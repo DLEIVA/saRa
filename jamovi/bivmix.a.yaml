@@ -1,0 +1,492 @@
+---
+name:  bivmix
+title: Mixed Data
+menuGroup: saRa
+version: '0.1.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: vars
+      title: Variables
+      type: Variables
+      suggested: 
+        - continuous
+      permitted: 
+        - numeric
+      description:
+          R: a vector of strings naming the variables of interest in `data`
+          
+    - name: groupBy
+      title: Group by
+      type: Variable
+      suggested:
+        - nominal
+      permitted:
+        - factor
+      default: null
+      description:
+          R: a vector of strings naming the variables used to segment `vars`    
+    
+    - name: n
+      title: N
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the N
+
+    - name: missing
+      title: Missing
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the missing values
+
+    - name: mean
+      title: Mean
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the mean
+          
+    - name: median
+      title: Median
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the median
+  
+    - name: mode
+      title: Mode
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the mode
+            
+    - name: geommean
+      title: Geometric Mean
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the geometric mean          
+    
+    - name: trimean
+      title: Trimean
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the trimean
+            
+    - name: avquartile
+      title: Quartiles' Average
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the quartiles average
+            
+    - name: midrange
+      title: Mid-Range
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the mid-range
+            
+    - name: trimmean
+      title: Trimmed Mean
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` (default) or `FALSE`, provides the Trimmed Mean
+            
+    - name: Trim
+      title: Percentage of Trimmed Data
+      type: Number
+      default: 5
+      description:
+          R: >
+            a number (detects by default the number) specifying the percentage of data to be trimmed 
+            
+    - name: winsmean
+      title: Winsorized Mean
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` (default) or `FALSE`, provides the Winsorized Mean
+            
+    - name: Win
+      title: Percentage of Winsorized Data
+      type: Number
+      default: 5
+      description:
+          R: >
+            a number (detects by default the number) specifying the percentage of data to be Winsorized             
+
+    - name: variance
+      title: Variance
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the variance
+
+    - name: stddev
+      title: Standard Deviation
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the standard deviation
+
+    - name: geomsd
+      title: Geometric Standard Deviation
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the geometric standard deviation
+            
+    - name: meandev
+      title: Mean Deviation
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the mean deviation    
+            
+    - name: cv
+      title:  Coefficient of Variation (CV)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the cv            
+
+    - name: range
+      title: Range
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the range
+    
+    - name: iqr
+      title: InterQuartile Range (IQR)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the iqr
+            
+    - name: qd
+      title:  Quartile Deviation (QD)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the quartile deviation
+
+    - name: mad
+      title: Median Absolute Deviation (MAD)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the mad
+            
+    - name: rcv
+      title:  Robust Coefficient of Variation (rCV)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the rcv
+            
+    - name: irange
+      title: Inner Range
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` (default) or `FALSE`, provides the Inner Range
+            
+    - name: NPerc
+      title: Percentage of Data
+      type: Number
+      default: 90
+      description:
+          R: >
+            a number (detects by default the number) specifying the percentage of data used            
+            
+    - name: min
+      title: Minimum
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the minimum
+
+    - name: max
+      title: Maximum
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the maximum
+
+            
+    - name: q1
+      title: Quartile 1 (Q1)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the first quartile
+            
+    - name: q2
+      title: Quartile 2 (Q2)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the second quartile
+            
+    - name: q3
+      title: Quartile 3 (Q3)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the third quartile
+            
+    - name: beta1
+      title: "Pearson's \u03B2\u2081 (Skewness)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the Pearson's \u03B2\u2081 index
+            
+    - name: gamma1
+      title: "Fisher's \u03B3\u2081 (Skewness)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the Fisher's \u03B3\u2081 index
+            
+    - name: h1
+      title: H1 (Skewness)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the H1 index
+            
+    - name: h3
+      title: H3 (Skewness)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the H3 index            
+            
+    - name: beta2
+      title: "Pearson's \u03B2\u2082 (Kurtosis)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the Pearson's \u03B2\u2082 index 
+            
+    - name: gamma2
+      title: "Fisher's \u03B3\u2082 (Kurtosis)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the Fisher's \u03B3\u2082 index            
+
+    - name: k2
+      title: K2 (Kurtosis)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the K2 index
+            
+    - name: k3
+      title: K3 (Kurtosis)
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the K3 index            
+
+    - name: pc
+      title: Percentiles
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides the Percentiles
+
+    - name: pcValues
+      title: Percentile Values
+      type: String
+      default: "25,50,75"
+      description:
+          R: >
+            a comma-separated list (default: 25,50,75) specifying the percentiles
+            
+    - name: cohend
+      title: "Cohen's d (2 levels)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides Cohen's d effect size indicator
+            
+    - name: rbp
+      title: "Point-biserial correlation (2 levels)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides point-biserial correlation 
+          
+    - name: probsup
+      title: "Probability of superiority (2 levels)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides probability of superiority
+            effect size indicator            
+          
+    - name: etasq
+      title: "\u03B7\u00B2 (k levels)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides \u03B7\u00B2 effect size indicator
+            
+    - name: omegasq
+      title: "\u03C9\u00B3 (k levels)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides \u03C9\u00B2 effect size indicator
+            
+    - name: kwind
+      title: "Kruskal-Wallis  (k levels)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides Kruskal-Wallis effect size indicator
+      
+    - name: hist
+      title: Histogram
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides histograms (continuous variables only)
+            
+    - name: dens
+      title: Density
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides density plots (continuous variables only)
+            
+    - name: norm
+      title: Normal Curve
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides overlapped normal curve (continuous variables only)            
+            
+    - name: box
+      title: Box plot
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide box plots (continuous variables only)
+            
+    - name: violin
+      title: Violin
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide violin plots (continuous variables only)
+            
+    - name: dot
+      title: Data
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide dot plots (continuous variables only)
+            
+    - name: dotType
+      title: ''
+      type: List
+      options:
+        - name: jitter
+          title: "Jittered"
+        - name: stack
+          title: "Stacked"
+      default: jitter
+
+    - name: boxMean
+      title: Mean
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), add mean to box plot
+            
+    - name: innerf
+      title: Inner Fence
+      type: Number
+      default: 1.5
+      description:
+          R: >
+            a number (detects by default the number) specifying the inner fence for detecting outliers 
+            
+    - name: outerf
+      title: Outer Fence
+      type: Number
+      default: 3.0
+      description:
+          R: >
+            a number (detects by default the number) specifying the outer fence for detecting outliers
+     
+    - name: qq
+      title: Q-Q plot
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Q-Q plots (continuous variables only)
+...

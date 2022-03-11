@@ -1,0 +1,31 @@
+---
+name:  ordSummary
+title: Univariate Data Analysis
+jrs:   '1.1'
+
+items:
+    - name: indicesord
+      title: Statistics
+      description: A table of the descriptive statistics
+      visible: (n || missing || median || mode || trimean || avquartile || midrange || range || iqr || qd || mad || rcv || min || max || q1 || q2 || q3 || pc || irange || h1 || h3 || k2 || k3)
+      type: Table
+      rows: 1
+      clearWith:
+        - pcValues
+        - NPerc
+      columns: []
+      
+    - name: plots
+      title: Plots
+      type: Array
+      description: An array of descriptive plots
+      items: (vars)
+      clearWith:
+        - innerf
+        - outerf
+      template:
+          title: ($key)
+          type: Group
+          items: []
+
+...

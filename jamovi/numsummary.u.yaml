@@ -1,0 +1,251 @@
+title: Numerical Data
+name: numSummary
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+  - type: VariableSupplier
+    persistentItems: false
+    stretchFactor: 2
+    children:
+      - type: TargetLayoutBox
+        label: Variables
+        children:
+          - type: VariablesListBox
+            name: vars
+            isTarget: true
+  - type: CollapseBox
+    label: Statistics
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 0
+          row: 0
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Sample Size
+            children:
+              - type: CheckBox
+                name: 'n'
+              - type: CheckBox
+                name: missing
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 0
+          row: 1
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Central Tendency
+            children:
+              - type: CheckBox
+                name: mean
+              - type: CheckBox
+                name: median
+              - type: CheckBox
+                name: mode
+              - type: CheckBox
+                name: geommean
+              - type: CheckBox
+                name: trimean
+              - type: CheckBox
+                name: avquartile
+              - type: CheckBox
+                name: midrange
+              - type: CheckBox
+                name: trimmean
+                label: Trimmed Mean
+                style: inline
+                verticalAlignment: center
+                children:
+                  - type: TextBox
+                    name: Trim
+                    label: ''
+                    suffix: '% trim'
+                    format: number
+                    enable: (trimmean)
+              - type: CheckBox
+                name: winsmean
+                label: Winsorized Mean
+                style: inline
+                verticalAlignment: center
+                children:
+                  - type: TextBox
+                    name: Win
+                    label: ''
+                    suffix: '% winsor'
+                    format: number
+                    enable: (winsmean)
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 1
+          row: 1
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Dispersion
+            children:
+              - type: CheckBox
+                name: variance
+              - type: CheckBox
+                name: stddev
+              - type: CheckBox
+                name: geomsd
+              - type: CheckBox
+                name: meandev
+              - type: CheckBox
+                name: cv
+              - type: CheckBox
+                name: range
+              - type: CheckBox
+                name: iqr
+              - type: CheckBox
+                name: qd
+              - type: CheckBox
+                name: mad
+              - type: CheckBox
+                name: rcv
+              - type: CheckBox
+                name: irange
+                label: Inner Range
+                style: inline
+                verticalAlignment: center
+                children:
+                  - type: TextBox
+                    name: NPerc
+                    label: ''
+                    suffix: '% of data'
+                    format: number
+                    enable: (irange)
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 0
+          row: 2
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Position
+            children:
+              - type: CheckBox
+                name: min
+              - type: CheckBox
+                name: max
+              - type: CheckBox
+                name: q1
+              - type: CheckBox
+                name: q2
+              - type: CheckBox
+                name: q3
+              - type: CheckBox
+                name: pc
+                style: inline
+                verticalAlignment: center
+                children:
+                  - type: TextBox
+                    name: pcValues
+                    label: ''
+                    format: string
+                    width: large
+                    enable: (pc)
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 0
+        cell:
+          column: 1
+          row: 2
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Shape
+            children:
+              - type: CheckBox
+                name: beta1
+              - type: CheckBox
+                name: gamma1
+              - type: CheckBox
+                name: h1
+              - type: CheckBox
+                name: h3
+              - type: CheckBox
+                name: beta2
+              - type: CheckBox
+                name: gamma2
+              - type: CheckBox
+                name: k2
+              - type: CheckBox
+                name: k3
+  - type: CollapseBox
+    label: Plots
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        style: inline
+        stretchFactor: 1
+        children:
+          - type: LayoutBox
+            margin: small
+            stretchFactor: 1
+            children:
+              - type: Label
+                label: Histograms
+                iconPosition: right
+                children:
+                  - type: CheckBox
+                    name: hist
+                  - type: CheckBox
+                    name: dens
+                  - type: CheckBox
+                    name: norm
+              - type: Label
+                label: Q-Q Plots
+                iconPosition: right
+                children:
+                  - type: CheckBox
+                    name: qq
+                    label: Q-Q
+          - type: Label
+            label: Box Plots
+            stretchFactor: 1
+            iconPosition: right
+            children:
+              - type: CheckBox
+                name: box
+              - type: CheckBox
+                name: violin
+              - type: CheckBox
+                name: dot
+                children:
+                  - type: ComboBox
+                    name: dotType
+                    enable: (dot)
+                    
+              - type: CheckBox
+                name: boxMean
+                enable: (box || violin || dot)
+                
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: TextBox
+                    name: innerf
+                    format: number
+                    enable: (box || dot)
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: TextBox
+                    name: outerf
+                    format: number
+                    enable: (box || dot)
+

@@ -1,0 +1,61 @@
+---
+title: Statistical Analyses with R Add-in for Jamovi
+name: saRa
+version: 0.1.0
+jms: '1.0'
+authors:
+  - 'David Leiva, Sara Martí'
+maintainer: David Leiva <dleivaur@ub.edu>
+date: '2022-03-09'
+type: R
+description: >-
+  More about what it does (maybe more than one line) Use four spaces when
+  indenting paragraphs within the Description.
+analyses:
+  - title: Categorical Data
+    name: catSummary
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Univariate
+    menuTitle: Categorical Data
+    menuSubtitle: null
+  - title: Ordinal Data
+    name: ordSummary
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Univariate
+    menuTitle: Ordinal Data
+  - title: Numerical Data
+    name: numSummary
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Univariate
+    menuTitle: Numerical Data
+  - title: Categorical Data
+    name: bivcat
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Bivariate
+    menuTitle: Categorical Data
+  - title: Ordinal Data
+    name: bivord
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Bivariate
+    menuTitle: Ordinal Data
+  - title: Numerical Data
+    name: bivnum
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Bivariate
+    menuTitle: Numerical Data
+  - title: Mixed Data
+    name: bivmix
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Bivariate
+    menuTitle: Mixed Data
+usesNative: true
+minApp: 1.0.8
+
+...

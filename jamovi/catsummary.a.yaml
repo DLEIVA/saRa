@@ -1,0 +1,146 @@
+---
+name:  catSummary
+title: Categorical Data
+menuGroup: saRa
+version: '0.1.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: vars
+      title: Variables
+      type: Variables
+      suggested:
+        - nominal
+      permitted:
+        - factor
+      description:
+          R: a vector of strings naming the variables of interest in `data`
+          
+    - name: freq
+      title: Frequency and odds tables
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide frequency tables (nominal, ordinal
+            variables only)
+            - name: mode
+    - name: mode 
+      title: Mode
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the mode 
+    - name: VR
+      title: Variation Ratio
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` (default) or `FALSE`, provide the variation ratio
+      
+    - name: Blau
+      title: Blau
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` (default) or `FALSE`, provide the Blau's Index
+            
+    - name: Teachman
+      title: Teachman
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` (default) or `FALSE`, provide the Teachman's Index
+            
+    - name: IQV
+      title: IQV
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` (default) or `FALSE`, provide the Index Qualitative Variation
+ 
+    - name: NCat
+      title: Number of Categories
+      type: Integer
+      default: 0
+      description:
+          R: >
+            an integer (detects by default the number) specifying the number of categories
+            
+    - name: bar
+      title: Bar plot
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide bar plots
+    
+    - name: f2p.bar
+      title: Frequencies (Y-Axis)
+      type: List
+      options:
+        - name: absolutefreq
+          title: Counts
+        - name: relativefreq
+          title: Percentages
+      default: absolutefreq
+      description:
+          R: >
+            `'absolute'` (default) or `'relative'` frequencies, to be used when
+            plotting barplots.
+
+    - name: pie
+      title: Pie chart
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide pie charts
+
+    - name: pareto
+      title: Pareto plot
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Pareto charts
+
+    - name: lolli
+      title: Lollipop 
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Lollipop charts
+
+    - name: f2p.lolli
+      title: Frequencies (Y-Axis)
+      type: List
+      options:
+        - name: absolutefreq
+          title: Counts
+        - name: relativefreq
+          title: Percentages
+      default: absolutefreq
+      description:
+          R: >
+            `'absolute'` (default) or `'relative'` frequencies, to be used when
+            plotting lollipop plots.
+            
+    - name: dough
+      title: Doughnut 
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Doughnut charts
+    
+...

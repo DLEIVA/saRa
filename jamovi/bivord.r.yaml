@@ -1,0 +1,11 @@
+---
+name:  bivord
+title: Bivariate Data Analysis
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Ordinal Data
+      type:  Preformatted
+
+...

@@ -1,0 +1,33 @@
+---
+name:  numSummary
+title: Univariate Data Analysis
+jrs:   '1.1'
+
+items:
+    - name: indicesnum
+      title: Statistics
+      description: A table of the descriptive statistics
+      visible: (n || missing || mean || median || mode || geommean || trimean || avquartile || midrange || trimmean || winsmean || variance || stddev || geomsd || meandev || cv || range || iqr || qd || mad || rcv || irange || min || max || q1 || q2 || q3 || pc || beta1 || gamma1 || h1 || h3 || beta2 || gamma2 || k2 || k3)
+      type: Table
+      rows: 1
+      clearWith:
+        - pcValues
+        - NPerc
+        - Trim
+        - Win
+      columns: []
+    - name: plots
+      title: Plots
+      type: Array
+      description: An array of descriptive plots
+      items: (vars)
+      clearWith:
+        - innerf
+        - outerf
+        
+      template:
+          title: ($key)
+          type: Group
+          items: []      
+
+...
