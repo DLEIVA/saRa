@@ -4,8 +4,22 @@ title: Bivariate Data Analysis
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Categorical Data
-      type:  Preformatted
-
+    - name: freqs
+      title: Contingency Tables
+      type: Table
+      description: a table of proportions
+      columns: [ ]
+      clearWith:
+        - rows
+        - cols
+    - name: asocind
+      title: Association Indices
+      description: A table of different bivariate indicators
+      visible: ( chiSq || phiind )
+      type: Table
+      rows: 1
+      columns: []
+      clearWith:
+        - rows
+        - cols 
 ...

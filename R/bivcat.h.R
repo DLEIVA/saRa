@@ -6,10 +6,15 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
-            group = NULL,
-            alt = "notequal",
-            varEq = TRUE, ...) {
+            rows = NULL,
+            cols = NULL,
+            obs = FALSE,
+            exp = FALSE,
+            pcRow = FALSE,
+            pcCol = FALSE,
+            pcTot = FALSE,
+            chiSq = FALSE,
+            phiind = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -17,47 +22,87 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
-            private$..alt <- jmvcore::OptionList$new(
-                "alt",
-                alt,
-                options=list(
-                    "notequal",
-                    "onegreater",
-                    "twogreater"),
-                default="notequal")
-            private$..varEq <- jmvcore::OptionBool$new(
-                "varEq",
-                varEq,
-                default=TRUE)
+            private$..rows <- jmvcore::OptionVariable$new(
+                "rows",
+                rows,
+                suggested=list(
+                    "nominal"),
+                permitted=list(
+                    "factor"))
+            private$..cols <- jmvcore::OptionVariable$new(
+                "cols",
+                cols,
+                suggested=list(
+                    "nominal"),
+                permitted=list(
+                    "factor"))
+            private$..obs <- jmvcore::OptionBool$new(
+                "obs",
+                obs,
+                default=FALSE)
+            private$..exp <- jmvcore::OptionBool$new(
+                "exp",
+                exp,
+                default=FALSE)
+            private$..pcRow <- jmvcore::OptionBool$new(
+                "pcRow",
+                pcRow,
+                default=FALSE)
+            private$..pcCol <- jmvcore::OptionBool$new(
+                "pcCol",
+                pcCol,
+                default=FALSE)
+            private$..pcTot <- jmvcore::OptionBool$new(
+                "pcTot",
+                pcTot,
+                default=FALSE)
+            private$..chiSq <- jmvcore::OptionBool$new(
+                "chiSq",
+                chiSq,
+                default=FALSE)
+            private$..phiind <- jmvcore::OptionBool$new(
+                "phiind",
+                phiind,
+                default=FALSE)
 
-            self$.addOption(private$..dep)
-            self$.addOption(private$..group)
-            self$.addOption(private$..alt)
-            self$.addOption(private$..varEq)
+            self$.addOption(private$..rows)
+            self$.addOption(private$..cols)
+            self$.addOption(private$..obs)
+            self$.addOption(private$..exp)
+            self$.addOption(private$..pcRow)
+            self$.addOption(private$..pcCol)
+            self$.addOption(private$..pcTot)
+            self$.addOption(private$..chiSq)
+            self$.addOption(private$..phiind)
         }),
     active = list(
-        dep = function() private$..dep$value,
-        group = function() private$..group$value,
-        alt = function() private$..alt$value,
-        varEq = function() private$..varEq$value),
+        rows = function() private$..rows$value,
+        cols = function() private$..cols$value,
+        obs = function() private$..obs$value,
+        exp = function() private$..exp$value,
+        pcRow = function() private$..pcRow$value,
+        pcCol = function() private$..pcCol$value,
+        pcTot = function() private$..pcTot$value,
+        chiSq = function() private$..chiSq$value,
+        phiind = function() private$..phiind$value),
     private = list(
-        ..dep = NA,
-        ..group = NA,
-        ..alt = NA,
-        ..varEq = NA)
+        ..rows = NA,
+        ..cols = NA,
+        ..obs = NA,
+        ..exp = NA,
+        ..pcRow = NA,
+        ..pcCol = NA,
+        ..pcTot = NA,
+        ..chiSq = NA,
+        ..phiind = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivcatResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        freqs = function() private$.items[["freqs"]],
+        asocind = function() private$.items[["asocind"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -65,10 +110,24 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Bivariate Data Analysis")
-            self$add(jmvcore::Preformatted$new(
+            self$add(jmvcore::Table$new(
                 options=options,
-                name="text",
-                title="Categorical Data"))}))
+                name="freqs",
+                title="Contingency Tables",
+                columns=list(),
+                clearWith=list(
+                    "rows",
+                    "cols")))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="asocind",
+                title="Association Indices",
+                visible="( chiSq || phiind )",
+                rows=1,
+                columns=list(),
+                clearWith=list(
+                    "rows",
+                    "cols")))}))
 
 bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivcatBase",
@@ -78,7 +137,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "bivcat",
-                version = c(0,1,0),
+                version = c(1,0,0),
                 options = options,
                 results = bivcatResults$new(options=options),
                 data = data,
@@ -87,48 +146,78 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 revision = revision,
                 pause = NULL,
                 completeWhenFilled = FALSE,
-                requiresMissings = FALSE,
-                weightsSupport = 'auto')
+                requiresMissings = FALSE)
         }))
 
 #' Categorical Data
 #'
 #' 
-#' @param data .
-#' @param dep .
-#' @param group .
-#' @param alt .
-#' @param varEq .
+#' @param data the data as a data frame
+#' @param rows the variable to use as the rows in the contingency table (not
+#'   necessary when providing a formula, see the examples)
+#' @param cols the variable to use as the columns in the contingency table
+#'   (not necessary when providing a formula, see the examples)
+#' @param obs \code{TRUE} or \code{FALSE} (default), provide the observed
+#'   counts
+#' @param exp \code{TRUE} or \code{FALSE} (default), provide the expected
+#'   counts
+#' @param pcRow \code{TRUE} or \code{FALSE} (default), provide row percentages
+#' @param pcCol \code{TRUE} or \code{FALSE} (default), provide column
+#'   percentages
+#' @param pcTot \code{TRUE} or \code{FALSE} (default), provide total
+#'   percentages
+#' @param chiSq \code{TRUE} or \code{FALSE} (default), provide Chi Squared
+#' @param phiind \code{TRUE} or \code{FALSE} (default), provide Pearson's
+#'   \u03c6
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
+#'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate indicators \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$freqs$asDF}
+#'
+#' \code{as.data.frame(results$freqs)}
 #'
 #' @export
 bivcat <- function(
     data,
-    dep,
-    group,
-    alt = "notequal",
-    varEq = TRUE) {
+    rows,
+    cols,
+    obs = FALSE,
+    exp = FALSE,
+    pcRow = FALSE,
+    pcCol = FALSE,
+    pcTot = FALSE,
+    chiSq = FALSE,
+    phiind = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
+    if ( ! missing(rows)) rows <- jmvcore::resolveQuo(jmvcore::enquo(rows))
+    if ( ! missing(cols)) cols <- jmvcore::resolveQuo(jmvcore::enquo(cols))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL),
-            `if`( ! missing(group), group, NULL))
+            `if`( ! missing(rows), rows, NULL),
+            `if`( ! missing(cols), cols, NULL))
 
+    for (v in rows) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
+    for (v in cols) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
 
     options <- bivcatOptions$new(
-        dep = dep,
-        group = group,
-        alt = alt,
-        varEq = varEq)
+        rows = rows,
+        cols = cols,
+        obs = obs,
+        exp = exp,
+        pcRow = pcRow,
+        pcCol = pcCol,
+        pcTot = pcTot,
+        chiSq = chiSq,
+        phiind = phiind)
 
     analysis <- bivcatClass$new(
         options = options,

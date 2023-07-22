@@ -2,35 +2,86 @@
 name:  bivcat
 title: Categorical Data
 menuGroup: saRa
-version: '0.1.0'
+version: '1.0.0'
 jas: '1.2'
 
 options:
     - name: data
       type: Data
+      description:
+          R: the data as a data frame
 
-    - name: dep
-      title: Dependent Variable
+    - name: rows
+      title: Rows
       type: Variable
-
-    - name: group
-      title: Grouping Variable
+      suggested:
+        - nominal
+      permitted:
+        - factor
+      description:
+          R: >
+              the variable to use as the rows in the contingency table (not
+              necessary when providing a formula, see the examples)
+    - name: cols
+      title: Columns
       type: Variable
-
-    - name: alt
-      title: Alternative hypothesis
-      type: List
-      options:
-        - title: Not equal
-          name:  notequal
-        - title: One greater
-          name:  onegreater
-        - title: Two greater
-          name:  twogreater
-      default: notequal
-
-    - name: varEq
-      title: Assume equal variances
+      suggested:
+        - nominal
+      permitted:
+        - factor
+      description:
+          R: >
+              the variable to use as the columns in the contingency table (not
+              necessary when providing a formula, see the examples)
+    - name: obs
+      title: Observed counts
       type: Bool
-      default: true
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the observed counts
+    - name: exp
+      title: Expected counts
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide the expected counts
+    - name: pcRow
+      title: Row
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide row percentages
+    - name: pcCol
+      title: Column
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide column percentages
+    - name: pcTot
+      title: Total
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide total percentages
+    - name: chiSq
+      title: "\u03c7\u00B2 index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Chi Squared
+    - name: phiind
+      title: "\u03c6 index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Pearson's \u03c6            
+              
+
 ...
