@@ -6,7 +6,7 @@ jms: '1.0'
 authors:
   - 'David Leiva, Sara Martí'
 maintainer: David Leiva <dleivaur@ub.edu>
-date: '2022-03-09'
+date: '2022-07-22'
 type: R
 description: >-
   More about what it does (maybe more than one line) Use four spaces when
