@@ -2,7 +2,7 @@ Package: saRa
 Type: Package
 Title: Statistical Analyses with R Add-in for Jamovi
 Version: 0.1.0
-Date: 2022-03-09
+Date: 2027-07-22
 Author: David Leiva, Sara Martí
 Maintainer: David Leiva <dleivaur@ub.edu>
 Description: An R package for a basic course on Statistics in jamovi.
@@ -16,7 +16,7 @@ BugReports: https://github.com/DLEIVA/saRa/issues
 License: GPL (>=2)
 LazyData: true
 Depends:
-    R (>= 4.0)
+    R (>= 4.1)
 Encoding: UTF-8
 LazyData: true
 Imports: jmvcore (>= 0.8.5), R6,
