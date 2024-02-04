@@ -364,7 +364,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             visible=visible
           )
         }        
-      } #else private$.clearASOCTable()
+      } else private$.clearASOCTable()
     },
     #### Populate tables ----
     .populateASOCTable = function(results) {
@@ -417,11 +417,11 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           asoc[['phiind']] <- sqrt(CHI/n) 
         } else NA
         
-      } else if (n==0) {
-        l <- list(
-          chiSq=NaN,
-          phiind=NaN
-        )
+      # } else if (n==0) {
+      #   l <- list(
+      #     chiSq=NaN,
+      #     phiind=NaN
+      #   )
       }
       return(asoc)  
     }    

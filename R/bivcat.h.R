@@ -124,10 +124,10 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 title="Association Indices",
                 visible="( chiSq || phiind )",
                 rows=1,
-                columns=list(),
                 clearWith=list(
                     "rows",
-                    "cols")))}))
+                    "cols"),
+                columns=list()))}))
 
 bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivcatBase",
@@ -146,7 +146,8 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 revision = revision,
                 pause = NULL,
                 completeWhenFilled = FALSE,
-                requiresMissings = FALSE)
+                requiresMissings = FALSE,
+                weightsSupport = 'auto')
         }))
 
 #' Categorical Data

@@ -18,8 +18,8 @@ items:
       visible: ( chiSq || phiind )
       type: Table
       rows: 1
-      columns: []
       clearWith:
         - rows
         - cols 
+      columns: []        
 ...

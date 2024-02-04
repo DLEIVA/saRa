@@ -14,9 +14,8 @@ Description: An R package for a basic course on Statistics in jamovi.
     information).
 BugReports: https://github.com/DLEIVA/saRa/issues
 License: GPL (>=2)
-LazyData: true
 Depends:
-    R (>= 4.3)
+    R (>= 4.1)
 Encoding: UTF-8
 LazyData: true
 Imports: jmvcore (>= 2.2), R6,
