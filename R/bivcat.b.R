@@ -10,27 +10,14 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     #### Init + run functions ----
     .init=function() {
       private$.FREQSTable()
-      #table <- self$results$asocind
-      if(self$options$chiSq | self$options$phiind) {
-       private$colArgs <- list(
-         name = c(
-           "chiSq", "phiind"
-         ),
-         title = c(
-           "\u03c7\u00B2", "\u03c6"
-         ),
-         superTitle = rep("",2),
-         type = c(rep("number",2)),
-         format = rep("",2),
-         visible = c("(chiSq)", "(phiind)"
-         )
-       )
-       private$.initASOCTable()
-      }
+      asocind <- self$results$asocind
+      
+      asocind$addColumn(index=1, type='text', combineBelow=TRUE)
+      asocind$addRow(rowKey=1, values=list())
     },
     
     .run=function() {
-
+      
       rowVarName <- self$options$rows
       colVarName <- self$options$cols
       
@@ -44,7 +31,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       freqRowNo <- 1
       
       mats <- list(table(data[[rowVarName]],data[[colVarName]]))
-  
+      
       nRows  <- base::nlevels(data[[rowVarName]])
       nCols  <- base::nlevels(data[[colVarName]])
       nCells <- nRows * nCols
@@ -54,8 +41,8 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         colTotals <- apply(mat, 2, sum)
         rowTotals <- apply(mat, 1, sum)
         exp <- matrix(kronecker(rowTotals,colTotals),
-                          length(rowTotals),length(colTotals),
-                          byrow = TRUE)/total
+                      length(rowTotals),length(colTotals),
+                      byrow = TRUE)/total
         
         
         for (rowNo in seq_len(nRows)) {
@@ -97,49 +84,47 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         values <- as.list(values)
         names(values) <- paste0(1:nCols, '[count]')
         values[['.total[count]']] <- rowTotal
-       # 
+        # 
         expValues <- apply(exp, 2, sum)
         expValues <- as.list(expValues)
         names(expValues) <- paste0(1:nCols, '[expected]')
-       # 
+        # 
         pcRow <- apply(mat, 2, sum) / rowTotal
         pcRow <- as.list(pcRow)
         names(pcRow) <- paste0(1:nCols, '[pcRow]')
-       # 
+        # 
         pcCol <- rep(1, nCols)
         pcCol <- as.list(pcCol)
         names(pcCol) <- paste0(1:nCols, '[pcCol]')
-       # 
+        # 
         pcTot <- apply(mat, 2, sum) / total
         pcTot <- as.list(pcTot)
         names(pcTot) <- paste0(1:nCols, '[pcTot]')
-       # 
+        # 
         expValues[['.total[exp]']] <- total
         pcRow[['.total[pcRow]']] <- 1
         pcCol[['.total[pcCol]']] <- 1
         pcTot[['.total[pcTot]']] <- 1
-       # 
+        # 
         values <- c(values, expValues, pcRow, pcCol, pcTot) #expValues,
-       # 
+        # 
         freqs$setRow(rowNo=freqRowNo, values=values)
         freqRowNo <- freqRowNo + 1
       }
-      if( self$options$chiSq | self$options$phiind){
-      resultsASOC <- private$.computeASOC()      
-      private$.populateASOCTable(resultsASOC)
-      }
-    },
-    #### Compute indices ----
-    .computeASOC = function() {
-      data <- self$data
-      vars <- 'Value'
-      indic <- list()
-      for(var in vars){
-        indic[[var]] <- private$.computeASOCIndices()
-      }
       
-      return(list(indic=indic))
-    },    
+      asocind   <- self$results$asocind
+      othRowNo <- 1
+      
+      tabla <- table(data[[rowVarName]],data[[colVarName]])
+      n <- sum(tabla)
+      CHI <- chisq.test(tabla,correct=FALSE)$statistic
+
+      values <- list(
+        `v[chiSq]`=CHI,
+        `v[phiind]`=sqrt(CHI/n))
+      nom$setRow(rowNo=othRowNo, values=values)
+    },
+    
     #### Init tables ----
     .FREQSTable = function(){
       rowVarName <- self$options$rows
@@ -326,55 +311,6 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
       }
     },
-    .initASOCTable = function() {
-      
-      table <- self$results$asocind
-      
-      vars <- 'Value'        
-
-      colArgs <- private$colArgs
-      if( self$options$chiSq | self$options$phiind ){
-        for (i in seq_along(colArgs$name)) {
-          if (private$.skipOption(colArgs$visible[i]))
-            next
-          
-          name <- colArgs$name[i]
-          title <- colArgs$title[i]
-          format <- colArgs$format[i]
-          type <- colArgs$type[i]
-          visible <- colArgs$visible[i]
-          
-          post <- paste0("[", name, "]")
-          table$addColumn(
-            name=paste0("asoc", post),
-            title="",
-            type="text",
-            value=title,
-            visible=visible,
-            combineBelow=TRUE
-          )
-        }
-        for (k in seq_along(vars)) {
-          subName <- paste0(vars[k], post)
-          table$addColumn(
-            name=subName,
-            title=vars[k],
-            type=type,
-            format=format,
-            visible=visible
-          )
-        }        
-      } else private$.clearASOCTable()
-    },
-    #### Populate tables ----
-    .populateASOCTable = function(results) {
-      table <- self$results$asocind
-      
-      indic <- results$indic
-      
-      table$setRow(rowNo=1, values=list(
-        `asocind[chiSq]`=indic$chiSq, `asocind[phiind]`=indic$phiind))
-    },
     #### Helper functions ----
     
     .grid=function(data, incRows=FALSE) {
@@ -396,34 +332,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     },
     .skipOption = function(visible) {
       return(! self$options[[ gsub("[()]", "", visible) ]])
-    },    
-    .computeASOCIndices = function() {
-      asoc <- list()
-      rowVarName <- self$options$rows
-      colVarName <- self$options$cols
-      
-      data <- self$data
-      
-      tabla <- table(data[[rowVarName]],data[[colVarName]])
-      n <- sum(tabla)
-      if (n > 0) {
-        
-        if ( self$options$chiSq ){
-          asoc[['chiSq']] <- chisq.test(tabla,correct=FALSE)$statistic
-        } else NA
-        
-        if ( self$options$phiind ){
-          CHI <- chisq.test(tabla,correct=FALSE)$statistic
-          asoc[['phiind']] <- sqrt(CHI/n) 
-        } else NA
-        
-      # } else if (n==0) {
-      #   l <- list(
-      #     chiSq=NaN,
-      #     phiind=NaN
-      #   )
-      }
-      return(asoc)  
-    }    
+    }
   )
 )
+

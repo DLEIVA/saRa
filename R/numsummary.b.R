@@ -1,9 +1,3 @@
-
-
-# This file is a generated template, your changes will not be overwritten
-
-# This file is a generated template, your changes will not be overwritten
-
 numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
   "numSummaryClass",
   inherit = numSummaryBase,

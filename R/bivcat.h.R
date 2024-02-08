@@ -123,11 +123,30 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="asocind",
                 title="Association Indices",
                 visible="( chiSq || phiind )",
-                rows=1,
+                columns=list(
+                    list(
+                        `name`="t[chiSq]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\\u03c7\\u00B2", 
+                        `visible`="(chiSq)"),
+                    list(
+                        `name`="v[chiSq]", 
+                        `title`="Value", 
+                        `visible`="(chiSq)"),
+                    list(
+                        `name`="t[phiind]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\\u03c6", 
+                        `visible`="(phiind)"),
+                    list(
+                        `name`="v[phiind]", 
+                        `title`="Value", 
+                        `visible`="(phiind)")),
                 clearWith=list(
                     "rows",
-                    "cols"),
-                columns=list()))}))
+                    "cols")))}))
 
 bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivcatBase",

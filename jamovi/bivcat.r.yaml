@@ -17,9 +17,28 @@ items:
       description: A table of different bivariate indicators
       visible: ( chiSq || phiind )
       type: Table
-      rows: 1
+      columns:
+        - name: t[chiSq]
+          title: ''
+          type: text
+          content: \u03c7\u00B2
+          visible: (chiSq)
+        
+        - name: v[chiSq]
+          title: Value
+          visible: (chiSq)
+        
+        - name: t[phiind]
+          title: ''
+          type: text
+          content: \u03c6
+          visible: (phiind)
+        
+        - name: v[phiind]
+          title: Value
+          visible: (phiind)          
+      
       clearWith:
         - rows
         - cols 
-      columns: []        
 ...
