@@ -12,7 +12,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       private$.FREQSTable()
       asocind <- self$results$asocind
       
-      asocind$addColumn(index=1, type='text', combineBelow=TRUE)
+      #asocind$addColumn(index=1, type='text', combineBelow=TRUE)
       asocind$addRow(rowKey=1, values=list())
     },
     
@@ -122,7 +122,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       values <- list(
         `v[chiSq]`=CHI,
         `v[phiind]`=sqrt(CHI/n))
-      nom$setRow(rowNo=othRowNo, values=values)
+      asocind$setRow(rowNo=othRowNo, values=values)
     },
     
     #### Init tables ----
