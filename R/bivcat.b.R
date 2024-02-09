@@ -120,7 +120,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       values <- list(
         `v[chiSq]`=CHI,
         `v[phiind]`=sqrt(CHI/n),
-        `v[phiSq]`=sqrt(CHI/n))
+        `v[phiSq]`=CHI/n))
       asocind$setRow(rowNo=othRowNo, values=values)
     },
     
