@@ -36,7 +36,18 @@ items:
         
         - name: v[phiind]
           title: Value
-          visible: (phiind)          
+          visible: (phiind)
+          
+        
+        - name: t[phiSq]
+          title: ''
+          type: text
+          content: "\u03c6\u00B2"
+          visible: (phiSq)
+        
+        - name: v[phiSq]
+          title: Value
+          visible: (phiSq)          
       
       clearWith:
         - rows
