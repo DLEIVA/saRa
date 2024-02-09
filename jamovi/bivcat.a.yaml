@@ -82,6 +82,12 @@ options:
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Pearson's \u03c6            
-              
+- name: phiSq
+      title: "\u03c6\u00B2 index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Pearson's \u03c6\u00B2                          
 
 ...
