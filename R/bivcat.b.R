@@ -6,14 +6,11 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
   inherit = bivcatBase,
   private = list(
     #### Member variables ----    
-    colArgs = NA,
+    #colArgs = NA,
     #### Init + run functions ----
     .init=function() {
       private$.FREQSTable()
-      asocind <- self$results$asocind
-      
-      #asocind$addColumn(index=1, type='text', combineBelow=TRUE)
-      asocind$addRow(rowKey=1, values=list())
+      private$.initASSOCTable()
     },
     
     .run=function() {
@@ -112,7 +109,8 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         freqRowNo <- freqRowNo + 1
       }
       
-      asocind   <- self$results$asocind
+      asocind <- self$results$asocind
+      
       othRowNo <- 1
       
       tabla <- table(data[[rowVarName]],data[[colVarName]])
@@ -310,6 +308,18 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         freqs$addRow(rowKey=key, values=values)
         
       }
+    },
+    .initASSOCTable = function(){
+      asocind <- self$results$asocind
+      asocind$addRow(rowKey=1, values=list())
+      if((self$options$chiSq | self$options$phiind) == FALSE){
+        asocind <- self$results$asocind
+        asocind$addColumn(
+          name=' ',
+          title=' ',
+          type='text')
+
+      }      
     },
     #### Helper functions ----
     
