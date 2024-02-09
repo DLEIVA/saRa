@@ -14,7 +14,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             pcCol = FALSE,
             pcTot = FALSE,
             chiSq = FALSE,
-            phiind = FALSE, ...) {
+            phiind = FALSE,
+            phiSq = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -64,6 +65,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "phiind",
                 phiind,
                 default=FALSE)
+            private$..phiSq <- jmvcore::OptionBool$new(
+                "phiSq",
+                phiSq,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -74,6 +79,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..pcTot)
             self$.addOption(private$..chiSq)
             self$.addOption(private$..phiind)
+            self$.addOption(private$..phiSq)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -84,7 +90,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         pcCol = function() private$..pcCol$value,
         pcTot = function() private$..pcTot$value,
         chiSq = function() private$..chiSq$value,
-        phiind = function() private$..phiind$value),
+        phiind = function() private$..phiind$value,
+        phiSq = function() private$..phiSq$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -94,7 +101,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..pcCol = NA,
         ..pcTot = NA,
         ..chiSq = NA,
-        ..phiind = NA)
+        ..phiind = NA,
+        ..phiSq = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -143,7 +151,17 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="v[phiind]", 
                         `title`="Value", 
-                        `visible`="(phiind)")),
+                        `visible`="(phiind)"),
+                    list(
+                        `name`="t[phiSq]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\u03C6\u00B2", 
+                        `visible`="(phiSq)"),
+                    list(
+                        `name`="v[phiSq]", 
+                        `title`="Value", 
+                        `visible`="(phiSq)")),
                 clearWith=list(
                     "rows",
                     "cols")))}))
@@ -189,6 +207,8 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param chiSq \code{TRUE} or \code{FALSE} (default), provide Chi Squared
 #' @param phiind \code{TRUE} or \code{FALSE} (default), provide Pearson's
 #'   \u03c6
+#' @param phiSq \code{TRUE} or \code{FALSE} (default), provide Pearson's
+#'   \u03c6\u00B2
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
@@ -212,7 +232,8 @@ bivcat <- function(
     pcCol = FALSE,
     pcTot = FALSE,
     chiSq = FALSE,
-    phiind = FALSE) {
+    phiind = FALSE,
+    phiSq = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -237,7 +258,8 @@ bivcat <- function(
         pcCol = pcCol,
         pcTot = pcTot,
         chiSq = chiSq,
-        phiind = phiind)
+        phiind = phiind,
+        phiSq = phiSq)
 
     analysis <- bivcatClass$new(
         options = options,
