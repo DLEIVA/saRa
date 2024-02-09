@@ -48,6 +48,16 @@ items:
         - name: v[phiSq]
           title: Value
           visible: (phiSq)          
+
+        - name: t[contCoef]
+          title: ''
+          type: text
+          content: "Contingency Index"
+          visible: (contCoef)
+        
+        - name: v[contCoef]
+          title: Value
+          visible: (contCoef)
       
       clearWith:
         - rows

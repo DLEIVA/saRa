@@ -89,5 +89,12 @@ options:
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Pearson's \u03c6\u00B2                          
+    - name: contCoef
+      title: "Pearson's contingency index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Pearson's contingency index             
 
 ...

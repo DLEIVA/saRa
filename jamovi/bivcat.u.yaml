@@ -79,4 +79,6 @@ children:
                   - type: CheckBox
                     name: phiind
                   - type: CheckBox
-                    name: phiSq                    
+                    name: phiSq 
+                  - type: CheckBox
+                    name: contCoef                     
