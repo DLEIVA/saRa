@@ -21,7 +21,7 @@ items:
         - name: t[chiSq]
           title: ''
           type: text
-          content: \u03c7\u00B2
+          content: "\u03c7\u00B2"
           visible: (chiSq)
         
         - name: v[chiSq]
@@ -31,7 +31,7 @@ items:
         - name: t[phiind]
           title: ''
           type: text
-          content: \u03c6
+          content: "\u03c6"
           visible: (phiind)
         
         - name: v[phiind]

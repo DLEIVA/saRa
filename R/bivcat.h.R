@@ -128,7 +128,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[chiSq]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="\\u03c7\\u00B2", 
+                        `content`="\u03C7\u00B2", 
                         `visible`="(chiSq)"),
                     list(
                         `name`="v[chiSq]", 
@@ -138,7 +138,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[phiind]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="\\u03c6", 
+                        `content`="\u03C6", 
                         `visible`="(phiind)"),
                     list(
                         `name`="v[phiind]", 
