@@ -78,3 +78,5 @@ children:
                     name: chiSq
                   - type: CheckBox
                     name: phiind
+                  - type: CheckBox
+                    name: phiSq                    
