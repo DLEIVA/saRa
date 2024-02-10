@@ -68,6 +68,7 @@ options:
       description:
           R: >
             `TRUE` or `FALSE` (default), provide total percentages
+
     - name: chiSq
       title: "\u03c7\u00B2 index"
       type: Bool
@@ -75,27 +76,38 @@ options:
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Chi Squared
+
     - name: phiind
       title: "\u03c6 index"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pearson's \u03c6            
+            `TRUE` or `FALSE` (default), provide Pearson's \u03c6
+
     - name: phiSq
       title: "\u03c6\u00B2 index"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pearson's \u03c6\u00B2                          
+            `TRUE` or `FALSE` (default), provide Pearson's \u03c6\u00B2
+
     - name: contCoef
       title: "Pearson's contingency index"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pearson's contingency index             
+            `TRUE` or `FALSE` (default), provide Pearson's contingency index
+            
+    - name: craV
+      title: "Cramér's V index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Cramér's V index   
 
     - name: chuprov
       title: "Chuprov's index"

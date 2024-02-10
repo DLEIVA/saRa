@@ -87,6 +87,8 @@ children:
                   - type: CheckBox
                     name: contCoef
                   - type: CheckBox
+                    name: craV                    
+                  - type: CheckBox
                     name: chuprov
                   - type: CheckBox
                     name: sakoda

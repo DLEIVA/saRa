@@ -58,6 +58,16 @@ items:
         - name: v[contCoef]
           title: Value
           visible: (contCoef)
+          
+        - name: t[craV]
+          title: ''
+          type: text
+          content: "Cramér's V"
+          visible: (craV)
+        
+        - name: v[craV]
+          title: Value
+          visible: (craV)           
 
         - name: t[chuprov]
           title: ''
