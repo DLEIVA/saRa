@@ -67,7 +67,12 @@ items:
         
         - name: v[chuprov]
           title: Value
-          visible: (chuprov)      
+          visible: (chuprov) 
+        
+        - name: v[sakoda]
+          title: Value
+          visible: (sakoda) 
+          
       clearWith:
         - rows
         - cols 

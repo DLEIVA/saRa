@@ -84,3 +84,6 @@ children:
                     name: contCoef
                   - type: CheckBox
                     name: chuprov                   
+                  - type: CheckBox
+                    name: sakoda
+                    

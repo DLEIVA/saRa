@@ -104,4 +104,12 @@ options:
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Chuprov's index             
+
+    - name: sakoda
+      title: "Sakoda's index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Sakoda's index             
 ...
