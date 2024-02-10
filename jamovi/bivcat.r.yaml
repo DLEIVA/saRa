@@ -135,9 +135,9 @@ items:
           content: "\u03BB (columns)"
           visible: (lambdaGKba)
         
-        - name: v[lambdaGKsym]
+        - name: v[lambdaGKba]
           title: Value
-          visible: (lambdaGKsym)
+          visible: (lambdaGKba)
           
         - name: t[lambdaGKsym]
           title: ''
