@@ -17,6 +17,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             phiind = FALSE,
             phiSq = FALSE,
             contCoef = FALSE,
+            craV = FALSE,
             chuprov = FALSE,
             sakoda = FALSE,
             Qyule = FALSE,
@@ -82,6 +83,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "contCoef",
                 contCoef,
                 default=FALSE)
+            private$..craV <- jmvcore::OptionBool$new(
+                "craV",
+                craV,
+                default=FALSE)
             private$..chuprov <- jmvcore::OptionBool$new(
                 "chuprov",
                 chuprov,
@@ -126,6 +131,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..phiind)
             self$.addOption(private$..phiSq)
             self$.addOption(private$..contCoef)
+            self$.addOption(private$..craV)
             self$.addOption(private$..chuprov)
             self$.addOption(private$..sakoda)
             self$.addOption(private$..Qyule)
@@ -147,6 +153,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         phiind = function() private$..phiind$value,
         phiSq = function() private$..phiSq$value,
         contCoef = function() private$..contCoef$value,
+        craV = function() private$..craV$value,
         chuprov = function() private$..chuprov$value,
         sakoda = function() private$..sakoda$value,
         Qyule = function() private$..Qyule$value,
@@ -167,6 +174,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..phiind = NA,
         ..phiSq = NA,
         ..contCoef = NA,
+        ..craV = NA,
         ..chuprov = NA,
         ..sakoda = NA,
         ..Qyule = NA,
@@ -245,6 +253,16 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="v[contCoef]", 
                         `title`="Value", 
                         `visible`="(contCoef)"),
+                    list(
+                        `name`="t[craV]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Cram\u00E9r's V", 
+                        `visible`="(craV)"),
+                    list(
+                        `name`="v[craV]", 
+                        `title`="Value", 
+                        `visible`="(craV)"),
                     list(
                         `name`="t[chuprov]", 
                         `title`="", 
@@ -383,6 +401,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \u03c6\u00B2
 #' @param contCoef \code{TRUE} or \code{FALSE} (default), provide Pearson's
 #'   contingency index
+#' @param craV \code{TRUE} or \code{FALSE} (default), provide Cramér's V index
 #' @param chuprov \code{TRUE} or \code{FALSE} (default), provide Chuprov's
 #'   index
 #' @param sakoda \code{TRUE} or \code{FALSE} (default), provide Sakoda's index
@@ -425,6 +444,7 @@ bivcat <- function(
     phiind = FALSE,
     phiSq = FALSE,
     contCoef = FALSE,
+    craV = FALSE,
     chuprov = FALSE,
     sakoda = FALSE,
     Qyule = FALSE,
@@ -460,6 +480,7 @@ bivcat <- function(
         phiind = phiind,
         phiSq = phiSq,
         contCoef = contCoef,
+        craV = craV,
         chuprov = chuprov,
         sakoda = sakoda,
         Qyule = Qyule,
