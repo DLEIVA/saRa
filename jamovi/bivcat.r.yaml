@@ -65,7 +65,7 @@ items:
           content: "Chuprov's Index"
           visible: (chuprov)
         
-        - name: v[chuprob]
+        - name: v[chuprov]
           title: Value
           visible: (chuprov)      
       clearWith:
