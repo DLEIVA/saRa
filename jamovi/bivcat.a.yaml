@@ -213,7 +213,7 @@ options:
           R: >
             `TRUE` or `FALSE` (default), provide Theil's prediction error index (dependent variable by columns)
             
-    - name: tauGKsym
+    - name: theilsym
       title: "Theil's index (symmetric)"
       type: Bool
       default: false

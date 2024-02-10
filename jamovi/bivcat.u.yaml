@@ -87,7 +87,7 @@ children:
                   - type: CheckBox
                     name: contCoef
                   - type: CheckBox
-                    name: craV                    
+                    name: craV
                   - type: CheckBox
                     name: chuprov
                   - type: CheckBox
@@ -97,7 +97,7 @@ children:
                   - type: CheckBox
                     name: Yyule
                   - type: CheckBox
-                    name: Vyule                    
+                    name: Vyule
       - type: LayoutBox
         margin: large
         stretchFactor: 2
@@ -114,16 +114,16 @@ children:
               - type: CheckBox
                 name: lambdaGKba
               - type: CheckBox
-                name: lambdaGKsym  
+                name: lambdaGKsym
               - type: CheckBox
                 name: tauGKab
               - type: CheckBox
                 name: tauGKba
               - type: CheckBox
-                name: tauGKsym              
+                name: tauGKsym
               - type: CheckBox
                 name: theilab
               - type: CheckBox
                 name: theilba
               - type: CheckBox
-                name: theilsym                              
+                name: theilsym
