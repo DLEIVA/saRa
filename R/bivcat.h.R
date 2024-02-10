@@ -28,7 +28,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             lambdaGKsym = FALSE,
             tauGKab = FALSE,
             tauGKba = FALSE,
-            tauGKsym = FALSE, ...) {
+            tauGKsym = FALSE,
+            theilab = FALSE,
+            theilba = FALSE,
+            theilsym = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -134,6 +137,18 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "tauGKsym",
                 tauGKsym,
                 default=FALSE)
+            private$..theilab <- jmvcore::OptionBool$new(
+                "theilab",
+                theilab,
+                default=FALSE)
+            private$..theilba <- jmvcore::OptionBool$new(
+                "theilba",
+                theilba,
+                default=FALSE)
+            private$..theilsym <- jmvcore::OptionBool$new(
+                "theilsym",
+                theilsym,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -158,6 +173,9 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..tauGKab)
             self$.addOption(private$..tauGKba)
             self$.addOption(private$..tauGKsym)
+            self$.addOption(private$..theilab)
+            self$.addOption(private$..theilba)
+            self$.addOption(private$..theilsym)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -182,7 +200,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         lambdaGKsym = function() private$..lambdaGKsym$value,
         tauGKab = function() private$..tauGKab$value,
         tauGKba = function() private$..tauGKba$value,
-        tauGKsym = function() private$..tauGKsym$value),
+        tauGKsym = function() private$..tauGKsym$value,
+        theilab = function() private$..theilab$value,
+        theilba = function() private$..theilba$value,
+        theilsym = function() private$..theilsym$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -206,7 +227,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..lambdaGKsym = NA,
         ..tauGKab = NA,
         ..tauGKba = NA,
-        ..tauGKsym = NA)
+        ..tauGKsym = NA,
+        ..theilab = NA,
+        ..theilba = NA,
+        ..theilsym = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -405,7 +429,37 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="v[tauGKsym]", 
                         `title`="Value", 
-                        `visible`="(tauGKsym)")),
+                        `visible`="(tauGKsym)"),
+                    list(
+                        `name`="t[theilab]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Theil's U (rows)", 
+                        `visible`="(theilab)"),
+                    list(
+                        `name`="v[theilab]", 
+                        `title`="Value", 
+                        `visible`="(theilab)"),
+                    list(
+                        `name`="t[theilba]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Theil's U (columns)", 
+                        `visible`="(theilba)"),
+                    list(
+                        `name`="v[theilba]", 
+                        `title`="Value", 
+                        `visible`="(theilba)"),
+                    list(
+                        `name`="t[theilsym]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Theil's U (symmetric)", 
+                        `visible`="(theilsym)"),
+                    list(
+                        `name`="v[theilsym]", 
+                        `title`="Value", 
+                        `visible`="(theilsym)")),
                 clearWith=list(
                     "rows",
                     "cols")))}))
@@ -466,17 +520,23 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param Vyule \code{TRUE} or \code{FALSE} (default), provide Yule's V index
 #'   for 2x2 contingency tables
 #' @param lambdaGKab \code{TRUE} or \code{FALSE} (default), provide Goodman
-#'   and Kruskal prediction error index (dependent variable by rows)
+#'   and Kruskal lambda prediction error index (dependent variable by rows)
 #' @param lambdaGKba \code{TRUE} or \code{FALSE} (default), provide Goodman
-#'   and Kruskal prediction error index (dependent variable by columns)
+#'   and Kruskal lambda prediction error index (dependent variable by columns)
 #' @param lambdaGKsym \code{TRUE} or \code{FALSE} (default), provide Goodman
-#'   and Kruskal prediction error index (symmetric)
+#'   and Kruskal lambda prediction error index (symmetric)
 #' @param tauGKab \code{TRUE} or \code{FALSE} (default), provide Goodman and
-#'   Kruskal prediction error index (dependent variable by rows)
+#'   Kruskal tau prediction error index (dependent variable by rows)
 #' @param tauGKba \code{TRUE} or \code{FALSE} (default), provide Goodman and
-#'   Kruskal prediction error index (dependent variable by columns)
+#'   Kruskal tau prediction error index (dependent variable by columns)
 #' @param tauGKsym \code{TRUE} or \code{FALSE} (default), provide Goodman and
-#'   Kruskal prediction error index (symmetric)
+#'   Kruskal tau prediction error index (symmetric)
+#' @param theilab \code{TRUE} or \code{FALSE} (default), provide Theil's
+#'   prediction error index (dependent variable by rows)
+#' @param theilba \code{TRUE} or \code{FALSE} (default), provide Theil's
+#'   prediction error index (dependent variable by columns)
+#' @param theilsym \code{TRUE} or \code{FALSE} (default), provide Theil's tau
+#'   prediction error index (symmetric)
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
@@ -515,7 +575,10 @@ bivcat <- function(
     lambdaGKsym = FALSE,
     tauGKab = FALSE,
     tauGKba = FALSE,
-    tauGKsym = FALSE) {
+    tauGKsym = FALSE,
+    theilab = FALSE,
+    theilba = FALSE,
+    theilsym = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -554,7 +617,10 @@ bivcat <- function(
         lambdaGKsym = lambdaGKsym,
         tauGKab = tauGKab,
         tauGKba = tauGKba,
-        tauGKsym = tauGKsym)
+        tauGKsym = tauGKsym,
+        theilab = theilab,
+        theilba = theilba,
+        theilsym = theilsym)
 
     analysis <- bivcatClass$new(
         options = options,

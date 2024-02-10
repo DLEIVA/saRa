@@ -174,12 +174,22 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   nrow=nrow(tabla)))-sum((colSums(tabla)/n)^2))/(1-sum((colSums(tabla)/n)^2))      
       .tau <- (tau.a.b + tau.b.a)/2
       
+      H.a.b <- -sum(tabla/n*log(tabla/n),na.rm=TRUE)
+      H.a <- -sum(rowSums(tabla)/n*log(rowSums(tabla)/n),na.rm=TRUE)
+      H.b <- -sum(colSums(tabla)/n*log(colSums(tabla)/n),na.rm=TRUE)
+      theil.a.b <- (H.a + H.b - H.a.b)/H.a
+      theil.b.a <- (H.a + H.b - H.a.b)/H.b
+      .theil <- 2*(H.a + H.b - H.a.b)/(H.a+H.b)
+      
       values <- list(`v[lambdaGKab]` =lambda.a.b,
                      `v[lambdaGKba]` =lambda.b.a,
                      `v[lambdaGKsym]` =.lambda,
                      `v[tauGKab]` =tau.a.b,
                      `v[tauGKba]` =tau.b.a,
-                     `v[tauGKsym]` =.tau)
+                     `v[tauGKsym]` =.tau,
+                     `v[theilab]` =theil.a.b,
+                     `v[theilba]` =theil.b.a,
+                     `v[theilsym]` =.theil)
       
       errorind$setRow(rowNo=othRowNo, values=values)      
       
@@ -391,7 +401,9 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       errorind$addRow(rowKey=1, values=list())
       if((self$options$lambdaGKab || self$options$lambdaGKba ||
           self$options$lambdaGKsym || self$options$tauGKab ||
-          self$options$tauGKba || self$options$tauGKsym) == FALSE){
+          self$options$tauGKba || self$options$tauGKsym || 
+          self$options$theilab || self$options$theilba ||
+          self$options$theilsym) == FALSE){
         errorind <- self$results$errorind
         errorind$addColumn(
           name=' ',
