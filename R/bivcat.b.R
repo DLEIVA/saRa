@@ -116,15 +116,48 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       tabla <- table(data[[rowVarName]],data[[colVarName]])
       n <- sum(tabla)
       CHI <- chisq.test(tabla,correct=FALSE)$statistic
-
+      
+      if(dim(tabla)[1]==2 & dim(tabla)[2]==2){
+        a <- tabla[1,1]
+        b <- tabla[1,2]
+        c <- tabla[2,1]
+        d <- tabla[2,2] 
+        QY <- (a*d-b*c)/(a*d+b*c)
+        YY <- (sqrt(a*d)-sqrt(b*c))/(sqrt(a*d)+sqrt(b*c))
+        VY <- (a*d-b*c)/((a+b)*(a+c)*(b+d)*(c+d))
+      } else{
+        QY <- NA
+        YY <- NA
+        VY <- NA
+      }
+      
       values <- list(
         `v[chiSq]`=CHI,
         `v[phiind]`=sqrt(CHI/n),
         `v[phiSq]`=CHI/n,
         `v[contCoef]`=sqrt(CHI/(n+CHI)),
         `v[chuprov]`=sqrt(CHI/(n*(dim(tabla)[1]-1)*(dim(tabla)[2]-1))),
-        `v[sakoda]`=sqrt(min(dim(tabla))*CHI/((min(dim(tabla))-1)*(n+CHI))))
+        `v[sakoda]`=sqrt(min(dim(tabla))*CHI/((min(dim(tabla))-1)*(n+CHI))),
+        `v[Qyule]` = QY,
+        `v[Yyule]` = YY,
+        `v[Vyule]` = VY
+        )
       asocind$setRow(rowNo=othRowNo, values=values)
+      
+      if ( self$options$Qyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
+        asocind$addFootnote(rowNo=1,'v[Qyule]',
+                            "Indices can only be computed for 2x2 tables.")
+      }
+      
+      if ( self$options$Yyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
+        asocind$addFootnote(rowNo=1,'v[Yyule]',
+                            "Indices can only be computed for 2x2 tables.")
+      }
+      
+      if ( self$options$Vyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
+        asocind$addFootnote(rowNo=1,'v[Vyule]',
+                            "Indices can only be computed for 2x2 tables.")
+      }      
     },
     
     #### Init tables ----
@@ -318,7 +351,8 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       asocind$addRow(rowKey=1, values=list())
       if((self$options$chiSq | self$options$phiind | self$options$phiSq |
           self$options$contCoef | self$options$chuprov | 
-          self$options$sakoda) == FALSE){
+          self$options$sakoda | self$options$Qyule |
+          self$options$Yyule | self$options$Vyule) == FALSE){
         asocind <- self$results$asocind
         asocind$addColumn(
           name=' ',

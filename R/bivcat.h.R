@@ -18,7 +18,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             phiSq = FALSE,
             contCoef = FALSE,
             chuprov = FALSE,
-            sakoda = FALSE, ...) {
+            sakoda = FALSE,
+            Qyule = FALSE,
+            Yyule = FALSE,
+            Vyule = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -84,6 +87,18 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "sakoda",
                 sakoda,
                 default=FALSE)
+            private$..Qyule <- jmvcore::OptionBool$new(
+                "Qyule",
+                Qyule,
+                default=FALSE)
+            private$..Yyule <- jmvcore::OptionBool$new(
+                "Yyule",
+                Yyule,
+                default=FALSE)
+            private$..Vyule <- jmvcore::OptionBool$new(
+                "Vyule",
+                Vyule,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -98,6 +113,9 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..contCoef)
             self$.addOption(private$..chuprov)
             self$.addOption(private$..sakoda)
+            self$.addOption(private$..Qyule)
+            self$.addOption(private$..Yyule)
+            self$.addOption(private$..Vyule)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -112,7 +130,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         phiSq = function() private$..phiSq$value,
         contCoef = function() private$..contCoef$value,
         chuprov = function() private$..chuprov$value,
-        sakoda = function() private$..sakoda$value),
+        sakoda = function() private$..sakoda$value,
+        Qyule = function() private$..Qyule$value,
+        Yyule = function() private$..Yyule$value,
+        Vyule = function() private$..Vyule$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -126,7 +147,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..phiSq = NA,
         ..contCoef = NA,
         ..chuprov = NA,
-        ..sakoda = NA)
+        ..sakoda = NA,
+        ..Qyule = NA,
+        ..Yyule = NA,
+        ..Vyule = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -211,11 +235,41 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="", 
                         `type`="text", 
                         `content`="Sakoda's Index", 
-                        `visible`="(chuprov)"),
+                        `visible`="(sakoda)"),
                     list(
                         `name`="v[sakoda]", 
                         `title`="Value", 
-                        `visible`="(sakoda)")),
+                        `visible`="(sakoda)"),
+                    list(
+                        `name`="t[Qyule]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Yule's Q Index", 
+                        `visible`="(Qyule)"),
+                    list(
+                        `name`="v[Qyule]", 
+                        `title`="Value", 
+                        `visible`="(Qyule)"),
+                    list(
+                        `name`="t[Yyule]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Yule's Y Index", 
+                        `visible`="(Yyule)"),
+                    list(
+                        `name`="v[Yyule]", 
+                        `title`="Value", 
+                        `visible`="(Yyule)"),
+                    list(
+                        `name`="t[Vyule]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Yule's V Index", 
+                        `visible`="(Vyule)"),
+                    list(
+                        `name`="v[Vyule]", 
+                        `title`="Value", 
+                        `visible`="(Vyule)")),
                 clearWith=list(
                     "rows",
                     "cols")))}))
@@ -268,6 +322,12 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param chuprov \code{TRUE} or \code{FALSE} (default), provide Chuprov's
 #'   index
 #' @param sakoda \code{TRUE} or \code{FALSE} (default), provide Sakoda's index
+#' @param Qyule \code{TRUE} or \code{FALSE} (default), provide Yule's Q index
+#'   for 2x2 contingency tables
+#' @param Yyule \code{TRUE} or \code{FALSE} (default), provide Yule's Y index
+#'   for 2x2 contingency tables
+#' @param Vyule \code{TRUE} or \code{FALSE} (default), provide Yule's V index
+#'   for 2x2 contingency tables
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
@@ -295,7 +355,10 @@ bivcat <- function(
     phiSq = FALSE,
     contCoef = FALSE,
     chuprov = FALSE,
-    sakoda = FALSE) {
+    sakoda = FALSE,
+    Qyule = FALSE,
+    Yyule = FALSE,
+    Vyule = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -324,7 +387,10 @@ bivcat <- function(
         phiSq = phiSq,
         contCoef = contCoef,
         chuprov = chuprov,
-        sakoda = sakoda)
+        sakoda = sakoda,
+        Qyule = Qyule,
+        Yyule = Yyule,
+        Vyule = Vyule)
 
     analysis <- bivcatClass$new(
         options = options,
