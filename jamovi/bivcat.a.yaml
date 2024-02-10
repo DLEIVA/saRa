@@ -155,7 +155,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (dependent variable by rows)
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal lambda prediction error index (dependent variable by rows)
 
     - name: lambdaGKba
       title: "Goodman-Kruskal \u03BB (B/A)"
@@ -163,7 +163,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (dependent variable by columns)
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal lambda prediction error index (dependent variable by columns)
             
     - name: lambdaGKsym
       title: "Goodman-Kruskal \u03BB (symmetric)"
@@ -171,7 +171,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (symmetric)            
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal lambda prediction error index (symmetric)            
 
     - name: tauGKab
       title: "Goodman-Kruskal \u03C4 (A/B)"
@@ -179,7 +179,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (dependent variable by rows)
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal tau prediction error index (dependent variable by rows)
 
     - name: tauGKba
       title: "Goodman-Kruskal \u03C4 (B/A)"
@@ -187,7 +187,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (dependent variable by columns)
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal tau prediction error index (dependent variable by columns)
             
     - name: tauGKsym
       title: "Goodman-Kruskal \u03C4 (symmetric)"
@@ -195,6 +195,30 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (symmetric)            
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal tau prediction error index (symmetric)            
+
+    - name: theilab
+      title: "Theil's index (A/B)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Theil's prediction error index (dependent variable by rows)
+
+    - name: theilba
+      title: "Theil's index (B/A)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Theil's prediction error index (dependent variable by columns)
+            
+    - name: tauGKsym
+      title: "Theil's index (symmetric)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Theil's tau prediction error index (symmetric)       
 
 ...

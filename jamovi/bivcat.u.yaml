@@ -120,4 +120,10 @@ children:
               - type: CheckBox
                 name: tauGKba
               - type: CheckBox
-                name: tauGKsym                  
+                name: tauGKsym              
+              - type: CheckBox
+                name: theilab
+              - type: CheckBox
+                name: theilba
+              - type: CheckBox
+                name: theilsym                              

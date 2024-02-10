@@ -189,6 +189,36 @@ items:
           title: Value
           visible: (tauGKsym)   
 
+        - name: t[theilab]
+          title: ''
+          type: text
+          content: "Theil's U (rows)"
+          visible: (theilab)
+        
+        - name: v[theilab]
+          title: Value
+          visible: (theilab)
+
+        - name: t[theilba]
+          title: ''
+          type: text
+          content: "Theil's U (columns)"
+          visible: (theilba)
+        
+        - name: v[theilba]
+          title: Value
+          visible: (theilba)
+          
+        - name: t[theilsym]
+          title: ''
+          type: text
+          content: "Theil's U (symmetric)"
+          visible: (theilsym)
+        
+        - name: v[theilsym]
+          title: Value
+          visible: (theilsym)   
+
       clearWith:
         - rows
         - cols           
