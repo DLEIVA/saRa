@@ -11,6 +11,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     .init=function() {
       private$.FREQSTable()
       private$.initASSOCTable()
+      private$.initERRORTable()
     },
     
     .run=function() {
@@ -110,6 +111,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       }
       
       asocind <- self$results$asocind
+      errorind <- self$results$errorind
       
       othRowNo <- 1
       
@@ -157,7 +159,21 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if ( self$options$Vyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
         asocind$addFootnote(rowNo=1,'v[Vyule]',
                             "Indices can only be computed for 2x2 tables.")
-      }      
+      }
+      
+      lambda.a.b <- (sum(apply(tabla,2,max)/sum(tabla)) - max(rowSums(tabla))/
+                       sum(tabla))/(1 - max(rowSums(tabla))/sum(tabla))
+      lambda.b.a <- (sum(apply(tabla,1,max)/sum(tabla)) - max(colSums(tabla))/
+                       sum(tabla))/(1 - max(colSums(tabla))/sum(tabla))
+      .lambda <- (lambda.a.b + lambda.b.a)/2
+      
+      
+      values <- list(`v[lambdaGKab]` =lambda.a.b,
+                     `v[lambdaGKba]` =lambda.b.a,
+                     `v[lambdaGKsym]` =.lambda)
+      
+      errorind$setRow(rowNo=othRowNo, values=values)      
+      
     },
     
     #### Init tables ----
@@ -361,6 +377,19 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
       }      
     },
+    .initERRORTable = function(){
+      errorind <- self$results$errorind
+      errorind$addRow(rowKey=1, values=list())
+      if((self$options$lambdaGKab || self$options$lambdaGKba ||
+          self$options$lambdaGKsym ) == FALSE){
+        errorind <- self$results$errorind
+        errorind$addColumn(
+          name=' ',
+          title=' ',
+          type='text')
+        
+      }      
+    },    
     #### Helper functions ----
     
     .grid=function(data, incRows=FALSE) {

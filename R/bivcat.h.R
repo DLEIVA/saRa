@@ -21,7 +21,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             sakoda = FALSE,
             Qyule = FALSE,
             Yyule = FALSE,
-            Vyule = FALSE, ...) {
+            Vyule = FALSE,
+            lambdaGKab = FALSE,
+            lambdaGKba = FALSE,
+            lambdaGKsym = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -99,6 +102,18 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "Vyule",
                 Vyule,
                 default=FALSE)
+            private$..lambdaGKab <- jmvcore::OptionBool$new(
+                "lambdaGKab",
+                lambdaGKab,
+                default=FALSE)
+            private$..lambdaGKba <- jmvcore::OptionBool$new(
+                "lambdaGKba",
+                lambdaGKba,
+                default=FALSE)
+            private$..lambdaGKsym <- jmvcore::OptionBool$new(
+                "lambdaGKsym",
+                lambdaGKsym,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -116,6 +131,9 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..Qyule)
             self$.addOption(private$..Yyule)
             self$.addOption(private$..Vyule)
+            self$.addOption(private$..lambdaGKab)
+            self$.addOption(private$..lambdaGKba)
+            self$.addOption(private$..lambdaGKsym)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -133,7 +151,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         sakoda = function() private$..sakoda$value,
         Qyule = function() private$..Qyule$value,
         Yyule = function() private$..Yyule$value,
-        Vyule = function() private$..Vyule$value),
+        Vyule = function() private$..Vyule$value,
+        lambdaGKab = function() private$..lambdaGKab$value,
+        lambdaGKba = function() private$..lambdaGKba$value,
+        lambdaGKsym = function() private$..lambdaGKsym$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -150,7 +171,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..sakoda = NA,
         ..Qyule = NA,
         ..Yyule = NA,
-        ..Vyule = NA)
+        ..Vyule = NA,
+        ..lambdaGKab = NA,
+        ..lambdaGKba = NA,
+        ..lambdaGKsym = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -158,7 +182,8 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Group,
     active = list(
         freqs = function() private$.items[["freqs"]],
-        asocind = function() private$.items[["asocind"]]),
+        asocind = function() private$.items[["asocind"]],
+        errorind = function() private$.items[["errorind"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -178,7 +203,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="asocind",
                 title="Association Indices",
-                visible="( chiSq || phiind )",
+                visible="( chiSq || phiind || phisSq || contCoef || chuprov || sakoda || Qyule || Yyule || Vyule )",
                 columns=list(
                     list(
                         `name`="t[chiSq]", 
@@ -272,6 +297,45 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `visible`="(Vyule)")),
                 clearWith=list(
                     "rows",
+                    "cols")))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="errorind",
+                title="Prediction Error Indices",
+                visible="( lambdaGKab || lambdaGKba || lambdaGKsym)",
+                columns=list(
+                    list(
+                        `name`="t[lambdaGKab]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\u03BB (rows)", 
+                        `visible`="(lambdaGKab)"),
+                    list(
+                        `name`="v[lambdaGKab]", 
+                        `title`="Value", 
+                        `visible`="(lambdaGKab)"),
+                    list(
+                        `name`="t[lambdaGKba]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\u03BB (columns)", 
+                        `visible`="(lambdaGKba)"),
+                    list(
+                        `name`="v[lambdaGKba]", 
+                        `title`="Value", 
+                        `visible`="(lambdaGKba)"),
+                    list(
+                        `name`="t[lambdaGKsym]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\u03BB (symmetric)", 
+                        `visible`="(lambdaGKsym)"),
+                    list(
+                        `name`="v[lambdaGKsym]", 
+                        `title`="Value", 
+                        `visible`="(lambdaGKsym)")),
+                clearWith=list(
+                    "rows",
                     "cols")))}))
 
 bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -328,10 +392,17 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   for 2x2 contingency tables
 #' @param Vyule \code{TRUE} or \code{FALSE} (default), provide Yule's V index
 #'   for 2x2 contingency tables
+#' @param lambdaGKab \code{TRUE} or \code{FALSE} (default), provide Goodman
+#'   and Kruskal prediction error index (dependent variable by rows)
+#' @param lambdaGKba \code{TRUE} or \code{FALSE} (default), provide Goodman
+#'   and Kruskal prediction error index (dependent variable by columns)
+#' @param lambdaGKsym \code{TRUE} or \code{FALSE} (default), provide Goodman
+#'   and Kruskal prediction error index (symmetric)
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
-#'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate indicators \cr
+#'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
+#'   \code{results$errorind} \tab \tab \tab \tab \tab A table of different prediction error indicators \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -358,7 +429,10 @@ bivcat <- function(
     sakoda = FALSE,
     Qyule = FALSE,
     Yyule = FALSE,
-    Vyule = FALSE) {
+    Vyule = FALSE,
+    lambdaGKab = FALSE,
+    lambdaGKba = FALSE,
+    lambdaGKsym = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -390,7 +464,10 @@ bivcat <- function(
         sakoda = sakoda,
         Qyule = Qyule,
         Yyule = Yyule,
-        Vyule = Vyule)
+        Vyule = Vyule,
+        lambdaGKab = lambdaGKab,
+        lambdaGKba = lambdaGKba,
+        lambdaGKsym = lambdaGKsym)
 
     analysis <- bivcatClass$new(
         options = options,
