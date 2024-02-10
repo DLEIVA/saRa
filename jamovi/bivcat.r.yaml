@@ -116,19 +116,39 @@ items:
     - name: errorind
       title: Prediction Error Indices
       description: A table of different prediction error indicators
-      visible: ( lambdaGK || )
+      visible: ( lambdaGKab || lambdaGKba || lambdaGKsym)
       type: Table
       columns:
-        - name: t[lambdaGK]
+        - name: t[lambdaGKab]
           title: ''
           type: text
-          content: "\u03bb"
-          visible: (lambdaGK)
+          content: "\u03BB (rows)"
+          visible: (lambdaGKab)
         
-        - name: v[lambdaGK]
+        - name: v[lambdaGKab]
           title: Value
-          visible: (lambdaGK)
+          visible: (lambdaGKab)
+
+        - name: t[lambdaGKba]
+          title: ''
+          type: text
+          content: "\u03BB (columns)"
+          visible: (lambdaGKba)
+        
+        - name: v[lambdaGKba]
+          title: Value
+          visible: (lambdaGKba)
           
+        - name: t[lambdaGKab]
+          title: ''
+          type: text
+          content: "\u03BB (symmetric)"
+          visible: (lambdaGKsym)
+        
+        - name: v[lambdaGKsym]
+          title: Value
+          visible: (lambdaGKsym)   
+
       clearWith:
         - rows
         - cols           

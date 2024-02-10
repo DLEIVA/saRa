@@ -137,11 +137,27 @@ options:
           R: >
             `TRUE` or `FALSE` (default), provide Yule's V index for 2x2 contingency tables            
 
-    - name: lambdaGK
-      title: "Goodman-Kruskal lambda"
+    - name: lambdaGKab
+      title: "Goodman-Kruskal \u03BB (A/B)"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index                        
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (dependent variable by rows)
+
+    - name: lambdaGKba
+      title: "Goodman-Kruskal \u03BB (B/A)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (dependent variable by columns)
+            
+    - name: lambdaGKsym
+      title: "Goodman-Kruskal \u03BB (symmetric)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (symmetric)            
 ...
