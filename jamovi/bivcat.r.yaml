@@ -68,6 +68,12 @@ items:
         - name: v[chuprov]
           title: Value
           visible: (chuprov) 
+
+        - name: t[sakoda]
+          title: ''
+          type: text
+          content: "Sakoda's Index"
+          visible: (chuprov)
         
         - name: v[sakoda]
           title: Value
