@@ -79,11 +79,16 @@ children:
                   - type: CheckBox
                     name: phiind
                   - type: CheckBox
-                    name: phiSq 
+                    name: phiSq
                   - type: CheckBox
                     name: contCoef
                   - type: CheckBox
-                    name: chuprov                   
+                    name: chuprov
                   - type: CheckBox
                     name: sakoda
-                    
+                  - type: CheckBox
+                    name: Qyule
+                  - type: CheckBox
+                    name: Yyule
+                  - type: CheckBox
+                    name: Vyule                    

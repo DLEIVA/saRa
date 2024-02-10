@@ -82,7 +82,7 @@ items:
         - name: t[Qyule]
           title: ''
           type: text
-          content: "Yule's Q Index for 2x2 tables"
+          content: "Yule's Q Index"
           visible: (Qyule)
       
         - name: v[Qyule]
@@ -92,7 +92,7 @@ items:
         - name: t[Yyule]
           title: ''
           type: text
-          content: "Yule's Y Index for 2x2 tables"
+          content: "Yule's Y Index"
           visible: (Yyule)
       
         - name: v[Yyule]
@@ -102,7 +102,7 @@ items:
         - name: t[Vyule]
           title: ''
           type: text
-          content: "Yule's V Index for 2x2 tables"
+          content: "Yule's V Index"
           visible: (Vyule)
       
         - name: v[Vyule]

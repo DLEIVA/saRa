@@ -114,7 +114,7 @@ options:
             `TRUE` or `FALSE` (default), provide Sakoda's index   
 
     - name: Qyule
-      title: "Yule's Q index"
+      title: "Yule's Q index (2x2 tables)"
       type: Bool
       default: false
       description:
@@ -122,7 +122,7 @@ options:
             `TRUE` or `FALSE` (default), provide Yule's Q index for 2x2 contingency tables
             
     - name: Yyule
-      title: "Yule's Y index"
+      title: "Yule's Y index (2x2 tables)"
       type: Bool
       default: false
       description:
@@ -130,7 +130,7 @@ options:
             `TRUE` or `FALSE` (default), provide Yule's Y index for 2x2 contingency tables            
 
     - name: Vyule
-      title: "Yule's V index"
+      title: "Yule's V index (2x2 tables)"
       type: Bool
       default: false
       description:
