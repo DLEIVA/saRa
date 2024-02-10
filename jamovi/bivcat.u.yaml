@@ -67,8 +67,12 @@ children:
         stretchFactor: 1
         children:
           - type: LayoutBox
-            margin: small
-            stretchFactor: 1
+            margin: large
+            stretchFactor: 2
+            cell:
+              column: 0
+              row: 0
+            fitToGrid: true
             children:
               - type: Label
                 label: Association indices
@@ -92,3 +96,16 @@ children:
                     name: Yyule
                   - type: CheckBox
                     name: Vyule                    
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 1
+          row: 0
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Prediction Error Indices
+            children:
+              - type: CheckBox
+                name: lambdaGK

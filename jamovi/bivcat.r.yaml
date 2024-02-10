@@ -14,8 +14,8 @@ items:
         - cols
     - name: asocind
       title: Association Indices
-      description: A table of different bivariate indicators
-      visible: ( chiSq || phiind )
+      description: A table of different bivariate association indicators
+      visible: ( chiSq || phiind || phisSq || contCoef || chuprov || sakoda || Qyule || Yyule || Vyule )
       type: Table
       columns:
         - name: t[chiSq]
@@ -112,4 +112,24 @@ items:
       clearWith:
         - rows
         - cols 
+
+    - name: errorind
+      title: Prediction Error Indices
+      description: A table of different prediction error indicators
+      visible: ( lambdaGK || )
+      type: Table
+      columns:
+        - name: t[lambdaGK]
+          title: ''
+          type: text
+          content: "\u03bb"
+          visible: (lambdaGK)
+        
+        - name: v[lambdaGK]
+          title: Value
+          visible: (lambdaGK)
+          
+      clearWith:
+        - rows
+        - cols           
 ...
