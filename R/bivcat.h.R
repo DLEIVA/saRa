@@ -17,7 +17,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             phiind = FALSE,
             phiSq = FALSE,
             contCoef = FALSE,
-            chuprov = FALSE, ...) {
+            chuprov = FALSE,
+            sakoda = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -79,6 +80,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "chuprov",
                 chuprov,
                 default=FALSE)
+            private$..sakoda <- jmvcore::OptionBool$new(
+                "sakoda",
+                sakoda,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -92,6 +97,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..phiSq)
             self$.addOption(private$..contCoef)
             self$.addOption(private$..chuprov)
+            self$.addOption(private$..sakoda)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -105,7 +111,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         phiind = function() private$..phiind$value,
         phiSq = function() private$..phiSq$value,
         contCoef = function() private$..contCoef$value,
-        chuprov = function() private$..chuprov$value),
+        chuprov = function() private$..chuprov$value,
+        sakoda = function() private$..sakoda$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -118,7 +125,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..phiind = NA,
         ..phiSq = NA,
         ..contCoef = NA,
-        ..chuprov = NA)
+        ..chuprov = NA,
+        ..sakoda = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -197,7 +205,11 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="v[chuprov]", 
                         `title`="Value", 
-                        `visible`="(chuprov)")),
+                        `visible`="(chuprov)"),
+                    list(
+                        `name`="v[sakoda]", 
+                        `title`="Value", 
+                        `visible`="(sakoda)")),
                 clearWith=list(
                     "rows",
                     "cols")))}))
@@ -249,6 +261,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   contingency index
 #' @param chuprov \code{TRUE} or \code{FALSE} (default), provide Chuprov's
 #'   index
+#' @param sakoda \code{TRUE} or \code{FALSE} (default), provide Sakoda's index
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
@@ -275,7 +288,8 @@ bivcat <- function(
     phiind = FALSE,
     phiSq = FALSE,
     contCoef = FALSE,
-    chuprov = FALSE) {
+    chuprov = FALSE,
+    sakoda = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -303,7 +317,8 @@ bivcat <- function(
         phiind = phiind,
         phiSq = phiSq,
         contCoef = contCoef,
-        chuprov = chuprov)
+        chuprov = chuprov,
+        sakoda = sakoda)
 
     analysis <- bivcatClass$new(
         options = options,
