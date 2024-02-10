@@ -168,10 +168,18 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                        sum(tabla))/(1 - max(colSums(tabla))/sum(tabla))
       .lambda <- (lambda.a.b + lambda.b.a)/2
       
+      tau.a.b <- (sum((tabla/n)^2/matrix(colSums(tabla)[col(tabla)]/n,
+                  nrow=nrow(tabla)))-sum((rowSums(tabla)/n)^2))/(1-sum((rowSums(tabla)/n)^2))
+      tau.b.a <- (sum((tabla/n)^2/matrix(rowSums(tabla)[row(tabla)]/n,
+                  nrow=nrow(tabla)))-sum((colSums(tabla)/n)^2))/(1-sum((colSums(tabla)/n)^2))      
+      .tau <- (tau.a.b + tau.b.a)/2
       
       values <- list(`v[lambdaGKab]` =lambda.a.b,
                      `v[lambdaGKba]` =lambda.b.a,
-                     `v[lambdaGKsym]` =.lambda)
+                     `v[lambdaGKsym]` =.lambda,
+                     `v[tauGKab]` =tau.a.b,
+                     `v[tauGKba]` =tau.b.a,
+                     `v[tauGKsym]` =.tau)
       
       errorind$setRow(rowNo=othRowNo, values=values)      
       
@@ -382,7 +390,8 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       errorind <- self$results$errorind
       errorind$addRow(rowKey=1, values=list())
       if((self$options$lambdaGKab || self$options$lambdaGKba ||
-          self$options$lambdaGKsym ) == FALSE){
+          self$options$lambdaGKsym || self$options$tauGKab ||
+          self$options$tauGKba || self$options$tauGKsym) == FALSE){
         errorind <- self$results$errorind
         errorind$addColumn(
           name=' ',

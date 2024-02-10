@@ -25,7 +25,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             Vyule = FALSE,
             lambdaGKab = FALSE,
             lambdaGKba = FALSE,
-            lambdaGKsym = FALSE, ...) {
+            lambdaGKsym = FALSE,
+            tauGKab = FALSE,
+            tauGKba = FALSE,
+            tauGKsym = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -119,6 +122,18 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "lambdaGKsym",
                 lambdaGKsym,
                 default=FALSE)
+            private$..tauGKab <- jmvcore::OptionBool$new(
+                "tauGKab",
+                tauGKab,
+                default=FALSE)
+            private$..tauGKba <- jmvcore::OptionBool$new(
+                "tauGKba",
+                tauGKba,
+                default=FALSE)
+            private$..tauGKsym <- jmvcore::OptionBool$new(
+                "tauGKsym",
+                tauGKsym,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -140,6 +155,9 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..lambdaGKab)
             self$.addOption(private$..lambdaGKba)
             self$.addOption(private$..lambdaGKsym)
+            self$.addOption(private$..tauGKab)
+            self$.addOption(private$..tauGKba)
+            self$.addOption(private$..tauGKsym)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -161,7 +179,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         Vyule = function() private$..Vyule$value,
         lambdaGKab = function() private$..lambdaGKab$value,
         lambdaGKba = function() private$..lambdaGKba$value,
-        lambdaGKsym = function() private$..lambdaGKsym$value),
+        lambdaGKsym = function() private$..lambdaGKsym$value,
+        tauGKab = function() private$..tauGKab$value,
+        tauGKba = function() private$..tauGKba$value,
+        tauGKsym = function() private$..tauGKsym$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -182,7 +203,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..Vyule = NA,
         ..lambdaGKab = NA,
         ..lambdaGKba = NA,
-        ..lambdaGKsym = NA)
+        ..lambdaGKsym = NA,
+        ..tauGKab = NA,
+        ..tauGKba = NA,
+        ..tauGKsym = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -351,7 +375,37 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="v[lambdaGKsym]", 
                         `title`="Value", 
-                        `visible`="(lambdaGKsym)")),
+                        `visible`="(lambdaGKsym)"),
+                    list(
+                        `name`="t[tauGKab]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\u03C4 (rows)", 
+                        `visible`="(tauGKab)"),
+                    list(
+                        `name`="v[tauGKab]", 
+                        `title`="Value", 
+                        `visible`="(tauGKab)"),
+                    list(
+                        `name`="t[tauGKba]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\u03C4 (columns)", 
+                        `visible`="(tauGKba)"),
+                    list(
+                        `name`="v[tauGKba]", 
+                        `title`="Value", 
+                        `visible`="(tauGKba)"),
+                    list(
+                        `name`="t[tauGKsym]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="\u03C4 (symmetric)", 
+                        `visible`="(tauGKsym)"),
+                    list(
+                        `name`="v[tauGKsym]", 
+                        `title`="Value", 
+                        `visible`="(tauGKsym)")),
                 clearWith=list(
                     "rows",
                     "cols")))}))
@@ -417,6 +471,12 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   and Kruskal prediction error index (dependent variable by columns)
 #' @param lambdaGKsym \code{TRUE} or \code{FALSE} (default), provide Goodman
 #'   and Kruskal prediction error index (symmetric)
+#' @param tauGKab \code{TRUE} or \code{FALSE} (default), provide Goodman and
+#'   Kruskal prediction error index (dependent variable by rows)
+#' @param tauGKba \code{TRUE} or \code{FALSE} (default), provide Goodman and
+#'   Kruskal prediction error index (dependent variable by columns)
+#' @param tauGKsym \code{TRUE} or \code{FALSE} (default), provide Goodman and
+#'   Kruskal prediction error index (symmetric)
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
@@ -452,7 +512,10 @@ bivcat <- function(
     Vyule = FALSE,
     lambdaGKab = FALSE,
     lambdaGKba = FALSE,
-    lambdaGKsym = FALSE) {
+    lambdaGKsym = FALSE,
+    tauGKab = FALSE,
+    tauGKba = FALSE,
+    tauGKsym = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -488,7 +551,10 @@ bivcat <- function(
         Vyule = Vyule,
         lambdaGKab = lambdaGKab,
         lambdaGKba = lambdaGKba,
-        lambdaGKsym = lambdaGKsym)
+        lambdaGKsym = lambdaGKsym,
+        tauGKab = tauGKab,
+        tauGKba = tauGKba,
+        tauGKsym = tauGKsym)
 
     analysis <- bivcatClass$new(
         options = options,
