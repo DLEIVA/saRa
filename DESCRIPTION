@@ -10,7 +10,7 @@ Description: An R package for a basic course on Statistics in jamovi.
     descriptive methods  for nominal, ordinal, and numeric variables.
     The add-in also incorporates a module of probability distributions, continuous and discrete, to
     be used in a Statistics course. This package is primarily thought and developed to 
-    be useable from the 'jamovi' statistical spreadsheet (see <https://www.jamovi.org> for more
+    be useable within the jamovi statistical spreadsheet (see <https://www.jamovi.org> for more
     information).
 BugReports: https://github.com/DLEIVA/saRa/issues
 License: GPL (>=2)
