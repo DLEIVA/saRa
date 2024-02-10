@@ -135,11 +135,11 @@ items:
           content: "\u03BB (columns)"
           visible: (lambdaGKba)
         
-        - name: v[lambdaGKba]
+        - name: v[lambdaGKsym]
           title: Value
-          visible: (lambdaGKba)
+          visible: (lambdaGKsym)
           
-        - name: t[lambdaGKab]
+        - name: t[lambdaGKsym]
           title: ''
           type: text
           content: "\u03BB (symmetric)"
