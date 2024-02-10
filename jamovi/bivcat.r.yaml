@@ -58,7 +58,16 @@ items:
         - name: v[contCoef]
           title: Value
           visible: (contCoef)
-      
+
+        - name: t[chuprov]
+          title: ''
+          type: text
+          content: "Chuprov's Index"
+          visible: (chuprov)
+        
+        - name: v[chuprob]
+          title: Value
+          visible: (chuprov)      
       clearWith:
         - rows
         - cols 

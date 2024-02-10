@@ -81,4 +81,6 @@ children:
                   - type: CheckBox
                     name: phiSq 
                   - type: CheckBox
-                    name: contCoef                     
+                    name: contCoef
+                  - type: CheckBox
+                    name: chuprov                   

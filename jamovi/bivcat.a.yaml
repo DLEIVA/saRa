@@ -97,4 +97,11 @@ options:
           R: >
             `TRUE` or `FALSE` (default), provide Pearson's contingency index             
 
+    - name: chuprov
+      title: "Chuprov's index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Chuprov's index             
 ...
