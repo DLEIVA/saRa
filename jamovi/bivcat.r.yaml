@@ -73,11 +73,41 @@ items:
           title: ''
           type: text
           content: "Sakoda's Index"
-          visible: (chuprov)
-        
+          visible: (sakoda)
+          
         - name: v[sakoda]
           title: Value
-          visible: (sakoda) 
+          visible: (sakoda)
+          
+        - name: t[Qyule]
+          title: ''
+          type: text
+          content: "Yule's Q Index for 2x2 tables"
+          visible: (Qyule)
+      
+        - name: v[Qyule]
+          title: Value
+          visible: (Qyule)      
+          
+        - name: t[Yyule]
+          title: ''
+          type: text
+          content: "Yule's Y Index for 2x2 tables"
+          visible: (Yyule)
+      
+        - name: v[Yyule]
+          title: Value
+          visible: (Yyule)    
+          
+        - name: t[Vyule]
+          title: ''
+          type: text
+          content: "Yule's V Index for 2x2 tables"
+          visible: (Vyule)
+      
+        - name: v[Vyule]
+          title: Value
+          visible: (Vyule)             
           
       clearWith:
         - rows

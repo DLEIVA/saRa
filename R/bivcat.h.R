@@ -207,6 +207,12 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="Value", 
                         `visible`="(chuprov)"),
                     list(
+                        `name`="t[sakoda]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Sakoda's Index", 
+                        `visible`="(chuprov)"),
+                    list(
                         `name`="v[sakoda]", 
                         `title`="Value", 
                         `visible`="(sakoda)")),

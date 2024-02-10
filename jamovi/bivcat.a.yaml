@@ -111,5 +111,29 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Sakoda's index             
+            `TRUE` or `FALSE` (default), provide Sakoda's index   
+
+    - name: Qyule
+      title: "Yule's Q index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Yule's Q index for 2x2 contingency tables
+            
+    - name: Yyule
+      title: "Yule's Y index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Yule's Y index for 2x2 contingency tables            
+
+    - name: Vyule
+      title: "Yule's V index"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Yule's V index for 2x2 contingency tables            
 ...
