@@ -16,7 +16,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             chiSq = FALSE,
             phiind = FALSE,
             phiSq = FALSE,
-            contCoef = FALSE, ...) {
+            contCoef = FALSE,
+            chuprov = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -74,6 +75,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "contCoef",
                 contCoef,
                 default=FALSE)
+            private$..chuprov <- jmvcore::OptionBool$new(
+                "chuprov",
+                chuprov,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -86,6 +91,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..phiind)
             self$.addOption(private$..phiSq)
             self$.addOption(private$..contCoef)
+            self$.addOption(private$..chuprov)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -98,7 +104,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         chiSq = function() private$..chiSq$value,
         phiind = function() private$..phiind$value,
         phiSq = function() private$..phiSq$value,
-        contCoef = function() private$..contCoef$value),
+        contCoef = function() private$..contCoef$value,
+        chuprov = function() private$..chuprov$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -110,7 +117,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..chiSq = NA,
         ..phiind = NA,
         ..phiSq = NA,
-        ..contCoef = NA)
+        ..contCoef = NA,
+        ..chuprov = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -179,7 +187,17 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="v[contCoef]", 
                         `title`="Value", 
-                        `visible`="(contCoef)")),
+                        `visible`="(contCoef)"),
+                    list(
+                        `name`="t[chuprov]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Chuprov's Index", 
+                        `visible`="(chuprov)"),
+                    list(
+                        `name`="v[chuprob]", 
+                        `title`="Value", 
+                        `visible`="(chuprov)")),
                 clearWith=list(
                     "rows",
                     "cols")))}))
@@ -229,6 +247,8 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \u03c6\u00B2
 #' @param contCoef \code{TRUE} or \code{FALSE} (default), provide Pearson's
 #'   contingency index
+#' @param chuprov \code{TRUE} or \code{FALSE} (default), provide Chuprov's
+#'   index
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
@@ -254,7 +274,8 @@ bivcat <- function(
     chiSq = FALSE,
     phiind = FALSE,
     phiSq = FALSE,
-    contCoef = FALSE) {
+    contCoef = FALSE,
+    chuprov = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -281,7 +302,8 @@ bivcat <- function(
         chiSq = chiSq,
         phiind = phiind,
         phiSq = phiSq,
-        contCoef = contCoef)
+        contCoef = contCoef,
+        chuprov = chuprov)
 
     analysis <- bivcatClass$new(
         options = options,

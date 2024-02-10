@@ -121,7 +121,8 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         `v[chiSq]`=CHI,
         `v[phiind]`=sqrt(CHI/n),
         `v[phiSq]`=CHI/n,
-        `v[contCoef]`=sqrt(CHI/(n+CHI)))
+        `v[contCoef]`=sqrt(CHI/(n+CHI)),
+        `v[chuprov]`=sqrt(CHI/(n*(dim(tabla)[1]-1)*(dim(tabla)[2]-1))))
       asocind$setRow(rowNo=othRowNo, values=values)
     },
     
@@ -315,7 +316,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       asocind <- self$results$asocind
       asocind$addRow(rowKey=1, values=list())
       if((self$options$chiSq | self$options$phiind | self$options$phiSq |
-          self$options$contCoef) == FALSE){
+          self$options$contCoef | self$options$chuprov) == FALSE){
         asocind <- self$results$asocind
         asocind$addColumn(
           name=' ',
