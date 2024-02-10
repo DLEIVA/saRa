@@ -159,6 +159,36 @@ items:
           title: Value
           visible: (lambdaGKsym)   
 
+        - name: t[tauGKab]
+          title: ''
+          type: text
+          content: "\u03C4 (rows)"
+          visible: (tauGKab)
+        
+        - name: v[tauGKab]
+          title: Value
+          visible: (tauGKab)
+
+        - name: t[tauGKba]
+          title: ''
+          type: text
+          content: "\u03C4 (columns)"
+          visible: (tauGKba)
+        
+        - name: v[tauGKba]
+          title: Value
+          visible: (tauGKba)
+          
+        - name: t[tauGKsym]
+          title: ''
+          type: text
+          content: "\u03C4 (symmetric)"
+          visible: (tauGKsym)
+        
+        - name: v[tauGKsym]
+          title: Value
+          visible: (tauGKsym)   
+
       clearWith:
         - rows
         - cols           

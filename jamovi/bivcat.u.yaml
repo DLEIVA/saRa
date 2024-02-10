@@ -114,4 +114,10 @@ children:
               - type: CheckBox
                 name: lambdaGKba
               - type: CheckBox
-                name: lambdaGKsym                
+                name: lambdaGKsym  
+              - type: CheckBox
+                name: tauGKab
+              - type: CheckBox
+                name: tauGKba
+              - type: CheckBox
+                name: tauGKsym                  

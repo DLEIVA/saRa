@@ -172,4 +172,29 @@ options:
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (symmetric)            
+
+    - name: tauGKab
+      title: "Goodman-Kruskal \u03C4 (A/B)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (dependent variable by rows)
+
+    - name: tauGKba
+      title: "Goodman-Kruskal \u03C4 (B/A)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (dependent variable by columns)
+            
+    - name: tauGKsym
+      title: "Goodman-Kruskal \u03C4 (symmetric)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Goodman and Kruskal prediction error index (symmetric)            
+
 ...
