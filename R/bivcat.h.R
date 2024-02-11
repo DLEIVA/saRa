@@ -31,7 +31,12 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             tauGKsym = FALSE,
             theilab = FALSE,
             theilba = FALSE,
-            theilsym = FALSE, ...) {
+            theilsym = FALSE,
+            barplot = FALSE,
+            yaxis = "ycounts",
+            yaxisPc = "total_pc",
+            xaxis = "xrows",
+            bartype = "dodge", ...) {
 
             super$initialize(
                 package="saRa",
@@ -149,6 +154,39 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "theilsym",
                 theilsym,
                 default=FALSE)
+            private$..barplot <- jmvcore::OptionBool$new(
+                "barplot",
+                barplot,
+                default=FALSE)
+            private$..yaxis <- jmvcore::OptionList$new(
+                "yaxis",
+                yaxis,
+                options=list(
+                    "ycounts",
+                    "ypc"),
+                default="ycounts")
+            private$..yaxisPc <- jmvcore::OptionList$new(
+                "yaxisPc",
+                yaxisPc,
+                options=list(
+                    "total_pc",
+                    "column_pc",
+                    "row_pc"),
+                default="total_pc")
+            private$..xaxis <- jmvcore::OptionList$new(
+                "xaxis",
+                xaxis,
+                options=list(
+                    "xrows",
+                    "xcols"),
+                default="xrows")
+            private$..bartype <- jmvcore::OptionList$new(
+                "bartype",
+                bartype,
+                options=list(
+                    "dodge",
+                    "stack"),
+                default="dodge")
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -176,6 +214,11 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..theilab)
             self$.addOption(private$..theilba)
             self$.addOption(private$..theilsym)
+            self$.addOption(private$..barplot)
+            self$.addOption(private$..yaxis)
+            self$.addOption(private$..yaxisPc)
+            self$.addOption(private$..xaxis)
+            self$.addOption(private$..bartype)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -203,7 +246,12 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         tauGKsym = function() private$..tauGKsym$value,
         theilab = function() private$..theilab$value,
         theilba = function() private$..theilba$value,
-        theilsym = function() private$..theilsym$value),
+        theilsym = function() private$..theilsym$value,
+        barplot = function() private$..barplot$value,
+        yaxis = function() private$..yaxis$value,
+        yaxisPc = function() private$..yaxisPc$value,
+        xaxis = function() private$..xaxis$value,
+        bartype = function() private$..bartype$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -230,7 +278,12 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..tauGKsym = NA,
         ..theilab = NA,
         ..theilba = NA,
-        ..theilsym = NA)
+        ..theilsym = NA,
+        ..barplot = NA,
+        ..yaxis = NA,
+        ..yaxisPc = NA,
+        ..xaxis = NA,
+        ..bartype = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -239,7 +292,8 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     active = list(
         freqs = function() private$.items[["freqs"]],
         asocind = function() private$.items[["asocind"]],
-        errorind = function() private$.items[["errorind"]]),
+        errorind = function() private$.items[["errorind"]],
+        barplot = function() private$.items[["barplot"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -459,10 +513,23 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="v[theilsym]", 
                         `title`="Value", 
-                        `visible`="(theilsym)")),
+                        `visible`="(theilsym)"))))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="barplot",
+                title="Plots",
+                width=450,
+                height=400,
+                renderFun=".barPlot",
+                visible="(barplot)",
+                requiresData=TRUE,
                 clearWith=list(
                     "rows",
-                    "cols")))}))
+                    "cols",
+                    "yaxis",
+                    "yaxisPc",
+                    "xaxis",
+                    "bartype")))}))
 
 bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivcatBase",
@@ -537,11 +604,20 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   prediction error index (dependent variable by columns)
 #' @param theilsym \code{TRUE} or \code{FALSE} (default), provide Theil's tau
 #'   prediction error index (symmetric)
+#' @param barplot \code{TRUE} or \code{FALSE} (default), show barplots
+#' @param yaxis ycounts (default) or ypc. Use respectively \code{counts} or
+#'   \code{percentages} for the bar plot y-axis
+#' @param yaxisPc total_pc (default), column_pc, or row_pc. Use respectively
+#'   percentages \code{of total}, \code{within columns}, or \code{within rows}
+#'   for the bar plot y-axis.
+#' @param xaxis rows (default), or columns in bar plot X axis
+#' @param bartype stack or side by side (default), barplot type
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
 #'   \code{results$errorind} \tab \tab \tab \tab \tab A table of different prediction error indicators \cr
+#'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -578,7 +654,12 @@ bivcat <- function(
     tauGKsym = FALSE,
     theilab = FALSE,
     theilba = FALSE,
-    theilsym = FALSE) {
+    theilsym = FALSE,
+    barplot = FALSE,
+    yaxis = "ycounts",
+    yaxisPc = "total_pc",
+    xaxis = "xrows",
+    bartype = "dodge") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -620,7 +701,12 @@ bivcat <- function(
         tauGKsym = tauGKsym,
         theilab = theilab,
         theilba = theilba,
-        theilsym = theilsym)
+        theilsym = theilsym,
+        barplot = barplot,
+        yaxis = yaxis,
+        yaxisPc = yaxisPc,
+        xaxis = xaxis,
+        bartype = bartype)
 
     analysis <- bivcatClass$new(
         options = options,

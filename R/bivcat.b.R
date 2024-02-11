@@ -12,6 +12,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       private$.FREQSTable()
       private$.initASSOCTable()
       private$.initERRORTable()
+      private$.initBarPlot()      
     },
     
     .run=function() {
@@ -411,7 +412,85 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           type='text')
         
       }      
+    },
+    #### Plot functions ---- Taken from conttables.b.R in jmv package
+    .initBarPlot = function() {
+      image <- self$results$get('barplot')
+      
+      width <- 450
+      height <- 400
+      
+      image$setSize(width * 2, height)
+    },
+    .barPlot = function(image, ggtheme, theme, ...) {
+      
+      if (! self$options$barplot)
+        return()
+      
+      rowVarName <- self$options$rows
+      colVarName <- self$options$cols
+
+      if (is.null(rowVarName) || is.null(colVarName))
+        return()
+      
+      data <- self$data
+      
+      data <- na.omit(data)
+      
+      formula <- jmvcore::composeFormula(NULL, c(rowVarName, colVarName))
+      counts <- xtabs(formula, data)
+      d <- dim(counts)
+      
+      expand <- list() 
+      for (i in c(rowVarName, colVarName))
+        expand[[i]] <- base::levels(data[[i]])
+      tab <- expand.grid(expand)
+      tab$Counts <- as.numeric(counts)
+      
+      if (self$options$yaxis == "ypc") { # percentages
+        props <- counts
+        
+        if (self$options$yaxisPc == "column_pc") {
+          pctVarName <- colVarName
+        } else if (self$options$yaxisPc == "row_pc") {
+          pctVarName <- rowVarName
+        } else { # total
+          pctVarName <- NULL
+        }
+        
+        props <- proportions(counts, pctVarName)
+
+        tab$Percentages <- as.numeric(props) * 100
+      }
+      
+      if (self$options$xaxis == "xcols") {
+        xVarName <- colVarName
+        zVarName <- rowVarName
+      } else {
+        xVarName <- rowVarName
+        zVarName <- colVarName
+      }
+      
+      position <- self$options$bartype
+      
+      if (self$options$yaxis == "ycounts") {
+        p <- ggplot(data=tab, aes_string(y="Counts", x=xVarName, fill=zVarName)) +
+          geom_col(position=position, width = 0.7)
+      } else {
+        p <- ggplot(data=tab, aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
+          geom_col(position=position, width = 0.7)
+        
+        if (self$options$yaxisPc == "total_pc") {
+          p <- p + labs(y = "Percentages of total")
+        } else {
+          p <- p + labs(y = paste0("Percentages within ", pctVarName))
+        }
+      }
+      p <- p + ggtheme
+      
+      return(p)
     },    
+    
     #### Helper functions ----
     
     .grid=function(data, incRows=FALSE) {
