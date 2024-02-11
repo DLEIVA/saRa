@@ -217,9 +217,22 @@ items:
         
         - name: v[theilsym]
           title: Value
-          visible: (theilsym)   
+          visible: (theilsym)  
+          
+    - name: barplot
+      title: Plots
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .barPlot
+      visible: (barplot)
+      requiresData: true          
 
       clearWith:
         - rows
-        - cols           
+        - cols  
+        - yaxis
+        - yaxisPc
+        - xaxis
+        - bartype        
 ...
