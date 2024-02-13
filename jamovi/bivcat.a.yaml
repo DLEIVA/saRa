@@ -285,4 +285,13 @@ options:
       description:
           R: >
             stack or side by side (default), barplot type
+            
+    - name: mosaicplot
+      title: Mosaic Plot
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), show mosaicplots
+            
 ...
