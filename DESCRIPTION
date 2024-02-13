@@ -29,4 +29,5 @@ Imports: jmvcore (>= 2.2), R6,
     qqplotr,
     psych,
     rcompanion,
-    effectsize
+    effectsize,
+    vcd
