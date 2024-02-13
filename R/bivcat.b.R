@@ -461,6 +461,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         props <- proportions(counts, pctVarName)
 
         tab$Percentages <- as.numeric(props) * 100
+        tab$Perc <- paste0(round(as.numeric(tab$Percentages),2),'%')
       }
       
       if (self$options$xaxis == "xcols") {
@@ -474,18 +475,33 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       position <- self$options$bartype
       
       if (self$options$yaxis == "ycounts") {
+        if (position!='dodge') {
         p <- ggplot(data=tab, aes_string(y="Counts", x=xVarName, fill=zVarName)) +
           geom_col(position=position, width = 0.7)
+        } else {
+          p <- ggplot(data=tab, aes_string(y="Counts", x=xVarName, fill=zVarName,
+                                           label='Counts')) +
+            geom_col(position=position, width = 0.7)  +
+            geom_text(position = position_dodge(.7), 
+                      vjust = -0.5, 
+                      size = 4)         
+        }
       } else {
-        p <- ggplot(data=tab, aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
-          geom_col(position=position, width = 0.7)
-        
+        if (position!='dodge') {p <- ggplot(data=tab, aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
+          geom_col(position=position, width = 0.7)} else {
+                p <- ggplot(data=tab, aes_string(y="Percentages", x=xVarName, fill=zVarName,label='Perc')) +
+          geom_col(position=position, width = 0.7) +
+          geom_text(position = position_dodge(.7), 
+                    vjust = -0.5, 
+                    size = 4)}
+      
         if (self$options$yaxisPc == "total_pc") {
           p <- p + labs(y = "Percentages of total")
         } else {
           p <- p + labs(y = paste0("Percentages within ", pctVarName))
         }
       }
+      
       p <- p + ggtheme
       
       return(p)
