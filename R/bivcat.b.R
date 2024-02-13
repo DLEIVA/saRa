@@ -13,6 +13,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       private$.initASSOCTable()
       private$.initERRORTable()
       private$.initBarPlot()      
+      private$.initMosaicPlot()      
     },
     
     .run=function() {
@@ -422,6 +423,14 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       image$setSize(width * 2, height)
     },
+    .initMosaicPlot = function() {
+      image <- self$results$get('mosaicplot')
+      
+      width <- 450
+      height <- 400
+      
+      image$setSize(width * 3, height*1.5)
+    },    
     .barPlot = function(image, ggtheme, theme, ...) {
       
       if (! self$options$barplot)
@@ -506,6 +515,43 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       return(p)
     },    
+    .mosaicPlot = function(image, ...) {
+      
+      if (! self$options$mosaicplot)
+        return()
+      
+      rowVarName <- self$options$rows
+      colVarName <- self$options$cols
+      
+      if (is.null(rowVarName) || is.null(colVarName))
+        return()
+      
+      data <- self$data
+      
+      data <- na.omit(data)
+      
+      # formula <- jmvcore::composeFormula(NULL, c(rowVarName, colVarName))
+      # counts <- xtabs(formula, data)
+      # d <- dim(counts)
+      # 
+      # expand <- list() 
+      # for (i in c(rowVarName, colVarName))
+      #   expand[[i]] <- base::levels(data[[i]])
+      # tab <- expand.grid(expand)
+      # tab$Counts <- as.numeric(counts)
+      
+      if (self$options$xaxis == "xcols") {
+        xVarName <- colVarName
+        zVarName <- rowVarName
+      } else {
+        xVarName <- rowVarName
+        zVarName <- colVarName
+      }
+      
+      vcd::mosaic(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))),
+                       gp= vcd::shading_Friendly2(interpolate = c(-4,-2,2,4)),
+                       split_vertical=FALSE)
+    },        
     
     #### Helper functions ----
     

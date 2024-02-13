@@ -36,7 +36,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             yaxis = "ycounts",
             yaxisPc = "total_pc",
             xaxis = "xrows",
-            bartype = "dodge", ...) {
+            bartype = "dodge",
+            mosaicplot = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -187,6 +188,10 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "dodge",
                     "stack"),
                 default="dodge")
+            private$..mosaicplot <- jmvcore::OptionBool$new(
+                "mosaicplot",
+                mosaicplot,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -219,6 +224,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..yaxisPc)
             self$.addOption(private$..xaxis)
             self$.addOption(private$..bartype)
+            self$.addOption(private$..mosaicplot)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -251,7 +257,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         yaxis = function() private$..yaxis$value,
         yaxisPc = function() private$..yaxisPc$value,
         xaxis = function() private$..xaxis$value,
-        bartype = function() private$..bartype$value),
+        bartype = function() private$..bartype$value,
+        mosaicplot = function() private$..mosaicplot$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -283,7 +290,8 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..yaxis = NA,
         ..yaxisPc = NA,
         ..xaxis = NA,
-        ..bartype = NA)
+        ..bartype = NA,
+        ..mosaicplot = NA)
 )
 
 bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -293,7 +301,8 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         freqs = function() private$.items[["freqs"]],
         asocind = function() private$.items[["asocind"]],
         errorind = function() private$.items[["errorind"]],
-        barplot = function() private$.items[["barplot"]]),
+        barplot = function() private$.items[["barplot"]],
+        mosaicplot = function() private$.items[["mosaicplot"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -522,6 +531,15 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 height=400,
                 renderFun=".barPlot",
                 visible="(barplot)",
+                requiresData=TRUE))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="mosaicplot",
+                title="Plots",
+                width=450,
+                height=400,
+                renderFun=".mosaicPlot",
+                visible="(mosaicplot)",
                 requiresData=TRUE,
                 clearWith=list(
                     "rows",
@@ -612,12 +630,14 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   for the bar plot y-axis.
 #' @param xaxis rows (default), or columns in bar plot X axis
 #' @param bartype stack or side by side (default), barplot type
+#' @param mosaicplot \code{TRUE} or \code{FALSE} (default), show mosaicplots
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
 #'   \code{results$errorind} \tab \tab \tab \tab \tab A table of different prediction error indicators \cr
 #'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$mosaicplot} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -659,7 +679,8 @@ bivcat <- function(
     yaxis = "ycounts",
     yaxisPc = "total_pc",
     xaxis = "xrows",
-    bartype = "dodge") {
+    bartype = "dodge",
+    mosaicplot = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivcat requires jmvcore to be installed (restart may be required)")
@@ -706,7 +727,8 @@ bivcat <- function(
         yaxis = yaxis,
         yaxisPc = yaxisPc,
         xaxis = xaxis,
-        bartype = bartype)
+        bartype = bartype,
+        mosaicplot = mosaicplot)
 
     analysis <- bivcatClass$new(
         options = options,
