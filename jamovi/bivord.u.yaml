@@ -66,32 +66,36 @@ children:
         children:
           - type: LayoutBox
             margin: large
-            stretchFactor: 2
+            stretchFactor: 1
             cell:
               column: 0
               row: 0
             fitToGrid: true
             children:
-              - type: Label
-                label: Association indices
-                iconPosition: right
-                children:
-                  - type: CheckBox
-                    name: gammaGK
-                  - type: CheckBox
-                    name: tauKa
-                  - type: CheckBox
-                    name: tauKb
-                  - type: CheckBox
-                    name: tauKc
-                  - type: CheckBox
-                    name: dSommerR
-                  - type: CheckBox
-                    name: dSommerC
-                  - type: CheckBox
-                    name: dSommerS                    
-                  - type: CheckBox
-                    name: eWilson
+              - type: CheckBox
+                name: gammaGK
+              - type: CheckBox
+                name: tauKa
+              - type: CheckBox
+                name: tauKb
+              - type: CheckBox
+                name: tauKc
+          - type: LayoutBox
+            margin: large
+            stretchFactor: 1
+            cell:
+              column: 1
+              row: 0
+            fitToGrid: true
+            children:
+              - type: CheckBox
+                name: dSommerR
+              - type: CheckBox
+                name: dSommerC
+              - type: CheckBox
+                name: dSommerS                    
+              - type: CheckBox
+                name: eWilson                    
   - type: CollapseBox
     label: Plots
     stretchFactor: 1
