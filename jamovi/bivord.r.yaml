@@ -1,11 +1,90 @@
 ---
 name:  bivord
-title: Bivariate Data Analysis
+title: Bivariate Data Analysis - Ordinal
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Ordinal Data
-      type:  Preformatted
+    - name: freqs
+      title: Contingency Tables
+      type: Table
+      description: a table of proportions
+      columns: [ ]
+      clearWith:
+        - rows
+        - cols
+    - name: desc
+      title: Paired comparisons description
+      type: Table
+      description: a table with a summary for all possible comparisons
+      columns: [ ]
+      clearWith:
+        - rows
+        - cols
+        
+    - name: asocind
+      title: Association Indices
+      description: A table of different bivariate association indicators
+      visible: ( gammaGK || tauk || dSommer || eWilson )
+      type: Table
+      columns:
+        - name: t[gammaGK]
+          title: ''
+          type: text
+          content: "Goodman-Kruskal \u03B3"
+          visible: (gammaGK)
+        
+        - name: v[gammaGK]
+          title: Value
+          visible: (gammaGK)
+          
+        - name: t[tauK]
+          title: c('','','')
+          type: text
+          content: c("Kendal's \u03C4\-a","Kendal's \u03C4\-b","Kendal's \u03C4\-c")
+          visible: (tauK)
+        
+        - name: v[tauK]
+          title: Value
+          visible: (tauK)
+          
+        - name: t[dSommer]
+          title: c('','','')
+          type: text
+          content: c("Sommer's d (rows)","Sommer's d (columnns)","Sommer's d (symmetric)")
+          visible: (dSommer)
+        
+        - name: v[dSommer]
+          title: Value
+          visible: (dSommer)
+          
+        - name: t[eWilson]
+          title: ''
+          type: text
+          content: "Wilson's e"
+          visible: (eWilson)
+        
+        - name: v[eWilson]
+          title: Value
+          visible: (eWilson)          
 
+      clearWith:
+        - rows
+        - cols 
+        
+    - name: barplot
+      title: Plots
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .barPlot
+      visible: (barplot)
+      requiresData: true    
+
+      clearWith:
+        - rows
+        - cols  
+        - yaxis
+        - yaxisPc
+        - xaxis
+        - bartype                
 ...

@@ -2,33 +2,157 @@ title: Ordinal Data
 name: bivord
 jus: '3.0'
 stage: 0
-compilerMode: aggressive
+compilerMode: tame
 children:
   - type: VariableSupplier
     persistentItems: false
+    stretchFactor: 2
+    children:
+      - type: TargetLayoutBox
+        label: Rows
+        children:
+          - type: VariablesListBox
+            name: rows
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Columns
+        children:
+          - type: VariablesListBox
+            name: cols
+            maxItemCount: 1
+            isTarget: true
+  - type: CollapseBox
+    label: Cells
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        style: inline
+        stretchFactor: 2
+        children:
+          - type: LayoutBox
+            margin: small
+            stretchFactor: 2
+            children:
+              - type: Label
+                label: Counts
+                iconPosition: right
+                children:
+                  - type: CheckBox
+                    name: obs
+                  - type: CheckBox
+                    name: exp
+          - type: LayoutBox
+            margin: small
+            stretchFactor: 2
+            children:
+              - type: Label
+                label: Percentages
+                iconPosition: right
+                children:
+                  - type: CheckBox
+                    name: pcRow
+                  - type: CheckBox
+                    name: pcCol
+                  - type: CheckBox
+                    name: pcTot
+  - type: CollapseBox
+    label: Statistics
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        style: inline
+        stretchFactor: 2
+        children:
+          - type: LayoutBox
+            margin: large
+            stretchFactor: 2
+            cell:
+              column: 0
+              row: 0
+            fitToGrid: true
+            children:
+              - type: Label
+                label: Association indices
+                iconPosition: right
+                children:
+                  - type: CheckBox
+                    name: gammaGK
+                  - type: CheckBox
+                    name: tauK
+                  - type: CheckBox
+                    name: dSommer
+                  - type: CheckBox
+                    name: eWilson
+                    
+  - type: CollapseBox
+    label: Plots
     stretchFactor: 1
+    collapsed: true
     children:
-      - type: TargetLayoutBox
-        label: Dependent Variable
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 1
         children:
-          - type: VariablesListBox
-            name: dep
-            maxItemCount: 1
-            isTarget: true
-      - type: TargetLayoutBox
-        label: Grouping Variable
-        children:
-          - type: VariablesListBox
-            name: group
-            maxItemCount: 1
-            isTarget: true
-  - type: LayoutBox
-    margin: large
-    children:
-      - type: ComboBox
-        name: alt
-  - type: LayoutBox
-    margin: large
-    children:
-      - type: CheckBox
-        name: varEq
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 0
+            stretchFactor: 1
+            children:
+              - type: Label
+                label: Plots
+                fitToGrid: true
+                children:
+                  - type: CheckBox
+                    name: barplot
+              - type: Label
+                label: Bar Type
+                fitToGrid: true
+                children:
+                  - type: RadioButton
+                    name: dodge
+                    optionName: bartype
+                    optionPart: dodge
+                  - type: RadioButton
+                    name: stack
+                    optionName: bartype
+                    optionPart: stack
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 0
+            stretchFactor: 1
+            children:
+              - type: Label
+                label: Y-Axis
+                fitToGrid: true
+                children:
+                  - name: ycounts
+                    type: RadioButton
+                    optionName: yaxis
+                    optionPart: ycounts
+                  - type: RadioButton
+                    name: ypc
+                    optionName: yaxis
+                    optionPart: ypc
+                    style: inline
+                    verticalAlignment: center
+                    children:
+                      - type: ComboBox
+                        name: yaxisPc
+                        enable: (ypc)
+              - type: Label
+                label: X-Axis
+                fitToGrid: true
+                children:
+                  - type: RadioButton
+                    name: xrows
+                    optionName: xaxis
+                    optionPart: xrows
+                  - type: RadioButton
+                    name: xcols
+                    optionName: xaxis
+                    optionPart: xcols                                    
