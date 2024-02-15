@@ -1,6 +1,6 @@
 ---
 name:  bivnum
-title: Numerical Data
+title: Bivariate Data Analysis - Numerical
 menuGroup: saRa
 version: '0.1.0'
 jas: '1.2'
