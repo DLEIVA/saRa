@@ -8,13 +8,14 @@ authors:
 maintainer: David Leiva <dleivaur@ub.edu>
 date: '2024-02-04'
 type: R
-description: An R package for a basic course on Statistics in jamovi.
-    Basically based on jmv package, the add-in includes a suite of (univariate and bivariate) 
-    descriptive methods  for nominal, ordinal, and numeric variables.
-    The add-in also incorporates a module of probability distributions, continuous and discrete, to
-    be used in a Statistics course. This package is primarily thought and developed to 
-    be useable within the jamovi statistical spreadsheet (see <https://www.jamovi.org> for more
-    information).
+description: >-
+  An R package for a basic course on Statistics in jamovi. Basically based on
+  jmv package, the add-in includes a suite of (univariate and bivariate)
+  descriptive methods  for nominal, ordinal, and numeric variables. The add-in
+  also incorporates a module of probability distributions, continuous and
+  discrete, to be used in a Statistics course. This package is primarily thought
+  and developed to be useable within the jamovi statistical spreadsheet (see
+  <https://www.jamovi.org> for more information).
 analyses:
   - title: Categorical Data
     name: catSummary
@@ -35,30 +36,30 @@ analyses:
     menuGroup: saRa
     menuSubgroup: Univariate Analysis
     menuTitle: Numerical Data
-  - title: Categorical Data
+  - title: Bivariate Data Analysis - Categorical
     name: bivcat
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Categorical Data
-  - title: Ordinal Data
+  - title: Bivariate Data Analysis - Ordinal
     name: bivord
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Ordinal Data
-  - title: Numerical Data
+  - title: Bivariate Data Analysis - Numerical
     name: bivnum
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Numerical Data
-  - title: Mixed Data
+  - title: Bivariate Data Analysis - Mixed Scales
     name: bivmix
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
-    menuTitle: Mixed Data
+    menuTitle: Mixed Scales
 usesNative: true
 minApp: 1.0.8
 
