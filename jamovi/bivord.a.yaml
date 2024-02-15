@@ -70,21 +70,53 @@ options:
           R: >
             `TRUE` or `FALSE` (default), provide Goodman-Kruskal's gamma association index for ordinal variables.
 
-    - name: tauK
-      title: "Kendall's \u03C4"
+    - name: tauKa
+      title: "Kendall's \u03C4\-a"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Kendall's tau association indices (a, b, and c) for ordinal variables.
+            `TRUE` or `FALSE` (default), provide Kendall's tau-a association index for ordinal variables.
             
-    - name: dSommer
-      title: "Sommer's d"
+    - name: tauKb
+      title: "Kendall's \u03C4\-b"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Sommer's d association index for ordinal variables.
+            `TRUE` or `FALSE` (default), provide Kendall's tau-b association index for ordinal variables.            
+     
+    - name: tauKc
+      title: "Kendall's \u03C4\-c"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Kendall's tau-c association index for ordinal variables.     
+            
+    - name: dSommerR
+      title: "Sommer's d (rows)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Sommer's d association index for ordinal variables (rows dependent).
+            
+    - name: dSommerC
+      title: "Sommer's d (columns)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Sommer's d association index for ordinal variables (columns dependent).            
+      
+    - name: dSommerS
+      title: "Sommer's d (symmetric)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Sommer's d association index for ordinal variables (symmetric).      
             
     - name: eWilson
       title: "Wilson's e"

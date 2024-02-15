@@ -37,25 +37,65 @@ items:
           title: Value
           visible: (gammaGK)
           
-        - name: t[tauK]
+        - name: t[tauKa]
           title: ''
           type: text
-          content: c("Kendal's \u03C4\-a","Kendal's \u03C4\-b","Kendal's \u03C4\-c")
-          visible: (tauK)
+          content: "Kendal's \u03C4\-a"
+          visible: (tauKa)
         
-        - name: v[tauK]
+        - name: v[tauKa]
           title: Value
-          visible: (tauK)
+          visible: (tauKa)
           
-        - name: t[dSommer]
+        - name: t[tauKb]
           title: ''
           type: text
-          content: c("Sommer's d (rows)","Sommer's d (columnns)","Sommer's d (symmetric)")
-          visible: (dSommer)
+          content: "Kendal's \u03C4\-b"
+          visible: (tauKb)
         
-        - name: v[dSommer]
+        - name: v[tauKb]
           title: Value
-          visible: (dSommer)
+          visible: (tauKb) 
+          
+        - name: t[tauKc]
+          title: ''
+          type: text
+          content: "Kendal's \u03C4\-c"
+          visible: (tauKc)
+        
+        - name: v[tauKc]
+          title: Value
+          visible: (tauKc)          
+          
+        - name: t[dSommerR]
+          title: ''
+          type: text
+          content: "Sommer's d (rows)"
+          visible: (dSommerR)
+        
+        - name: v[dSommerR]
+          title: Value
+          visible: (dSommerR)
+
+        - name: t[dSommerC]
+          title: ''
+          type: text
+          content: "Sommer's d (columns)"
+          visible: (dSommerC)
+        
+        - name: v[dSommerC]
+          title: Value
+          visible: (dSommerC)
+          
+        - name: t[dSommerS]
+          title: ''
+          type: text
+          content: "Sommer's d (symmetric)"
+          visible: (dSommerS)
+        
+        - name: v[dSommerS]
+          title: Value
+          visible: (dSommerS)          
           
         - name: t[eWilson]
           title: ''

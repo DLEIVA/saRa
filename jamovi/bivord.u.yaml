@@ -79,9 +79,17 @@ children:
                   - type: CheckBox
                     name: gammaGK
                   - type: CheckBox
-                    name: tauK
+                    name: tauKa
                   - type: CheckBox
-                    name: dSommer
+                    name: tauKb
+                  - type: CheckBox
+                    name: tauKc
+                  - type: CheckBox
+                    name: dSommerR
+                  - type: CheckBox
+                    name: dSommerC
+                  - type: CheckBox
+                    name: dSommerS                    
                   - type: CheckBox
                     name: eWilson
   - type: CollapseBox
