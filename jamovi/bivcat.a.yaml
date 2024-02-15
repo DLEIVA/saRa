@@ -1,6 +1,6 @@
 ---
 name:  bivcat
-title: Categorical Data
+title: Bivariate Data Analysis - Categorical
 menuGroup: saRa
 version: '1.0.0'
 jas: '1.2'
