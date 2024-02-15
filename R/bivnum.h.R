@@ -64,7 +64,7 @@ bivnumResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis - Numerical")
+                title="Bivariate Data Analysis")
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="text",
@@ -91,7 +91,7 @@ bivnumBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Bivariate Data Analysis - Numerical
+#' Numerical Data
 #'
 #' 
 #' @param data .

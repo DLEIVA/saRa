@@ -505,6 +505,7 @@ bivmixResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivmixResults",
     inherit = jmvcore::Group,
     active = list(
+        text = function() private$.items[["text"]],
         indicesnum = function() private$.items[["indicesnum"]],
         esindices = function() private$.items[["esindices"]],
         plots = function() private$.items[["plots"]]),
@@ -514,7 +515,11 @@ bivmixResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis - Mixed Scales")
+                title="Bivariate Data Analysis")
+            self$add(jmvcore::Preformatted$new(
+                options=options,
+                name="text",
+                title="Mixed Data"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesnum",
@@ -574,7 +579,7 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Bivariate Data Analysis - Mixed Scales
+#' Mixed Data
 #'
 #' 
 #' @param data .
@@ -679,6 +684,7 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   (continuous variables only)
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$indicesnum} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$esindices} \tab \tab \tab \tab \tab A table of different effect size indicators \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr

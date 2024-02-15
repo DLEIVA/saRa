@@ -298,6 +298,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivcatResults",
     inherit = jmvcore::Group,
     active = list(
+        text = function() private$.items[["text"]],
         freqs = function() private$.items[["freqs"]],
         asocind = function() private$.items[["asocind"]],
         errorind = function() private$.items[["errorind"]],
@@ -309,7 +310,11 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis - Categorical")
+                title="Bivariate Data Analysis")
+            self$add(jmvcore::Preformatted$new(
+                options=options,
+                name="text",
+                title="Categorical Data"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="freqs",
@@ -570,7 +575,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Bivariate Data Analysis - Categorical
+#' Categorical Data
 #'
 #' 
 #' @param data the data as a data frame
@@ -633,6 +638,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param mosaicplot \code{TRUE} or \code{FALSE} (default), show mosaicplots
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
 #'   \code{results$errorind} \tab \tab \tab \tab \tab A table of different prediction error indicators \cr

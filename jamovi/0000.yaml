@@ -41,7 +41,7 @@ analyses:
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
-    menuTitle:  Categorical Data
+    menuTitle: Categorical Data
   - title: Ordinal Data
     name: bivord
     ns: saRa
