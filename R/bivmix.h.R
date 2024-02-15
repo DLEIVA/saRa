@@ -514,7 +514,7 @@ bivmixResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis - Mixed scales")
+                title="Bivariate Data Analysis - Mixed Scales")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesnum",
@@ -574,7 +574,7 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Mixed Data
+#' Bivariate Data Analysis - Mixed Scales
 #'
 #' 
 #' @param data .

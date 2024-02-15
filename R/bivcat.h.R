@@ -570,7 +570,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Categorical Data
+#' Bivariate Data Analysis - Categorical
 #'
 #' 
 #' @param data the data as a data frame
