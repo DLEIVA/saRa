@@ -40,7 +40,7 @@ items:
         - name: t[tauKa]
           title: ''
           type: text
-          content: "Kendal's \u03C4\-a"
+          content: "Kendall's \u03C4-a"
           visible: (tauKa)
         
         - name: v[tauKa]
@@ -50,7 +50,7 @@ items:
         - name: t[tauKb]
           title: ''
           type: text
-          content: "Kendal's \u03C4\-b"
+          content: "Kendall's \u03C4-b"
           visible: (tauKb)
         
         - name: v[tauKb]
@@ -60,7 +60,7 @@ items:
         - name: t[tauKc]
           title: ''
           type: text
-          content: "Kendal's \u03C4\-c"
+          content: "Kendall's \u03C4-c"
           visible: (tauKc)
         
         - name: v[tauKc]

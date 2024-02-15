@@ -71,7 +71,7 @@ options:
             `TRUE` or `FALSE` (default), provide Goodman-Kruskal's gamma association index for ordinal variables.
 
     - name: tauKa
-      title: "Kendall's \u03C4\-a"
+      title: "Kendall's \u03C4-a"
       type: Bool
       default: false
       description:
@@ -79,7 +79,7 @@ options:
             `TRUE` or `FALSE` (default), provide Kendall's tau-a association index for ordinal variables.
             
     - name: tauKb
-      title: "Kendall's \u03C4\-b"
+      title: "Kendall's \u03C4-b"
       type: Bool
       default: false
       description:
@@ -87,7 +87,7 @@ options:
             `TRUE` or `FALSE` (default), provide Kendall's tau-b association index for ordinal variables.            
      
     - name: tauKc
-      title: "Kendall's \u03C4\-c"
+      title: "Kendall's \u03C4-c"
       type: Bool
       default: false
       description:
