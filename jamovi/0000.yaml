@@ -36,30 +36,30 @@ analyses:
     menuGroup: saRa
     menuSubgroup: Univariate Analysis
     menuTitle: Numerical Data
-  - title: Bivariate Data Analysis - Categorical
+  - title: Categorical Data
     name: bivcat
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
-    menuTitle: Categorical Data
-  - title: Bivariate Data Analysis - Ordinal
+    menuTitle:  Categorical Data
+  - title: Ordinal Data
     name: bivord
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Ordinal Data
-  - title: Bivariate Data Analysis - Numerical
+  - title: Numerical Data
     name: bivnum
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Numerical Data
-  - title: Bivariate Data Analysis - Mixed Scales
+  - title: Mixed Data
     name: bivmix
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
-    menuTitle: Mixed Scales
+    menuTitle: Mixed Data
 usesNative: true
 minApp: 1.0.8
 
