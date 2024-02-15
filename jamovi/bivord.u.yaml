@@ -41,8 +41,6 @@ children:
                 children:
                   - type: CheckBox
                     name: obs
-                  - type: CheckBox
-                    name: exp
           - type: LayoutBox
             margin: small
             stretchFactor: 2
@@ -86,7 +84,6 @@ children:
                     name: dSommer
                   - type: CheckBox
                     name: eWilson
-                    
   - type: CollapseBox
     label: Plots
     stretchFactor: 1
@@ -155,4 +152,4 @@ children:
                   - type: RadioButton
                     name: xcols
                     optionName: xaxis
-                    optionPart: xcols                                    
+                    optionPart: xcols

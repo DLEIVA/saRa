@@ -38,7 +38,7 @@ items:
           visible: (gammaGK)
           
         - name: t[tauK]
-          title: c('','','')
+          title: ''
           type: text
           content: c("Kendal's \u03C4\-a","Kendal's \u03C4\-b","Kendal's \u03C4\-c")
           visible: (tauK)
@@ -48,7 +48,7 @@ items:
           visible: (tauK)
           
         - name: t[dSommer]
-          title: c('','','')
+          title: ''
           type: text
           content: c("Sommer's d (rows)","Sommer's d (columnns)","Sommer's d (symmetric)")
           visible: (dSommer)
