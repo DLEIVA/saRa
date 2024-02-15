@@ -63,7 +63,7 @@ options:
             `TRUE` or `FALSE` (default), provide total percentages
 
     - name: gammaGK
-      title: "Goodman-Kruskal \u03B3"
+      title: "Goodman-Kruskal's \u03B3"
       type: Bool
       default: false
       description:

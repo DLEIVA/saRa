@@ -30,7 +30,7 @@ items:
         - name: t[gammaGK]
           title: ''
           type: text
-          content: "Goodman-Kruskal \u03B3"
+          content: "Goodman-Kruskal's \u03B3"
           visible: (gammaGK)
         
         - name: v[gammaGK]
