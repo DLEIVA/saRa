@@ -1,6 +1,6 @@
 ---
 name:  bivmix
-title: Mixed Data
+title: Bivariate Data Analysis - Mixed Scales
 menuGroup: saRa
 version: '0.1.0'
 jas: '1.2'
