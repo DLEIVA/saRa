@@ -128,8 +128,8 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       E.XY <- (sum(tabla^2)-n)/2
       
       res <- c(C,D,E.X,E.Y,E.XY)
-      resnames <- c('Concordant pairs','Discordant pairs',paste0('Ties ',rowVarName),
-                         paste0('Ties ',colVarName),paste0('Ties ',rowVarName,' and ',colVarName))
+      resnames <- c('Concordant pairs','Discordant pairs',paste0('Ties in ',rowVarName),
+                         paste0('Ties in ',colVarName),paste0('Ties in ',rowVarName,' and ',colVarName))
       
       for(k in 1:length(res)){
         values <- list('names' = resnames[k], 'values' = res[k])
@@ -484,16 +484,6 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data <- self$data
       
       data <- na.omit(data)
-      
-      # formula <- jmvcore::composeFormula(NULL, c(rowVarName, colVarName))
-      # counts <- xtabs(formula, data)
-      # d <- dim(counts)
-      # 
-      # expand <- list() 
-      # for (i in c(rowVarName, colVarName))
-      #   expand[[i]] <- base::levels(data[[i]])
-      # tab <- expand.grid(expand)
-      # tab$Counts <- as.numeric(counts)
       
       if (self$options$xaxis == "xcols") {
         xVarName <- colVarName
