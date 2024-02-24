@@ -118,6 +118,8 @@ children:
                   - type: CheckBox
                     name: heatmap
                   - type: CheckBox
+                    name: alluvial                    
+                  - type: CheckBox
                     name: barplot
               - type: Label
                 label: Bar Type

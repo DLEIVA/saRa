@@ -199,3 +199,11 @@ options:
       description:
           R: >
             `TRUE` or `FALSE` (default), show heatmaps
+            
+    - name: alluvial
+      title: Alluvial Plot
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), show alluvial plots           

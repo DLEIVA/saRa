@@ -140,6 +140,15 @@ items:
       renderFun: .heatmap
       visible: (heatmap)
       requiresData: true
+      
+    - name: alluvial
+      title: Plots
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .alluvial
+      visible: (alluvial)
+      requiresData: true      
 
       clearWith:
         - rows
