@@ -9,28 +9,67 @@ options:
     - name: data
       type: Data
 
-    - name: dep
-      title: Dependent Variable
+    - name: xvar
+      title: X-Axis
       type: Variable
-
-    - name: group
-      title: Grouping Variable
+      suggested:
+        - continuous
+      permitted:
+        - numeric
+      description:
+          R: >
+            x variable. It must be numeric  
+            
+    - name: y
+      title: Y-Axis
       type: Variable
-
-    - name: alt
-      title: Alternative hypothesis
+      suggested:
+        - continuous
+      permitted:
+        - numeric
+      description:
+          R: >
+            y variable. It must be numeric  
+            
+    - name: marg
+      title: Marginals
       type: List
       options:
-        - title: Not equal
-          name:  notequal
-        - title: One greater
-          name:  onegreater
-        - title: Two greater
-          name:  twogreater
-      default: notequal
+        - title: None
+          name: none
+        - title: Densities
+          name: dens
+        - title: Histograms
+          name: hist         
+        - title: Boxplots
+          name: box
+      default: none
+      description:
+          R: >
+            `none` (default), `dens`, 'hist', or `box`, provide respectively no plots,
+            density plots, histograms, or box plots on the axes
+            
+    - name: line
+      title: Regression Line
+      type: List
+      options:
+        - title: None
+          name: none
+        - title: Linear
+          name: linear
+        - title: Smooth
+          name: smooth
+      default: none
+      description:
+          R: >
+            `none` (default), `linear`, or `smooth`, provide respectively no fitted function, 
+            a fitted regression line, or a smoothed curve
 
-    - name: varEq
-      title: Assume equal variances
+    - name: se
+      title: Standard error
       type: Bool
-      default: true
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), show the standard error for the regression line            
 ...

@@ -7,5 +7,17 @@ items:
     - name:  text
       title: Numerical Data
       type:  Preformatted
+      
+    - name: scat
+      title: ''
+      type: Image
+      description: A scatter plot
+      renderFun: .scat
+      clearWith:
+        - x
+        - y
+        - marg
+        - line
+        - se      
 
 ...
