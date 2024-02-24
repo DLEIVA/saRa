@@ -12,7 +12,8 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       private$.FREQSTable()
       private$.initCOMPTable()      
       private$.initASSOCTable()
-      private$.initBarPlot()      
+      private$.initBarPlot()
+      private$.initHeatMap()
     },
     
     .run=function() {
@@ -113,13 +114,31 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       tabla <- table(data[[rowVarName]],data[[colVarName]])
       n <- sum(tabla)
       
+      filas <- row(tabla)
+      columnas <- col(tabla)
+      n <- sum(tabla)
+      q <- min(dim(tabla))
+      C <- sum(tabla * mapply(function(f, c){sum(tabla[(filas > f) &
+                                                           (columnas > c)])}, f = filas, c = columnas))
+      D <- sum(tabla * mapply(function(f, c){sum(tabla[(filas > f) &
+                                                           (columnas < c)])}, f = filas, c = columnas))
+      E.X <- (sum(apply(tabla,1,sum)^2)-n)/2
+      E.Y <- (sum(apply(tabla,2,sum)^2)-n)/2
+      E.XY <- (sum(tabla^2)-n)/2
+      
+      res <- c(C,D,E.X,E.Y,E.XY)
+      resnames <- c('Concordant pairs','Discordant pairs',paste0('Ties ',rowVarName),
+                         paste0('Ties ',colVarName),paste0('Ties ',rowVarName,' and ',colVarName))
+      
+      for(k in 1:length(res)){
+        values <- list('names' = resnames[k], 'values' = res[k])
+        desc$setRow(rowNo=k, values=values)
+      }
+        
+      
       values <- list()
       asocind$setRow(rowNo=othRowNo, values=values)
-      
-      values <- list()
-      
-      desc$setRow(rowNo=othRowNo, values=values)      
-      
+
     },
     
     #### Init tables ----
@@ -311,19 +330,20 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           name=' ',
           title=' ',
           type='text')
-        
       }      
     },
     .initCOMPTable = function(){
       desc <- self$results$desc
       desc$addRow(rowKey=1, values=list())
-      if(is.null(self$options$rows) & is.null(self$options$rows) ){
+      if(is.null(self$options$rows) | is.null(self$options$cols) ){
         desc <- self$results$desc
-        desc$addColumn(
-          name=' ',
-          title=' ',
-          type='text')
+        resnames <- c(' ',' ',
+                      ' ',' ',' ')
         
+        for(k in 1:length(resnames)){
+          values <- list('names' = resnames[k], 'values' = NA)
+          desc$setRow(rowNo=k, values=values)
+        }
       }      
     },
     #### Plot functions ---- Taken from conttables.b.R in jmv package
@@ -335,13 +355,13 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       image$setSize(width * 2, height)
     },
-    .initMosaicPlot = function() {
-      image <- self$results$get('mosaicplot')
+    .initHeatMap = function() {
+      image <- self$results$get('heatmap')
       
       width <- 450
       height <- 400
       
-      image$setSize(width * 3, height*1.5)
+      image$setSize(width * 2, height)
     },    
     .barPlot = function(image, ggtheme, theme, ...) {
       
@@ -426,7 +446,50 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       p <- p + ggtheme
       
       return(p)
-    },    
+    },  
+    .heatmap = function(image, ...) {
+      
+      if (! self$options$heatmap)
+        return()
+      
+      rowVarName <- self$options$rows
+      colVarName <- self$options$cols
+      
+      if (is.null(rowVarName) || is.null(colVarName))
+        return()
+      
+      data <- self$data
+      
+      data <- na.omit(data)
+      
+      # formula <- jmvcore::composeFormula(NULL, c(rowVarName, colVarName))
+      # counts <- xtabs(formula, data)
+      # d <- dim(counts)
+      # 
+      # expand <- list() 
+      # for (i in c(rowVarName, colVarName))
+      #   expand[[i]] <- base::levels(data[[i]])
+      # tab <- expand.grid(expand)
+      # tab$Counts <- as.numeric(counts)
+      
+      if (self$options$xaxis == "xcols") {
+        xVarName <- colVarName
+        zVarName <- rowVarName
+      } else {
+        xVarName <- rowVarName
+        zVarName <- colVarName
+      }
+      
+      tabla <- as.data.frame(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))))
+      p <- ggplot(tabla,aes_string(xVarName,zVarName)) +
+        geom_tile(aes(fill = Freq), colour ="black") +
+        scale_fill_gradient(low='white',high='steelblue') + theme_bw() +
+        theme(axis.text.x=element_text(size=13),
+              axis.text.y=element_text(size=13),
+              axis.title.x = element_text(size=14),
+              axis.title.y = element_text(size=14))
+      return(p)
+    },
     #### Helper functions ----
     
     .grid=function(data, incRows=FALSE) {

@@ -24,7 +24,8 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             yaxis = "ycounts",
             yaxisPc = "total_pc",
             xaxis = "xrows",
-            bartype = "dodge", ...) {
+            bartype = "dodge",
+            heatmap = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -127,6 +128,10 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "dodge",
                     "stack"),
                 default="dodge")
+            private$..heatmap <- jmvcore::OptionBool$new(
+                "heatmap",
+                heatmap,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -147,6 +152,7 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..yaxisPc)
             self$.addOption(private$..xaxis)
             self$.addOption(private$..bartype)
+            self$.addOption(private$..heatmap)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -167,7 +173,8 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         yaxis = function() private$..yaxis$value,
         yaxisPc = function() private$..yaxisPc$value,
         xaxis = function() private$..xaxis$value,
-        bartype = function() private$..bartype$value),
+        bartype = function() private$..bartype$value,
+        heatmap = function() private$..heatmap$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -187,7 +194,8 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..yaxis = NA,
         ..yaxisPc = NA,
         ..xaxis = NA,
-        ..bartype = NA)
+        ..bartype = NA,
+        ..heatmap = NA)
 )
 
 bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -198,7 +206,8 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         freqs = function() private$.items[["freqs"]],
         desc = function() private$.items[["desc"]],
         asocind = function() private$.items[["asocind"]],
-        barplot = function() private$.items[["barplot"]]),
+        barplot = function() private$.items[["barplot"]],
+        heatmap = function() private$.items[["heatmap"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -222,7 +231,16 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="desc",
                 title="Paired comparisons description",
-                columns=list(),
+                columns=list(
+                    list(
+                        `name`="names", 
+                        `title`="", 
+                        `type`="text"),
+                    list(
+                        `name`="values", 
+                        `title`="Values", 
+                        `type`="integer")),
+                rows=4,
                 clearWith=list(
                     "rows",
                     "cols")))
@@ -323,6 +341,15 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 height=400,
                 renderFun=".barPlot",
                 visible="(barplot)",
+                requiresData=TRUE))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="heatmap",
+                title="Plots",
+                width=450,
+                height=400,
+                renderFun=".heatmap",
+                visible="(heatmap)",
                 requiresData=TRUE,
                 clearWith=list(
                     "rows",
@@ -392,6 +419,7 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   for the bar plot y-axis.
 #' @param xaxis rows (default), or columns in bar plot X axis
 #' @param bartype stack or side by side (default), barplot type
+#' @param heatmap \code{TRUE} or \code{FALSE} (default), show heatmaps
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
@@ -399,6 +427,7 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$desc} \tab \tab \tab \tab \tab a table with a summary for all possible comparisons \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
 #'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$heatmap} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -428,7 +457,8 @@ bivord <- function(
     yaxis = "ycounts",
     yaxisPc = "total_pc",
     xaxis = "xrows",
-    bartype = "dodge") {
+    bartype = "dodge",
+    heatmap = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivord requires jmvcore to be installed (restart may be required)")
@@ -461,7 +491,8 @@ bivord <- function(
         yaxis = yaxis,
         yaxisPc = yaxisPc,
         xaxis = xaxis,
-        bartype = bartype)
+        bartype = bartype,
+        heatmap = heatmap)
 
     analysis <- bivordClass$new(
         options = options,
