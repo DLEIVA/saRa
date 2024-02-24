@@ -20,7 +20,15 @@ items:
       title: Paired comparisons description
       type: Table
       description: a table with a summary for all possible comparisons
-      columns: [ ]
+      columns:
+        - name: names
+          title: ''
+          type: text
+        
+        - name: values
+          title: Values
+          type: integer
+      rows: 4
       clearWith:
         - rows
         - cols
