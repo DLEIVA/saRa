@@ -14,6 +14,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       private$.initASSOCTable()
       private$.initBarPlot()
       private$.initHeatMap()
+      private$.initAlluvial()  
     },
     
     .run=function() {
@@ -362,6 +363,14 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       height <- 400
       
       image$setSize(width * 2, height)
+    },
+    .initAlluvial = function() {
+      image <- self$results$get('alluvial')
+      
+      width <- 450
+      height <- 400
+      
+      image$setSize(width * 2, height)
     },    
     .barPlot = function(image, ggtheme, theme, ...) {
       
@@ -490,10 +499,48 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               axis.title.y = element_text(size=14))
       return(p)
     },
+    .alluvial =  function(image, ...) {
+      library(ggalluvial)
+      if (! self$options$alluvial)
+        return()
+      
+      rowVarName <- self$options$rows
+      colVarName <- self$options$cols
+      
+      if (is.null(rowVarName) || is.null(colVarName))
+        return()
+      
+      data <- self$data
+      
+      data <- na.omit(data)
+      
+      if (self$options$xaxis == "xcols") {
+        xVarName <- colVarName
+        zVarName <- rowVarName
+      } else {
+        xVarName <- rowVarName
+        zVarName <- colVarName
+      }
+      
+      tabla <- as.data.frame(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))))
+      p <- ggplot(data = tabla,
+             aes_string(axis1 = xVarName,axis2 = zVarName, y = "Freq")) +
+        scale_x_discrete(limits = c(xVarName, zVarName), expand = c(.2, .05)) +
+        scale_fill_gradient(low = "white", high = "steelblue") +
+        geom_alluvium(aes(fill = Freq)) +
+        geom_stratum() +
+        geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+        theme_bw() +
+        theme(axis.text.x=element_text(size=13),
+              axis.text.y=element_text(size=13),
+              axis.title.x = element_text(size=14),
+              axis.title.y = element_text(size=14))
+      return(p)
+    },
     #### Helper functions ----
     
     .grid=function(data, incRows=FALSE) {
-      
+
       rowVarName <- self$options$rows
       
       expand <- list()

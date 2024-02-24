@@ -25,7 +25,8 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             yaxisPc = "total_pc",
             xaxis = "xrows",
             bartype = "dodge",
-            heatmap = FALSE, ...) {
+            heatmap = FALSE,
+            alluvial = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -132,6 +133,10 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "heatmap",
                 heatmap,
                 default=FALSE)
+            private$..alluvial <- jmvcore::OptionBool$new(
+                "alluvial",
+                alluvial,
+                default=FALSE)
 
             self$.addOption(private$..rows)
             self$.addOption(private$..cols)
@@ -153,6 +158,7 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..xaxis)
             self$.addOption(private$..bartype)
             self$.addOption(private$..heatmap)
+            self$.addOption(private$..alluvial)
         }),
     active = list(
         rows = function() private$..rows$value,
@@ -174,7 +180,8 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         yaxisPc = function() private$..yaxisPc$value,
         xaxis = function() private$..xaxis$value,
         bartype = function() private$..bartype$value,
-        heatmap = function() private$..heatmap$value),
+        heatmap = function() private$..heatmap$value,
+        alluvial = function() private$..alluvial$value),
     private = list(
         ..rows = NA,
         ..cols = NA,
@@ -195,7 +202,8 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..yaxisPc = NA,
         ..xaxis = NA,
         ..bartype = NA,
-        ..heatmap = NA)
+        ..heatmap = NA,
+        ..alluvial = NA)
 )
 
 bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -207,7 +215,8 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         desc = function() private$.items[["desc"]],
         asocind = function() private$.items[["asocind"]],
         barplot = function() private$.items[["barplot"]],
-        heatmap = function() private$.items[["heatmap"]]),
+        heatmap = function() private$.items[["heatmap"]],
+        alluvial = function() private$.items[["alluvial"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -350,6 +359,15 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 height=400,
                 renderFun=".heatmap",
                 visible="(heatmap)",
+                requiresData=TRUE))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="alluvial",
+                title="Plots",
+                width=450,
+                height=400,
+                renderFun=".alluvial",
+                visible="(alluvial)",
                 requiresData=TRUE,
                 clearWith=list(
                     "rows",
@@ -420,6 +438,7 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param xaxis rows (default), or columns in bar plot X axis
 #' @param bartype stack or side by side (default), barplot type
 #' @param heatmap \code{TRUE} or \code{FALSE} (default), show heatmaps
+#' @param alluvial \code{TRUE} or \code{FALSE} (default), show alluvial plots
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
@@ -428,6 +447,7 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
 #'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$heatmap} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$alluvial} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -458,7 +478,8 @@ bivord <- function(
     yaxisPc = "total_pc",
     xaxis = "xrows",
     bartype = "dodge",
-    heatmap = FALSE) {
+    heatmap = FALSE,
+    alluvial = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivord requires jmvcore to be installed (restart may be required)")
@@ -492,7 +513,8 @@ bivord <- function(
         yaxisPc = yaxisPc,
         xaxis = xaxis,
         bartype = bartype,
-        heatmap = heatmap)
+        heatmap = heatmap,
+        alluvial = alluvial)
 
     analysis <- bivordClass$new(
         options = options,
