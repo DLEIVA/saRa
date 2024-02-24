@@ -191,3 +191,11 @@ options:
       description:
           R: >
             stack or side by side (default), barplot type
+            
+    - name: heatmap
+      title: Heatmap
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), show heatmaps

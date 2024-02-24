@@ -131,6 +131,15 @@ items:
       renderFun: .barPlot
       visible: (barplot)
       requiresData: true    
+      
+    - name: heatmap
+      title: Plots
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .heatmap
+      visible: (heatmap)
+      requiresData: true
 
       clearWith:
         - rows

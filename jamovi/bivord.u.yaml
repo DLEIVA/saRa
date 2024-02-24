@@ -116,6 +116,8 @@ children:
                 fitToGrid: true
                 children:
                   - type: CheckBox
+                    name: heatmap
+                  - type: CheckBox
                     name: barplot
               - type: Label
                 label: Bar Type
