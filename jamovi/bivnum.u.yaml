@@ -12,14 +12,14 @@ children:
         label: X-Axis
         children:
           - type: VariablesListBox
-            name: x
+            name: xvar
             maxItemCount: 1
             isTarget: true
       - type: TargetLayoutBox
         label: Y-Axis
         children:
           - type: VariablesListBox
-            name: 'y'
+            name: yvar
             maxItemCount: 1
             isTarget: true
   - type: CollapseBox
@@ -42,11 +42,11 @@ children:
               - type: CheckBox
                 name: covar
               - type: CheckBox
-                name: pearsonr
+                name: pearsonR
               - type: CheckBox
-                name: spearmanr
+                name: spearmanR
               - type: CheckBox
-                name: kendallt
+                name: tauK
           - type: LayoutBox
             margin: large
             stretchFactor: 1
@@ -60,65 +60,64 @@ children:
               - type: CheckBox
                 name: spearmanR2
               - type: CheckBox
-                name: kendallR2                    
+                name: kendallR2
   - type: CollapseBox
     label: Plots
     stretchFactor: 1
     collapsed: true
     children:
-
-  - type: LayoutBox
-    margin: large
-    stretchFactor: 1
-    children:
       - type: LayoutBox
         margin: large
-        cell:
-          column: 0
-          row: 0
         stretchFactor: 1
         children:
-          - type: Label
-            label: Regression Line
+          - type: LayoutBox
+            margin: large
+            cell:
+              column: 0
+              row: 0
+            stretchFactor: 1
             children:
-              - type: RadioButton
-                name: line_none
-                optionName: line
-                optionPart: none
-              - type: RadioButton
-                name: line_linear
-                optionName: line
-                optionPart: linear
-              - type: RadioButton
-                name: line_smooth
-                optionName: line
-                optionPart: smooth
-              - type: CheckBox
-                name: se
-                enable: (!line_none)
-      - type: LayoutBox
-        margin: large
-        cell:
-          column: 1
-          row: 0
-        stretchFactor: 1
-        children:
-          - type: Label
-            label: Marginals
+              - type: Label
+                label: Regression Line / Curve
+                children:
+                  - type: RadioButton
+                    name: line_none
+                    optionName: line
+                    optionPart: none
+                  - type: RadioButton
+                    name: line_linear
+                    optionName: line
+                    optionPart: linear
+                  - type: RadioButton
+                    name: line_smooth
+                    optionName: line
+                    optionPart: smooth
+                  - type: CheckBox
+                    name: se
+                    enable: (!line_none)
+          - type: LayoutBox
+            margin: large
+            cell:
+              column: 1
+              row: 0
+            stretchFactor: 1
             children:
-              - type: RadioButton
-                name: marg_none
-                optionName: marg
-                optionPart: none
-              - type: RadioButton
-                name: marg_dens
-                optionName: marg
-                optionPart: dens
-              - type: RadioButton
-                name: marg_hist
-                optionName: marg
-                optionPart: histogram                
-              - type: RadioButton
-                name: marg_box
-                optionName: marg
-                optionPart: box
+              - type: Label
+                label: Marginals
+                children:
+                  - type: RadioButton
+                    name: marg_none
+                    optionName: marg
+                    optionPart: none
+                  - type: RadioButton
+                    name: marg_dens
+                    optionName: marg
+                    optionPart: dens
+                  - type: RadioButton
+                    name: marg_hist
+                    optionName: marg
+                    optionPart: hist
+                  - type: RadioButton
+                    name: marg_box
+                    optionName: marg
+                    optionPart: box

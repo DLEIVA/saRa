@@ -20,7 +20,7 @@ options:
           R: >
             x variable. It must be numeric  
             
-    - name: y
+    - name: yvar
       title: Y-Axis
       type: Variable
       suggested:
@@ -29,7 +29,64 @@ options:
         - numeric
       description:
           R: >
-            y variable. It must be numeric  
+            y variable. It must be numeric 
+            
+    - name: covar
+      title: "Covariance"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide linear covariance for numeric variables.
+            
+    - name: pearsonR
+      title: "Pearson's correlation"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Pearson's correlation for numeric variables.
+
+    - name: spearmanR
+      title: "Spearman's correlation"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Spearman's correlation for numeric variables.
+
+    - name: tauK
+      title: "Kendall's correlation"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Kendall's tau-b association index for numeric variables.
+            
+    - name: pearsonR2
+      title: "Pearson's R\u00B2"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Pearson's coefficient of determination for numeric variables (rows dependent).
+
+    - name: spearmanR2
+      title: "Spearmans's R\u00B2"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Spearman's coefficient of determination for numeric variables (rows dependent).
+
+    - name: kendallR2
+      title: "Kendall's R\u00B2"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Kendall's coefficient of determination for numeric variables (rows dependent).
+        
             
     - name: marg
       title: Marginals
@@ -50,7 +107,7 @@ options:
             density plots, histograms, or box plots on the axes
             
     - name: line
-      title: Regression Line
+      title: Regression Line / Curve
       type: List
       options:
         - title: None

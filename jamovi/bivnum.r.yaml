@@ -8,6 +8,82 @@ items:
       title: Numerical Data
       type:  Preformatted
       
+    - name: asocind
+      title: Association Indices
+      description: A table of different bivariate association indicators
+      visible: ( covar || pearsonR || spearmanR || tauK || pearsonR2 || spearmanR2 || kendallR2 )
+      type: Table
+      columns:
+        - name: t[covar]
+          title: ''
+          type: text
+          content: "Covariance"
+          visible: (covar)
+        
+        - name: v[covar]
+          title: Value
+          visible: (covar) 
+          
+        - name: t[pearsonR]
+          title: ''
+          type: text
+          content: "Pearson's r"
+          visible: (pearsonR)
+        
+        - name: v[pearsonR]
+          title: Value
+          visible: (pearsonR)
+          
+        - name: t[spearmanR]
+          title: ''
+          type: text
+          content: "Spearman's r"
+          visible: (spearmanR)
+        
+        - name: v[spearmanR]
+          title: Value
+          visible: (spearmanR)          
+          
+        - name: t[tauK]
+          title: ''
+          type: text
+          content: "Kendall's \u03C4-b"
+          visible: (tauK)
+          
+        - name: v[tauK]
+          title: Value
+          visible: (tauK)
+          
+        - name: t[pearsonR2]
+          title: ''
+          type: text
+          content: "Pearson's R\u00B2"
+          visible: (pearsonR2)
+        
+        - name: v[pearsonR2]
+          title: Value
+          visible: (pearsonR2)
+          
+        - name: t[spearmanR2]
+          title: ''
+          type: text
+          content: "Spearman's R\u00B2"
+          visible: (spearmanR2)
+        
+        - name: v[spearmanR2]
+          title: Value
+          visible: (spearmanR2)  
+          
+        - name: t[kendallR2]
+          title: ''
+          type: text
+          content: "Kendall's R\u00B2"
+          visible: (kendallR2)
+        
+        - name: v[kendallR2]
+          title: Value
+          visible: (kendallR2)          
+      
     - name: scat
       title: ''
       type: Image
