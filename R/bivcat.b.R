@@ -530,16 +530,6 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- na.omit(data)
       
-      # formula <- jmvcore::composeFormula(NULL, c(rowVarName, colVarName))
-      # counts <- xtabs(formula, data)
-      # d <- dim(counts)
-      # 
-      # expand <- list() 
-      # for (i in c(rowVarName, colVarName))
-      #   expand[[i]] <- base::levels(data[[i]])
-      # tab <- expand.grid(expand)
-      # tab$Counts <- as.numeric(counts)
-      
       if (self$options$xaxis == "xcols") {
         xVarName <- colVarName
         zVarName <- rowVarName
