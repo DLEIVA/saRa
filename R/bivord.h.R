@@ -6,10 +6,25 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
-            group = NULL,
-            alt = "notequal",
-            varEq = TRUE, ...) {
+            rows = NULL,
+            cols = NULL,
+            obs = FALSE,
+            pcRow = FALSE,
+            pcCol = FALSE,
+            pcTot = FALSE,
+            gammaGK = FALSE,
+            tauKa = FALSE,
+            tauKb = FALSE,
+            tauKc = FALSE,
+            dSommerR = FALSE,
+            dSommerC = FALSE,
+            dSommerS = FALSE,
+            eWilson = FALSE,
+            barplot = FALSE,
+            yaxis = "ycounts",
+            yaxisPc = "total_pc",
+            xaxis = "xrows",
+            bartype = "dodge", ...) {
 
             super$initialize(
                 package="saRa",
@@ -17,47 +32,173 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
-            private$..alt <- jmvcore::OptionList$new(
-                "alt",
-                alt,
+            private$..rows <- jmvcore::OptionVariable$new(
+                "rows",
+                rows,
+                suggested=list(
+                    "ordinal"),
+                permitted=list(
+                    "numeric"))
+            private$..cols <- jmvcore::OptionVariable$new(
+                "cols",
+                cols,
+                suggested=list(
+                    "ordinal"),
+                permitted=list(
+                    "numeric"))
+            private$..obs <- jmvcore::OptionBool$new(
+                "obs",
+                obs,
+                default=FALSE)
+            private$..pcRow <- jmvcore::OptionBool$new(
+                "pcRow",
+                pcRow,
+                default=FALSE)
+            private$..pcCol <- jmvcore::OptionBool$new(
+                "pcCol",
+                pcCol,
+                default=FALSE)
+            private$..pcTot <- jmvcore::OptionBool$new(
+                "pcTot",
+                pcTot,
+                default=FALSE)
+            private$..gammaGK <- jmvcore::OptionBool$new(
+                "gammaGK",
+                gammaGK,
+                default=FALSE)
+            private$..tauKa <- jmvcore::OptionBool$new(
+                "tauKa",
+                tauKa,
+                default=FALSE)
+            private$..tauKb <- jmvcore::OptionBool$new(
+                "tauKb",
+                tauKb,
+                default=FALSE)
+            private$..tauKc <- jmvcore::OptionBool$new(
+                "tauKc",
+                tauKc,
+                default=FALSE)
+            private$..dSommerR <- jmvcore::OptionBool$new(
+                "dSommerR",
+                dSommerR,
+                default=FALSE)
+            private$..dSommerC <- jmvcore::OptionBool$new(
+                "dSommerC",
+                dSommerC,
+                default=FALSE)
+            private$..dSommerS <- jmvcore::OptionBool$new(
+                "dSommerS",
+                dSommerS,
+                default=FALSE)
+            private$..eWilson <- jmvcore::OptionBool$new(
+                "eWilson",
+                eWilson,
+                default=FALSE)
+            private$..barplot <- jmvcore::OptionBool$new(
+                "barplot",
+                barplot,
+                default=FALSE)
+            private$..yaxis <- jmvcore::OptionList$new(
+                "yaxis",
+                yaxis,
                 options=list(
-                    "notequal",
-                    "onegreater",
-                    "twogreater"),
-                default="notequal")
-            private$..varEq <- jmvcore::OptionBool$new(
-                "varEq",
-                varEq,
-                default=TRUE)
+                    "ycounts",
+                    "ypc"),
+                default="ycounts")
+            private$..yaxisPc <- jmvcore::OptionList$new(
+                "yaxisPc",
+                yaxisPc,
+                options=list(
+                    "total_pc",
+                    "column_pc",
+                    "row_pc"),
+                default="total_pc")
+            private$..xaxis <- jmvcore::OptionList$new(
+                "xaxis",
+                xaxis,
+                options=list(
+                    "xrows",
+                    "xcols"),
+                default="xrows")
+            private$..bartype <- jmvcore::OptionList$new(
+                "bartype",
+                bartype,
+                options=list(
+                    "dodge",
+                    "stack"),
+                default="dodge")
 
-            self$.addOption(private$..dep)
-            self$.addOption(private$..group)
-            self$.addOption(private$..alt)
-            self$.addOption(private$..varEq)
+            self$.addOption(private$..rows)
+            self$.addOption(private$..cols)
+            self$.addOption(private$..obs)
+            self$.addOption(private$..pcRow)
+            self$.addOption(private$..pcCol)
+            self$.addOption(private$..pcTot)
+            self$.addOption(private$..gammaGK)
+            self$.addOption(private$..tauKa)
+            self$.addOption(private$..tauKb)
+            self$.addOption(private$..tauKc)
+            self$.addOption(private$..dSommerR)
+            self$.addOption(private$..dSommerC)
+            self$.addOption(private$..dSommerS)
+            self$.addOption(private$..eWilson)
+            self$.addOption(private$..barplot)
+            self$.addOption(private$..yaxis)
+            self$.addOption(private$..yaxisPc)
+            self$.addOption(private$..xaxis)
+            self$.addOption(private$..bartype)
         }),
     active = list(
-        dep = function() private$..dep$value,
-        group = function() private$..group$value,
-        alt = function() private$..alt$value,
-        varEq = function() private$..varEq$value),
+        rows = function() private$..rows$value,
+        cols = function() private$..cols$value,
+        obs = function() private$..obs$value,
+        pcRow = function() private$..pcRow$value,
+        pcCol = function() private$..pcCol$value,
+        pcTot = function() private$..pcTot$value,
+        gammaGK = function() private$..gammaGK$value,
+        tauKa = function() private$..tauKa$value,
+        tauKb = function() private$..tauKb$value,
+        tauKc = function() private$..tauKc$value,
+        dSommerR = function() private$..dSommerR$value,
+        dSommerC = function() private$..dSommerC$value,
+        dSommerS = function() private$..dSommerS$value,
+        eWilson = function() private$..eWilson$value,
+        barplot = function() private$..barplot$value,
+        yaxis = function() private$..yaxis$value,
+        yaxisPc = function() private$..yaxisPc$value,
+        xaxis = function() private$..xaxis$value,
+        bartype = function() private$..bartype$value),
     private = list(
-        ..dep = NA,
-        ..group = NA,
-        ..alt = NA,
-        ..varEq = NA)
+        ..rows = NA,
+        ..cols = NA,
+        ..obs = NA,
+        ..pcRow = NA,
+        ..pcCol = NA,
+        ..pcTot = NA,
+        ..gammaGK = NA,
+        ..tauKa = NA,
+        ..tauKb = NA,
+        ..tauKc = NA,
+        ..dSommerR = NA,
+        ..dSommerC = NA,
+        ..dSommerS = NA,
+        ..eWilson = NA,
+        ..barplot = NA,
+        ..yaxis = NA,
+        ..yaxisPc = NA,
+        ..xaxis = NA,
+        ..bartype = NA)
 )
 
 bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivordResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        text = function() private$.items[["text"]],
+        freqs = function() private$.items[["freqs"]],
+        desc = function() private$.items[["desc"]],
+        asocind = function() private$.items[["asocind"]],
+        barplot = function() private$.items[["barplot"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -68,7 +209,128 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="text",
-                title="Ordinal Data"))}))
+                title="Ordinal Data"))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="freqs",
+                title="Contingency Tables",
+                columns=list(),
+                clearWith=list(
+                    "rows",
+                    "cols")))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="desc",
+                title="Paired comparisons description",
+                columns=list(),
+                clearWith=list(
+                    "rows",
+                    "cols")))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="asocind",
+                title="Association Indices",
+                visible="( gammaGK || tauk || dSommer || eWilson )",
+                columns=list(
+                    list(
+                        `name`="t[gammaGK]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Goodman-Kruskal's \u03B3", 
+                        `visible`="(gammaGK)"),
+                    list(
+                        `name`="v[gammaGK]", 
+                        `title`="Value", 
+                        `visible`="(gammaGK)"),
+                    list(
+                        `name`="t[tauKa]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Kendall's \u03C4-a", 
+                        `visible`="(tauKa)"),
+                    list(
+                        `name`="v[tauKa]", 
+                        `title`="Value", 
+                        `visible`="(tauKa)"),
+                    list(
+                        `name`="t[tauKb]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Kendall's \u03C4-b", 
+                        `visible`="(tauKb)"),
+                    list(
+                        `name`="v[tauKb]", 
+                        `title`="Value", 
+                        `visible`="(tauKb)"),
+                    list(
+                        `name`="t[tauKc]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Kendall's \u03C4-c", 
+                        `visible`="(tauKc)"),
+                    list(
+                        `name`="v[tauKc]", 
+                        `title`="Value", 
+                        `visible`="(tauKc)"),
+                    list(
+                        `name`="t[dSommerR]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Sommer's d (rows)", 
+                        `visible`="(dSommerR)"),
+                    list(
+                        `name`="v[dSommerR]", 
+                        `title`="Value", 
+                        `visible`="(dSommerR)"),
+                    list(
+                        `name`="t[dSommerC]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Sommer's d (columns)", 
+                        `visible`="(dSommerC)"),
+                    list(
+                        `name`="v[dSommerC]", 
+                        `title`="Value", 
+                        `visible`="(dSommerC)"),
+                    list(
+                        `name`="t[dSommerS]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Sommer's d (symmetric)", 
+                        `visible`="(dSommerS)"),
+                    list(
+                        `name`="v[dSommerS]", 
+                        `title`="Value", 
+                        `visible`="(dSommerS)"),
+                    list(
+                        `name`="t[eWilson]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Wilson's e", 
+                        `visible`="(eWilson)"),
+                    list(
+                        `name`="v[eWilson]", 
+                        `title`="Value", 
+                        `visible`="(eWilson)")),
+                clearWith=list(
+                    "rows",
+                    "cols")))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="barplot",
+                title="Plots",
+                width=450,
+                height=400,
+                renderFun=".barPlot",
+                visible="(barplot)",
+                requiresData=TRUE,
+                clearWith=list(
+                    "rows",
+                    "cols",
+                    "yaxis",
+                    "yaxisPc",
+                    "xaxis",
+                    "bartype")))}))
 
 bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivordBase",
@@ -94,41 +356,112 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Ordinal Data
 #'
 #' 
-#' @param data .
-#' @param dep .
-#' @param group .
-#' @param alt .
-#' @param varEq .
+#' @param data the data as a data frame
+#' @param rows the variable to use as the rows in the contingency table (not
+#'   necessary when providing a formula, see the examples)
+#' @param cols the variable to use as the columns in the contingency table
+#'   (not necessary when providing a formula, see the examples)
+#' @param obs \code{TRUE} or \code{FALSE} (default), provide the observed
+#'   counts
+#' @param pcRow \code{TRUE} or \code{FALSE} (default), provide row percentages
+#' @param pcCol \code{TRUE} or \code{FALSE} (default), provide column
+#'   percentages
+#' @param pcTot \code{TRUE} or \code{FALSE} (default), provide total
+#'   percentages
+#' @param gammaGK \code{TRUE} or \code{FALSE} (default), provide
+#'   Goodman-Kruskal's gamma association index for ordinal variables.
+#' @param tauKa \code{TRUE} or \code{FALSE} (default), provide Kendall's tau-a
+#'   association index for ordinal variables.
+#' @param tauKb \code{TRUE} or \code{FALSE} (default), provide Kendall's tau-b
+#'   association index for ordinal variables.
+#' @param tauKc \code{TRUE} or \code{FALSE} (default), provide Kendall's tau-c
+#'   association index for ordinal variables.
+#' @param dSommerR \code{TRUE} or \code{FALSE} (default), provide Sommer's d
+#'   association index for ordinal variables (rows dependent).
+#' @param dSommerC \code{TRUE} or \code{FALSE} (default), provide Sommer's d
+#'   association index for ordinal variables (columns dependent).
+#' @param dSommerS \code{TRUE} or \code{FALSE} (default), provide Sommer's d
+#'   association index for ordinal variables (symmetric).
+#' @param eWilson \code{TRUE} or \code{FALSE} (default), provide Wilson's e
+#'   association index for ordinal variables.
+#' @param barplot \code{TRUE} or \code{FALSE} (default), show barplots
+#' @param yaxis ycounts (default) or ypc. Use respectively \code{counts} or
+#'   \code{percentages} for the bar plot y-axis
+#' @param yaxisPc total_pc (default), column_pc, or row_pc. Use respectively
+#'   percentages \code{of total}, \code{within columns}, or \code{within rows}
+#'   for the bar plot y-axis.
+#' @param xaxis rows (default), or columns in bar plot X axis
+#' @param bartype stack or side by side (default), barplot type
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
+#'   \code{results$desc} \tab \tab \tab \tab \tab a table with a summary for all possible comparisons \cr
+#'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
+#'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$freqs$asDF}
+#'
+#' \code{as.data.frame(results$freqs)}
 #'
 #' @export
 bivord <- function(
     data,
-    dep,
-    group,
-    alt = "notequal",
-    varEq = TRUE) {
+    rows,
+    cols,
+    obs = FALSE,
+    pcRow = FALSE,
+    pcCol = FALSE,
+    pcTot = FALSE,
+    gammaGK = FALSE,
+    tauKa = FALSE,
+    tauKb = FALSE,
+    tauKc = FALSE,
+    dSommerR = FALSE,
+    dSommerC = FALSE,
+    dSommerS = FALSE,
+    eWilson = FALSE,
+    barplot = FALSE,
+    yaxis = "ycounts",
+    yaxisPc = "total_pc",
+    xaxis = "xrows",
+    bartype = "dodge") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("bivord requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
+    if ( ! missing(rows)) rows <- jmvcore::resolveQuo(jmvcore::enquo(rows))
+    if ( ! missing(cols)) cols <- jmvcore::resolveQuo(jmvcore::enquo(cols))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL),
-            `if`( ! missing(group), group, NULL))
+            `if`( ! missing(rows), rows, NULL),
+            `if`( ! missing(cols), cols, NULL))
 
 
     options <- bivordOptions$new(
-        dep = dep,
-        group = group,
-        alt = alt,
-        varEq = varEq)
+        rows = rows,
+        cols = cols,
+        obs = obs,
+        pcRow = pcRow,
+        pcCol = pcCol,
+        pcTot = pcTot,
+        gammaGK = gammaGK,
+        tauKa = tauKa,
+        tauKb = tauKb,
+        tauKc = tauKc,
+        dSommerR = dSommerR,
+        dSommerC = dSommerC,
+        dSommerS = dSommerS,
+        eWilson = eWilson,
+        barplot = barplot,
+        yaxis = yaxis,
+        yaxisPc = yaxisPc,
+        xaxis = xaxis,
+        bartype = bartype)
 
     analysis <- bivordClass$new(
         options = options,
