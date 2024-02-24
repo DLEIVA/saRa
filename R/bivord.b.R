@@ -135,9 +135,23 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         values <- list('names' = resnames[k], 'values' = res[k])
         desc$setRow(rowNo=k, values=values)
       }
-        
+      gammaGK <- (C-D)/(C+D)        
+      tau.a <- (C-D)/choose(n,2)
+      tau.b <- (C-D)/sqrt((C+D+E.X-E.XY)*(C+D+E.Y-E.XY))
+      tau.c <- 2*q*(C-D)/(n^2*(q-1))
+      sommers.x.y <- (C-D)/(C+D+E.X-E.XY)
+      sommers.y.x <- (C-D)/(C+D+E.Y-E.XY)
+      .sommers <- (C-D)/(C+D+(E.X+E.Y)/2-E.XY)      
+      .wilson <- 2*(C-D)/(choose(n,2)-E.XY)
       
-      values <- list()
+      values <- list(`v[gammaGK]` = gammaGK,
+                     `v[tauKa]` = tau.a,
+                     `v[tauKb]` = tau.b,
+                     `v[tauKc]` = tau.c,
+                     `v[dSommerR]` = sommers.x.y,
+                     `v[dSommerC]` = sommers.y.x,
+                     `v[dSommerS]` = .sommers,
+                     `v[eWilson]` = .wilson)
       asocind$setRow(rowNo=othRowNo, values=values)
 
     },
