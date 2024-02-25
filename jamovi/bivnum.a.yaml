@@ -88,11 +88,12 @@ options:
             `TRUE` or `FALSE` (default), provide Kendall's coefficient of determination for numeric variables (rows dependent).
     
     - name: scat
+      title: Scatterplot
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide a scatterplot for numeric variables    
+            `TRUE` or `FALSE` (default), show scatterplots   
             
     - name: marg
       title: Marginals
