@@ -17,6 +17,20 @@ description: >-
   and developed to be useable within the jamovi statistical spreadsheet (see
   <https://www.jamovi.org> for more information).
 analyses:
+  - title: Discrete variables
+    name: discvars
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Probability Distributions
+    menuTitle: Discrete variables
+    menuSubtitle: null
+  - title: Continuous variables
+    name: contvars
+    ns: saRa
+    menuGroup: saRa
+    menuSubgroup: Probability Distributions
+    menuTitle: Continuous variables
+    menuSubtitle: null
   - title: Categorical Data
     name: catSummary
     ns: saRa
