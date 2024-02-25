@@ -15,6 +15,7 @@ bivnumOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             pearsonR2 = FALSE,
             spearmanR2 = FALSE,
             kendallR2 = FALSE,
+            scat = FALSE,
             marg = "none",
             line = "none",
             se = FALSE, ...) {
@@ -67,6 +68,10 @@ bivnumOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "kendallR2",
                 kendallR2,
                 default=FALSE)
+            private$..scat <- jmvcore::OptionBool$new(
+                "scat",
+                scat,
+                default=FALSE)
             private$..marg <- jmvcore::OptionList$new(
                 "marg",
                 marg,
@@ -98,6 +103,7 @@ bivnumOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..pearsonR2)
             self$.addOption(private$..spearmanR2)
             self$.addOption(private$..kendallR2)
+            self$.addOption(private$..scat)
             self$.addOption(private$..marg)
             self$.addOption(private$..line)
             self$.addOption(private$..se)
@@ -112,6 +118,7 @@ bivnumOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         pearsonR2 = function() private$..pearsonR2$value,
         spearmanR2 = function() private$..spearmanR2$value,
         kendallR2 = function() private$..kendallR2$value,
+        scat = function() private$..scat$value,
         marg = function() private$..marg$value,
         line = function() private$..line$value,
         se = function() private$..se$value),
@@ -125,6 +132,7 @@ bivnumOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..pearsonR2 = NA,
         ..spearmanR2 = NA,
         ..kendallR2 = NA,
+        ..scat = NA,
         ..marg = NA,
         ..line = NA,
         ..se = NA)
@@ -227,11 +235,15 @@ bivnumResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="scat",
-                title="",
+                title="Plots",
+                width=450,
+                height=400,
                 renderFun=".scat",
+                visible="(scat)",
+                requiresData=TRUE,
                 clearWith=list(
-                    "x",
-                    "y",
+                    "xvar",
+                    "yvar",
                     "marg",
                     "line",
                     "se")))}))
@@ -277,6 +289,7 @@ bivnumBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   coefficient of determination for numeric variables (rows dependent).
 #' @param kendallR2 \code{TRUE} or \code{FALSE} (default), provide Kendall's
 #'   coefficient of determination for numeric variables (rows dependent).
+#' @param scat \code{TRUE} or \code{FALSE} (default), show scatterplots
 #' @param marg \code{none} (default), \code{dens}, 'hist', or \code{box},
 #'   provide respectively no plots, density plots, histograms, or box plots on
 #'   the axes
@@ -289,7 +302,7 @@ bivnumBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
-#'   \code{results$scat} \tab \tab \tab \tab \tab A scatter plot \cr
+#'   \code{results$scat} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -310,6 +323,7 @@ bivnum <- function(
     pearsonR2 = FALSE,
     spearmanR2 = FALSE,
     kendallR2 = FALSE,
+    scat = FALSE,
     marg = "none",
     line = "none",
     se = FALSE) {
@@ -336,6 +350,7 @@ bivnum <- function(
         pearsonR2 = pearsonR2,
         spearmanR2 = spearmanR2,
         kendallR2 = kendallR2,
+        scat = scat,
         marg = marg,
         line = line,
         se = se)
