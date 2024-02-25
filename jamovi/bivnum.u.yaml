@@ -106,15 +106,12 @@ children:
                     name: se
                     enable: (!line_none)
               - type: Label
-                label: Regression Line / Curve
+                label: Marginals
                 cell:
                   column: 1
                   row: 1
                 stretchFactor: 2
                 children:
-                  - type: Label
-                    label: Marginals
-                    children:
                       - type: RadioButton
                         name: marg_none
                         optionName: marg
