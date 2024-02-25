@@ -74,7 +74,7 @@ children:
             cell:
               column: 0
               row: 0
-            stretchFactor: 1
+            stretchFactor: 2
             children:
               - type: Label
                 label: Plots
@@ -85,6 +85,10 @@ children:
 
               - type: Label
                 label: Regression Line / Curve
+                cell:
+                  column: 0
+                  row: 1
+                stretchFactor: 2
                 children:
                   - type: RadioButton
                     name: line_none
@@ -101,29 +105,29 @@ children:
                   - type: CheckBox
                     name: se
                     enable: (!line_none)
-          - type: LayoutBox
-            margin: large
-            cell:
-              column: 1
-              row: 0
-            stretchFactor: 1
-            children:
               - type: Label
-                label: Marginals
+                label: Regression Line / Curve
+                cell:
+                  column: 1
+                  row: 1
+                stretchFactor: 2
                 children:
-                  - type: RadioButton
-                    name: marg_none
-                    optionName: marg
-                    optionPart: none
-                  - type: RadioButton
-                    name: marg_dens
-                    optionName: marg
-                    optionPart: dens
-                  - type: RadioButton
-                    name: marg_hist
-                    optionName: marg
-                    optionPart: hist
-                  - type: RadioButton
-                    name: marg_box
-                    optionName: marg
-                    optionPart: box
+                  - type: Label
+                    label: Marginals
+                    children:
+                      - type: RadioButton
+                        name: marg_none
+                        optionName: marg
+                        optionPart: none
+                      - type: RadioButton
+                        name: marg_dens
+                        optionName: marg
+                        optionPart: dens
+                      - type: RadioButton
+                        name: marg_hist
+                        optionName: marg
+                        optionPart: hist
+                      - type: RadioButton
+                        name: marg_box
+                        optionName: marg
+                        optionPart: box
