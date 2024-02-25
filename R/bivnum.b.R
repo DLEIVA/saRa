@@ -55,8 +55,8 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .initScatterPlot = function() {
           image <- self$results$get('scat')
           
-          width <- 400
-          height <- 400
+          width <- 450
+          height <- 450
           
           image$setSize(width * 2, height)
         },        
@@ -138,7 +138,7 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 fill='transparent', color=NA)
             )
             
-            xdens <- ggplot2::ggplot() +
+            xbox <- ggplot2::ggplot() +
               ggplot2::geom_boxplot(
                 data=data, 
                 ggplot2::aes_string(y=xVarName), 
@@ -152,7 +152,7 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               themeBox + 
               ggplot2::coord_flip()
             
-            ydens <- ggplot2::ggplot() +
+            ybox <- ggplot2::ggplot() +
               ggplot2::geom_boxplot(
                 data=data, 
                 ggplot2::aes_string(y=yVarName), 
@@ -167,12 +167,58 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             
             p <- cowplot::insert_xaxis_grob(
               p, 
-              xdens,
+              xbox,
               position="top"
             )
             p <- cowplot::insert_yaxis_grob(
               p, 
-              ydens, 
+              ybox, 
+              position="right"
+            )
+            
+            p <- cowplot::ggdraw(p)          
+          }  else if (marg == 'hist') {          
+            themeHist <- ggplot2::theme(
+              panel.grid.major = ggplot2::element_blank(),
+              panel.grid.minor = ggplot2::element_blank(),
+              strip.background = ggplot2::element_rect(
+                fill='transparent', color=NA
+              ),
+              panel.background=ggplot2::element_rect(
+                fill='transparent', color=NA)
+            )
+            
+            xhist <- ggplot2::ggplot() +
+              ggplot2::geom_histogram(
+                data=data, 
+                ggplot2::aes_string(y=xVarName), 
+#                position=ggplot2::position_dodge(0.8),
+                alpha=0.9,
+                fill ="#ADD8E6"
+              ) + 
+              ggtheme + 
+              themeHist + 
+              ggplot2::coord_flip()
+            
+            yhist <- ggplot2::ggplot() +
+              ggplot2::geom_histogram(
+                data=data, 
+                ggplot2::aes_string(y=yVarName), 
+#                position=ggplot2::position_dodge(0.8),
+                alpha=0.9, 
+                fill ="#ADD8E6"
+              ) + 
+              ggtheme + 
+              themeHist
+            
+            p <- cowplot::insert_xaxis_grob(
+              p, 
+              xhist,
+              position="top"
+            )
+            p <- cowplot::insert_yaxis_grob(
+              p, 
+              yhist, 
               position="right"
             )
             
