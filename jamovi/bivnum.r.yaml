@@ -83,15 +83,18 @@ items:
         - name: v[kendallR2]
           title: Value
           visible: (kendallR2)          
-      
+    
     - name: scat
-      title: ''
+      title: Plots
       type: Image
-      description: A scatter plot
+      width: 450
+      height: 400
       renderFun: .scat
+      visible: (scat)
+      requiresData: true
       clearWith:
-        - x
-        - y
+        - xvar
+        - yvar
         - marg
         - line
         - se      

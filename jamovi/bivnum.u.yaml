@@ -71,12 +71,18 @@ children:
         stretchFactor: 1
         children:
           - type: LayoutBox
-            margin: large
             cell:
               column: 0
               row: 0
             stretchFactor: 1
             children:
+              - type: Label
+                label: Plots
+                fitToGrid: true
+                children:
+                  - type: CheckBox
+                    name: scat
+
               - type: Label
                 label: Regression Line / Curve
                 children:
