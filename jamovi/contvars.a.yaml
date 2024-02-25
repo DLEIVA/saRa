@@ -1,0 +1,12 @@
+---
+name:  contvars
+title: Continuous Distributions
+menuGroup: saRa
+version: '0.1.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+    
+...

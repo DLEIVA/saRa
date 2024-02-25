@@ -1,0 +1,20 @@
+---
+name:  contvars
+title: Continuous Distributions
+jrs:   '1.1'
+
+items:
+    - name: frequencies
+      title: Categorical Data
+      type: Array
+      description: Frequencies Distribution
+      visible: (freq)
+      
+      items: (vars)
+      template:
+          title: Frequencies and odds of $key
+          type: Table
+          visible: (levels($key))
+          columns: []      
+
+...
