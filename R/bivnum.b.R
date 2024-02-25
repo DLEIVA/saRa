@@ -92,7 +92,6 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           p <- p + theme(legend.position = 'none')
           
           if (marg == 'dens') {
-            library(ggridges)
             xdens <- cowplot::axis_canvas(p, axis='x') +
               ggridges::geom_ridgeline(
                 data=data, 
