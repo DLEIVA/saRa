@@ -129,7 +129,55 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             p <- cowplot::ggdraw(p)    
             
           } else if (marg == 'box') {          
-          
+            themeBox <- ggplot2::theme(
+              panel.grid.major = ggplot2::element_blank(),
+              panel.grid.minor = ggplot2::element_blank(),
+              strip.background = ggplot2::element_rect(
+                fill='transparent', color=NA
+              ),
+              panel.background=ggplot2::element_rect(
+                fill='transparent', color=NA)
+            )
+            
+            xdens <- ggplot2::ggplot() +
+              ggplot2::geom_boxplot(
+                data=data, 
+                ggplot2::aes_string(y=xVarName), 
+                position=ggplot2::position_dodge(0.8),
+                width=0.5, 
+                alpha=0.9, 
+                notch=TRUE,
+                fill ="#ADD8E6"
+              ) + 
+              ggtheme + 
+              themeBox + 
+              ggplot2::coord_flip()
+            
+            ydens <- ggplot2::ggplot() +
+              ggplot2::geom_boxplot(
+                data=data, 
+                ggplot2::aes_string(y=yVarName), 
+                position=ggplot2::position_dodge(0.8),
+                width=0.5, 
+                alpha=0.9, 
+                notch=TRUE,
+                fill ="#ADD8E6"
+              ) + 
+              ggtheme + 
+              themeBox
+            
+            p <- cowplot::insert_xaxis_grob(
+              p, 
+              xdens,
+              position="top"
+            )
+            p <- cowplot::insert_yaxis_grob(
+              p, 
+              ydens, 
+              position="right"
+            )
+            
+            p <- cowplot::ggdraw(p)          
           }
           return(p)    
         }
