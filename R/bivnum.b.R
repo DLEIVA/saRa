@@ -92,28 +92,31 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           p <- p + theme(legend.position = 'none')
           
           if (marg == 'dens') {
+            library(ggridges)
             xdens <- cowplot::axis_canvas(p, axis='x') +
               ggridges::geom_ridgeline(
                 data=data, 
                 ggplot2::aes_string(
-                  xVarName, y=0, height=..density..
+                  xVarName, y=0, height="..density.."
                 ),
                 stat='density', 
                 alpha=0.5, 
-                size=.2, 
-                trim=FALSE
-              ) + ggtheme 
+                size=.2,
+                trim=FALSE,
+                fill="#ADD8E6"
+              ) + ggtheme
             
             ydens <- cowplot::axis_canvas(p, axis='y') +
               ggridges::geom_vridgeline(
                 data=data, 
                 ggplot2::aes_string(
-                  x=0, y=yVarName, width=..density..
+                  x=0, y=yVarName, width="..density.."
                 ),
                 stat='ydensity', 
                 alpha=0.5, 
                 size=.2, 
-                trim=FALSE
+                trim=FALSE,
+                fill ="#ADD8E6"
               ) + ggtheme
             
             p <- cowplot::insert_xaxis_grob(
