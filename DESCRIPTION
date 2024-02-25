@@ -31,4 +31,5 @@ Imports: jmvcore (>= 2.2), R6,
     rcompanion,
     effectsize,
     vcd,
-    ggalluvial
+    ggalluvial,
+    cowplot
