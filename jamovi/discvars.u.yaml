@@ -3,4 +3,160 @@ name: discvars
 jus: '3.0'
 stage: 0
 compilerMode: tame
-children: []
+children:
+  - type: CollapseBox
+    label: Distributions
+    stretchFactor: 2
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 1
+        children:
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 0
+            stretchFactor: 2
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: RadioButton
+                    name: binom
+                    optionName: distros
+                    optionPart: binom
+                    children:
+                      - type: TextBox
+                        name: binomn
+                        label: Number of trials (n)
+                        format: number
+                        width: large
+                        enable: (binom)
+                      - type: TextBox
+                        name: binomp
+                        label: Probability (p)
+                        format: number
+                        width: large
+                        enable: (binom)
+                  - type: RadioButton
+                    name: poiss
+                    optionName: distros
+                    optionPart: poiss
+                    children:
+                      - type: TextBox
+                        name: lambda
+                        label: λ
+                        format: number
+                        width: large
+                        enable: (poiss)
+  - type: CollapseBox
+    label: Values and functions
+    stretchFactor: 2
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 1
+        children:
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 0
+            stretchFactor: 1
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: TextBox
+                    name: values
+                    width: large
+                    format: string
+                    enable: (pmf || cdf || surv)
+                  - type: CheckBox
+                    name: pmf
+                  - type: CheckBox
+                    name: cdf
+                  - type: CheckBox
+                    name: surv
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 0
+            stretchFactor: 1
+            children:                    
+                  - type: TextBox
+                    name: qvalues
+                    width: large 
+                    format: string 
+                    enable: (icdf)
+                  - type: CheckBox
+                    name: icdf                    
+
+  - type: CollapseBox
+    label: Plots
+    stretchFactor: 2
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 1
+        children:
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 0
+            stretchFactor: 1
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: TextBox
+                    name: pvalue
+                    format: number
+                    enable: (ppmf || pcdf || psurv)
+                  - type: CheckBox
+                    name: ppmf
+                  - type: CheckBox
+                    name: pcdf
+                  - type: CheckBox
+                    name: psurv
+                  - type: CheckBox
+                    name: pinterv
+                    children:
+                      - type: TextBox
+                        name: x1value
+                        format: number
+                        enable: (pinterv)
+                      - type: TextBox
+                        name: x2value
+                        format: number
+                        enable: (pinterv)                        
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 0
+            stretchFactor: 1
+            children:                    
+                  - type: TextBox
+                    name: pqvalue
+                    format: number 
+                    enable: (picdf)
+                  - type: CheckBox
+                    name: picdf
+                    children:
+                      - type: RadioButton
+                        name: left
+                        optionName: tail
+                        optionPart: left
+                        enable: (picdf)
+                      - type: RadioButton
+                        name: right
+                        optionName: tail
+                        optionPart: right
+                        enable: (picdf)                        
+                      - type: RadioButton
+                        name: central
+                        optionName: tail
+                        optionPart: central                       
+                        enable: (picdf)                        
