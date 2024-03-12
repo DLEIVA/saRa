@@ -9,27 +9,23 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           distros <- self$options$distros
           InfoTab <- self$results$InfoTab
           if (distros=='binom'){
-            distros <- 'Binomial'
+            distroslabel <- 'Binomial'
             param1 <- paste('n:',self$options$binomn)
             param2 <- paste('p:',self$options$binomp)  
+            paramlabel <- paste(param1,param2,sep='; ')
           } else if (distros=='poiss'){
-            distros <- 'Poisson'
+            distroslabel <- 'Poisson'
             param1 <- paste('\u3bb:',self$options$lambda)
-            param2 <- NA
+            paramlabel <- param1
           }
-          Info <- matrix(NA,nrow=2,ncol=2)
+          Info <- matrix(NA,nrow=1,ncol=2)
           
-          Info[1,1] <- distros
-          Info[2,1] <- NA
-          Info[1,2] <- param1
-          Info[2,2] <- param2
+          Info[1,1] <- distroslabel
+          Info[1,2] <- paramlabel
           
           InfoTab$setRow(rowNo=1, values=list(
             DistributionColumn=Info[1,1],
             ParametersColumn=Info[1,2]))
-          InfoTab$setRow(rowNo=2, values=list(
-            DistributionColumn=Info[2,1],
-            ParametersColumn=Info[2,2]))
           
           #if(self$options$pmf){
           #  probValues <- private$.getProbValues()

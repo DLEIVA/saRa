@@ -115,7 +115,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="InfoTab",
                 title="Distribution information",
-                rows=2,
+                rows=1,
                 columns=list(
                     list(
                         `name`="DistributionColumn", 

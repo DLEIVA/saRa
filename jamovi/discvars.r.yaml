@@ -7,7 +7,7 @@ items:
     - name: InfoTab
       title: Distribution information
       type: Table
-      rows: 2
+      rows: 1
       columns:
         - name: DistributionColumn
           title: Distribution
