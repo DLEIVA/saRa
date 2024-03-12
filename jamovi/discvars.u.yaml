@@ -46,7 +46,7 @@ children:
                     children:
                       - type: TextBox
                         name: lambda
-                        label: λ
+                        label: Mean (λ)
                         format: number
                         width: large
                         enable: (poiss)
@@ -69,9 +69,9 @@ children:
                 margin: large
                 children:
                   - type: TextBox
-                    name: values
+                    name: valuesfunc
                     width: large
-                    format: string
+                    format: string  
                     enable: (pmf || cdf || surv)
                   - type: CheckBox
                     name: pmf
@@ -84,79 +84,15 @@ children:
               column: 1
               row: 0
             stretchFactor: 1
-            children:                    
-                  - type: TextBox
-                    name: qvalues
-                    width: large 
-                    format: string 
-                    enable: (icdf)
-                  - type: CheckBox
-                    name: icdf                    
-
-  - type: CollapseBox
-    label: Plots
-    stretchFactor: 2
-    collapsed: true
-    children:
-      - type: LayoutBox
-        margin: large
-        stretchFactor: 1
-        children:
-          - type: LayoutBox
-            cell:
-              column: 0
-              row: 0
-            stretchFactor: 1
             children:
               - type: LayoutBox
                 margin: large
                 children:
                   - type: TextBox
-                    name: pvalue
-                    format: number
-                    enable: (ppmf || pcdf || psurv)
+                    name: qvalues
+                    width: large
+                    format: string
+                    enable: (icdf)
                   - type: CheckBox
-                    name: ppmf
-                  - type: CheckBox
-                    name: pcdf
-                  - type: CheckBox
-                    name: psurv
-                  - type: CheckBox
-                    name: pinterv
-                    children:
-                      - type: TextBox
-                        name: x1value
-                        format: number
-                        enable: (pinterv)
-                      - type: TextBox
-                        name: x2value
-                        format: number
-                        enable: (pinterv)                        
-          - type: LayoutBox
-            cell:
-              column: 1
-              row: 0
-            stretchFactor: 1
-            children:                    
-                  - type: TextBox
-                    name: pqvalue
-                    format: number 
-                    enable: (picdf)
-                  - type: CheckBox
-                    name: picdf
-                    children:
-                      - type: RadioButton
-                        name: left
-                        optionName: tail
-                        optionPart: left
-                        enable: (picdf)
-                      - type: RadioButton
-                        name: right
-                        optionName: tail
-                        optionPart: right
-                        enable: (picdf)                        
-                      - type: RadioButton
-                        name: central
-                        optionName: tail
-                        optionPart: central                       
-                        enable: (picdf)                        
+                    name: icdf
+

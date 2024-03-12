@@ -7,25 +7,15 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             distros = "binom",
-            binomn = NULL,
-            binomp = NULL,
+            binomn = 10,
+            binomp = 0.5,
             lambda = NULL,
-            values = NULL,
+            valuesfunc = NULL,
             pmf = FALSE,
             cdf = FALSE,
             surv = FALSE,
             icdf = FALSE,
-            qvalues = NULL,
-            pvalue = NULL,
-            ppmf = FALSE,
-            pcdf = FALSE,
-            pinterv = FALSE,
-            x1value = NULL,
-            x2value = NULL,
-            psurv = FALSE,
-            picdf = FALSE,
-            pqvalue = NULL,
-            tail = "left", ...) {
+            qvalues = NULL, ...) {
 
             super$initialize(
                 package="saRa",
@@ -42,16 +32,18 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default="binom")
             private$..binomn <- jmvcore::OptionInteger$new(
                 "binomn",
-                binomn)
+                binomn,
+                default=10)
             private$..binomp <- jmvcore::OptionNumber$new(
                 "binomp",
-                binomp)
+                binomp,
+                default=0.5)
             private$..lambda <- jmvcore::OptionNumber$new(
                 "lambda",
                 lambda)
-            private$..values <- jmvcore::OptionString$new(
-                "values",
-                values)
+            private$..valuesfunc <- jmvcore::OptionString$new(
+                "valuesfunc",
+                valuesfunc)
             private$..pmf <- jmvcore::OptionBool$new(
                 "pmf",
                 pmf,
@@ -71,123 +63,47 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..qvalues <- jmvcore::OptionString$new(
                 "qvalues",
                 qvalues)
-            private$..pvalue <- jmvcore::OptionNumber$new(
-                "pvalue",
-                pvalue)
-            private$..ppmf <- jmvcore::OptionBool$new(
-                "ppmf",
-                ppmf,
-                default=FALSE)
-            private$..pcdf <- jmvcore::OptionBool$new(
-                "pcdf",
-                pcdf,
-                default=FALSE)
-            private$..pinterv <- jmvcore::OptionBool$new(
-                "pinterv",
-                pinterv,
-                default=FALSE)
-            private$..x1value <- jmvcore::OptionNumber$new(
-                "x1value",
-                x1value)
-            private$..x2value <- jmvcore::OptionNumber$new(
-                "x2value",
-                x2value)
-            private$..psurv <- jmvcore::OptionBool$new(
-                "psurv",
-                psurv,
-                default=FALSE)
-            private$..picdf <- jmvcore::OptionBool$new(
-                "picdf",
-                picdf,
-                default=FALSE)
-            private$..pqvalue <- jmvcore::OptionNumber$new(
-                "pqvalue",
-                pqvalue)
-            private$..tail <- jmvcore::OptionList$new(
-                "tail",
-                tail,
-                options=list(
-                    "left",
-                    "right",
-                    "central"),
-                default="left")
 
             self$.addOption(private$..distros)
             self$.addOption(private$..binomn)
             self$.addOption(private$..binomp)
             self$.addOption(private$..lambda)
-            self$.addOption(private$..values)
+            self$.addOption(private$..valuesfunc)
             self$.addOption(private$..pmf)
             self$.addOption(private$..cdf)
             self$.addOption(private$..surv)
             self$.addOption(private$..icdf)
             self$.addOption(private$..qvalues)
-            self$.addOption(private$..pvalue)
-            self$.addOption(private$..ppmf)
-            self$.addOption(private$..pcdf)
-            self$.addOption(private$..pinterv)
-            self$.addOption(private$..x1value)
-            self$.addOption(private$..x2value)
-            self$.addOption(private$..psurv)
-            self$.addOption(private$..picdf)
-            self$.addOption(private$..pqvalue)
-            self$.addOption(private$..tail)
         }),
     active = list(
         distros = function() private$..distros$value,
         binomn = function() private$..binomn$value,
         binomp = function() private$..binomp$value,
         lambda = function() private$..lambda$value,
-        values = function() private$..values$value,
+        valuesfunc = function() private$..valuesfunc$value,
         pmf = function() private$..pmf$value,
         cdf = function() private$..cdf$value,
         surv = function() private$..surv$value,
         icdf = function() private$..icdf$value,
-        qvalues = function() private$..qvalues$value,
-        pvalue = function() private$..pvalue$value,
-        ppmf = function() private$..ppmf$value,
-        pcdf = function() private$..pcdf$value,
-        pinterv = function() private$..pinterv$value,
-        x1value = function() private$..x1value$value,
-        x2value = function() private$..x2value$value,
-        psurv = function() private$..psurv$value,
-        picdf = function() private$..picdf$value,
-        pqvalue = function() private$..pqvalue$value,
-        tail = function() private$..tail$value),
+        qvalues = function() private$..qvalues$value),
     private = list(
         ..distros = NA,
         ..binomn = NA,
         ..binomp = NA,
         ..lambda = NA,
-        ..values = NA,
+        ..valuesfunc = NA,
         ..pmf = NA,
         ..cdf = NA,
         ..surv = NA,
         ..icdf = NA,
-        ..qvalues = NA,
-        ..pvalue = NA,
-        ..ppmf = NA,
-        ..pcdf = NA,
-        ..pinterv = NA,
-        ..x1value = NA,
-        ..x2value = NA,
-        ..psurv = NA,
-        ..picdf = NA,
-        ..pqvalue = NA,
-        ..tail = NA)
+        ..qvalues = NA)
 )
 
 discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "discvarsResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
-        probstab = function() private$.items[["probstab"]],
-        quantilestab = function() private$.items[["quantilestab"]],
-        ppmf = function() private$.items[["ppmf"]],
-        pcdf = function() private$.items[["pcdf"]],
-        psurvival = function() private$.items[["psurvival"]],
-        picdf = function() private$.items[["picdf"]]),
+        InfoTab = function() private$.items[["InfoTab"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -195,110 +111,21 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Discrete Distributions")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="text",
-                title="Discrete distributions"))
             self$add(jmvcore::Table$new(
                 options=options,
-                name="probstab",
-                title="Probabilities table",
-                visible="( binom || poiss )",
+                name="InfoTab",
+                title="Distribution information",
+                rows=2,
                 columns=list(
                     list(
-                        `name`="t[pmf]", 
-                        `title`="PMF", 
+                        `name`="DistributionColumn", 
+                        `title`="Distribution", 
+                        `type`="text"),
+                    list(
+                        `name`="ParametersColumn", 
+                        `title`="Parameter(s)", 
                         `type`="text", 
-                        `content`="Pr(X = x)", 
-                        `visible`="(pmf)"),
-                    list(
-                        `name`="v[pmf]", 
-                        `title`="Value", 
-                        `visible`="(pmf)"),
-                    list(
-                        `name`="t[cdf]", 
-                        `title`="CDF", 
-                        `type`="text", 
-                        `content`="Pr(X \u2264 x)", 
-                        `visible`="(cdf)"),
-                    list(
-                        `name`="v[cdf]", 
-                        `title`="Value", 
-                        `visible`="(cdf)"),
-                    list(
-                        `name`="t[surv]", 
-                        `title`="Survival", 
-                        `type`="text", 
-                        `content`="Pr(X \u2265 x)", 
-                        `visible`="(surv)"),
-                    list(
-                        `name`="v[surv]", 
-                        `title`="Value", 
-                        `visible`="(surv)"))))
-            self$add(jmvcore::Table$new(
-                options=options,
-                name="quantilestab",
-                title="Quantiles table",
-                visible="( binom || poiss )",
-                columns=list(
-                    list(
-                        `name`="t[icdf]", 
-                        `title`="ICDF", 
-                        `type`="text", 
-                        `content`="ICDF", 
-                        `visible`="(icdf)"),
-                    list(
-                        `name`="v[icdf]", 
-                        `title`="Value", 
-                        `visible`="(icdf)"))))
-            self$add(jmvcore::Image$new(
-                options=options,
-                name="ppmf",
-                title="Probability Mass Function Plot",
-                width=450,
-                height=400,
-                renderFun=".ppmf",
-                visible="(ppmf)",
-                requiresData=FALSE,
-                clearWith=list(
-                    "distros",
-                    "pvalue")))
-            self$add(jmvcore::Image$new(
-                options=options,
-                name="pcdf",
-                title="Cumulative Distribution Function Plot",
-                width=450,
-                height=400,
-                renderFun=".pcdf",
-                visible="(pcdf)",
-                requiresData=FALSE,
-                clearWith=list(
-                    "distros",
-                    "pvalue")))
-            self$add(jmvcore::Image$new(
-                options=options,
-                name="psurvival",
-                title="Survival Function Plot",
-                width=450,
-                height=400,
-                renderFun=".psurv",
-                visible="(psurv)",
-                requiresData=FALSE,
-                clearWith=list(
-                    "distros",
-                    "pvalue")))
-            self$add(jmvcore::Image$new(
-                options=options,
-                name="picdf",
-                title="Inverse Cumulative Distribution Function Plot",
-                width=450,
-                height=400,
-                renderFun=".`cidf",
-                visible="(pcidf)",
-                requiresData=FALSE,
-                clearWith=list(
-                    "distros",
-                    "pvalue")))}))
+                        `visible`="(distros)"))))}))
 
 discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "discvarsBase",
@@ -331,7 +158,8 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param binomp a number specifying success probability in binomial
 #'   distribution
 #' @param lambda lambda parameter for Poisson distribution
-#' @param values a comma-separated list specifying random variables' values
+#' @param valuesfunc a comma-separated list specifying random variables'
+#'   values
 #' @param pmf \code{TRUE} or \code{FALSE} (default), provide probability mass
 #'   function for a discrete distribution
 #' @param cdf \code{TRUE} or \code{FALSE} (default), provide cumulative
@@ -342,65 +170,29 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   cumulative distribution function for a discrete distribution
 #' @param qvalues a comma-separated list specifying quantiles for a random
 #'   variable
-#' @param pvalue a number specifying random variables' value to be plotted
-#' @param ppmf \code{TRUE} or \code{FALSE} (default), provide probability mass
-#'   function for a discrete distribution to be plotted
-#' @param pcdf \code{TRUE} or \code{FALSE} (default), provide cumulative
-#'   distribution function for a discrete distribution to be plotted
-#' @param pinterv \code{TRUE} or \code{FALSE} (default), provide probability
-#'   plot within an interval
-#' @param x1value a number specifying X1 value for probability plot within
-#'   interval
-#' @param x2value a number specifying X2 value for probability plot within
-#'   interval
-#' @param psurv \code{TRUE} or \code{FALSE} (default), provide survival
-#'   function for a discrete distribution to be plotted
-#' @param picdf \code{TRUE} or \code{FALSE} (default), provide inverse of
-#'   cumulative distribution function for a discrete distribution to be plotted
-#' @param pqvalue a number specifying a quantile for a random variable to be
-#'   plotted
-#' @param tail \code{left} (default), \code{right}, or \code{central},
-#'   specifies the tail to be plotted in the ICDF plot for discrete
-#'   distributions
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$probstab} \tab \tab \tab \tab \tab A table with probabilities for selected distributions \cr
-#'   \code{results$quantilestab} \tab \tab \tab \tab \tab A table with quantiles for selected distributions \cr
-#'   \code{results$ppmf} \tab \tab \tab \tab \tab an image \cr
-#'   \code{results$pcdf} \tab \tab \tab \tab \tab an image \cr
-#'   \code{results$psurvival} \tab \tab \tab \tab \tab an image \cr
-#'   \code{results$picdf} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$InfoTab} \tab \tab \tab \tab \tab a table \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#' \code{results$probstab$asDF}
+#' \code{results$InfoTab$asDF}
 #'
-#' \code{as.data.frame(results$probstab)}
+#' \code{as.data.frame(results$InfoTab)}
 #'
 #' @export
 discvars <- function(
     distros = "binom",
-    binomn,
-    binomp,
+    binomn = 10,
+    binomp = 0.5,
     lambda,
-    values,
+    valuesfunc,
     pmf = FALSE,
     cdf = FALSE,
     surv = FALSE,
     icdf = FALSE,
-    qvalues,
-    pvalue,
-    ppmf = FALSE,
-    pcdf = FALSE,
-    pinterv = FALSE,
-    x1value,
-    x2value,
-    psurv = FALSE,
-    picdf = FALSE,
-    pqvalue,
-    tail = "left") {
+    qvalues) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("discvars requires jmvcore to be installed (restart may be required)")
@@ -411,22 +203,12 @@ discvars <- function(
         binomn = binomn,
         binomp = binomp,
         lambda = lambda,
-        values = values,
+        valuesfunc = valuesfunc,
         pmf = pmf,
         cdf = cdf,
         surv = surv,
         icdf = icdf,
-        qvalues = qvalues,
-        pvalue = pvalue,
-        ppmf = ppmf,
-        pcdf = pcdf,
-        pinterv = pinterv,
-        x1value = x1value,
-        x2value = x2value,
-        psurv = psurv,
-        picdf = picdf,
-        pqvalue = pqvalue,
-        tail = tail)
+        qvalues = qvalues)
 
     analysis <- discvarsClass$new(
         options = options,

@@ -1,112 +1,19 @@
 ---
-name:  discvars
+name: discvars
 title: Discrete Distributions
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Discrete distributions
-      type:  Preformatted 
-      
-    - name: probstab
-      title: Probabilities table
-      description: A table with probabilities for selected distributions
-      visible: ( binom || poiss )
+    - name: InfoTab
+      title: Distribution information
       type: Table
+      rows: 2
       columns:
-        - name: t[pmf]
-          title: 'PMF'
+        - name: DistributionColumn
+          title: Distribution
           type: text
-          content: "Pr(X = x)"
-          visible: (pmf)
-        
-        - name: v[pmf]
-          title: Value
-          visible: (pmf) 
-
-        - name: t[cdf]
-          title: 'CDF'
+        - name: ParametersColumn
+          title: Parameter(s)
           type: text
-          content: "Pr(X ≤ x)"
-          visible: (cdf)
-        
-        - name: v[cdf]
-          title: Value
-          visible: (cdf)
-          
-        - name: t[surv]
-          title: 'Survival'
-          type: text
-          content: "Pr(X > x)"
-          visible: (surv)
-        
-        - name: v[surv]
-          title: Value
-          visible: (surv)          
-          
-    - name: quantilestab
-      title: Quantiles table
-      description: A table with quantiles for selected distributions
-      visible: ( binom || poiss )
-      type: Table
-      columns:    
-        - name: t[icdf]
-          title: 'ICDF'
-          type: text
-          content: "ICDF"
-          visible: (icdf)
-        
-        - name: v[icdf]
-          title: Value
-          visible: (icdf) 
-      
-          
-    - name: ppmf
-      title: Probability Mass Function Plot
-      type: Image
-      width: 450
-      height: 400
-      renderFun: .ppmf
-      visible: (ppmf)
-      requiresData: false
-      clearWith:
-        - distros
-        - pvalue
-        
-    - name: pcdf
-      title: Cumulative Distribution Function Plot
-      type: Image
-      width: 450
-      height: 400
-      renderFun: .pcdf
-      visible: (pcdf)
-      requiresData: false
-      clearWith:
-        - distros
-        - pvalue
-        
-    - name: psurvival
-      title: Survival Function Plot
-      type: Image
-      width: 450
-      height: 400
-      renderFun: .psurv
-      visible: (psurv)
-      requiresData: false
-      clearWith:
-        - distros
-        - pvalue 
-        
-    - name: picdf
-      title: Inverse Cumulative Distribution Function Plot
-      type: Image
-      width: 450
-      height: 400
-      renderFun: .`cidf
-      visible: (pcidf)
-      requiresData: false
-      clearWith:
-        - distros
-        - pvalue         
-
+          visible: (distros)
 ...
