@@ -1,13 +1,13 @@
 discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     "discvarsClass",
     inherit = discvarsBase,
-    private = list(
-      .init=function() {
-        #private$.initProbsTable()
+     private = list(
+       .init=function() {
       },       
         .run = function() {
           distros <- self$options$distros
           InfoTab <- self$results$InfoTab
+          probstab <- self$results$probstab
           if (distros=='binom'){
             distroslabel <- 'Binomial'
             param1 <- paste('n:',self$options$binomn)
@@ -27,32 +27,51 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             DistributionColumn=Info[1,1],
             ParametersColumn=Info[1,2]))
           
-          #if(self$options$pmf){
-          #  probValues <- private$.getProbValues()
-          #  nprobValues <- length(probValues)
-          #}
-    
+          varValues <- private$.getProbValues()
+          
+          if(length(varValues)>0){
+            if(length(varValues) > 1){
+              for(k in 2:length(varValues))
+                probstab$addRow(rowKey=k,values=list(`x`='',
+                                                     `pmf`='',`cdf`='',`surv`=''))
+            }
+            
+            ProbRowNo <- 1
+            
+            for(i in 1:length(varValues)){
+              varname <- paste0('x = ',varValues[i])
+              pmfval <- if(distros=='binom'){
+                dbinom(varValues[i],self$options$binomn,self$options$binomp)
+              } else if(distros=='poiss'){
+                dpois(varValues[i],self$options$lambda)
+              }
+              cdfval <- if(distros=='binom'){
+                pbinom(varValues[i],self$options$binomn,self$options$binomp)
+              } else if(distros=='poiss'){
+                ppois(varValues[i],self$options$lambda)
+              }
+              survval <- if(distros=='binom'){
+                pbinom(varValues[i],self$options$binomn,self$options$binomp,lower.tail=FALSE)
+              } else if(distros=='poiss'){
+                ppois(varValues[i],self$options$lambda,lower.tail=FALSE)
+              }
+              
+              probstab$setRow(rowNo=ProbRowNo, values=list(`varValues`=varname,
+                                                           `pmf`=pmfval,`cdf`=cdfval,`surv`=survval))
+              ProbRowNo <- ProbRowNo + 1
+            }
+          }
         },
-      #### Init tables ----
-      .initProbsTable = function(){
-        probstab <- self$results$probstab
-        probstab$addRow(rowKey=1, values=list())
-        if((self$options$pmf) == FALSE){
-          probstab <- self$results$probstab
-          probstab$addColumn(
-            name=' ',
-            title=' ',
-            type='text')
-        }      
+      #### Init plots ----
+
       },
-      #### Additional functions ----
+    #### Helper functions ----
       .getProbValues = function(){
-        probValues <- self$options$values
-        if (is.character(probValues))
+        probValues <- self$options$valuesfunc
+        if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
-        probValues[probValues < 0 | probValues > 1] <- NA
+        probValues[probValues < 0 ] <- NA
         probValues <- probValues[!is.na(probValues)]
-        
         return(probValues)
       }
       )

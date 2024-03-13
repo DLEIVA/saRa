@@ -103,7 +103,8 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "discvarsResults",
     inherit = jmvcore::Group,
     active = list(
-        InfoTab = function() private$.items[["InfoTab"]]),
+        InfoTab = function() private$.items[["InfoTab"]],
+        probstab = function() private$.items[["probstab"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -125,7 +126,34 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="ParametersColumn", 
                         `title`="Parameter(s)", 
                         `type`="text", 
-                        `visible`="(distros)"))))}))
+                        `visible`="(distros)"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="probstab",
+                title="Probabilities table",
+                visible="(pmf | cdf | surv)",
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="varValues", 
+                        `title`="x", 
+                        `type`="text", 
+                        `visible`="(distros)"),
+                    list(
+                        `name`="pmf", 
+                        `title`="Pr(X = x)", 
+                        `type`="number", 
+                        `visible`="(pmf)"),
+                    list(
+                        `name`="cdf", 
+                        `title`="Pr(X \u2264 x)", 
+                        `type`="number", 
+                        `visible`="(cdf)"),
+                    list(
+                        `name`="surv", 
+                        `title`="Pr(X > x)", 
+                        `type`="number", 
+                        `visible`="(surv)"))))}))
 
 discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "discvarsBase",
@@ -173,6 +201,7 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$InfoTab} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$probstab} \tab \tab \tab \tab \tab A table with probabilities for selected distributions \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:

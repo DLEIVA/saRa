@@ -16,4 +16,28 @@ items:
           title: Parameter(s)
           type: text
           visible: (distros)
+          
+    - name: probstab
+      title: Probabilities table
+      description: A table with probabilities for selected distributions
+      visible: (pmf | cdf | surv)
+      type: Table
+      rows: 1
+      columns:
+        - name: varValues
+          title: "x"
+          type: text
+          visible: (distros)
+        - name: pmf
+          title: "Pr(X = x)"
+          type: number
+          visible: (pmf)
+        - name: cdf
+          title: "Pr(X ≤ x)"
+          type: number
+          visible: (cdf)
+        - name: surv
+          title: "Pr(X > x)"
+          type: number
+          visible: (surv)          
 ...
