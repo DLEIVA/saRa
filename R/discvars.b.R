@@ -8,6 +8,8 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           distros <- self$options$distros
           InfoTab <- self$results$InfoTab
           probstab <- self$results$probstab
+          quantstab <- self$results$quantstab
+          
           if (distros=='binom'){
             distroslabel <- 'Binomial'
             param1 <- paste('n:',self$options$binomn)
@@ -61,18 +63,56 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               ProbRowNo <- ProbRowNo + 1
             }
           }
+          
+          quantValues <- private$.getQuantValues()
+          
+          if(length(quantValues)>0){
+            if(length(quantValues) > 1){
+              for(k in 2:length(quantValues))
+                quantstab$addRow(rowKey=k,values=list(`Prob`='',
+                                                     `lTail`='',`rTail`=''))
+            }
+            
+            ProbRowNo <- 1
+            
+            for(i in 1:length(quantValues)){
+              varname <- paste0('Prob = ',quantValues[i])
+              lTail <- if(distros=='binom'){
+                qbinom(quantValues[i],self$options$binomn,self$options$binomp)
+              } else if(distros=='poiss'){
+                qpois(quantValues[i],self$options$lambda)
+              }
+              rTail <- if(distros=='binom'){
+                qbinom(quantValues[i],self$options$binomn,self$options$binomp,lower.tail=FALSE)
+              } else if(distros=='poiss'){
+                qpois(quantValues[i],self$options$lambda,lower.tail=FALSE)
+              }
+              
+              quantstab$setRow(rowNo=ProbRowNo, values=list(`quantValues`=varname,
+                                                           `lTail`=lTail,`rTail`=rTail))
+              ProbRowNo <- ProbRowNo + 1
+            }
+          }          
+          
         },
       #### Init plots ----
 
-      },
     #### Helper functions ----
       .getProbValues = function(){
         probValues <- self$options$valuesfunc
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
         probValues[probValues < 0 ] <- NA
-        probValues <- probValues[!is.na(probValues)]
+        probValues <- unique(probValues[!is.na(probValues)])
         return(probValues)
-      }
+      },
+    .getQuantValues = function(){
+      quantValues <- self$options$qvalues
+      if (!is.na(quantValues) && is.character(quantValues))
+        quantValues <- as.numeric(unlist(strsplit(quantValues, ",")))
+      quantValues[quantValues < 0 | quantValues > 1] <- NA
+      quantValues <- unique(quantValues[!is.na(quantValues)])
+      return(quantValues)
+    }    
       )
 )

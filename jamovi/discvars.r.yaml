@@ -39,5 +39,26 @@ items:
         - name: surv
           title: "Pr(X > x)"
           type: number
-          visible: (surv)          
+          visible: (surv) 
+          
+    - name: quantstab
+      title: Quantiles table
+      description: A table with quantiles for selected distributions
+      visible: (icdf)
+      type: Table
+      rows: 1
+      columns:
+        - name: quantValues
+          title: "Prob"
+          type: text
+          visible: (distros)
+        - name: lTail
+          title: "Left tail"
+          type: number
+          visible: (icdf)
+        - name: rTail
+          title: "Right tail"
+          type: number
+          visible: (icdf)
+          
 ...

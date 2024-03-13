@@ -15,7 +15,17 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             cdf = FALSE,
             surv = FALSE,
             icdf = FALSE,
-            qvalues = NULL, ...) {
+            qvalues = NULL,
+            ppvalue = NULL,
+            ppmf = FALSE,
+            pcdf = FALSE,
+            pinterv = FALSE,
+            x1value = NULL,
+            x2value = NULL,
+            psurv = FALSE,
+            picdf = FALSE,
+            pqvalue = NULL,
+            tail = "left", ...) {
 
             super$initialize(
                 package="saRa",
@@ -63,6 +73,46 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..qvalues <- jmvcore::OptionString$new(
                 "qvalues",
                 qvalues)
+            private$..ppvalue <- jmvcore::OptionNumber$new(
+                "ppvalue",
+                ppvalue)
+            private$..ppmf <- jmvcore::OptionBool$new(
+                "ppmf",
+                ppmf,
+                default=FALSE)
+            private$..pcdf <- jmvcore::OptionBool$new(
+                "pcdf",
+                pcdf,
+                default=FALSE)
+            private$..pinterv <- jmvcore::OptionBool$new(
+                "pinterv",
+                pinterv,
+                default=FALSE)
+            private$..x1value <- jmvcore::OptionNumber$new(
+                "x1value",
+                x1value)
+            private$..x2value <- jmvcore::OptionNumber$new(
+                "x2value",
+                x2value)
+            private$..psurv <- jmvcore::OptionBool$new(
+                "psurv",
+                psurv,
+                default=FALSE)
+            private$..picdf <- jmvcore::OptionBool$new(
+                "picdf",
+                picdf,
+                default=FALSE)
+            private$..pqvalue <- jmvcore::OptionNumber$new(
+                "pqvalue",
+                pqvalue)
+            private$..tail <- jmvcore::OptionList$new(
+                "tail",
+                tail,
+                options=list(
+                    "left",
+                    "right",
+                    "central"),
+                default="left")
 
             self$.addOption(private$..distros)
             self$.addOption(private$..binomn)
@@ -74,6 +124,16 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..surv)
             self$.addOption(private$..icdf)
             self$.addOption(private$..qvalues)
+            self$.addOption(private$..ppvalue)
+            self$.addOption(private$..ppmf)
+            self$.addOption(private$..pcdf)
+            self$.addOption(private$..pinterv)
+            self$.addOption(private$..x1value)
+            self$.addOption(private$..x2value)
+            self$.addOption(private$..psurv)
+            self$.addOption(private$..picdf)
+            self$.addOption(private$..pqvalue)
+            self$.addOption(private$..tail)
         }),
     active = list(
         distros = function() private$..distros$value,
@@ -85,7 +145,17 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         cdf = function() private$..cdf$value,
         surv = function() private$..surv$value,
         icdf = function() private$..icdf$value,
-        qvalues = function() private$..qvalues$value),
+        qvalues = function() private$..qvalues$value,
+        ppvalue = function() private$..ppvalue$value,
+        ppmf = function() private$..ppmf$value,
+        pcdf = function() private$..pcdf$value,
+        pinterv = function() private$..pinterv$value,
+        x1value = function() private$..x1value$value,
+        x2value = function() private$..x2value$value,
+        psurv = function() private$..psurv$value,
+        picdf = function() private$..picdf$value,
+        pqvalue = function() private$..pqvalue$value,
+        tail = function() private$..tail$value),
     private = list(
         ..distros = NA,
         ..binomn = NA,
@@ -96,7 +166,17 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..cdf = NA,
         ..surv = NA,
         ..icdf = NA,
-        ..qvalues = NA)
+        ..qvalues = NA,
+        ..ppvalue = NA,
+        ..ppmf = NA,
+        ..pcdf = NA,
+        ..pinterv = NA,
+        ..x1value = NA,
+        ..x2value = NA,
+        ..psurv = NA,
+        ..picdf = NA,
+        ..pqvalue = NA,
+        ..tail = NA)
 )
 
 discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -104,7 +184,8 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Group,
     active = list(
         InfoTab = function() private$.items[["InfoTab"]],
-        probstab = function() private$.items[["probstab"]]),
+        probstab = function() private$.items[["probstab"]],
+        quantstab = function() private$.items[["quantstab"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -153,7 +234,29 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="surv", 
                         `title`="Pr(X > x)", 
                         `type`="number", 
-                        `visible`="(surv)"))))}))
+                        `visible`="(surv)"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="quantstab",
+                title="Quantiles table",
+                visible="(icdf)",
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="quantValues", 
+                        `title`="Prob", 
+                        `type`="text", 
+                        `visible`="(distros)"),
+                    list(
+                        `name`="lTail", 
+                        `title`="Left tail", 
+                        `type`="number", 
+                        `visible`="(icdf)"),
+                    list(
+                        `name`="rTail", 
+                        `title`="Right tail", 
+                        `type`="number", 
+                        `visible`="(icdf)"))))}))
 
 discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "discvarsBase",
@@ -198,10 +301,31 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   cumulative distribution function for a discrete distribution
 #' @param qvalues a comma-separated list specifying quantiles for a random
 #'   variable
+#' @param ppvalue a number specifying random variables' value to be plotted
+#' @param ppmf \code{TRUE} or \code{FALSE} (default), provide probability mass
+#'   function for a discrete distribution to be plotted
+#' @param pcdf \code{TRUE} or \code{FALSE} (default), provide cumulative
+#'   distribution function for a discrete distribution to be plotted
+#' @param pinterv \code{TRUE} or \code{FALSE} (default), provide probability
+#'   plot within an interval
+#' @param x1value a number specifying X1 value for probability plot within
+#'   interval
+#' @param x2value a number specifying X2 value for probability plot within
+#'   interval
+#' @param psurv \code{TRUE} or \code{FALSE} (default), provide survival
+#'   function for a discrete distribution to be plotted
+#' @param picdf \code{TRUE} or \code{FALSE} (default), provide inverse of
+#'   cumulative distribution function for a discrete distribution to be plotted
+#' @param pqvalue a number specifying a quantile for a random variable to be
+#'   plotted
+#' @param tail \code{left} (default), \code{right}, or \code{central},
+#'   specifies the tail to be plotted in the ICDF plot for discrete
+#'   distributions
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$InfoTab} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$probstab} \tab \tab \tab \tab \tab A table with probabilities for selected distributions \cr
+#'   \code{results$quantstab} \tab \tab \tab \tab \tab A table with quantiles for selected distributions \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -221,7 +345,17 @@ discvars <- function(
     cdf = FALSE,
     surv = FALSE,
     icdf = FALSE,
-    qvalues) {
+    qvalues,
+    ppvalue,
+    ppmf = FALSE,
+    pcdf = FALSE,
+    pinterv = FALSE,
+    x1value,
+    x2value,
+    psurv = FALSE,
+    picdf = FALSE,
+    pqvalue,
+    tail = "left") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("discvars requires jmvcore to be installed (restart may be required)")
@@ -237,7 +371,17 @@ discvars <- function(
         cdf = cdf,
         surv = surv,
         icdf = icdf,
-        qvalues = qvalues)
+        qvalues = qvalues,
+        ppvalue = ppvalue,
+        ppmf = ppmf,
+        pcdf = pcdf,
+        pinterv = pinterv,
+        x1value = x1value,
+        x2value = x2value,
+        psurv = psurv,
+        picdf = picdf,
+        pqvalue = pqvalue,
+        tail = tail)
 
     analysis <- discvarsClass$new(
         options = options,

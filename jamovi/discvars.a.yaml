@@ -89,5 +89,87 @@ options:
           R: >
             a comma-separated list specifying quantiles for a random variable     
             
+    - name: ppvalue
+      title: Random Variable Value
+      type: Number
+      description:
+          R: >
+            a number specifying random variables' value to be plotted
 
+    - name: ppmf
+      title: "Probability Mass Function (Pr(X = x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide probability mass function for a discrete distribution to be plotted            
+
+    - name: pcdf
+      title: "Cumulative Distribution Function (Pr(X ≤ x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide cumulative distribution function for a discrete distribution to be plotted
+            
+    - name: pinterv
+      title: "Pr(x1 ≤ X ≤ x2)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide probability plot within an interval 
+            
+    - name: x1value
+      title: x1 Value
+      type: Number
+      description:
+          R: >
+            a number specifying X1 value for probability plot within interval 
+          
+    - name: x2value
+      title: x2 Value
+      type: Number
+      description:
+          R: >
+            a number specifying X2 value for probability plot within interval
+            
+    - name: psurv
+      title: "Survival function (Pr(X > x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide survival function for a discrete distribution to be plotted            
+            
+    - name: picdf
+      title: "Inverse of CDF (Quantiles)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a discrete distribution to be plotted            
+
+    - name: pqvalue
+      title: Quantile Value
+      type: Number
+      description:
+          R: >
+            a number specifying a quantile for a random variable to be plotted              
+            
+    - name: tail
+      title: Tail of the distribution
+      type: List
+      options:
+        - title: Left
+          name: left
+        - title: Right
+          name: right
+        - title: Central
+          name: central          
+      default: left    
+      description:
+          R: >
+            `left` (default), `right`, or `central`, specifies the tail to be plotted in the ICDF plot for discrete distributions
+            
 ...
