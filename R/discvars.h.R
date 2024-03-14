@@ -185,7 +185,12 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     active = list(
         InfoTab = function() private$.items[["InfoTab"]],
         probstab = function() private$.items[["probstab"]],
-        quantstab = function() private$.items[["quantstab"]]),
+        quantstab = function() private$.items[["quantstab"]],
+        pmfplot = function() private$.items[["pmfplot"]],
+        cdfplot = function() private$.items[["cdfplot"]],
+        survplot = function() private$.items[["survplot"]],
+        intervplot = function() private$.items[["intervplot"]],
+        icdfplot = function() private$.items[["icdfplot"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -256,7 +261,56 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="rTail", 
                         `title`="Right tail", 
                         `type`="number", 
-                        `visible`="(icdf)"))))}))
+                        `visible`="(icdf)"))))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="pmfplot",
+                title="Probability mass function plot $distros",
+                width=450,
+                height=400,
+                renderFun=".ppmf",
+                visible="(ppmf)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="cdfplot",
+                title="Cumulative distribution function plot",
+                width=450,
+                height=400,
+                renderFun=".pcdf",
+                visible="(pcdf)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="survplot",
+                title="Survival function plot",
+                width=450,
+                height=400,
+                renderFun=".psurv",
+                visible="(psurv)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="intervplot",
+                title="Probability interval plot",
+                width=450,
+                height=400,
+                renderFun=".pinterv",
+                visible="(pinterv)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="icdfplot",
+                title="Quantile (ICDF) plot",
+                width=450,
+                height=400,
+                renderFun=".picdf",
+                visible="(picdf)",
+                clearWith=list(
+                    "ppmf",
+                    "pcdf",
+                    "psurv",
+                    "pinterv",
+                    "ppvalue",
+                    "pqvalue",
+                    "x1value",
+                    "x2value")))}))
 
 discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "discvarsBase",
@@ -326,6 +380,11 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$InfoTab} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$probstab} \tab \tab \tab \tab \tab A table with probabilities for selected distributions \cr
 #'   \code{results$quantstab} \tab \tab \tab \tab \tab A table with quantiles for selected distributions \cr
+#'   \code{results$pmfplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$cdfplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$survplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$intervplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$icdfplot} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:

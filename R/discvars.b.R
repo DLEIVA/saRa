@@ -3,6 +3,8 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     inherit = discvarsBase,
      private = list(
        .init=function() {
+         private$.initppmf()
+         private$.initpcdf()         
       },       
         .run = function() {
           distros <- self$options$distros
@@ -92,11 +94,107 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                                            `lTail`=lTail,`rTail`=rTail))
               ProbRowNo <- ProbRowNo + 1
             }
-          }          
-          
+          }
         },
-      #### Init plots ----
-
+      #### Plot functions ---- Adapted from distrACTION
+      .initppmf = function() {
+        image <- self$results$get('pmfplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      }, 
+      .initpcdf = function() {
+        image <- self$results$get('cdfplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      },       
+      .ppmf = function(image, ...) {
+        
+        if (! self$options$ppmf)
+          return()
+        
+        Color <- c("#e0bc6b", "#7b9ee6", "#9f9f9f")
+        
+        distros <- self$options$distros
+        
+        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
+          round(self$options$lambda+4*sqrt(self$options$lambda))}
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
+        k <- private$.getppvalue()
+        k1 <- private$.getX1value() 
+        k2 <- private$.getX2value()
+        
+        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
+          'Poisson: '
+        }        
+        
+        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
+            ppois(0:n,lambda)
+          },
+          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
+        
+        p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==k))) +
+          geom_col() + 
+          scale_fill_manual(values = setNames(c(Color[1],Color[3]),c(T,F))) +
+          scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
+          ggtitle(paste0(distroslabel,'Pr(X = ',k,') = ',round(plotData$pmf[plotData$x==k],2))) +
+          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
+          theme(axis.text.x=element_text(size=13),
+                axis.text.y=element_text(size=13),
+                axis.title.x = element_text(size=14),
+                axis.title.y = element_text(size=14))
+        return(p)                
+      }, 
+      .pcdf = function(image, ...) {
+        
+        if (! self$options$pcdf)
+          return()
+        
+        Color <- c("#e0bc6b", "#7b9ee6", "#9f9f9f")
+        
+        distros <- self$options$distros
+        
+        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
+          round(self$options$lambda+4*sqrt(self$options$lambda))}
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
+        k <- private$.getppvalue()
+        k1 <- private$.getX1value() 
+        k2 <- private$.getX2value()
+        
+        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
+          'Poisson: '
+        }        
+        
+        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
+            ppois(0:n,lambda)
+          },
+          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
+        
+        p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x<=k))) +
+          geom_col() + 
+          scale_fill_manual(values = setNames(c(Color[1],Color[3]),c(T,F))) +
+          scale_x_continuous('', 0:n, 0:n, c(0,n)) +
+          ggtitle(paste0(distroslabel,'Pr(X \u2264 ',k,') = ',round(plotData$cdf[plotData$x==k],2))) +
+          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic()
+          theme(axis.text.x=element_text(size=13),
+                axis.text.y=element_text(size=13),
+                axis.title.x = element_text(size=14),
+                axis.title.y = element_text(size=14))
+        return(p)                
+      },      
     #### Helper functions ----
       .getProbValues = function(){
         probValues <- self$options$valuesfunc
@@ -113,6 +211,30 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       quantValues[quantValues < 0 | quantValues > 1] <- NA
       quantValues <- unique(quantValues[!is.na(quantValues)])
       return(quantValues)
-    }    
+    },
+    .getppvalue = function(){
+      ppval <- self$options$ppvalue
+      if (!is.na(ppval) && is.character(ppval))
+        ppval <- as.numeric(unlist(strsplit(ppval, ",")))
+      ppval[ppval < 0] <- NA
+      ppval <- unique(ppval[!is.na(ppval)])[1]
+      return(ppval)
+    },    
+    .getX1value = function(){
+      X1val <- self$options$x1value
+      if (!is.na(X1val) && is.character(X1val))
+        X1val <- as.numeric(unlist(strsplit(X1val, ",")))
+      X1val[X1val < 0] <- NA
+      X1val <- unique(X1val[!is.na(X1val)])[1]
+      return(X1val)
+    },
+    .getX2value = function(){
+      X2val <- self$options$x2value
+      if (!is.na(X2val) && is.character(X2val))
+        X2val <- as.numeric(unlist(strsplit(X2val, ",")))
+      X2val[X2val < 0] <- NA
+      X2val <- unique(X2val[!is.na(X2val)])[1]
+      return(X2val)
+    }
       )
 )
