@@ -61,4 +61,53 @@ items:
           type: number
           visible: (icdf)
           
+    - name: pmfplot
+      title: Probability mass function plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .ppmf
+      visible: (ppmf)
+      
+    - name: cdfplot
+      title: Cumulative distribution function plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .pcdf
+      visible: (pcdf)
+      
+    - name: survplot
+      title: Survival function plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .psurv
+      visible: (psurv)
+      
+    - name: intervplot
+      title: Probability interval plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .pinterv
+      visible: (pinterv)
+      
+    - name: icdfplot
+      title: Quantile (ICDF) plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .picdf
+      visible: (picdf)
+
+      clearWith:
+        - ppmf
+        - pcdf  
+        - psurv
+        - pinterv
+        - ppvalue
+        - pqvalue
+        - x1value
+        - x2value
 ...
