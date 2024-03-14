@@ -5,6 +5,8 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
        .init=function() {
          private$.initppmf()
          private$.initpcdf()         
+         private$.initpsurv()                  
+         private$.initpinterv()                           
       },       
         .run = function() {
           distros <- self$options$distros
@@ -112,7 +114,23 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         height <- 400
         
         image$setSize(width * 2, height)
-      },       
+      },
+      .initpsurv = function() {
+        image <- self$results$get('survplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      },
+      .initpinterv = function() {
+        image <- self$results$get('intervplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      },      
       .ppmf = function(image, ...) {
         
         if (! self$options$ppmf)
@@ -236,6 +254,48 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               axis.title.y = element_text(size=14))
         return(p)                
       },
+      .pinterv = function(image, ...) {
+        
+        if (! self$options$psurv)
+          return()
+        
+        Color <- c("#e0bc6b", "#7b9ee6", "#9f9f9f")
+        
+        distros <- self$options$distros
+        
+        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
+          round(self$options$lambda+4*sqrt(self$options$lambda))}
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
+        k <- private$.getppvalue()
+        k1 <- private$.getX1value() 
+        k2 <- private$.getX2value()
+        
+        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
+          'Poisson: '
+        }        
+        
+        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
+            ppois(0:n,lambda)
+          },
+          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
+        
+        p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x>=k1 & x<=k2))) +
+          geom_col() + 
+          scale_fill_manual(values = setNames(c(Color[1],Color[3]),c(T,F))) +
+          scale_x_continuous('', 0:n, 0:n, c(0,n)) +
+          ggtitle(paste0(distroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',
+                         round(sum(plotData$pmf[plotData$x>=k1 & plotData$x<=k2]),2))) +
+          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
+          theme(axis.text.x=element_text(size=13),
+                axis.text.y=element_text(size=13),
+                axis.title.x = element_text(size=14),
+                axis.title.y = element_text(size=14))
+        return(p)                
+      },      
     #### Helper functions ----
       .getProbValues = function(){
         probValues <- self$options$valuesfunc
