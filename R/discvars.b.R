@@ -188,13 +188,54 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           scale_fill_manual(values = setNames(c(Color[1],Color[3]),c(T,F))) +
           scale_x_continuous('', 0:n, 0:n, c(0,n)) +
           ggtitle(paste0(distroslabel,'Pr(X \u2264 ',k,') = ',round(plotData$cdf[plotData$x==k],2))) +
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic()
+          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
           theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))
         return(p)                
-      },      
+      },
+      .psurv = function(image, ...) {
+        
+        if (! self$options$psurv)
+          return()
+        
+        Color <- c("#e0bc6b", "#7b9ee6", "#9f9f9f")
+        
+        distros <- self$options$distros
+        
+        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
+          round(self$options$lambda+4*sqrt(self$options$lambda))}
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
+        k <- private$.getppvalue()
+        k1 <- private$.getX1value() 
+        k2 <- private$.getX2value()
+        
+        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
+          'Poisson: '
+        }        
+        
+        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
+            ppois(0:n,lambda)
+          },
+          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
+        
+        p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x>k))) +
+          geom_col() + 
+          scale_fill_manual(values = setNames(c(Color[1],Color[3]),c(T,F))) +
+          scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
+          ggtitle(paste0(distroslabel,'Pr(X > ',k,') = ',round(plotData$surv[plotData$x==k],2))) +
+          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
+        theme(axis.text.x=element_text(size=13),
+              axis.text.y=element_text(size=13),
+              axis.title.x = element_text(size=14),
+              axis.title.y = element_text(size=14))
+        return(p)                
+      },
     #### Helper functions ----
       .getProbValues = function(){
         probValues <- self$options$valuesfunc
