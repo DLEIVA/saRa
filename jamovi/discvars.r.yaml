@@ -62,7 +62,7 @@ items:
           visible: (icdf)
           
     - name: pmfplot
-      title: Probability mass function plot $distros
+      title: Probability mass function plot
       type: Image
       width: 450
       height: 400
