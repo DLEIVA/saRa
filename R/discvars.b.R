@@ -145,8 +145,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
         k <- private$.getppvalue()
-        k1 <- private$.getX1value() 
-        k2 <- private$.getX2value()
         
         distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
           'Poisson: '
@@ -186,9 +184,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
         k <- private$.getppvalue()
-        k1 <- private$.getX1value() 
-        k2 <- private$.getX2value()
-        
+
         distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
           'Poisson: '
         }        
@@ -227,9 +223,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
         k <- private$.getppvalue()
-        k1 <- private$.getX1value() 
-        k2 <- private$.getX2value()
-        
+
         distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
           'Poisson: '
         }        
@@ -267,7 +261,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           round(self$options$lambda+4*sqrt(self$options$lambda))}
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
-        k <- private$.getppvalue()
         k1 <- private$.getX1value() 
         k2 <- private$.getX2value()
         
