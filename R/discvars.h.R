@@ -265,7 +265,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="pmfplot",
-                title="Probability mass function plot $distros",
+                title="Probability mass function plot",
                 width=450,
                 height=400,
                 renderFun=".ppmf",
@@ -301,16 +301,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 width=450,
                 height=400,
                 renderFun=".picdf",
-                visible="(picdf)",
-                clearWith=list(
-                    "ppmf",
-                    "pcdf",
-                    "psurv",
-                    "pinterv",
-                    "ppvalue",
-                    "pqvalue",
-                    "x1value",
-                    "x2value")))}))
+                visible="(picdf)"))}))
 
 discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "discvarsBase",

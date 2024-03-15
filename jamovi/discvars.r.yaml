@@ -101,13 +101,4 @@ items:
       renderFun: .picdf
       visible: (picdf)
 
-      clearWith:
-        - ppmf
-        - pcdf  
-        - psurv
-        - pinterv
-        - ppvalue
-        - pqvalue
-        - x1value
-        - x2value
 ...
