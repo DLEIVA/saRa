@@ -12,6 +12,7 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             lambda = NULL,
             negbinomr = 10,
             negbinomp = 0.5,
+            geomp = 0.5,
             valuesfunc = NULL,
             pmf = FALSE,
             cdf = FALSE,
@@ -41,7 +42,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=list(
                     "binom",
                     "poiss",
-                    "negbinom"),
+                    "negbinom",
+                    "geom"),
                 default="binom")
             private$..binomn <- jmvcore::OptionInteger$new(
                 "binomn",
@@ -61,6 +63,10 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..negbinomp <- jmvcore::OptionNumber$new(
                 "negbinomp",
                 negbinomp,
+                default=0.5)
+            private$..geomp <- jmvcore::OptionNumber$new(
+                "geomp",
+                geomp,
                 default=0.5)
             private$..valuesfunc <- jmvcore::OptionString$new(
                 "valuesfunc",
@@ -131,6 +137,7 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..lambda)
             self$.addOption(private$..negbinomr)
             self$.addOption(private$..negbinomp)
+            self$.addOption(private$..geomp)
             self$.addOption(private$..valuesfunc)
             self$.addOption(private$..pmf)
             self$.addOption(private$..cdf)
@@ -155,6 +162,7 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         lambda = function() private$..lambda$value,
         negbinomr = function() private$..negbinomr$value,
         negbinomp = function() private$..negbinomp$value,
+        geomp = function() private$..geomp$value,
         valuesfunc = function() private$..valuesfunc$value,
         pmf = function() private$..pmf$value,
         cdf = function() private$..cdf$value,
@@ -178,6 +186,7 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..lambda = NA,
         ..negbinomr = NA,
         ..negbinomp = NA,
+        ..geomp = NA,
         ..valuesfunc = NA,
         ..pmf = NA,
         ..cdf = NA,
@@ -355,6 +364,8 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   binomial distribution
 #' @param negbinomp a number specifying success probability in negative
 #'   binomial distribution
+#' @param geomp a number specifying success probability in geometric
+#'   distribution
 #' @param valuesfunc a comma-separated list specifying random variables'
 #'   values
 #' @param pmf \code{TRUE} or \code{FALSE} (default), provide probability mass
@@ -413,6 +424,7 @@ discvars <- function(
     lambda,
     negbinomr = 10,
     negbinomp = 0.5,
+    geomp = 0.5,
     valuesfunc,
     pmf = FALSE,
     cdf = FALSE,
@@ -441,6 +453,7 @@ discvars <- function(
         lambda = lambda,
         negbinomr = negbinomr,
         negbinomp = negbinomp,
+        geomp = geomp,
         valuesfunc = valuesfunc,
         pmf = pmf,
         cdf = cdf,
