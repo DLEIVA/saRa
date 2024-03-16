@@ -10,6 +10,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             binomn = 10,
             binomp = 0.5,
             lambda = NULL,
+            negbinomr = 10,
+            negbinomp = 0.5,
             valuesfunc = NULL,
             pmf = FALSE,
             cdf = FALSE,
@@ -38,7 +40,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 distros,
                 options=list(
                     "binom",
-                    "poiss"),
+                    "poiss",
+                    "negbinom"),
                 default="binom")
             private$..binomn <- jmvcore::OptionInteger$new(
                 "binomn",
@@ -51,6 +54,14 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..lambda <- jmvcore::OptionNumber$new(
                 "lambda",
                 lambda)
+            private$..negbinomr <- jmvcore::OptionInteger$new(
+                "negbinomr",
+                negbinomr,
+                default=10)
+            private$..negbinomp <- jmvcore::OptionNumber$new(
+                "negbinomp",
+                negbinomp,
+                default=0.5)
             private$..valuesfunc <- jmvcore::OptionString$new(
                 "valuesfunc",
                 valuesfunc)
@@ -118,6 +129,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..binomn)
             self$.addOption(private$..binomp)
             self$.addOption(private$..lambda)
+            self$.addOption(private$..negbinomr)
+            self$.addOption(private$..negbinomp)
             self$.addOption(private$..valuesfunc)
             self$.addOption(private$..pmf)
             self$.addOption(private$..cdf)
@@ -140,6 +153,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         binomn = function() private$..binomn$value,
         binomp = function() private$..binomp$value,
         lambda = function() private$..lambda$value,
+        negbinomr = function() private$..negbinomr$value,
+        negbinomp = function() private$..negbinomp$value,
         valuesfunc = function() private$..valuesfunc$value,
         pmf = function() private$..pmf$value,
         cdf = function() private$..cdf$value,
@@ -161,6 +176,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..binomn = NA,
         ..binomp = NA,
         ..lambda = NA,
+        ..negbinomr = NA,
+        ..negbinomp = NA,
         ..valuesfunc = NA,
         ..pmf = NA,
         ..cdf = NA,
@@ -334,6 +351,10 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param binomp a number specifying success probability in binomial
 #'   distribution
 #' @param lambda lambda parameter for Poisson distribution
+#' @param negbinomr a number specifying number of successes in negative
+#'   binomial distribution
+#' @param negbinomp a number specifying success probability in negative
+#'   binomial distribution
 #' @param valuesfunc a comma-separated list specifying random variables'
 #'   values
 #' @param pmf \code{TRUE} or \code{FALSE} (default), provide probability mass
@@ -390,6 +411,8 @@ discvars <- function(
     binomn = 10,
     binomp = 0.5,
     lambda,
+    negbinomr = 10,
+    negbinomp = 0.5,
     valuesfunc,
     pmf = FALSE,
     cdf = FALSE,
@@ -416,6 +439,8 @@ discvars <- function(
         binomn = binomn,
         binomp = binomp,
         lambda = lambda,
+        negbinomr = negbinomr,
+        negbinomp = negbinomp,
         valuesfunc = valuesfunc,
         pmf = pmf,
         cdf = cdf,

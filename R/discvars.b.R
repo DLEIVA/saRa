@@ -24,6 +24,11 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             distroslabel <- 'Poisson'
             param1 <- paste('\u3bb:',self$options$lambda)
             paramlabel <- param1
+          } else if (distros=='negbinom'){
+            distroslabel <- 'Negative Binomial'
+            param1 <- paste('r:',self$options$negbinomr)
+            param2 <- paste('p:',self$options$negbinomp)  
+            paramlabel <- paste(param1,param2,sep='; ')
           }
           Info <- matrix(NA,nrow=1,ncol=2)
           
@@ -51,16 +56,23 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 dbinom(varValues[i],self$options$binomn,self$options$binomp)
               } else if(distros=='poiss'){
                 dpois(varValues[i],self$options$lambda)
+              } else if(distros=='negbinom'){
+                dnbinom(varValues[i],self$options$negbinomr,self$options$negbinomp)                
               }
               cdfval <- if(distros=='binom'){
                 pbinom(varValues[i],self$options$binomn,self$options$binomp)
               } else if(distros=='poiss'){
                 ppois(varValues[i],self$options$lambda)
+              } else if(distros=='negbinom'){
+                pnbinom(varValues[i],self$options$negbinomr,self$options$negbinomp)                
               }
               survval <- if(distros=='binom'){
                 pbinom(varValues[i],self$options$binomn,self$options$binomp,lower.tail=FALSE)
               } else if(distros=='poiss'){
                 ppois(varValues[i],self$options$lambda,lower.tail=FALSE)
+              } else if(distros=='negbinom'){
+                pnbinom(varValues[i],self$options$negbinomr,self$options$negbinomp,
+                        lower.tail=FALSE)                
               }
               
               probstab$setRow(rowNo=ProbRowNo, values=list(`varValues`=varname,
@@ -86,11 +98,15 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 qbinom(quantValues[i],self$options$binomn,self$options$binomp)
               } else if(distros=='poiss'){
                 qpois(quantValues[i],self$options$lambda)
+              } else if(distros=='negbinom'){
+                qnbinom(quantValues[i],self$options$negbinomr,self$options$negbinomp)                
               }
               rTail <- if(distros=='binom'){
                 qbinom(quantValues[i],self$options$binomn,self$options$binomp,lower.tail=FALSE)
               } else if(distros=='poiss'){
                 qpois(quantValues[i],self$options$lambda,lower.tail=FALSE)
+              } else if(distros=='negbinom'){
+                qnbinom(quantValues[i],self$options$negbinomr,self$options$negbinomp)                
               }
               
               quantstab$setRow(rowNo=ProbRowNo, values=list(`quantValues`=varname,
@@ -150,22 +166,28 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         distros <- self$options$distros
         
         n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))}
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
+          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
+            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
+                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
+          }
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
+          self$options$negbinomp
+        }
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
+          self$options$lambda} else if(distros=='negbinom'){NA}
         k <- private$.getppvalue()
         
         distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '
-        }        
+          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '}       
         
         plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
+            } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)},
           cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)
-          },
+            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)},
           surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
+            } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)})
         
         p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==k))) +
           geom_col() + 
@@ -189,23 +211,29 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         distros <- self$options$distros
         
         n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))}
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
+          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
+            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
+                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
+          }
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
+          self$options$negbinomp
+        }
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
+          self$options$lambda} else if(distros=='negbinom'){NA}
         k <- private$.getppvalue()
-
+        
         distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '
-        }        
+          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '}       
         
         plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
+          } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)},
           cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)
-          },
+            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)},
           surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
-        
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
+          } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)})        
+
         p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x<=k))) +
           geom_col() + 
           scale_fill_manual(values = setNames(c(Color[1],Color[3]),c(T,F))) +
@@ -228,22 +256,28 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         distros <- self$options$distros
         
         n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))}
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
+          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
+            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
+                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
+          }
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
+          self$options$negbinomp
+        }
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
+          self$options$lambda} else if(distros=='negbinom'){NA}
         k <- private$.getppvalue()
-
+        
         distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '
-        }        
+          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '}       
         
         plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
+          } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)},
           cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)
-          },
+            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)},
           surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
+          } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)})
         
         p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x>k))) +
           geom_col() + 
@@ -267,23 +301,31 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         distros <- self$options$distros
         
         n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))}
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
+          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
+            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
+                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)
+          }
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
+          self$options$negbinomp
+        }
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
+          self$options$lambda} else if(distros=='negbinom'){NA}
+        k <- private$.getppvalue()
+        
+        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
+          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '}  
+        
         k1 <- private$.getX1value() 
         k2 <- private$.getX2value()
         
-        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '
-        }        
-        
         plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
+          } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)},
           cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)
-          },
+            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)},
           surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
+          } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)})
         
         p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x>=k1 & x<=k2))) +
           geom_col() + 
@@ -307,42 +349,52 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         distros <- self$options$distros
         
-        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))}
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){self$options$lambda}
         tail <- self$options$tail
+        
+        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
+          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
+            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
+                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
+          }
+        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
+          self$options$negbinomp
+        }
+        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
+          self$options$lambda} else if(distros=='negbinom'){NA}
+        
+        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
+          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '}  
         
         q <- private$.getpqvalue()
         
-        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '
-        }        
-        
         plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)},
+          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
+          } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)},
           cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)
-          },
+            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)},
           surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)})
-        
+          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
+          } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)})        
+
         if(tail=='left'){
           quant1 <- q
-          qs <- if(distros=='binom'){
-            qbinom(quant1,n,p)} else if(distros=='poiss'){
-              qpois(quant1,lambda)}
+          qs <- if(distros=='binom'){qbinom(quant1,n,p)} else if(distros=='poiss'){
+              qpois(quant1,lambda)} else if(distros=='negbinom'){
+                qnbinom(quant1,self$options$negbinomr,p)
+              }
           q1 <- qs
           p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==q1))) +
             geom_col() + 
             scale_fill_manual(values = setNames(c(Color[1],Color[3]),c(T,F))) +
             scale_x_continuous('', 0:n, 0:n, c(0,n)) +
             ggtitle(TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,'$')))          
-        } else if(tail=='right'){
+        }  else if(tail=='right'){
           quant1 <- 1-q
           qs <- if(distros=='binom'){
             qbinom(quant1,n,p)} else if(distros=='poiss'){
-              qpois(quant1,lambda)}
+              qpois(quant1,lambda)} else if(distros=='negbinom'){
+                qnbinom(quant1,self$options$negbinomr,p)
+              }
           q1 <- qs
           p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==q1))) +
             geom_col() + 
@@ -354,7 +406,9 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           quant2 <- 1-(1-q)/2
           qs <- if(distros=='binom'){
             qbinom(c(quant1,quant2),n,p)} else if(distros=='poiss'){
-              qpois(c(quant1,quant2),lambda)}
+              qpois(c(quant1,quant2),lambda)} else if(distros=='negbinom'){
+                qnbinom(c(quant1,quant2),self$options$negbinomr,p)
+              }
           q1 <- qs[1]
           q2 <- qs[2]
           p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==q1 | x==q2))) +
