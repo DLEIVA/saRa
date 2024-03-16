@@ -113,17 +113,69 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ProbRowNo <- ProbRowNo + 1
         }
         }
+        ContquantValues <- private$.getcontQuantValues()
         
-        
+        if(length(ContquantValues)>0){
+          if(length(ContquantValues) > 1){
+            for(k in 2:length(ContquantValues))
+              Contquantstab$addRow(rowKey=k,values=list(`Prob`='',
+                                                        `lTail`='',`rTail`=''))
+          }
+          
+          ProbRowNo <- 1
+          
+          for(i in 1:length(ContquantValues)){
+            varname <- paste0('Prob = ',ContquantValues[i])
+            lTail <- if(cdistros=='norm'){
+              qnorm(ContquantValues[i],self$options$mu,self$options$sigma)
+            } else if(cdistros=='tdist'){
+              qt(ContquantValues[i],self$options$tnu)
+            } else if(cdistros=='chisqdist'){
+              qchisq(ContquantValues[i],self$options$chinu)                
+            } else if(cdistros=='fdist'){
+              qf(ContquantValues[i],self$options$f1nu,self$options$f2nu)
+            } else if(cdistros=='exp'){
+              qexp(ContquantValues[i],self$options$rate)
+            } else if(cdistros=='unif'){
+              qunif(ContquantValues[i],self$options$unifmin,self$options$unifmax)
+            }
+            rTail <- if(cdistros=='norm'){
+              qnorm(ContquantValues[i],self$options$mu,self$options$sigma,lower.tail=FALSE)
+            } else if(cdistros=='tdist'){
+              qt(ContquantValues[i],self$options$tnu,lower.tail=FALSE)
+            } else if(cdistros=='chisqdist'){
+              qchisq(ContquantValues[i],self$options$chinu,lower.tail=FALSE)                
+            } else if(cdistros=='fdist'){
+              qf(ContquantValues[i],self$options$f1nu,self$options$f2nu,lower.tail=FALSE)
+            } else if(cdistros=='exp'){
+              qexp(ContquantValues[i],self$options$rate,lower.tail=FALSE)
+            } else if(cdistros=='unif'){
+              qunif(ContquantValues[i],self$options$unifmin,self$options$unifmax,lower.tail=FALSE)
+            }
+            
+            Contquantstab$setRow(rowNo=ProbRowNo, values=list(`contquantValues`=varname,
+                                                              `contlTail`=lTail,`contrTail`=rTail))
+            ProbRowNo <- ProbRowNo + 1
+          }
+        }
       },
+      #### Plot functions ---- Adapted from distrACTION
+      
       #### Helper functions ----
       .getcontProbValues = function(){
         probValues <- self$options$contvaluesfunc
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
-        probValues[probValues < 0 ] <- NA
         probValues <- unique(probValues[!is.na(probValues)])
         return(probValues)
-      }     
+      },
+      .getcontQuantValues = function(){
+        quantValues <- self$options$contqvalues
+        if (!is.na(quantValues) && is.character(quantValues))
+          quantValues <- as.numeric(unlist(strsplit(quantValues, ",")))
+        quantValues[quantValues < 0 | quantValues > 1] <- NA
+        quantValues <- unique(quantValues[!is.na(quantValues)])
+        return(quantValues)
+      }    
     )
 )
