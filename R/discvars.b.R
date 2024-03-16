@@ -202,7 +202,12 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
           } else if(distros=='geom'){
             round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){self$options$hyperk}
+          } else if(distros=='hypergeom'){
+            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
+              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
+                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
+                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
+                       (self$options$hyperm+self$options$hypern)-1)}
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -256,7 +261,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
           } else if(distros=='geom'){
             round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){self$options$hyperk}
+          } else if(distros=='hypergeom'){
+            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
+              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
+                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
+                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
+                       (self$options$hyperm+self$options$hypern)-1)
+          }
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -310,7 +321,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
           } else if(distros=='geom'){
             round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){self$options$hyperk}
+          } else if(distros=='hypergeom'){
+            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
+              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
+                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
+                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
+                       (self$options$hyperm+self$options$hypern)-1)
+          }
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -364,7 +381,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
           } else if(distros=='geom'){
             round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){self$options$hyperk}
+          } else if(distros=='hypergeom'){
+            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
+              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
+                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
+                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
+                       (self$options$hyperm+self$options$hypern)-1)
+          }
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -423,7 +446,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
           } else if(distros=='geom'){
             round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){self$options$hyperk}
+          } else if(distros=='hypergeom'){
+            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
+              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
+                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
+                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
+                       (self$options$hyperm+self$options$hypern)-1)
+          }
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
