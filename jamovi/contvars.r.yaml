@@ -4,17 +4,101 @@ title: Continuous Distributions
 jrs:   '1.1'
 
 items:
-    - name: frequencies
-      title: Categorical Data
-      type: Array
-      description: Frequencies Distribution
-      visible: (freq)
+    - name: ContInfoTab
+      title: Distribution information
+      type: Table
+      rows: 1
+      columns:
+        - name: DistributionColumn
+          title: Distribution
+          type: text
+        - name: ParametersColumn
+          title: Parameter(s)
+          type: text
+          visible: (distros)
+          
+    - name: Contprobstab
+      title: Densities/Probabilities table
+      description: A table with probabilities for selected distributions
+      visible: (contpdf | contcdf | contsurv)
+      type: Table
+      rows: 1
+      columns:
+        - name: contvarValues
+          title: "x"
+          type: text
+          visible: (cdistros)
+        - name: contpdf
+          title: "f(x)"
+          type: number
+          visible: (contpdf)
+        - name: contcdf
+          title: "Pr(X ≤ x)"
+          type: number
+          visible: (contcdf)
+        - name: contsurv
+          title: "Pr(X > x)"
+          type: number
+          visible: (contsurv) 
+          
+    - name: Contquantstab
+      title: Quantiles table
+      description: A table with quantiles for selected distributions
+      visible: (conticdf)
+      type: Table
+      rows: 1
+      columns:
+        - name: contquantValues
+          title: "Prob"
+          type: text
+          visible: (cdistros)
+        - name: contlTail
+          title: "Left tail"
+          type: number
+          visible: (conticdf)
+        - name: contrTail
+          title: "Right tail"
+          type: number
+          visible: (conticdf)
+          
+    - name: contpdfplot
+      title: Probability density function plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .contppdf
+      visible: (contppdf)
       
-      items: (vars)
-      template:
-          title: Frequencies and odds of $key
-          type: Table
-          visible: (levels($key))
-          columns: []      
+    - name: contcdfplot
+      title: Cumulative distribution function plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .contpcdf
+      visible: (contpcdf)
+      
+    - name: contsurvplot
+      title: Survival function plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .contpsurv
+      visible: (contpsurv)
+      
+    - name: contintervplot
+      title: Probability interval plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .contpinterv
+      visible: (contpinterv)
+      
+    - name: conticdfplot
+      title: Quantile (ICDF) plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .contpicdf
+      visible: (contpicdf)    
 
 ...

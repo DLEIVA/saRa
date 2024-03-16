@@ -3,4 +3,220 @@ name: contvars
 jus: '3.0'
 stage: 0
 compilerMode: tame
-children: []
+children:
+  - type: CollapseBox
+    label: Distributions
+    stretchFactor: 2
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 1
+        children:
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 0
+            stretchFactor: 2
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: RadioButton
+                    name: norm
+                    optionName: cdistros
+                    optionPart: norm
+                    children:
+                      - type: TextBox
+                        name: mu
+                        label: Mean (\u03BC)
+                        format: number
+                        enable: (norm)
+                      - type: TextBox
+                        name: sigma
+                        label: Std. deviation (\u03C3)
+                        format: number
+                        enable: (norm)
+                  - type: RadioButton
+                    name: tdist
+                    optionName: cdistros
+                    optionPart: tdist
+                    children:
+                      - type: TextBox
+                        name: tnu
+                        label: Degrees of freedom (\u03BD)
+                        format: number
+                        enable: (tdist)
+                  - type: RadioButton
+                    name: chidist
+                    optionName: cdistros
+                    optionPart: chidist
+                    children:
+                      - type: TextBox
+                        name: chinu
+                        label: Degrees of freedom (\u03BD)
+                        format: number
+                        enable: (chidist)
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 0
+            stretchFactor: 2
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: RadioButton
+                    name: fdist
+                    optionName: cdistros
+                    optionPart: fdist
+                    children:
+                      - type: TextBox
+                        name: f1nu
+                        label: Degrees of freedom numerator (\u03BD\u2081)
+                        format: number
+                        enable: (fdist)
+                      - type: TextBox
+                        name: f2nu
+                        label: Degrees of freedom numerator (\u03BD\u2081)
+                        format: number
+                        enable: (fdist)                        
+                  - type: RadioButton
+                    name: exp
+                    optionName: cdistros
+                    optionPart: exp
+                    children:
+                      - type: TextBox
+                        name: rate
+                        label: Rate (\u03BB)
+                        format: number
+                        enable: (exp)
+                  - type: RadioButton
+                    name: unif
+                    optionName: cdistros
+                    optionPart: unif
+                    children:
+                      - type: TextBox
+                        name: unifmin
+                        label: Minimum
+                        format: number
+                        enable: (unif)
+                      - type: TextBox
+                        name: unifmax
+                        label: Maximum
+                        format: number
+                        enable: (unif)                        
+                        
+  - type: CollapseBox
+    label: Values and functions
+    stretchFactor: 2
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 1
+        children:
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 0
+            stretchFactor: 1
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: TextBox
+                    name: contvaluesfunc
+                    width: large
+                    format: string  
+                    enable: (contpdf || contcdf || contsurv)
+                  - type: CheckBox
+                    name: contpdf
+                  - type: CheckBox
+                    name: contcdf
+                  - type: CheckBox
+                    name: contsurv
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 0
+            stretchFactor: 1
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: TextBox
+                    name: contqvalues
+                    width: large
+                    format: string
+                    enable: (conticdf)
+                  - type: CheckBox
+                    name: conticdf
+
+  - type: CollapseBox
+    label: Plots
+    stretchFactor: 2
+    collapsed: true
+    children:
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 1
+        children:
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 0
+            stretchFactor: 1
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: TextBox
+                    name: contppvalue
+                    format: number
+                    enable: (contppmf || contpcdf || contpsurv)
+                  - type: CheckBox
+                    name: contppmf
+                  - type: CheckBox
+                    name: contpcdf
+                  - type: CheckBox
+                    name: contpsurv
+                  - type: CheckBox
+                    name: contpinterv
+                    children:
+                      - type: TextBox
+                        name: contx1value
+                        format: number
+                        enable: (contpinterv)
+                      - type: TextBox
+                        name: contx2value
+                        format: number
+                        enable: (contpinterv)
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 0
+            stretchFactor: 1
+            children:                    
+                  - type: TextBox
+                    name: contpqvalue
+                    format: number 
+                    enable: (contpicdf)
+                  - type: CheckBox
+                    name: contpicdf
+                    children:
+                      - type: RadioButton
+                        name: left
+                        optionName: conttail
+                        optionPart: left
+                        enable: (contpicdf)
+                      - type: RadioButton
+                        name: right
+                        optionName: conttail
+                        optionPart: right
+                        enable: (contpicdf)                        
+                      - type: RadioButton
+                        name: central
+                        optionName: conttail
+                        optionPart: central                       
+                        enable: (contpicdf)                        

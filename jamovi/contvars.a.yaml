@@ -6,7 +6,227 @@ version: '0.1.0'
 jas: '1.2'
 
 options:
-    - name: data
-      type: Data
+    - name: cdistros
+      title: Distributions
+      type: List
+      options:
+        - title: Normal
+          name: norm
+        - title: t distribution
+          name: tdist
+        - title: \u03c6\u00B2 distribution
+          name: chisqdist
+        - title: F distribution
+          name: fdist
+        - title: Exponential
+          name: exp
+        - title: Uniform
+          name: unif          
+      default: norm   
+      description:
+          R: >
+            `norm` (default), `tdist`, 'chisqdist', 'fdist', or `exp`, specifies normal,
+            t, chi-squared, F, exponential or uniform distributions
+            
+    - name: mu
+      title: "Mean (\u03BC)"
+      type: Number
+      default: 0
+      description:
+          R: >
+            a number specifying mean of normal distribution 
+
+    - name: sigma
+      title: "Std. Deviation (\u03C3)"
+      type: Number
+      default: 1
+      description:
+          R: >
+            a number specifying standard deviation in normal distribution 
+            
+    - name: tnu
+      title: "Degrees of freedom (\u03BD)"
+      type: Number
+      default: 10      
+      description:
+          R: >
+            Degrees of freedom for the t distribution  
+            
+    - name: chinu
+      title: "Degrees of freedom (\u03BD)"
+      type: Number
+      default: 10      
+      description:
+          R: >
+            Degrees of freedom for the \u03c6\u00B2 distribution  
+
+    - name: f1nu
+      title: "Degrees of freedom numerator (\u03BD\u2081)"
+      type: Number
+      default: 10      
+      description:
+          R: >
+            Degrees of freedom in the numerator for the F distribution  
+
+    - name: f2nu
+      title: "Degrees of freedom denominator (\u03BD\u2082)"
+      type: Number
+      default: 10      
+      description:
+          R: >
+            Degrees of freedom in the numerator for the F distribution 
+            
+    - name: rate
+      title: Rate (\u03BB)
+      type: Number
+      default: 10
+      description:
+          R: >
+            a number specifying rate (lambda) in the exponential distribution            
+
+    - name: unifmin
+      title: Minimum
+      type: Number
+      default: 0
+      description:
+          R: >
+            a number specifying minimum in continuous uniform distribution
+            
+    - name: unifmax
+      title: Maximum
+      type: Number
+      default: 0
+      description:
+          R: >
+            a number specifying maximum in continuous uniform distribution           
+            
+    - name: contvaluesfunc
+      title: Random Variable Values
+      type: String
+      description:
+          R: >
+            a comma-separated list specifying random variables' values  
+
+    - name: contpdf
+      title: "Probabilty Density Function (f(x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide probability density function for a continuous distribution            
+
+    - name: contcdf
+      title: "Cumulative Distribution Function (Pr(X ≤ x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide cumulative distribution function for a continuous distribution 
+            
+    - name: contsurv
+      title: "Survival function (Pr(X > x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide survival function for a continuous distribution            
+            
+    - name: conticdf
+      title: "Inverse of CDF (Quantiles)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a continuous distribution            
+
+    - name: contqvalues
+      title: Quantiles Values
+      type: String
+      description:
+          R: >
+            a comma-separated list specifying quantiles for a random variable     
+            
+    - name: contppvalue
+      title: Random Variable Value
+      type: Number
+      description:
+          R: >
+            a number specifying random variables' value to be plotted
+
+    - name: contppdf
+      title: "Probability Density Function (f(x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide probability mass function for a continuous distribution to be plotted            
+
+    - name: contpcdf
+      title: "Cumulative Distribution Function (Pr(X ≤ x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide cumulative distribution function for a continuous distribution to be plotted
+            
+    - name: contpinterv
+      title: "Pr(x1 ≤ X ≤ x2)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide probability plot within an interval 
+            
+    - name: contx1value
+      title: x1 Value
+      type: Number
+      description:
+          R: >
+            a number specifying X1 value for probability plot within interval 
+          
+    - name: contx2value
+      title: x2 Value
+      type: Number
+      description:
+          R: >
+            a number specifying X2 value for probability plot within interval
+            
+    - name: contpsurv
+      title: "Survival function (Pr(X > x))"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide survival function for a cont distribution to be plotted            
+            
+    - name: contpicdf
+      title: "Inverse of CDF (Quantiles)"
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a continuous distribution to be plotted            
+
+    - name: contpqvalue
+      title: Quantile Value
+      type: Number
+      description:
+          R: >
+            a number specifying a quantile for a random variable to be plotted              
+            
+    - name: conttail
+      title: Tail of the distribution
+      type: List
+      options:
+        - title: Left
+          name: left
+        - title: Right
+          name: right
+        - title: Central
+          name: central          
+      default: left    
+      description:
+          R: >
+            `left` (default), `right`, or `central`, specifies the tail to be plotted in the ICDF plot for continuous distributions
     
 ...
