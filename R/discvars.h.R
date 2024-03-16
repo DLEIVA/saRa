@@ -9,7 +9,7 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             distros = "binom",
             binomn = 10,
             binomp = 0.5,
-            lambda = NULL,
+            lambda = 10,
             negbinomr = 10,
             negbinomp = 0.5,
             geomp = 0.5,
@@ -55,7 +55,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=0.5)
             private$..lambda <- jmvcore::OptionNumber$new(
                 "lambda",
-                lambda)
+                lambda,
+                default=10)
             private$..negbinomr <- jmvcore::OptionInteger$new(
                 "negbinomr",
                 negbinomr,
@@ -421,7 +422,7 @@ discvars <- function(
     distros = "binom",
     binomn = 10,
     binomp = 0.5,
-    lambda,
+    lambda = 10,
     negbinomr = 10,
     negbinomp = 0.5,
     geomp = 0.5,
