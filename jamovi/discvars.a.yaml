@@ -16,6 +16,8 @@ options:
           name: poiss
         - title: Negative Binomial
           name: negbinom
+        - title: Geometric
+          name: geom          
       default: binom    
       description:
           R: >
@@ -41,6 +43,7 @@ options:
     - name: lambda
       title: "Mean (\u03BB)"
       type: Number
+      default: 10      
       description:
           R: >
             lambda parameter for Poisson distribution  
@@ -60,6 +63,15 @@ options:
       description:
           R: >
             a number specifying success probability in negative binomial distribution 
+
+    - name: geomp
+      title: Probability
+      type: Number
+      default: 0.5
+      description:
+          R: >
+            a number specifying success probability in geometric distribution 
+
             
     - name: valuesfunc
       title: Random Variable Values
