@@ -5,25 +5,245 @@ contvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "contvarsOptions",
     inherit = jmvcore::Options,
     public = list(
-        initialize = function( ...) {
+        initialize = function(
+            cdistros = "norm",
+            mu = 0,
+            sigma = 1,
+            tnu = 10,
+            chinu = 10,
+            f1nu = 10,
+            f2nu = 10,
+            rate = 10,
+            unifmin = 0,
+            unifmax = 1,
+            contvaluesfunc = NULL,
+            contpdf = FALSE,
+            contcdf = FALSE,
+            contsurv = FALSE,
+            conticdf = FALSE,
+            contqvalues = NULL,
+            contppvalue = NULL,
+            contppdf = FALSE,
+            contpcdf = FALSE,
+            contpinterv = FALSE,
+            contx1value = NULL,
+            contx2value = NULL,
+            contpsurv = FALSE,
+            contpicdf = FALSE,
+            contpqvalue = NULL,
+            conttail = "left", ...) {
 
             super$initialize(
                 package="saRa",
                 name="contvars",
-                requiresData=TRUE,
+                requiresData=FALSE,
                 ...)
 
+            private$..cdistros <- jmvcore::OptionList$new(
+                "cdistros",
+                cdistros,
+                options=list(
+                    "norm",
+                    "tdist",
+                    "chisqdist",
+                    "fdist",
+                    "exp",
+                    "unif"),
+                default="norm")
+            private$..mu <- jmvcore::OptionNumber$new(
+                "mu",
+                mu,
+                default=0)
+            private$..sigma <- jmvcore::OptionNumber$new(
+                "sigma",
+                sigma,
+                default=1)
+            private$..tnu <- jmvcore::OptionNumber$new(
+                "tnu",
+                tnu,
+                default=10)
+            private$..chinu <- jmvcore::OptionNumber$new(
+                "chinu",
+                chinu,
+                default=10)
+            private$..f1nu <- jmvcore::OptionNumber$new(
+                "f1nu",
+                f1nu,
+                default=10)
+            private$..f2nu <- jmvcore::OptionNumber$new(
+                "f2nu",
+                f2nu,
+                default=10)
+            private$..rate <- jmvcore::OptionNumber$new(
+                "rate",
+                rate,
+                default=10)
+            private$..unifmin <- jmvcore::OptionNumber$new(
+                "unifmin",
+                unifmin,
+                default=0)
+            private$..unifmax <- jmvcore::OptionNumber$new(
+                "unifmax",
+                unifmax,
+                default=1)
+            private$..contvaluesfunc <- jmvcore::OptionString$new(
+                "contvaluesfunc",
+                contvaluesfunc)
+            private$..contpdf <- jmvcore::OptionBool$new(
+                "contpdf",
+                contpdf,
+                default=FALSE)
+            private$..contcdf <- jmvcore::OptionBool$new(
+                "contcdf",
+                contcdf,
+                default=FALSE)
+            private$..contsurv <- jmvcore::OptionBool$new(
+                "contsurv",
+                contsurv,
+                default=FALSE)
+            private$..conticdf <- jmvcore::OptionBool$new(
+                "conticdf",
+                conticdf,
+                default=FALSE)
+            private$..contqvalues <- jmvcore::OptionString$new(
+                "contqvalues",
+                contqvalues)
+            private$..contppvalue <- jmvcore::OptionNumber$new(
+                "contppvalue",
+                contppvalue)
+            private$..contppdf <- jmvcore::OptionBool$new(
+                "contppdf",
+                contppdf,
+                default=FALSE)
+            private$..contpcdf <- jmvcore::OptionBool$new(
+                "contpcdf",
+                contpcdf,
+                default=FALSE)
+            private$..contpinterv <- jmvcore::OptionBool$new(
+                "contpinterv",
+                contpinterv,
+                default=FALSE)
+            private$..contx1value <- jmvcore::OptionNumber$new(
+                "contx1value",
+                contx1value)
+            private$..contx2value <- jmvcore::OptionNumber$new(
+                "contx2value",
+                contx2value)
+            private$..contpsurv <- jmvcore::OptionBool$new(
+                "contpsurv",
+                contpsurv,
+                default=FALSE)
+            private$..contpicdf <- jmvcore::OptionBool$new(
+                "contpicdf",
+                contpicdf,
+                default=FALSE)
+            private$..contpqvalue <- jmvcore::OptionNumber$new(
+                "contpqvalue",
+                contpqvalue)
+            private$..conttail <- jmvcore::OptionList$new(
+                "conttail",
+                conttail,
+                options=list(
+                    "left",
+                    "right",
+                    "central"),
+                default="left")
 
+            self$.addOption(private$..cdistros)
+            self$.addOption(private$..mu)
+            self$.addOption(private$..sigma)
+            self$.addOption(private$..tnu)
+            self$.addOption(private$..chinu)
+            self$.addOption(private$..f1nu)
+            self$.addOption(private$..f2nu)
+            self$.addOption(private$..rate)
+            self$.addOption(private$..unifmin)
+            self$.addOption(private$..unifmax)
+            self$.addOption(private$..contvaluesfunc)
+            self$.addOption(private$..contpdf)
+            self$.addOption(private$..contcdf)
+            self$.addOption(private$..contsurv)
+            self$.addOption(private$..conticdf)
+            self$.addOption(private$..contqvalues)
+            self$.addOption(private$..contppvalue)
+            self$.addOption(private$..contppdf)
+            self$.addOption(private$..contpcdf)
+            self$.addOption(private$..contpinterv)
+            self$.addOption(private$..contx1value)
+            self$.addOption(private$..contx2value)
+            self$.addOption(private$..contpsurv)
+            self$.addOption(private$..contpicdf)
+            self$.addOption(private$..contpqvalue)
+            self$.addOption(private$..conttail)
         }),
-    active = list(),
-    private = list()
+    active = list(
+        cdistros = function() private$..cdistros$value,
+        mu = function() private$..mu$value,
+        sigma = function() private$..sigma$value,
+        tnu = function() private$..tnu$value,
+        chinu = function() private$..chinu$value,
+        f1nu = function() private$..f1nu$value,
+        f2nu = function() private$..f2nu$value,
+        rate = function() private$..rate$value,
+        unifmin = function() private$..unifmin$value,
+        unifmax = function() private$..unifmax$value,
+        contvaluesfunc = function() private$..contvaluesfunc$value,
+        contpdf = function() private$..contpdf$value,
+        contcdf = function() private$..contcdf$value,
+        contsurv = function() private$..contsurv$value,
+        conticdf = function() private$..conticdf$value,
+        contqvalues = function() private$..contqvalues$value,
+        contppvalue = function() private$..contppvalue$value,
+        contppdf = function() private$..contppdf$value,
+        contpcdf = function() private$..contpcdf$value,
+        contpinterv = function() private$..contpinterv$value,
+        contx1value = function() private$..contx1value$value,
+        contx2value = function() private$..contx2value$value,
+        contpsurv = function() private$..contpsurv$value,
+        contpicdf = function() private$..contpicdf$value,
+        contpqvalue = function() private$..contpqvalue$value,
+        conttail = function() private$..conttail$value),
+    private = list(
+        ..cdistros = NA,
+        ..mu = NA,
+        ..sigma = NA,
+        ..tnu = NA,
+        ..chinu = NA,
+        ..f1nu = NA,
+        ..f2nu = NA,
+        ..rate = NA,
+        ..unifmin = NA,
+        ..unifmax = NA,
+        ..contvaluesfunc = NA,
+        ..contpdf = NA,
+        ..contcdf = NA,
+        ..contsurv = NA,
+        ..conticdf = NA,
+        ..contqvalues = NA,
+        ..contppvalue = NA,
+        ..contppdf = NA,
+        ..contpcdf = NA,
+        ..contpinterv = NA,
+        ..contx1value = NA,
+        ..contx2value = NA,
+        ..contpsurv = NA,
+        ..contpicdf = NA,
+        ..contpqvalue = NA,
+        ..conttail = NA)
 )
 
 contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "contvarsResults",
     inherit = jmvcore::Group,
     active = list(
-        frequencies = function() private$.items[["frequencies"]]),
+        ContInfoTab = function() private$.items[["ContInfoTab"]],
+        Contprobstab = function() private$.items[["Contprobstab"]],
+        Contquantstab = function() private$.items[["Contquantstab"]],
+        contpdfplot = function() private$.items[["contpdfplot"]],
+        contcdfplot = function() private$.items[["contcdfplot"]],
+        contsurvplot = function() private$.items[["contsurvplot"]],
+        contintervplot = function() private$.items[["contintervplot"]],
+        conticdfplot = function() private$.items[["conticdfplot"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -31,17 +251,110 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Continuous Distributions")
-            self$add(jmvcore::Array$new(
+            self$add(jmvcore::Table$new(
                 options=options,
-                name="frequencies",
-                title="Categorical Data",
-                visible="(freq)",
-                items="(vars)",
-                template=jmvcore::Table$new(
-                    options=options,
-                    title="Frequencies and odds of $key",
-                    visible="(levels($key))",
-                    columns=list())))}))
+                name="ContInfoTab",
+                title="Distribution information",
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="DistributionColumn", 
+                        `title`="Distribution", 
+                        `type`="text"),
+                    list(
+                        `name`="ParametersColumn", 
+                        `title`="Parameter(s)", 
+                        `type`="text", 
+                        `visible`="(cdistros)"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="Contprobstab",
+                title="Densities/Probabilities table",
+                visible="(contpdf | contcdf | contsurv)",
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="contvarValues", 
+                        `title`="x", 
+                        `type`="text", 
+                        `visible`="(cdistros)"),
+                    list(
+                        `name`="contpdf", 
+                        `title`="f(x)", 
+                        `type`="number", 
+                        `visible`="(contpdf)"),
+                    list(
+                        `name`="contcdf", 
+                        `title`="Pr(X \u2264 x)", 
+                        `type`="number", 
+                        `visible`="(contcdf)"),
+                    list(
+                        `name`="contsurv", 
+                        `title`="Pr(X > x)", 
+                        `type`="number", 
+                        `visible`="(contsurv)"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="Contquantstab",
+                title="Quantiles table",
+                visible="(conticdf)",
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="contquantValues", 
+                        `title`="Prob", 
+                        `type`="text", 
+                        `visible`="(cdistros)"),
+                    list(
+                        `name`="contlTail", 
+                        `title`="Left tail", 
+                        `type`="number", 
+                        `visible`="(conticdf)"),
+                    list(
+                        `name`="contrTail", 
+                        `title`="Right tail", 
+                        `type`="number", 
+                        `visible`="(conticdf)"))))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="contpdfplot",
+                title="Probability density function plot",
+                width=450,
+                height=400,
+                renderFun=".contppdf",
+                visible="(contppdf)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="contcdfplot",
+                title="Cumulative distribution function plot",
+                width=450,
+                height=400,
+                renderFun=".contpcdf",
+                visible="(contpcdf)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="contsurvplot",
+                title="Survival function plot",
+                width=450,
+                height=400,
+                renderFun=".contpsurv",
+                visible="(contpsurv)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="contintervplot",
+                title="Probability interval plot",
+                width=450,
+                height=400,
+                renderFun=".contpinterv",
+                visible="(contpinterv)"))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="conticdfplot",
+                title="Quantile (ICDF) plot",
+                width=450,
+                height=400,
+                renderFun=".contpicdf",
+                visible="(contpicdf)"))}))
 
 contvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "contvarsBase",
@@ -61,31 +374,139 @@ contvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 pause = NULL,
                 completeWhenFilled = FALSE,
                 requiresMissings = FALSE,
-                weightsSupport = 'auto')
+                weightsSupport = 'na')
         }))
 
 #' Continuous Distributions
 #'
 #' 
-#' @param data .
+#' @param cdistros \code{norm} (default), \code{tdist}, 'chisqdist', 'fdist',
+#'   or \code{exp}, specifies normal, t, chi-squared, F, exponential or uniform
+#'   distributions
+#' @param mu a number specifying mean of normal distribution
+#' @param sigma a number specifying standard deviation in normal distribution
+#' @param tnu Degrees of freedom for the t distribution
+#' @param chinu Degrees of freedom for the \u03c6\u00B2 distribution
+#' @param f1nu Degrees of freedom in the numerator for the F distribution
+#' @param f2nu Degrees of freedom in the denominator for the F distribution
+#' @param rate a number specifying rate (lambda) in the exponential
+#'   distribution
+#' @param unifmin a number specifying minimum in continuous uniform
+#'   distribution
+#' @param unifmax a number specifying maximum in continuous uniform
+#'   distribution
+#' @param contvaluesfunc a comma-separated list specifying random variables'
+#'   values
+#' @param contpdf \code{TRUE} or \code{FALSE} (default), provide probability
+#'   density function for a continuous distribution
+#' @param contcdf \code{TRUE} or \code{FALSE} (default), provide cumulative
+#'   distribution function for a continuous distribution
+#' @param contsurv \code{TRUE} or \code{FALSE} (default), provide survival
+#'   function for a continuous distribution
+#' @param conticdf \code{TRUE} or \code{FALSE} (default), provide inverse of
+#'   cumulative distribution function for a continuous distribution
+#' @param contqvalues a comma-separated list specifying quantiles for a random
+#'   variable
+#' @param contppvalue a number specifying random variables' value to be
+#'   plotted
+#' @param contppdf \code{TRUE} or \code{FALSE} (default), provide probability
+#'   mass function for a continuous distribution to be plotted
+#' @param contpcdf \code{TRUE} or \code{FALSE} (default), provide cumulative
+#'   distribution function for a continuous distribution to be plotted
+#' @param contpinterv \code{TRUE} or \code{FALSE} (default), provide
+#'   probability plot within an interval
+#' @param contx1value a number specifying X1 value for probability plot within
+#'   interval
+#' @param contx2value a number specifying X2 value for probability plot within
+#'   interval
+#' @param contpsurv \code{TRUE} or \code{FALSE} (default), provide survival
+#'   function for a cont distribution to be plotted
+#' @param contpicdf \code{TRUE} or \code{FALSE} (default), provide inverse of
+#'   cumulative distribution function for a continuous distribution to be
+#'   plotted
+#' @param contpqvalue a number specifying a quantile for a random variable to
+#'   be plotted
+#' @param conttail \code{left} (default), \code{right}, or \code{central},
+#'   specifies the tail to be plotted in the ICDF plot for continuous
+#'   distributions
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$frequencies} \tab \tab \tab \tab \tab Frequencies Distribution \cr
+#'   \code{results$ContInfoTab} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$Contprobstab} \tab \tab \tab \tab \tab A table with probabilities for selected distributions \cr
+#'   \code{results$Contquantstab} \tab \tab \tab \tab \tab A table with quantiles for selected distributions \cr
+#'   \code{results$contpdfplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$contcdfplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$contsurvplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$contintervplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$conticdfplot} \tab \tab \tab \tab \tab an image \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$ContInfoTab$asDF}
+#'
+#' \code{as.data.frame(results$ContInfoTab)}
 #'
 #' @export
 contvars <- function(
-    data) {
+    cdistros = "norm",
+    mu = 0,
+    sigma = 1,
+    tnu = 10,
+    chinu = 10,
+    f1nu = 10,
+    f2nu = 10,
+    rate = 10,
+    unifmin = 0,
+    unifmax = 1,
+    contvaluesfunc,
+    contpdf = FALSE,
+    contcdf = FALSE,
+    contsurv = FALSE,
+    conticdf = FALSE,
+    contqvalues,
+    contppvalue,
+    contppdf = FALSE,
+    contpcdf = FALSE,
+    contpinterv = FALSE,
+    contx1value,
+    contx2value,
+    contpsurv = FALSE,
+    contpicdf = FALSE,
+    contpqvalue,
+    conttail = "left") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("contvars requires jmvcore to be installed (restart may be required)")
 
-    if (missing(data))
-        data <- jmvcore::marshalData(
-            parent.frame())
 
-
-    options <- contvarsOptions$new()
+    options <- contvarsOptions$new(
+        cdistros = cdistros,
+        mu = mu,
+        sigma = sigma,
+        tnu = tnu,
+        chinu = chinu,
+        f1nu = f1nu,
+        f2nu = f2nu,
+        rate = rate,
+        unifmin = unifmin,
+        unifmax = unifmax,
+        contvaluesfunc = contvaluesfunc,
+        contpdf = contpdf,
+        contcdf = contcdf,
+        contsurv = contsurv,
+        conticdf = conticdf,
+        contqvalues = contqvalues,
+        contppvalue = contppvalue,
+        contppdf = contppdf,
+        contpcdf = contpcdf,
+        contpinterv = contpinterv,
+        contx1value = contx1value,
+        contx2value = contx2value,
+        contpsurv = contpsurv,
+        contpicdf = contpicdf,
+        contpqvalue = contpqvalue,
+        conttail = conttail)
 
     analysis <- contvarsClass$new(
         options = options,
