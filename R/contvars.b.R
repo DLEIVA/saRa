@@ -54,7 +54,76 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         ContInfoTab$setRow(rowNo=1, values=list(
           DistributionColumn=Info[1,1],
           ParametersColumn=Info[1,2]))
-      }
-      
+        
+        ContvarValues <- private$.getcontProbValues()
+        
+        if(length(ContvarValues)>0){
+          if(length(ContvarValues) > 1){
+            for(k in 2:length(ContvarValues))
+              Contprobstab$addRow(rowKey=k,values=list(`x`='',
+                                                       `contpdf`='',`contcdf`='',`contsurv`=''))
+          }        
+        
+        ProbRowNo <- 1
+        
+        for(i in 1:length(ContvarValues)){
+          varname <- paste0('x = ',ContvarValues[i])
+          pdfval <- if(cdistros=='norm'){
+            dnorm(ContvarValues[i],self$options$mu,self$options$sigma)
+          } else if(cdistros=='tdist'){
+            dt(ContvarValues[i],self$options$tnu)
+          } else if(cdistros=='chisqdist'){
+            dchisq(ContvarValues[i],self$options$chinu)                
+          } else if(cdistros=='fdist'){
+            df(ContvarValues[i],self$options$f1nu,self$options$f2nu)
+          } else if(cdistros=='exp'){
+            dexp(ContvarValues[i],self$options$rate)
+          } else if(cdistros=='unif'){
+            dunif(ContvarValues[i],self$options$unifmin,self$options$unifmax)
+          }
+          cdfval <- if(cdistros=='norm'){
+            pnorm(ContvarValues[i],self$options$mu,self$options$sigma)
+          } else if(cdistros=='tdist'){
+            pt(ContvarValues[i],self$options$tnu)
+          } else if(cdistros=='chisqdist'){
+            pchisq(ContvarValues[i],self$options$chinu)                
+          } else if(cdistros=='fdist'){
+            pf(ContvarValues[i],self$options$f1nu,self$options$f2nu)
+          } else if(cdistros=='exp'){
+            pexp(ContvarValues[i],self$options$rate)
+          } else if(cdistros=='unif'){
+            punif(ContvarValues[i],self$options$unifmin,self$options$unifmax)
+          }
+          survval <- if(cdistros=='norm'){
+            pnorm(ContvarValues[i],self$options$mu,self$options$sigma,lower.tail=FALSE)
+          } else if(cdistros=='tdist'){
+            pt(ContvarValues[i],self$options$tnu,lower.tail=FALSE)
+          } else if(cdistros=='chisqdist'){
+            pchisq(ContvarValues[i],self$options$chinu,lower.tail=FALSE)                
+          } else if(cdistros=='fdist'){
+            pf(ContvarValues[i],self$options$f1nu,self$options$f2nu,lower.tail=FALSE)
+          } else if(cdistros=='exp'){
+            pexp(ContvarValues[i],self$options$rate,lower.tail=FALSE)
+          } else if(cdistros=='unif'){
+            punif(ContvarValues[i],self$options$unifmin,self$options$unifmax,lower.tail=FALSE)
+          }
+          
+          Contprobstab$setRow(rowNo=ProbRowNo, values=list(`contvarValues`=varname,
+                                                           `contpdf`=pdfval,`contcdf`=cdfval,`contsurv`=survval))
+          ProbRowNo <- ProbRowNo + 1
+        }
+        }
+        
+        
+      },
+      #### Helper functions ----
+      .getcontProbValues = function(){
+        probValues <- self$options$contvaluesfunc
+        if (!is.na(probValues) && is.character(probValues))
+          probValues <- as.numeric(unlist(strsplit(probValues, ",")))
+        probValues[probValues < 0 ] <- NA
+        probValues <- unique(probValues[!is.na(probValues)])
+        return(probValues)
+      }     
     )
 )
