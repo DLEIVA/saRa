@@ -163,9 +163,16 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       #### Helper functions ----
       .getcontProbValues = function(){
+        cdistros <- self$options$cdistros
         probValues <- self$options$contvaluesfunc
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
+        if(cdistros%in%c('chisqdist','fdist','exp')){
+          probValues[probValues < 0] <- NA 
+        }
+        if(cdistros=='unif'){
+          probValues[probValues < self$options$unifmin |probValues > self$options$unifmax] <- NA           
+        }
         probValues <- unique(probValues[!is.na(probValues)])
         return(probValues)
       },
