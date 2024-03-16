@@ -31,13 +31,11 @@ children:
                         name: binomn
                         label: Number of trials (n)
                         format: number
-                        width: large
                         enable: (binom)
                       - type: TextBox
                         name: binomp
                         label: Probability (p)
                         format: number
-                        width: large
                         enable: (binom)
                   - type: RadioButton
                     name: poiss
@@ -48,7 +46,6 @@ children:
                         name: lambda
                         label: Mean (λ)
                         format: number
-                        width: large
                         enable: (poiss)
                   - type: RadioButton
                     name: negbinom
@@ -59,13 +56,11 @@ children:
                         name: negbinomr
                         label: Number of successes (r)
                         format: number
-                        width: large
                         enable: (negbinom)
                       - type: TextBox
                         name: negbinomp
                         label: Probability (p)
                         format: number
-                        width: large
                         enable: (negbinom)
           - type: LayoutBox
             cell:
@@ -85,7 +80,6 @@ children:
                         name: geomp
                         label: Probability (p)
                         format: number
-                        width: large
                         enable: (geom)                        
                   - type: RadioButton
                     name: hypergeom
