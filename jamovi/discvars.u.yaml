@@ -96,19 +96,16 @@ children:
                         name: hyperm
                         label: Number of success states (m)
                         format: number
-                        width: large
                         enable: (hypergeom)
                       - type: TextBox
                         name: hypern
                         label: Number of failure states (n)
                         format: number
-                        width: large
                         enable: (hypergeom)
                       - type: TextBox
                         name: hyperk
                         label: Number of draws (k)
                         format: number
-                        width: large
                         enable: (hypergeom)                        
   - type: CollapseBox
     label: Values and functions
