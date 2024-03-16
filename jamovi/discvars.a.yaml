@@ -13,7 +13,9 @@ options:
         - title: Binomial
           name: binom
         - title: Poisson
-          name: poiss          
+          name: poiss
+        - title: Negative Binomial
+          name: negbinom
       default: binom    
       description:
           R: >
@@ -42,7 +44,23 @@ options:
       description:
           R: >
             lambda parameter for Poisson distribution  
+            
+    - name: negbinomr
+      title: Successes
+      type: Integer
+      default: 10
+      description:
+          R: >
+            a number specifying number of successes in negative binomial distribution 
 
+    - name: negbinomp
+      title: Probability
+      type: Number
+      default: 0.5
+      description:
+          R: >
+            a number specifying success probability in negative binomial distribution 
+            
     - name: valuesfunc
       title: Random Variable Values
       type: String

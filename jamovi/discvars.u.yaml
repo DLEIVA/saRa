@@ -50,6 +50,23 @@ children:
                         format: number
                         width: large
                         enable: (poiss)
+                  - type: RadioButton
+                    name: negbinom
+                    optionName: distros
+                    optionPart: negbinom
+                    children:
+                      - type: TextBox
+                        name: negbinomr
+                        label: Number of successes (r)
+                        format: number
+                        width: large
+                        enable: (negbinom)
+                      - type: TextBox
+                        name: negbinomp
+                        label: Probability (p)
+                        format: number
+                        width: large
+                        enable: (negbinom)
   - type: CollapseBox
     label: Values and functions
     stretchFactor: 2
