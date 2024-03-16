@@ -13,6 +13,9 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             negbinomr = 10,
             negbinomp = 0.5,
             geomp = 0.5,
+            hyperm = 10,
+            hypern = 10,
+            hyperk = 5,
             valuesfunc = NULL,
             pmf = FALSE,
             cdf = FALSE,
@@ -43,7 +46,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "binom",
                     "poiss",
                     "negbinom",
-                    "geom"),
+                    "geom",
+                    "hypergeom"),
                 default="binom")
             private$..binomn <- jmvcore::OptionInteger$new(
                 "binomn",
@@ -69,6 +73,18 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "geomp",
                 geomp,
                 default=0.5)
+            private$..hyperm <- jmvcore::OptionInteger$new(
+                "hyperm",
+                hyperm,
+                default=10)
+            private$..hypern <- jmvcore::OptionInteger$new(
+                "hypern",
+                hypern,
+                default=10)
+            private$..hyperk <- jmvcore::OptionInteger$new(
+                "hyperk",
+                hyperk,
+                default=5)
             private$..valuesfunc <- jmvcore::OptionString$new(
                 "valuesfunc",
                 valuesfunc)
@@ -139,6 +155,9 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..negbinomr)
             self$.addOption(private$..negbinomp)
             self$.addOption(private$..geomp)
+            self$.addOption(private$..hyperm)
+            self$.addOption(private$..hypern)
+            self$.addOption(private$..hyperk)
             self$.addOption(private$..valuesfunc)
             self$.addOption(private$..pmf)
             self$.addOption(private$..cdf)
@@ -164,6 +183,9 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         negbinomr = function() private$..negbinomr$value,
         negbinomp = function() private$..negbinomp$value,
         geomp = function() private$..geomp$value,
+        hyperm = function() private$..hyperm$value,
+        hypern = function() private$..hypern$value,
+        hyperk = function() private$..hyperk$value,
         valuesfunc = function() private$..valuesfunc$value,
         pmf = function() private$..pmf$value,
         cdf = function() private$..cdf$value,
@@ -188,6 +210,9 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..negbinomr = NA,
         ..negbinomp = NA,
         ..geomp = NA,
+        ..hyperm = NA,
+        ..hypern = NA,
+        ..hyperk = NA,
         ..valuesfunc = NA,
         ..pmf = NA,
         ..cdf = NA,
@@ -367,6 +392,12 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   binomial distribution
 #' @param geomp a number specifying success probability in geometric
 #'   distribution
+#' @param hyperm a number specifying number of success states in the
+#'   population (i.e. white balls in an urn)
+#' @param hypern a number specifying number of failure states in the
+#'   population (i.e. black balls in an urn)
+#' @param hyperk a number specifying number of draws in hypergeometric
+#'   distribution
 #' @param valuesfunc a comma-separated list specifying random variables'
 #'   values
 #' @param pmf \code{TRUE} or \code{FALSE} (default), provide probability mass
@@ -426,6 +457,9 @@ discvars <- function(
     negbinomr = 10,
     negbinomp = 0.5,
     geomp = 0.5,
+    hyperm = 10,
+    hypern = 10,
+    hyperk = 5,
     valuesfunc,
     pmf = FALSE,
     cdf = FALSE,
@@ -455,6 +489,9 @@ discvars <- function(
         negbinomr = negbinomr,
         negbinomp = negbinomp,
         geomp = geomp,
+        hyperm = hyperm,
+        hypern = hypern,
+        hyperk = hyperk,
         valuesfunc = valuesfunc,
         pmf = pmf,
         cdf = cdf,
