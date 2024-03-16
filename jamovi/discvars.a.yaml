@@ -17,7 +17,9 @@ options:
         - title: Negative Binomial
           name: negbinom
         - title: Geometric
-          name: geom          
+          name: geom
+        - title: Hypergeometric
+          name: hypergeom          
       default: binom    
       description:
           R: >
@@ -71,7 +73,30 @@ options:
       description:
           R: >
             a number specifying success probability in geometric distribution 
+            
+    - name: hyperm
+      title: Successes
+      type: Integer
+      default: 10
+      description:
+          R: >
+            a number specifying number of success states in the population (i.e. white balls in an urn)            
 
+    - name: hypern
+      title: Failures
+      type: Integer
+      default: 10
+      description:
+          R: >
+            a number specifying number of failure states in the population (i.e. black balls in an urn)
+            
+    - name: hyperk
+      title: Draws
+      type: Integer
+      default: 5
+      description:
+          R: >
+            a number specifying number of draws in hypergeometric distribution            
             
     - name: valuesfunc
       title: Random Variable Values
