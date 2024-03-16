@@ -15,7 +15,7 @@ items:
         - name: ParametersColumn
           title: Parameter(s)
           type: text
-          visible: (distros)
+          visible: (cdistros)
           
     - name: Contprobstab
       title: Densities/Probabilities table

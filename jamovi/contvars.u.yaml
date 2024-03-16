@@ -29,12 +29,12 @@ children:
                     children:
                       - type: TextBox
                         name: mu
-                        label: Mean (\u03BC)
+                        label: Mean (μ)
                         format: number
                         enable: (norm)
                       - type: TextBox
                         name: sigma
-                        label: Std. deviation (\u03C3)
+                        label: Std. deviation (σ)
                         format: number
                         enable: (norm)
                   - type: RadioButton
@@ -44,19 +44,19 @@ children:
                     children:
                       - type: TextBox
                         name: tnu
-                        label: Degrees of freedom (\u03BD)
+                        label: df (ν)
                         format: number
                         enable: (tdist)
-                  - type: RadioButton
-                    name: chidist
+                  - name: chisqdist
+                    type: RadioButton
                     optionName: cdistros
-                    optionPart: chidist
+                    optionPart: chisqdist
                     children:
                       - type: TextBox
                         name: chinu
-                        label: Degrees of freedom (\u03BD)
+                        label: df (ν)
                         format: number
-                        enable: (chidist)
+                        enable: (chisqdist)                    
           - type: LayoutBox
             cell:
               column: 1
@@ -73,14 +73,14 @@ children:
                     children:
                       - type: TextBox
                         name: f1nu
-                        label: Degrees of freedom numerator (\u03BD\u2081)
+                        label: df numerator (ν1)
                         format: number
                         enable: (fdist)
                       - type: TextBox
                         name: f2nu
-                        label: Degrees of freedom numerator (\u03BD\u2081)
+                        label: df denominator (ν2)
                         format: number
-                        enable: (fdist)                        
+                        enable: (fdist)
                   - type: RadioButton
                     name: exp
                     optionName: cdistros
@@ -88,7 +88,7 @@ children:
                     children:
                       - type: TextBox
                         name: rate
-                        label: Rate (\u03BB)
+                        label: Rate (λ)
                         format: number
                         enable: (exp)
                   - type: RadioButton
@@ -98,15 +98,14 @@ children:
                     children:
                       - type: TextBox
                         name: unifmin
-                        label: Minimum
+                        label: Minimum (α)
                         format: number
                         enable: (unif)
                       - type: TextBox
                         name: unifmax
-                        label: Maximum
+                        label: Maximum (β)
                         format: number
-                        enable: (unif)                        
-                        
+                        enable: (unif)
   - type: CollapseBox
     label: Values and functions
     stretchFactor: 2
@@ -128,7 +127,7 @@ children:
                   - type: TextBox
                     name: contvaluesfunc
                     width: large
-                    format: string  
+                    format: string
                     enable: (contpdf || contcdf || contsurv)
                   - type: CheckBox
                     name: contpdf
@@ -152,7 +151,6 @@ children:
                     enable: (conticdf)
                   - type: CheckBox
                     name: conticdf
-
   - type: CollapseBox
     label: Plots
     stretchFactor: 2
@@ -174,9 +172,9 @@ children:
                   - type: TextBox
                     name: contppvalue
                     format: number
-                    enable: (contppmf || contpcdf || contpsurv)
+                    enable: (contppdf || contpcdf || contpsurv)
                   - type: CheckBox
-                    name: contppmf
+                    name: contppdf                    
                   - type: CheckBox
                     name: contpcdf
                   - type: CheckBox
@@ -197,26 +195,26 @@ children:
               column: 1
               row: 0
             stretchFactor: 1
-            children:                    
-                  - type: TextBox
-                    name: contpqvalue
-                    format: number 
+            children:
+              - type: TextBox
+                name: contpqvalue
+                format: number
+                enable: (contpicdf)
+              - type: CheckBox
+                name: contpicdf
+                children:
+                  - type: RadioButton
+                    name: left
+                    optionName: conttail
+                    optionPart: left
                     enable: (contpicdf)
-                  - type: CheckBox
-                    name: contpicdf
-                    children:
-                      - type: RadioButton
-                        name: left
-                        optionName: conttail
-                        optionPart: left
-                        enable: (contpicdf)
-                      - type: RadioButton
-                        name: right
-                        optionName: conttail
-                        optionPart: right
-                        enable: (contpicdf)                        
-                      - type: RadioButton
-                        name: central
-                        optionName: conttail
-                        optionPart: central                       
-                        enable: (contpicdf)                        
+                  - type: RadioButton
+                    name: right
+                    optionName: conttail
+                    optionPart: right
+                    enable: (contpicdf)
+                  - type: RadioButton
+                    name: central
+                    optionName: conttail
+                    optionPart: central
+                    enable: (contpicdf)
