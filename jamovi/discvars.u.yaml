@@ -67,6 +67,27 @@ children:
                         format: number
                         width: large
                         enable: (negbinom)
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 0
+            stretchFactor: 2
+            children:
+              - type: LayoutBox
+                margin: large
+                children:
+                  - type: RadioButton
+                    name: geom
+                    optionName: distros
+                    optionPart: geom
+                    children:
+                      - type: TextBox
+                        name: geomp
+                        label: Probability (p)
+                        format: number
+                        width: large
+                        enable: (geom)                        
+                        
   - type: CollapseBox
     label: Values and functions
     stretchFactor: 2
