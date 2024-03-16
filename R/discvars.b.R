@@ -368,7 +368,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       },
       .pinterv = function(image, ...) {
         
-        if (! self$options$psurv)
+        if (! self$options$pinterv)
           return()
         
         Color <- c("#e0bc6b","#9f9f9f")
