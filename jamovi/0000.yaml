@@ -78,7 +78,11 @@ datasets:
   - name: phobia
     path: phobia.RData
     description: Simulated data
-    tags: [ Descriptives, t-tests, Correlation, Regression] 
+    tags:
+      - Descriptives
+      - t-tests
+      - Correlation
+      - Regression
   - name: beliefs
     path: beliefs.RData
     description: A dataset on personal beliefs
