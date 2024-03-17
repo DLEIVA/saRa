@@ -1,0 +1,11 @@
+---
+name:  testnorm
+title: Normality tests
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Normality tests
+      type:  Preformatted
+
+...

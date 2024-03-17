@@ -1,0 +1,11 @@
+---
+name:  wilcoxT
+title: Wilcoxon T test
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Wilcoxon T test
+      type:  Preformatted
+
+...

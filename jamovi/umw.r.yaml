@@ -1,0 +1,11 @@
+---
+name:  umw
+title: Mann-Whitney test
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Mann-Whitney test
+      type:  Preformatted
+
+...
