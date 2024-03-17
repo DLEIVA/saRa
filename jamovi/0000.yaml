@@ -75,31 +75,46 @@ analyses:
     menuSubgroup: Bivariate Analysis
     menuTitle: Mixed Data
 datasets:
+  - name: phobia
+    path: phobia.RData
+    description: Simulated data
+    tags: [ Descriptives, t-tests, Correlation, Regression] 
   - name: beliefs
     path: beliefs.RData
-    description: "A dataset on personal beliefs"
-    tags: [ Sampling Distributions, Confidence Intervals, z tests, t-tests One Sample ]
+    description: A dataset on personal beliefs
+    tags:
+      - Confidence Intervals
+      - z tests
+      - t-tests One Sample
   - name: neoffi
     path: NEOFFI.RData
-    description: "A dataset on NEO-FFI scale in a sample of students"
-    tags: [ t-tests One Sample, Confidence Intervals, Correlation ]    
+    description: A dataset on NEO-FFI
+    tags:
+      - t-tests One Sample
+      - Confidence Intervals
+      - Correlation
   - name: attitudes
     path: attitudes.immigration.RData
-    description: "A dataset on attitudes towards immigration"
-    tags: [ t-tests IS, t-tests RM ]
+    description: A dataset on attitudes towards immigration
+    tags:
+      - t-tests IS
+      - t-tests RM
   - name: ginzberg
     path: Ginzberg.RData
-    description: "A dataset from Ginzberg to illustrate linear regression"
-    tags: [ Regression ]    
+    description: A dataset to illustrate linear regression
+    tags:
+      - Regression
   - name: polynomialReg
     path: polynomial_regression.RData
-    description: "A dataset to illustrate polynomial regression"
-    tags: [ Polynomial Regression ]
+    description: A dataset to illustrate polynomial regression
+    tags:
+      - Polynomial Regression
   - name: medData
     path: mediation.RData
-    description: "A dataset to illustrate simple mediation models"
-    tags: [ Regression, Simple Mediation ]    
-    
+    description: A dataset to illustrate simple mediation models
+    tags:
+      - Regression
+      - Simple Mediation
 usesNative: true
 minApp: 1.0.8
 
