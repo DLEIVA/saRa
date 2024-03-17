@@ -401,6 +401,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         k1 <- private$.getX1value() 
         k2 <- private$.getX2value()
         
+        if(k1>k2){
+          temp <- k2
+          k2 <- k1
+          k1 <- temp
+          rm(temp)
+        }        
+        
         plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
           dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
           } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)} else if(distros=='geom'){
