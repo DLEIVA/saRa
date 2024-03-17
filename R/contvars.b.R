@@ -374,6 +374,74 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 axis.title.y = element_text(size=14))        
         
         return(p)                
+      },
+      .contpinterv = function(image, ...) {
+        
+        if (! self$options$contpinterv)
+          return()
+        
+        Color <- c("#e0bc6b","#7b9ee6")
+        
+        cdistros <- self$options$cdistros
+        
+        x <- if(cdistros=='norm'){
+          data.frame(xlim=c(self$options$mu-4*self$options$sigma,self$options$mu+4*self$options$sigma))
+        } else if(cdistros=='tdist'){
+          data.frame(xlim=c(-4,4))
+        } else if(cdistros=='chisqdist'){
+          data.frame(xlim=c(0,self$options$chinu+3*sqrt(2*self$options$chinu)))
+        } else if(cdistros=='fdist'){data.frame(xlim=c(0,5))} else if(cdistros=='exp'){
+          data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
+            data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
+        
+        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
+          't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
+            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
+        
+        k1 <- private$.getcontX1value() 
+        k2 <- private$.getcontX2value()
+        if(k1>k2){
+          temp <- k2
+          k2 <- k1
+          k1 <- temp
+          rm(temp)
+        }
+        
+        ipval <- if(cdistros=='norm'){diff(pnorm(c(k1,k2),self$options$mu,self$options$sigma))
+        } else if(cdistros=='tdist'){diff(pt(c(k1,k2),self$options$tnu))
+        } else if(cdistros=='chisqdist'){diff(pchisq(c(k1,k2),self$options$chinu))
+        } else if(cdistros=='fdist'){diff(pf(c(k1,k2),self$options$f1nu,self$options$f2nu))
+        } else if(cdistros=='exp'){diff(pexp(c(k1,k2),self$options$rate))
+        } else if(cdistros=='unif'){diff(punif(c(k1,k2),self$options$unifmin,self$options$unifmax))}        
+        
+        p <- ggplot(x,aes(x=xlim)) +
+          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
+              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
+            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
+            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
+              list(df=self$options$chinu)} else if(cdistros=='fdist'){
+                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
+                  list(rate=self$options$rate)} else if(cdistros=='unif'){
+                    list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
+          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
+              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
+            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
+            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
+              list(df=self$options$chinu)} else if(cdistros=='fdist'){
+                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
+                  list(rate=self$options$rate)} else if(cdistros=='unif'){
+                    list(min=self$options$unifmin,max=self$options$unifmax)}, 
+            xlim = c(k1,k2),geom = "area",fill=Color[1]) +          
+          ggtitle(paste0(cdistroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',round(ipval,2))) + 
+          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
+          theme(axis.text.x=element_text(size=13),
+                axis.text.y=element_text(size=13),
+                axis.title.x = element_text(size=14),
+                axis.title.y = element_text(size=14))      
+        
+        return(p)                
       },      
       #### Helper functions ----
       .getcontProbValues = function(){
@@ -411,6 +479,34 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         ppval <- unique(ppval[!is.na(ppval)])
         return(ppval)
+      },
+      .getcontX1value = function(){
+        cdistros <- self$options$cdistros
+        X1val <- self$options$contx1value
+        if (!is.na(X1val) && is.character(X1val))
+          X1val <- as.numeric(unlist(strsplit(X1val, ",")))
+        if(cdistros%in%c('chisqdist','fdist','exp')){
+          X1val[X1val < 0] <- NA 
+        }
+        if(cdistros=='unif'){
+          X1val[X1val < self$options$unifmin |X1val > self$options$unifmax] <- NA           
+        }
+        X1val <- unique(X1val[!is.na(X1val)])[1]
+        return(X1val)
+      },
+      .getcontX2value = function(){
+        cdistros <- self$options$cdistros
+        X2val <- self$options$contx2value
+        if (!is.na(X2val) && is.character(X2val))
+          X2val <- as.numeric(unlist(strsplit(X2val, ",")))
+        if(cdistros%in%c('chisqdist','fdist','exp')){
+          X2val[X2val < 0] <- NA 
+        }
+        if(cdistros=='unif'){
+          X2val[X2val < self$options$unifmin |X2val > self$options$unifmax] <- NA           
+        }
+        X2val <- unique(X2val[!is.na(X2val)])[1]
+        return(X2val)
       }      
     )
 )
