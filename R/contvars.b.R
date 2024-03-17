@@ -312,6 +312,68 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 axis.title.y = element_text(size=14))        
         
         return(p)                
+      },
+      .contpsurv = function(image, ...) {
+        
+        if (! self$options$contpsurv)
+          return()
+        
+        Color <- c("#e0bc6b","#7b9ee6")
+        
+        cdistros <- self$options$cdistros
+        
+        x <- if(cdistros=='norm'){
+          data.frame(xlim=c(self$options$mu-4*self$options$sigma,self$options$mu+4*self$options$sigma))
+        } else if(cdistros=='tdist'){
+          data.frame(xlim=c(-4,4))
+        } else if(cdistros=='chisqdist'){
+          data.frame(xlim=c(0,self$options$chinu+3*sqrt(2*self$options$chinu)))
+        } else if(cdistros=='fdist'){data.frame(xlim=c(0,5))} else if(cdistros=='exp'){
+          data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
+            data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
+        
+        k <- private$.getcontppvalue()
+        
+        rpval <- if(cdistros=='norm'){pnorm(k,self$options$mu,self$options$sigma,lower.tail=FALSE)
+        } else if(cdistros=='tdist'){pt(k,self$options$tnu,lower.tail=FALSE)
+        } else if(cdistros=='chisqdist'){pchisq(k,self$options$chinu,lower.tail=FALSE)
+        } else if(cdistros=='fdist'){pf(k,self$options$f1nu,self$options$f2nu,lower.tail=FALSE)
+        } else if(cdistros=='exp'){pexp(k,self$options$rate,lower.tail=FALSE)
+        } else if(cdistros=='unif'){punif(k,self$options$unifmin,self$options$unifmax,lower.tail=FALSE)}
+        
+        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
+          't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
+            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
+        
+        
+        p <- ggplot(x,aes(x=xlim)) +
+          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
+              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
+            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
+            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
+              list(df=self$options$chinu)} else if(cdistros=='fdist'){
+                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
+                  list(rate=self$options$rate)} else if(cdistros=='unif'){
+                    list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
+          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
+              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
+            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
+            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
+              list(df=self$options$chinu)} else if(cdistros=='fdist'){
+                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
+                  list(rate=self$options$rate)} else if(cdistros=='unif'){
+                    list(min=self$options$unifmin,max=self$options$unifmax)}, 
+            xlim = c(k,x$xlim[2]),geom = "area",fill=Color[1]) +          
+          ggtitle(paste0(cdistroslabel,'Pr(X > ',k,') = ',round(rpval,2))) + 
+          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
+          theme(axis.text.x=element_text(size=13),
+                axis.text.y=element_text(size=13),
+                axis.title.x = element_text(size=14),
+                axis.title.y = element_text(size=14))        
+        
+        return(p)                
       },      
       #### Helper functions ----
       .getcontProbValues = function(){
