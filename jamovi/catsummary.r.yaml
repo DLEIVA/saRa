@@ -4,8 +4,12 @@ title: Univariate Data Analysis
 jrs:   '1.1'
 
 items:
-    - name: frequencies
+    - name:  text
       title: Categorical Data
+      type:  Preformatted
+
+    - name: frequencies
+      title: Frequencies distribution
       type: Array
       description: Frequencies Distribution
       visible: (freq)

@@ -152,6 +152,7 @@ catSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "catSummaryResults",
     inherit = jmvcore::Group,
     active = list(
+        text = function() private$.items[["text"]],
         frequencies = function() private$.items[["frequencies"]],
         indices = function() private$.items[["indices"]],
         plots = function() private$.items[["plots"]]),
@@ -162,10 +163,14 @@ catSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Univariate Data Analysis")
+            self$add(jmvcore::Preformatted$new(
+                options=options,
+                name="text",
+                title="Categorical Data"))
             self$add(jmvcore::Array$new(
                 options=options,
                 name="frequencies",
-                title="Categorical Data",
+                title="Frequencies distribution",
                 visible="(freq)",
                 items="(vars)",
                 template=jmvcore::Table$new(
@@ -246,6 +251,7 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param dough \code{TRUE} or \code{FALSE} (default), provide Doughnut charts
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$frequencies} \tab \tab \tab \tab \tab Frequencies Distribution \cr
 #'   \code{results$indices} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr

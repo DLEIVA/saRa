@@ -4,6 +4,10 @@ title: Univariate Data Analysis
 jrs:   '1.1'
 
 items:
+    - name:  text
+      title: Numerical Data
+      type:  Preformatted
+
     - name: indicesnum
       title: Statistics
       description: A table of the descriptive statistics

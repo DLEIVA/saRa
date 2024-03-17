@@ -312,6 +312,7 @@ ordSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "ordSummaryResults",
     inherit = jmvcore::Group,
     active = list(
+        text = function() private$.items[["text"]],
         indicesord = function() private$.items[["indicesord"]],
         plots = function() private$.items[["plots"]]),
     private = list(),
@@ -321,6 +322,10 @@ ordSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Univariate Data Analysis")
+            self$add(jmvcore::Preformatted$new(
+                options=options,
+                name="text",
+                title="Ordinal Data"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesord",
@@ -427,6 +432,7 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   fence for detecting outliers
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$indicesord} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }

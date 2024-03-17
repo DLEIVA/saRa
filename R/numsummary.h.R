@@ -445,6 +445,7 @@ numSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "numSummaryResults",
     inherit = jmvcore::Group,
     active = list(
+        text = function() private$.items[["text"]],
         indicesnum = function() private$.items[["indicesnum"]],
         plots = function() private$.items[["plots"]]),
     private = list(),
@@ -454,6 +455,10 @@ numSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Univariate Data Analysis")
+            self$add(jmvcore::Preformatted$new(
+                options=options,
+                name="text",
+                title="Numerical Data"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesnum",
@@ -597,6 +602,7 @@ numSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   (continuous variables only)
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$indicesnum} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }
