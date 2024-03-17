@@ -6,11 +6,11 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     inherit = contvarsBase,
     private = list(
       .init=function() {
-        #private$.initcontppdf()
-        #private$.initcontpcdf()         
-        #private$.initcontpsurv()                  
-        #private$.initcontpinterv()
-        #private$.initcontpicdf()         
+        private$.initcontppdf()
+        private$.initcontpcdf()         
+        private$.initcontpsurv()                  
+        private$.initcontpinterv()
+        private$.initcontpicdf()         
       },
       .run = function() {
         cdistros <- self$options$cdistros
@@ -160,7 +160,98 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
       },
       #### Plot functions ---- Adapted from distrACTION
-      
+      .initcontppdf = function() {
+        image <- self$results$get('contpdfplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      }, 
+      .initcontpcdf = function() {
+        image <- self$results$get('contcdfplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      },
+      .initcontpsurv = function() {
+        image <- self$results$get('contsurvplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      },
+      .initcontpinterv = function() {
+        image <- self$results$get('contintervplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      },
+      .initcontpicdf = function() {
+        image <- self$results$get('conticdfplot')
+        
+        width <- 450
+        height <- 400
+        
+        image$setSize(width * 2, height)
+      },
+      .contppdf = function(image, ...) {
+        
+        if (! self$options$contppdf)
+          return()
+        
+        Color <- c("#e0bc6b","#7b9ee6")
+        
+        cdistros <- self$options$cdistros
+        
+        x <- if(cdistros=='norm'){
+          data.frame(xlim=c(self$options$mu-4*self$options$sigma,self$options$mu+4*self$options$sigma))
+          } else if(cdistros=='tdist'){
+          data.frame(xlim=c(-4,4))
+          } else if(cdistros=='chisqdist'){
+            data.frame(xlim=c(0,self$options$chinu+3*sqrt(2*self$options$chinu)))
+          } else if(cdistros=='fdist'){data.frame(xlim=c(0,5))} else if(cdistros=='exp'){
+            data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
+              data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
+        
+        k <- private$.getcontppvalue()
+        dval <- if(cdistros=='norm'){dnorm(k,self$options$mu,self$options$sigma)
+        } else if(cdistros=='tdist'){dt(k,self$options$tnu)
+        } else if(cdistros=='chisqdist'){dchisq(k,self$options$chinu)
+        } else if(cdistros=='fdist'){df(k,self$options$f1nu,self$options$f2nu)
+        } else if(cdistros=='exp'){dexp(k,self$options$rate)
+        } else if(cdistros=='unif'){dunif(k,self$options$unifmin,self$options$unifmax)}
+        
+        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
+          't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
+            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
+        
+        p <- ggplot(x,aes(x=xlim)) +
+          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
+              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
+            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
+              } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
+                list(df=self$options$chinu)} else if(cdistros=='fdist'){
+                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
+                  list(rate=self$options$rate)} else if(cdistros=='unif'){
+                    list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
+          ggtitle(paste0(cdistroslabel,'f(X = ',k,') = ',round(dval,2))) + 
+          geom_segment(aes(x=k,y=0,xend=k,yend=dval),color=Color[1],lwd=1.1) +
+          geom_point(aes(x=k,y=dval),col=Color[1]) +
+          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
+          theme(axis.text.x=element_text(size=13),
+                axis.text.y=element_text(size=13),
+                axis.title.x = element_text(size=14),
+                axis.title.y = element_text(size=14))        
+        
+        return(p)                
+      },       
       #### Helper functions ----
       .getcontProbValues = function(){
         cdistros <- self$options$cdistros
@@ -183,6 +274,20 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         quantValues[quantValues < 0 | quantValues > 1] <- NA
         quantValues <- unique(quantValues[!is.na(quantValues)])
         return(quantValues)
-      }    
+      },
+      .getcontppvalue = function(){
+        cdistros <- self$options$cdistros
+        ppval <- self$options$contppvalue
+        if (!is.na(ppval) && is.character(ppval))
+          ppval <- as.numeric(unlist(strsplit(ppval, ",")))
+        if(cdistros%in%c('chisqdist','fdist','exp')){
+          ppval[ppval < 0] <- NA 
+        }
+        if(cdistros=='unif'){
+          ppval[ppval < self$options$unifmin |ppval > self$options$unifmax] <- NA           
+        }
+        ppval <- unique(ppval[!is.na(ppval)])
+        return(ppval)
+      }      
     )
 )
