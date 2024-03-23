@@ -97,7 +97,25 @@ items:
         - name: stat[rankCorr]
           title: Statistic
           content: .
-          visible: (rankCorr)    
+          visible: (rankCorr) 
+          
+        - name: var[fstat]
+          title: ""
+          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (fstat)          
+          
+        - name: name[fstat]
+          title: ''
+          type: text
+          content: f Statistic
+          visible: (fstat)
+
+        - name: stat[fstat]
+          title: Statistic
+          content: .
+          visible: (fstat)          
           
     - name: cisMed
       title: Medians CIs

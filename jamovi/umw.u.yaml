@@ -47,6 +47,9 @@ children:
                 
               - type: CheckBox
                 name: rankCorr                
+        
+              - type: CheckBox
+                name: fstat                
 
           - type: Label
             label: Hypothesis

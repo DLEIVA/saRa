@@ -88,6 +88,17 @@ options:
           R: >
             `TRUE` or `FALSE` (default), compute rank biserial correlation.
             
+    - name: fstat
+      title: f Statistic
+      type: Bool
+      default: false
+      description:
+          ui: >
+            compute f statistic.
+          R: >
+            `TRUE` or `FALSE` (default), compute f statistic.
+            
+            
     - name: hypothesis
       title: Alternative hypothesis
       type: List
