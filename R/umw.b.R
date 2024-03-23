@@ -65,7 +65,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           groupLevels <- base::levels(dataMWTest$group)
           n <- tapply(dataMWTest$dep, dataMWTest$group, length)
           med <- tapply(dataMWTest$dep, dataMWTest$group, function(x) tryNaN(median(x)))
-          rangos <- tryNaN(rank(unlist(split(fobia$electini,fobia$grupo))))
+          rangos <- tryNaN(rank(unlist(split(dataMWTest$dep,dataMWTest$group))))
           R1 <- sum(rangos[1:n[1]])
           R2 <- sum(rangos[(n[1]+1):length(rangos)])
           R <- c(R1,R2)
@@ -249,7 +249,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "num[2]"=n[2],
               "median[2]"=med[2],
               "rankA[2]"=avgR[2],
-              "rankS[2]"=R[2],              
+              "rankS[2]"=R[2]            
             ))
           }          
           
