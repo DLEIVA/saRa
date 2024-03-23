@@ -52,7 +52,7 @@ children:
                 name: fstat                
 
           - type: Label
-            label: Hypothesis
+            label: Alternative Hypothesis
             children:
               - type: RadioButton
                 name: hypothesis_different
