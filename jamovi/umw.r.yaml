@@ -63,7 +63,6 @@ items:
           type: number
           format: zto,pvalue
           visible: (zstat)
-          content: ''
 
         - name: var[pSup]
           title: ""

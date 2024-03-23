@@ -78,6 +78,32 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           R[is.na(R)] <- NaN
           avgR[is.na(avgR)] <- NaN
           
+          .zStattest <- function(dep,group,Ha){
+            df <- data.frame(dep,group)
+            n <- as.numeric(table(df$group))
+            N <- sum(n)
+            t <- table(df$dep)
+            mu <- prod(n)/2
+            sigma <- if(any(t>1)){
+              sqrt(prod(n)/12*(N-1/(N*(N-1))*sum(t^3-t)))
+            } else{ sqrt(prod(n)*(N+1)/12)}
+            U <- wilcox.test(df$dep~df$group)$statistic
+            statistic <- (U-mu)/sigma
+            names(statistic) <- NULL
+            p.value <- if(Ha=='two.sided'){min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))*2
+            } else{min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))}
+            names(p.value) <- NULL
+            list(statistic=statistic,p.value=p.value,mu=mu,sigma=sigma,n=n,t=t)
+          } 
+          
+          .bisrankr <- function(dep,group){
+            df <- data.frame(dep,group)
+            n <- as.numeric(table(df$group))
+            U <- wilcox.test(df$dep~df$group)$statistic
+            statistic <- 1 - (2 * U/prod(n))
+            list(statistic=statistic)
+          } 
+          
           if (self$options$mwu) {
             
             if (is.factor(dataMWTest$dep))
@@ -111,8 +137,106 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 "p[mwu]"=res$p.value))
             }
           }
+
+          if (self$options$zstat) {
+            
+            if (is.factor(dataMWTest$dep))
+              res <- createError(.('Variable is not numeric'))
+            else if (any(is.infinite(dataMWTest$dep)))
+              res <- createError(.('Variable contains infinite values'))
+            else
+              res <- try(suppressWarnings(.zStattest(dep=dataMWTest$dep,group=dataMWTest$group,Ha=Ha)), silent=TRUE)
+            
+            if (isError(res)) {
+              
+              mwtestTable$setRow(rowKey=depName, list(
+                "stat[zstat]"=NaN,
+                "p[zstat]"=''))
+              
+              message <- extractErrorMessage(res)
+              if (message == 'grouping factor must have exactly 2 levels')
+                message <- .('One or both groups do not contain enough observations')
+              else if (message == 'not enough observations')
+                message <- .('One or both groups do not contain enough observations')
+              else if (message == 'data are essentially constant')
+                message <- .('All observations are tied')
+              
+              mwtestTable$addFootnote(rowKey=depName, 'stat[zstat]', message)
+              
+            } else {
+              
+              mwtestTable$setRow(rowKey=depName, list(
+                "stat[zstat]"=res$statistic,
+                "p[zstat]"=res$p.value))
+              
+              if(any(res$n<20) & any(res$t>1)){
+                message2 <- .('Less than 20 observations and ties in the groups: p-value might not be adequate')
+                mwtestTable$addFootnote(rowKey=depName, 'p[zstat]', message2)
+              }              
+            }
+          }
           
+          if (self$options$pSup) {
+            if (is.factor(dataMWTest$dep))
+              res <- createError(.('Variable is not numeric'))
+            else if (any(is.infinite(dataMWTest$dep)))
+              res <- createError(.('Variable contains infinite values'))
+            else
+              res <- try(suppressWarnings(rcompanion::wilcoxonPS(dep~group,data=dataMWTest)[[1]]), silent=TRUE)
+            
+            if (isError(res)) {
+              
+              mwtestTable$setRow(rowKey=depName, list(
+                "stat[pSup]"=NaN))
+              
+              message <- extractErrorMessage(res)
+              if (message == 'grouping factor must have exactly 2 levels')
+                message <- .('One or both groups do not contain enough observations')
+              else if (message == 'not enough observations')
+                message <- .('One or both groups do not contain enough observations')
+              else if (message == 'data are essentially constant')
+                message <- .('All observations are tied')
+              
+              mwtestTable$addFootnote(rowKey=depName, 'stat[pSup]', message)
+              
+            } else {
+              
+              mwtestTable$setRow(rowKey=depName, list(
+                "stat[pSup]"=res))
+            }            
+          }
+          
+          if (self$options$rankCorr) {
+            if (is.factor(dataMWTest$dep))
+              res <- createError(.('Variable is not numeric'))
+            else if (any(is.infinite(dataMWTest$dep)))
+              res <- createError(.('Variable contains infinite values'))
+            else
+              res <- try(suppressWarnings(.bisrankr(dep=dataMWTest$dep,group=dataMWTest$group)), silent=TRUE)
+            
+            if (isError(res)) {
+              
+              mwtestTable$setRow(rowKey=depName, list(
+                "stat[rankCorr]"=NaN))
+              
+              message <- extractErrorMessage(res)
+              if (message == 'grouping factor must have exactly 2 levels')
+                message <- .('One or both groups do not contain enough observations')
+              else if (message == 'not enough observations')
+                message <- .('One or both groups do not contain enough observations')
+              else if (message == 'data are essentially constant')
+                message <- .('All observations are tied')
+              
+              mwtestTable$addFootnote(rowKey=depName, 'stat[rankCorr]', message)
+              
+            } else {
+              
+              mwtestTable$setRow(rowKey=depName, list(
+                "stat[rankCorr]"=res$statistic))
+            }            
+          }          
           
         }
-        })
+        }
+      )
 )

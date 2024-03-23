@@ -225,8 +225,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="p", 
                         `type`="number", 
                         `format`="zto,pvalue", 
-                        `visible`="(zstat)", 
-                        `content`=""),
+                        `visible`="(zstat)"),
                     list(
                         `name`="var[pSup]", 
                         `title`="", 
