@@ -234,6 +234,23 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               mwtestTable$setRow(rowKey=depName, list(
                 "stat[rankCorr]"=res$statistic))
             }            
+          }
+          
+          if (self$options$desc) {
+            
+            descTable$setRow(rowKey=depName, list(
+              "dep"=depName,
+              "group[1]"=groupLevels[1],
+              "num[1]"=n[1],
+              "median[1]"=med[1],
+              "rankA[1]"=avgR[1],
+              "rankS[1]"=R[1],              
+              "group[2]"=groupLevels[2],
+              "num[2]"=n[2],
+              "median[2]"=med[2],
+              "rankA[2]"=avgR[2],
+              "rankS[2]"=R[2],              
+            ))
           }          
           
         }
