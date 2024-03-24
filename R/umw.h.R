@@ -12,6 +12,7 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             zstat = TRUE,
             pSup = FALSE,
             rankCorr = FALSE,
+            fstat = FALSE,
             hypothesis = "different",
             ciMedians = FALSE,
             ciHL = FALSE,
@@ -58,6 +59,10 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..rankCorr <- jmvcore::OptionBool$new(
                 "rankCorr",
                 rankCorr,
+                default=FALSE)
+            private$..fstat <- jmvcore::OptionBool$new(
+                "fstat",
+                fstat,
                 default=FALSE)
             private$..hypothesis <- jmvcore::OptionList$new(
                 "hypothesis",
@@ -110,6 +115,7 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..zstat)
             self$.addOption(private$..pSup)
             self$.addOption(private$..rankCorr)
+            self$.addOption(private$..fstat)
             self$.addOption(private$..hypothesis)
             self$.addOption(private$..ciMedians)
             self$.addOption(private$..ciHL)
@@ -126,6 +132,7 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         zstat = function() private$..zstat$value,
         pSup = function() private$..pSup$value,
         rankCorr = function() private$..rankCorr$value,
+        fstat = function() private$..fstat$value,
         hypothesis = function() private$..hypothesis$value,
         ciMedians = function() private$..ciMedians$value,
         ciHL = function() private$..ciHL$value,
@@ -141,6 +148,7 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..zstat = NA,
         ..pSup = NA,
         ..rankCorr = NA,
+        ..fstat = NA,
         ..hypothesis = NA,
         ..ciMedians = NA,
         ..ciHL = NA,
@@ -260,7 +268,25 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="stat[rankCorr]", 
                         `title`="Statistic", 
                         `content`=".", 
-                        `visible`="(rankCorr)"))))
+                        `visible`="(rankCorr)"),
+                    list(
+                        `name`="var[fstat]", 
+                        `title`="", 
+                        `content`="($key)", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(fstat)"),
+                    list(
+                        `name`="name[fstat]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="f Statistic", 
+                        `visible`="(fstat)"),
+                    list(
+                        `name`="stat[fstat]", 
+                        `title`="Statistic", 
+                        `content`=".", 
+                        `visible`="(fstat)"))))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="cisMed",
@@ -451,6 +477,7 @@ umwBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   superiority index
 #' @param rankCorr \code{TRUE} or \code{FALSE} (default), compute rank
 #'   biserial correlation.
+#' @param fstat \code{TRUE} or \code{FALSE} (default), compute f statistic.
 #' @param hypothesis \code{'different'} (default), \code{'oneGreater'} or
 #'   \code{'twoGreater'}, the alternative hypothesis; group 1 different to group
 #'   2, group 1 greater than group 2, and group 2 greater than group 1
@@ -496,6 +523,7 @@ umw <- function(
     zstat = TRUE,
     pSup = FALSE,
     rankCorr = FALSE,
+    fstat = FALSE,
     hypothesis = "different",
     ciMedians = FALSE,
     ciHL = FALSE,
@@ -541,6 +569,7 @@ umw <- function(
         zstat = zstat,
         pSup = pSup,
         rankCorr = rankCorr,
+        fstat = fstat,
         hypothesis = hypothesis,
         ciMedians = ciMedians,
         ciHL = ciHL,

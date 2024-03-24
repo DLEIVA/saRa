@@ -87,11 +87,15 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             sigma <- if(any(t>1)){
               sqrt(prod(n)/12*(N-1/(N*(N-1))*sum(t^3-t)))
             } else{ sqrt(prod(n)*(N+1)/12)}
+            med <- tapply(df$dep,df$group,median)
             U <- wilcox.test(df$dep~df$group)$statistic
             statistic <- (U-mu)/sigma
             names(statistic) <- NULL
-            p.value <- if(Ha=='two.sided'){min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))*2
-            } else{min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))}
+            p.value <- min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))
+            p.value <- if(Ha=='two.sided'){(p.value)*2
+            } else if((Ha=='greater' & med[1]<med[2]) | (Ha=='less' & med[1]>med[2])){
+              1-p.value
+            } else{p.value}
             names(p.value) <- NULL
             list(statistic=statistic,p.value=p.value,mu=mu,sigma=sigma,n=n,t=t)
           } 
