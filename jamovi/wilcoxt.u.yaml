@@ -2,33 +2,123 @@ title: Wilcoxon T test
 name: wilcoxT
 jus: '3.0'
 stage: 0
-compilerMode: aggressive
+compilerMode: tame
 children:
   - type: VariableSupplier
-    persistentItems: false
+    suggested:
+      - continuous
+    permitted:
+      - numeric
+    persistentItems: true
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Dependent Variable
         children:
           - type: VariablesListBox
-            name: dep
-            maxItemCount: 1
+            name: pairs
             isTarget: true
-      - type: TargetLayoutBox
-        label: Grouping Variable
+            fullRowSelect: true
+            itemDropBehaviour: overwrite
+            columns:
+              - name: i1
+                stretchFactor: 1
+                template:
+                  type: VariableLabel
+              - name: i2
+                stretchFactor: 1
+                template:
+                  type: VariableLabel
+  - type: LayoutBox
+    margin: large
+    stretchFactor: 1
+    children:
+      - type: LayoutBox
+        cell:
+          column: 0
+          row: 0
+        stretchFactor: 1
         children:
-          - type: VariablesListBox
-            name: group
-            maxItemCount: 1
-            isTarget: true
-  - type: LayoutBox
-    margin: large
-    children:
-      - type: ComboBox
-        name: alt
-  - type: LayoutBox
-    margin: large
-    children:
-      - type: CheckBox
-        name: varEq
+          - type: Label
+            label: Tests
+            children:
+              - type: CheckBox
+                name: wilcoxon
+                label: Wilcoxon rank
+              - type: CheckBox
+                name: zstatps
+              - type: CheckBox
+                name: rankCorrps
+          - type: Label
+            label: Hypothesis
+            children:
+              - type: RadioButton
+                name: hypothesis_different
+                optionName: hypothesisps
+                optionPart: different
+                label: Measure 1 ≠ Measure 2
+              - type: RadioButton
+                name: hypothesis_oneGreater
+                optionName: hypothesisps
+                optionPart: oneGreater
+                label: Measure 1 > Measure 2
+              - type: RadioButton
+                name: hypothesis_twoGreater
+                optionName: hypothesisps
+                optionPart: twoGreater
+                label: Measure 1 < Measure 2
+          - type: Label
+            label: Missing values
+            children:
+              - type: RadioButton
+                name: miss_perAnalysis
+                optionName: missps
+                optionPart: perAnalysis
+                label: Exclude cases analysis by analysis
+              - type: RadioButton
+                name: miss_listwise
+                optionName: missps
+                optionPart: listwise
+                label: Exclude cases listwise
+      - type: LayoutBox
+        cell:
+          column: 1
+          row: 0
+        stretchFactor: 1
+        children:
+          - type: Label
+            label: Confidence Intervals
+            children:
+              - type: TextBox
+                name: ciWidthps
+                suffix: '%'
+                format: number
+                enable: (ciMediansps || ciHLps)
+              - type: CheckBox
+                name: ciMediansps
+                children:
+                  - type: RadioButton
+                    name: exact
+                    optionName: ciMethodps
+                    optionPart: exact
+                    enable: (ciMediansps)
+                  - type: RadioButton
+                    name: boot
+                    optionName: ciMethodps
+                    optionPart: boot
+                    enable: (ciMediansps)
+                    children:
+                      - type: TextBox
+                        name: numR
+                        format: number
+                        enable: (boot)
+              - type: CheckBox
+                name: ciHLps
+          - type: Label
+            label: Descriptive Analyses
+            children:
+              - type: CheckBox
+                name: descps
+                label: Descriptives
+              - type: CheckBox
+                name: plotsps
+                label: Descriptives plots

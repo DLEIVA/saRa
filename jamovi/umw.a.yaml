@@ -130,7 +130,7 @@ options:
             `TRUE` or `FALSE` (default), provide confidence intervals for the medians
             
     - name: ciHL
-      title: Hodges-Lehmann (Pseudo-median)
+      title: Hodges-Lehmann (Difference in location)
       type: Bool
       default: false
       description:

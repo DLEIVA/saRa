@@ -6,10 +6,19 @@ wilcoxTOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
-            group = NULL,
-            alt = "notequal",
-            varEq = TRUE, ...) {
+            pairs = NULL,
+            wilcoxon = TRUE,
+            zstatps = TRUE,
+            rankCorrps = FALSE,
+            hypothesisps = "different",
+            ciMediansps = FALSE,
+            ciHLps = FALSE,
+            ciWidthps = 95,
+            ciMethodps = "exact",
+            numR = 999,
+            descps = FALSE,
+            plotsps = FALSE,
+            missps = "perAnalysis", ...) {
 
             super$initialize(
                 package="saRa",
@@ -17,47 +26,129 @@ wilcoxTOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
-            private$..alt <- jmvcore::OptionList$new(
-                "alt",
-                alt,
-                options=list(
-                    "notequal",
-                    "onegreater",
-                    "twogreater"),
-                default="notequal")
-            private$..varEq <- jmvcore::OptionBool$new(
-                "varEq",
-                varEq,
+            private$..pairs <- jmvcore::OptionPairs$new(
+                "pairs",
+                pairs,
+                suggested=list(
+                    "continuous"),
+                permitted=list(
+                    "numeric"))
+            private$..wilcoxon <- jmvcore::OptionBool$new(
+                "wilcoxon",
+                wilcoxon,
                 default=TRUE)
+            private$..zstatps <- jmvcore::OptionBool$new(
+                "zstatps",
+                zstatps,
+                default=TRUE)
+            private$..rankCorrps <- jmvcore::OptionBool$new(
+                "rankCorrps",
+                rankCorrps,
+                default=FALSE)
+            private$..hypothesisps <- jmvcore::OptionList$new(
+                "hypothesisps",
+                hypothesisps,
+                options=list(
+                    "different",
+                    "oneGreater",
+                    "twoGreater"),
+                default="different")
+            private$..ciMediansps <- jmvcore::OptionBool$new(
+                "ciMediansps",
+                ciMediansps,
+                default=FALSE)
+            private$..ciHLps <- jmvcore::OptionBool$new(
+                "ciHLps",
+                ciHLps,
+                default=FALSE)
+            private$..ciWidthps <- jmvcore::OptionNumber$new(
+                "ciWidthps",
+                ciWidthps,
+                min=50,
+                max=99.9,
+                default=95)
+            private$..ciMethodps <- jmvcore::OptionList$new(
+                "ciMethodps",
+                ciMethodps,
+                options=list(
+                    "exact",
+                    "boot"),
+                default="exact")
+            private$..numR <- jmvcore::OptionNumber$new(
+                "numR",
+                numR,
+                min=499,
+                max=9999,
+                default=999)
+            private$..descps <- jmvcore::OptionBool$new(
+                "descps",
+                descps,
+                default=FALSE)
+            private$..plotsps <- jmvcore::OptionBool$new(
+                "plotsps",
+                plotsps,
+                default=FALSE)
+            private$..missps <- jmvcore::OptionList$new(
+                "missps",
+                missps,
+                options=list(
+                    "perAnalysis",
+                    "listwise"),
+                default="perAnalysis")
 
-            self$.addOption(private$..dep)
-            self$.addOption(private$..group)
-            self$.addOption(private$..alt)
-            self$.addOption(private$..varEq)
+            self$.addOption(private$..pairs)
+            self$.addOption(private$..wilcoxon)
+            self$.addOption(private$..zstatps)
+            self$.addOption(private$..rankCorrps)
+            self$.addOption(private$..hypothesisps)
+            self$.addOption(private$..ciMediansps)
+            self$.addOption(private$..ciHLps)
+            self$.addOption(private$..ciWidthps)
+            self$.addOption(private$..ciMethodps)
+            self$.addOption(private$..numR)
+            self$.addOption(private$..descps)
+            self$.addOption(private$..plotsps)
+            self$.addOption(private$..missps)
         }),
     active = list(
-        dep = function() private$..dep$value,
-        group = function() private$..group$value,
-        alt = function() private$..alt$value,
-        varEq = function() private$..varEq$value),
+        pairs = function() private$..pairs$value,
+        wilcoxon = function() private$..wilcoxon$value,
+        zstatps = function() private$..zstatps$value,
+        rankCorrps = function() private$..rankCorrps$value,
+        hypothesisps = function() private$..hypothesisps$value,
+        ciMediansps = function() private$..ciMediansps$value,
+        ciHLps = function() private$..ciHLps$value,
+        ciWidthps = function() private$..ciWidthps$value,
+        ciMethodps = function() private$..ciMethodps$value,
+        numR = function() private$..numR$value,
+        descps = function() private$..descps$value,
+        plotsps = function() private$..plotsps$value,
+        missps = function() private$..missps$value),
     private = list(
-        ..dep = NA,
-        ..group = NA,
-        ..alt = NA,
-        ..varEq = NA)
+        ..pairs = NA,
+        ..wilcoxon = NA,
+        ..zstatps = NA,
+        ..rankCorrps = NA,
+        ..hypothesisps = NA,
+        ..ciMediansps = NA,
+        ..ciHLps = NA,
+        ..ciWidthps = NA,
+        ..ciMethodps = NA,
+        ..numR = NA,
+        ..descps = NA,
+        ..plotsps = NA,
+        ..missps = NA)
 )
 
 wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "wilcoxTResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        wilcoxttest = function() private$.items[["wilcoxttest"]],
+        cisMedps = function() private$.items[["cisMedps"]],
+        cisHLps = function() private$.items[["cisHLps"]],
+        descps = function() private$.items[["descps"]],
+        plotsps = function() private$.items[["plotsps"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -65,10 +156,236 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Wilcoxon T test")
-            self$add(jmvcore::Preformatted$new(
+            self$add(jmvcore::Table$new(
                 options=options,
-                name="text",
-                title="Wilcoxon T test"))}))
+                name="wilcoxttest",
+                title="Wilcoxon T test and ES indices",
+                rows="(pairs)",
+                clearWith=list(
+                    "group",
+                    "hypothesis",
+                    "ciWidth",
+                    "miss"),
+                columns=list(
+                    list(
+                        `name`="var[wilcoxon]", 
+                        `title`="", 
+                        `content`="($key)", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(wilcoxon)"),
+                    list(
+                        `name`="name[wilcoxon]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Wilcoxon T", 
+                        `visible`="(wilcoxon)"),
+                    list(
+                        `name`="stat[wilcoxon]", 
+                        `title`="Statistic", 
+                        `type`="number", 
+                        `visible`="(wilcoxon)"),
+                    list(
+                        `name`="p[wilcoxon]", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue", 
+                        `visible`="(wilcoxon)"),
+                    list(
+                        `name`="var[zstatps]", 
+                        `title`="", 
+                        `content`="($key)", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(zstatps)"),
+                    list(
+                        `name`="name[zstatps]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="z Statistic", 
+                        `visible`="(zstatps)"),
+                    list(
+                        `name`="stat[zstatps]", 
+                        `title`="Statistic", 
+                        `type`="number", 
+                        `visible`="(zstatps)"),
+                    list(
+                        `name`="p[zstatps]", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue", 
+                        `visible`="(zstatps)"),
+                    list(
+                        `name`="var[rankCorrps]", 
+                        `title`="", 
+                        `content`="($key)", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(rankCorrps)"),
+                    list(
+                        `name`="name[rankCorrps]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Rank Biserial Correlation", 
+                        `visible`="(rankCorrps)"),
+                    list(
+                        `name`="stat[rankCorr]", 
+                        `title`="Statistic", 
+                        `content`=".", 
+                        `visible`="(rankCorrps)"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="cisMedps",
+                title="Variables Medians CIs",
+                visible="(ciMediansps)",
+                rows="(pairs)",
+                clearWith=list(
+                    "group",
+                    "miss"),
+                columns=list(
+                    list(
+                        `name`="dep", 
+                        `title`="", 
+                        `content`="($key)", 
+                        `type`="text"),
+                    list(
+                        `name`="group[1]", 
+                        `title`="Variable", 
+                        `type`="text"),
+                    list(
+                        `name`="median[1]", 
+                        `title`="Median", 
+                        `type`="number"),
+                    list(
+                        `name`="cilMed[1]", 
+                        `title`="Lower Bound", 
+                        `type`="number"),
+                    list(
+                        `name`="ciuMed[1]", 
+                        `title`="Upper Bound", 
+                        `type`="number"),
+                    list(
+                        `name`="group[2]", 
+                        `title`="Group", 
+                        `type`="text"),
+                    list(
+                        `name`="median[2]", 
+                        `title`="Median", 
+                        `type`="number"),
+                    list(
+                        `name`="cilMed[2]", 
+                        `title`="Lower Bound", 
+                        `type`="number"),
+                    list(
+                        `name`="ciuMed[2]", 
+                        `title`="Upper Bound", 
+                        `type`="number"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="cisHLps",
+                title="Hodges-Lehmann Estimator CIs",
+                visible="(ciHLps)",
+                rows="(pairs)",
+                clearWith=list(
+                    "group",
+                    "miss"),
+                columns=list(
+                    list(
+                        `name`="dep", 
+                        `title`="", 
+                        `content`="($key)", 
+                        `type`="text"),
+                    list(
+                        `name`="hlestimate", 
+                        `title`="Hodges-Lehmann Estimator", 
+                        `type`="number"),
+                    list(
+                        `name`="cilHL", 
+                        `title`="Lower Bound", 
+                        `type`="number"),
+                    list(
+                        `name`="ciuHL", 
+                        `title`="Upper Bound", 
+                        `type`="number"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="descps",
+                title="Variables Descriptives",
+                visible="(descps)",
+                rows="(pairs)",
+                clearWith=list(
+                    "group",
+                    "miss"),
+                columns=list(
+                    list(
+                        `name`="dep", 
+                        `title`="", 
+                        `content`="($key)", 
+                        `type`="text"),
+                    list(
+                        `name`="num[1]", 
+                        `title`="N", 
+                        `type`="integer"),
+                    list(
+                        `name`="num[2]", 
+                        `title`="N", 
+                        `type`="integer"),
+                    list(
+                        `name`="num[3]", 
+                        `title`="N", 
+                        `type`="integer"),
+                    list(
+                        `name`="rankA[1]", 
+                        `title`="Average Rank", 
+                        `type`="number"),
+                    list(
+                        `name`="rankS[1]", 
+                        `title`="Ranks Sum", 
+                        `type`="number"),
+                    list(
+                        `name`="rankA[2]", 
+                        `title`="Average Rank", 
+                        `type`="number"),
+                    list(
+                        `name`="rankS[2]", 
+                        `title`="Ranks Sum", 
+                        `type`="number"),
+                    list(
+                        `name`="rankA[3]", 
+                        `title`="Average Rank", 
+                        `type`="number"),
+                    list(
+                        `name`="rankS[3]", 
+                        `title`="Ranks Sum", 
+                        `type`="number"))))
+            self$add(jmvcore::Array$new(
+                options=options,
+                name="plotsps",
+                title="Plots",
+                items="(pairs)",
+                clearWith=list(
+                    "group",
+                    "miss",
+                    "ciWidth"),
+                template=R6::R6Class(
+                    inherit = jmvcore::Group,
+                    active = list(
+                        descps = function() private$.items[["descps"]]),
+                    private = list(),
+                    public=list(
+                        initialize=function(options) {
+                            super$initialize(
+                                options=options,
+                                name="undefined",
+                                title="Plots")
+                            self$add(jmvcore::Image$new(
+                                options=options,
+                                name="descps",
+                                width=450,
+                                height=400,
+                                visible="(plotsps)",
+                                renderFun=".desc",
+                                clearWith=list()))}))$new(options=options)))}))
 
 wilcoxTBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "wilcoxTBase",
@@ -94,41 +411,90 @@ wilcoxTBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Wilcoxon T test
 #'
 #' 
-#' @param data .
-#' @param dep .
-#' @param group .
-#' @param alt .
-#' @param varEq .
+#' @param data the data as a data frame
+#' @param pairs a list of lists specifying the pairs of measurement in
+#'   \code{data}
+#' @param wilcoxon \code{TRUE} or \code{FALSE} (default), perform Wilcoxon
+#'   signed rank tests
+#' @param zstatps \code{TRUE} (default) or \code{FALSE}, perform Z tests
+#' @param rankCorrps \code{TRUE} or \code{FALSE} (default), compute rank
+#'   biserial correlation.
+#' @param hypothesisps \code{'different'} (default), \code{'oneGreater'} or
+#'   \code{'twoGreater'}, the alternative hypothesis; measure 1 different to
+#'   measure 2, measure 1 greater than measure 2, and measure 2 greater than
+#'   measure 1 respectively
+#' @param ciMediansps \code{TRUE} or \code{FALSE} (default), provide
+#'   confidence intervals for the medians
+#' @param ciHLps \code{TRUE} or \code{FALSE} (default), provide confidence
+#'   intervals for the  Hodges-Lehmann estimator
+#' @param ciWidthps a number between 50 and 99.9 (default: 95), the width of
+#'   confidence intervals
+#' @param ciMethodps \code{exact} (default), or \code{boot}, specifies the
+#'   method for obtaining CIs
+#' @param numR a number between 499 and 9999 (default: 999), the number of
+#'   replications for Bootstrap CIs.
+#' @param descps \code{TRUE} or \code{FALSE} (default), provide descriptive
+#'   statistics
+#' @param plotsps \code{TRUE} or \code{FALSE} (default), provide descriptive
+#'   plots
+#' @param missps \code{'perAnalysis'} or \code{'listwise'}, how to handle
+#'   missing values; \code{'perAnalysis'} excludes missing values for individual
+#'   dependent variables, \code{'listwise'} excludes a row from all analyses if
+#'   one of its entries is missing
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$wilcoxttest} \tab \tab \tab \tab \tab a table containing the Wilcoxon T test results \cr
+#'   \code{results$cisMedps} \tab \tab \tab \tab \tab a table containing confidence interval estimates for the medians \cr
+#'   \code{results$cisHLps} \tab \tab \tab \tab \tab a table containing confidence interval estimates for HL estimator \cr
+#'   \code{results$descps} \tab \tab \tab \tab \tab a table containing the group descriptives \cr
+#'   \code{results$plotsps} \tab \tab \tab \tab \tab an array of groups of plots \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$wilcoxttest$asDF}
+#'
+#' \code{as.data.frame(results$wilcoxttest)}
 #'
 #' @export
 wilcoxT <- function(
     data,
-    dep,
-    group,
-    alt = "notequal",
-    varEq = TRUE) {
+    pairs,
+    wilcoxon = TRUE,
+    zstatps = TRUE,
+    rankCorrps = FALSE,
+    hypothesisps = "different",
+    ciMediansps = FALSE,
+    ciHLps = FALSE,
+    ciWidthps = 95,
+    ciMethodps = "exact",
+    numR = 999,
+    descps = FALSE,
+    plotsps = FALSE,
+    missps = "perAnalysis") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("wilcoxT requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
     if (missing(data))
         data <- jmvcore::marshalData(
-            parent.frame(),
-            `if`( ! missing(dep), dep, NULL),
-            `if`( ! missing(group), group, NULL))
+            parent.frame())
 
 
     options <- wilcoxTOptions$new(
-        dep = dep,
-        group = group,
-        alt = alt,
-        varEq = varEq)
+        pairs = pairs,
+        wilcoxon = wilcoxon,
+        zstatps = zstatps,
+        rankCorrps = rankCorrps,
+        hypothesisps = hypothesisps,
+        ciMediansps = ciMediansps,
+        ciHLps = ciHLps,
+        ciWidthps = ciWidthps,
+        ciMethodps = ciMethodps,
+        numR = numR,
+        descps = descps,
+        plotsps = plotsps,
+        missps = missps)
 
     analysis <- wilcoxTClass$new(
         options = options,

@@ -4,8 +4,234 @@ title: Wilcoxon T test
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Wilcoxon T test
-      type:  Preformatted
+    - name: wilcoxttest
+      title: Wilcoxon T test and ES indices
+      description: a table containing the Wilcoxon T test results
+      type: Table
+      rows: (pairs)
+      clearWith:
+        - group
+        - hypothesis
+        - ciWidth
+        - miss
+
+      columns:
+        - name: var[wilcoxon]
+          title: ""
+          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (wilcoxon)
+
+        - name: name[wilcoxon]
+          title: ''
+          type: text
+          content: Wilcoxon T
+          visible: (wilcoxon)
+
+        - name: stat[wilcoxon]
+          title: Statistic
+          type: number
+          visible: (wilcoxon)
+
+        - name: p[wilcoxon]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (wilcoxon)
+
+        - name: var[zstatps]
+          title: ""
+          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (zstatps)
+
+        - name: name[zstatps]
+          title: ''
+          type: text
+          content: z Statistic
+          visible: (zstatps)
+
+        - name: stat[zstatps]
+          title: Statistic
+          type: number
+          visible: (zstatps)
+
+        - name: p[zstatps]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (zstatps)
+
+        - name: var[rankCorrps]
+          title: ""
+          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (rankCorrps)
+
+        - name: name[rankCorrps]
+          title: ''
+          type: text
+          content: Rank Biserial Correlation
+          visible: (rankCorrps)
+
+        - name: stat[rankCorr]
+          title: Statistic
+          content: .
+          visible: (rankCorrps) 
+          
+    - name: cisMedps
+      title: Variables Medians CIs
+      type: Table
+      description: a table containing confidence interval estimates for the medians
+      visible: (ciMediansps)
+      rows: (pairs)
+      clearWith:
+        - group
+        - miss
+
+      columns:
+        - name: dep
+          title: ""
+          content: ($key)
+          type: text
+
+        - name: group[1]
+          title: Variable
+          type: text
+
+        - name: median[1]
+          title: "Median"
+          type: number
+
+        - name: cilMed[1]
+          title: Lower Bound
+          type: number
+
+        - name: ciuMed[1]
+          title: Upper Bound
+          type: number
+
+        - name: group[2]
+          title: Group
+          type: text
+
+        - name: median[2]
+          title: "Median"
+          type: number
+
+        - name: cilMed[2]
+          title: Lower Bound
+          type: number
+
+        - name: ciuMed[2]
+          title: Upper Bound
+          type: number
+          
+    - name: cisHLps
+      title: Hodges-Lehmann Estimator CIs
+      type: Table
+      description: a table containing confidence interval estimates for HL estimator
+      visible: (ciHLps)
+      rows: (pairs)
+      clearWith:
+        - group
+        - miss
+
+      columns:
+        - name: dep
+          title: ""
+          content: ($key)
+          type: text
+          
+        - name: hlestimate
+          title: "Hodges-Lehmann Estimator"
+          type: number
+
+        - name: cilHL
+          title: Lower Bound
+          type: number
+
+        - name: ciuHL
+          title: Upper Bound
+          type: number          
+          
+
+    - name: descps
+      title: Variables Descriptives
+      type: Table
+      description: a table containing the group descriptives
+      visible: (descps)
+      rows: (pairs)
+      clearWith:
+        - group
+        - miss
+
+      columns:
+        - name: dep
+          title: ""
+          content: ($key)
+          type: text
+
+        - name: num[1]
+          title: "N"
+          type: integer
+          
+        - name: num[2]
+          title: "N"
+          type: integer 
+          
+        - name: num[3]
+          title: "N"
+          type: integer          
+
+        - name: rankA[1]
+          title: Average Rank
+          type: number
+          
+        - name: rankS[1]
+          title: Ranks Sum
+          type: number   
+          
+        - name: rankA[2]
+          title: Average Rank
+          type: number
+          
+        - name: rankS[2]
+          title: Ranks Sum
+          type: number          
+
+        - name: rankA[3]
+          title: Average Rank
+          type: number
+          
+        - name: rankS[3]
+          title: Ranks Sum
+          type: number          
+
+
+    - name: plotsps
+      title: Plots
+      type: Array
+      description: an array of groups of plots
+      items: (pairs)
+      clearWith:
+        - group
+        - miss
+        - ciWidth
+      template:
+          title: Plots
+          type: Group
+          items:
+            - name: descps
+              type: Image
+              width: 450
+              height: 400
+              description: descriptives plot
+              visible: (plotsps)
+              renderFun: .desc
+              clearWith: []
 
 ...
