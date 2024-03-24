@@ -265,6 +265,8 @@ items:
           items:
             - name: desc
               type: Image
+              width: 450
+              height: 400
               description: descriptives plot
               visible: (plots)
               renderFun: .desc

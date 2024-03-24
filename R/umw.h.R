@@ -449,6 +449,8 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                             self$add(jmvcore::Image$new(
                                 options=options,
                                 name="desc",
+                                width=450,
+                                height=400,
                                 visible="(plots)",
                                 renderFun=".desc",
                                 clearWith=list()))}))$new(options=options)))}))
