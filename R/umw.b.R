@@ -350,6 +350,37 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "cilHL"=cihl[2],
               "ciuHL"=cihl[3]           
             ))
+          }
+          
+          if (self$options$plots) {
+            
+            image <- self$results$plots$get(key=depName)$desc
+            
+            if (nrow(dataMWTest) > 0) {
+              
+              ciWidth <- self$options$ciWidth
+              tail <- qnorm(1 - (100 - ciWidth) / 200)
+              
+              cies  <- cimed
+              medians <- aggregate(dataMWTest$dep, by=list(dataMWTest$group),
+                                   function(x) tryNaN(median(x)), simplify=FALSE)
+              
+              medianPlotData <- data.frame(group=medians$Group.1)
+              medianPlotData <- cbind(medianPlotData, stat=unlist(medians$x))
+              medianPlotData <- cbind(medianPlotData, stat=cimed)
+              medianPlotData <- cbind(medianPlotData, type='median')
+              
+              plotData <- medianPlotData
+              
+              if (all(is.na(plotData$stat)))
+                image$setState(NULL)
+              else
+                image$setState(plotData)
+              
+            } else {
+              
+              image$setState(NULL)
+            }
           }          
         }
         },
@@ -389,6 +420,38 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if(self$options$ciMedians & self$options$ciMethod=='boot')
           cisMed$setNote("numR", jmvcore::format(paste0("Number of replicates in Bootstrap CI(s): ",reps)))
         
-      }   
+      },
+      .desc=function(image, ggtheme, theme, ...) {
+        
+        if (is.null(image$state))
+          return(FALSE)
+        
+        groupName <- self$options$group
+        
+        ciw <- self$options$ciWidth
+        
+        pd <- position_dodge(0.2)
+        
+        plot <- ggplot(data=image$state, aes(x=group, y=stat, shape=type)) +
+          geom_errorbar(aes(x=group, ymin=stat.1, ymax=stat.2, width=.1),
+                        size=.8, colour=theme$color[2], position=pd) +
+          geom_point(aes(x=group, y=stat, shape=type), color=theme$color[1],
+                     fill=theme$fill[1], size=3, position=pd) +
+          labs(x=groupName, y=image$key) +
+          scale_shape_manual(
+            name='',
+            values=c(median=22),
+            labels=c(
+              median=jmvcore::format(.('Median ({ciWidth}% CI)'), ciWidth=ciw)
+            )
+          ) +
+          ggtheme +
+          theme(
+            plot.title=ggplot2::element_text(margin=ggplot2::margin(b = 5.5 * 1.2)),
+            plot.margin = ggplot2::margin(5.5, 5.5, 5.5, 5.5)
+          )
+        
+        return(plot)
+      }      
       )
 )
