@@ -78,6 +78,16 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           R[is.na(R)] <- NaN
           avgR[is.na(avgR)] <- NaN
           
+          if(self$options$ciMethod=='exact'){
+            cimed <- matrix(unlist(tapply(dataMWTest$dep,dataMWTest$group,
+                          function(x) DescTools::MedianCI(x,method='exact'))),
+            nrow=2,ncol=3,byrow=TRUE)[,2:3]
+          } else if(self$options$ciMethod=='boot'){
+            cimed <- matrix(unlist(tapply(dataMWTest$dep,dataMWTest$group,
+                                 function(x) DescTools::MedianCI(x,method='boot',R=self$options$numR))),
+                   nrow=2,ncol=3,byrow=TRUE)[,2:3]            
+          }
+          
           .zStattest <- function(dep,group,Ha){
             df <- data.frame(dep,group)
             n <- as.numeric(table(df$group))
@@ -106,7 +116,19 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             U <- wilcox.test(df$dep~df$group)$statistic
             statistic <- 1 - (2 * U/prod(n))
             list(statistic=statistic)
-          } 
+          }
+          
+          .fstat <- function(dep,group){
+            df <- data.frame(dep,group)
+            n <- as.numeric(table(df$group))
+            rangos <- tryNaN(rank(unlist(split(df$dep,df$group))))
+            R1 <- sum(rangos[1:n[1]])
+            R2 <- sum(rangos[(n[1]+1):length(rangos)])
+            R <- c(R1,R2)  
+            U <- R-(n*(n+1)/2)
+            statistic <- max(U)/prod(n)
+            list(statistic=statistic)
+          }          
           
           if (self$options$mwu) {
             
@@ -240,6 +262,36 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }            
           }
           
+          if (self$options$fstat) {
+            if (is.factor(dataMWTest$dep))
+              res <- createError(.('Variable is not numeric'))
+            else if (any(is.infinite(dataMWTest$dep)))
+              res <- createError(.('Variable contains infinite values'))
+            else
+              res <- try(suppressWarnings(.fstat(dep=dataMWTest$dep,group=dataMWTest$group)), silent=TRUE)
+            
+            if (isError(res)) {
+              
+              mwtestTable$setRow(rowKey=depName, list(
+                "stat[fstat]"=NaN))
+              
+              message <- extractErrorMessage(res)
+              if (message == 'grouping factor must have exactly 2 levels')
+                message <- .('One or both groups do not contain enough observations')
+              else if (message == 'not enough observations')
+                message <- .('One or both groups do not contain enough observations')
+              else if (message == 'data are essentially constant')
+                message <- .('All observations are tied')
+              
+              mwtestTable$addFootnote(rowKey=depName, 'stat[fstat]', message)
+              
+            } else {
+              
+              mwtestTable$setRow(rowKey=depName, list(
+                "stat[fstat]"=res$statistic))
+            }            
+          }          
+          
           if (self$options$desc) {
             
             descTable$setRow(rowKey=depName, list(
@@ -254,6 +306,22 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "median[2]"=med[2],
               "rankA[2]"=avgR[2],
               "rankS[2]"=R[2]            
+            ))
+          }
+          
+          if (self$options$ciMedians) {
+            
+            cismedTable$setRow(rowKey=depName, list(
+              "dep"=depName,
+              "group[1]"=groupLevels[1],
+              "median[1]"=med[1],
+              "cilMed[1]"=cimed[1,1],
+              "ciuMed[1]"=cimed[1,2],              
+              "group[2]"=groupLevels[2],
+              "num[2]"=n[2],
+              "median[2]"=med[2],
+              "cilMed[2]"=cimed[2,1],
+              "ciuMed[2]"=cimed[2,2]              
             ))
           }          
         }

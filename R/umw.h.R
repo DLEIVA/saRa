@@ -18,6 +18,7 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             ciHL = FALSE,
             ciWidth = 95,
             ciMethod = "exact",
+            numR = 999,
             desc = FALSE,
             plots = FALSE,
             miss = "perAnalysis", ...) {
@@ -93,6 +94,12 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "exact",
                     "boot"),
                 default="exact")
+            private$..numR <- jmvcore::OptionNumber$new(
+                "numR",
+                numR,
+                min=499,
+                max=9999,
+                default=999)
             private$..desc <- jmvcore::OptionBool$new(
                 "desc",
                 desc,
@@ -121,6 +128,7 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..ciHL)
             self$.addOption(private$..ciWidth)
             self$.addOption(private$..ciMethod)
+            self$.addOption(private$..numR)
             self$.addOption(private$..desc)
             self$.addOption(private$..plots)
             self$.addOption(private$..miss)
@@ -138,6 +146,7 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ciHL = function() private$..ciHL$value,
         ciWidth = function() private$..ciWidth$value,
         ciMethod = function() private$..ciMethod$value,
+        numR = function() private$..numR$value,
         desc = function() private$..desc$value,
         plots = function() private$..plots$value,
         miss = function() private$..miss$value),
@@ -154,6 +163,7 @@ umwOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..ciHL = NA,
         ..ciWidth = NA,
         ..ciMethod = NA,
+        ..numR = NA,
         ..desc = NA,
         ..plots = NA,
         ..miss = NA)
@@ -490,6 +500,8 @@ umwBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   confidence intervals
 #' @param ciMethod \code{exact} (default), or \code{boot}, specifies the
 #'   method for obtaining CIs
+#' @param numR a number between 499 and 9999 (default: 999), the number of
+#'   replications for Bootstrap CIs.
 #' @param desc \code{TRUE} or \code{FALSE} (default), provide descriptive
 #'   statistics
 #' @param plots \code{TRUE} or \code{FALSE} (default), provide descriptive
@@ -529,6 +541,7 @@ umw <- function(
     ciHL = FALSE,
     ciWidth = 95,
     ciMethod = "exact",
+    numR = 999,
     desc = FALSE,
     plots = FALSE,
     miss = "perAnalysis",
@@ -575,6 +588,7 @@ umw <- function(
         ciHL = ciHL,
         ciWidth = ciWidth,
         ciMethod = ciMethod,
+        numR = numR,
         desc = desc,
         plots = plots,
         miss = miss)
