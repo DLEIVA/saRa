@@ -34,4 +34,5 @@ Imports: jmvcore (>= 2.2), R6,
     ggalluvial,
     cowplot,
     ggridges,
-    latex2exp
+    latex2exp,
+    DescTools
