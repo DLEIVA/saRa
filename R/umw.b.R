@@ -387,7 +387,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> \u2260 \u03BE\u2009<sub>{}</sub>", groups[1], groups[2]))
          
         if(self$options$ciMedians & self$options$ciMethod=='boot')
-          cisMed$setNote("numR", jmvcore::format("Number of replicates in Bootstrap CI(s): ",reps))
+          cisMed$setNote("numR", jmvcore::format(paste0("Number of replicates in Bootstrap CI(s): ",reps)))
         
       }   
       )
