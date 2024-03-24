@@ -256,8 +256,40 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "rankS[2]"=R[2]            
             ))
           }          
-          
         }
-        }
+        },
+      .init=function() {
+        
+        hypothesis <- self$options$hypothesis
+        groupName <- self$options$group
+        
+        groups <- NULL
+        if ( ! is.null(groupName))
+          groups <- base::levels(self$data[[groupName]])
+        if (length(groups) != 2)
+          groups <- c('Group 1', 'Group 2')
+        
+        table <- self$results$mwutest
+        cisMed <- self$results$cisMed
+        cisHL <- self$results$cisHL
+        
+         ciTitleString <- .('{ciWidth}% Confidence Interval')
+         
+         ciTitle <- jmvcore::format(ciTitleString, ciWidth=self$options$ciWidth)
+         cisMed$getColumn('cilMed[1]')$setSuperTitle(ciTitle)
+         cisMed$getColumn('ciuMed[1]')$setSuperTitle(ciTitle)
+         cisMed$getColumn('cilMed[2]')$setSuperTitle(ciTitle)
+         cisMed$getColumn('ciuMed[2]')$setSuperTitle(ciTitle)
+         cisHL$getColumn('cilHL')$setSuperTitle(ciTitle)
+         cisHL$getColumn('ciuHL')$setSuperTitle(ciTitle)
+        
+        if (hypothesis == 'oneGreater')
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> > \u03BE\u2009<sub>{}</sub>", groups[1], groups[2]))
+        else if (hypothesis == 'twoGreater')
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> < \u03BE\u2009<sub>{}</sub>", groups[1], groups[2]))
+        else
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> \u2260 \u03BE\u2009<sub>{}</sub>", groups[1], groups[2]))
+        
+      }   
       )
 )
