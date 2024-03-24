@@ -165,6 +165,19 @@ options:
       description:
           R: >
             `exact` (default), or `boot`, specifies the method for obtaining CIs
+            
+    - name: numR
+      title: Replicates
+      type: Number
+      min: 499
+      max: 9999
+      default: 999
+      description:
+          ui: >
+            number of replications for Bootstrap CIs.
+          R: >
+            a number between 499 and 9999 (default: 999), the number of replications for
+            Bootstrap CIs.
 
     - name: desc
       title: Descriptives Table

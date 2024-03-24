@@ -114,6 +114,11 @@ children:
                     optionName: ciMethod
                     optionPart: boot
                     enable: (ciMedians)
+                    children:
+                      - type: TextBox
+                        name: numR
+                        format: number
+                        enable: (boot)
               - type: CheckBox
                 name: ciHL                    
           - type: Label
