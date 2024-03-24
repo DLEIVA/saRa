@@ -54,6 +54,57 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           Ha <- "less"
         else
           Ha <- "two.sided"
+
+        ## Additional functions                
+        .zStattest <- function(dep,group,Ha){
+          df <- data.frame(dep,group)
+          n <- as.numeric(table(df$group))
+          N <- sum(n)
+          t <- table(df$dep)
+          mu <- prod(n)/2
+          sigma <- if(any(t>1)){
+            sqrt(prod(n)/12*(N-1/(N*(N-1))*sum(t^3-t)))
+          } else{ sqrt(prod(n)*(N+1)/12)}
+          med <- tapply(df$dep,df$group,median)
+          U <- wilcox.test(df$dep~df$group)$statistic
+          statistic <- (U-mu)/sigma
+          names(statistic) <- NULL
+          p.value <- min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))
+          p.value <- if(Ha=='two.sided'){(p.value)*2
+          } else if((Ha=='greater' & med[1]<med[2]) | (Ha=='less' & med[1]>med[2])){
+            1-p.value
+          } else{p.value}
+          names(p.value) <- NULL
+          list(statistic=statistic,p.value=p.value,mu=mu,sigma=sigma,n=n,t=t)
+        } 
+        
+        .bisrankr <- function(dep,group){
+          df <- data.frame(dep,group)
+          n <- as.numeric(table(df$group))
+          U <- wilcox.test(df$dep~df$group)$statistic
+          statistic <- 1 - (2 * U/prod(n))
+          list(statistic=statistic)
+        }
+        
+        .fstat <- function(dep,group){
+          df <- data.frame(dep,group)
+          n <- as.numeric(table(df$group))
+          rangos <- tryNaN(rank(unlist(split(df$dep,df$group))))
+          R1 <- sum(rangos[1:n[1]])
+          R2 <- sum(rangos[(n[1]+1):length(rangos)])
+          R <- c(R1,R2)  
+          U <- R-(n*(n+1)/2)
+          statistic <- max(U)/prod(n)
+          list(statistic=statistic)
+        }
+        
+        .hl <- function(dep,group,conflevel){
+          df <- data.frame(dep,group)
+          test <- wilcox.test(df$dep~df$group,conf.int=TRUE,conf.level=conflevel)
+          results <- c(test$estimate,test$conf.int)
+          names(results) <- NULL
+          results
+        }          
         
         for (depName in depVarNames) {
           
@@ -88,47 +139,13 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                    nrow=2,ncol=3,byrow=TRUE)[,2:3]            
           }
           
-          .zStattest <- function(dep,group,Ha){
-            df <- data.frame(dep,group)
-            n <- as.numeric(table(df$group))
-            N <- sum(n)
-            t <- table(df$dep)
-            mu <- prod(n)/2
-            sigma <- if(any(t>1)){
-              sqrt(prod(n)/12*(N-1/(N*(N-1))*sum(t^3-t)))
-            } else{ sqrt(prod(n)*(N+1)/12)}
-            med <- tapply(df$dep,df$group,median)
-            U <- wilcox.test(df$dep~df$group)$statistic
-            statistic <- (U-mu)/sigma
-            names(statistic) <- NULL
-            p.value <- min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))
-            p.value <- if(Ha=='two.sided'){(p.value)*2
-            } else if((Ha=='greater' & med[1]<med[2]) | (Ha=='less' & med[1]>med[2])){
-              1-p.value
-            } else{p.value}
-            names(p.value) <- NULL
-            list(statistic=statistic,p.value=p.value,mu=mu,sigma=sigma,n=n,t=t)
-          } 
+          cimed[is.na(cimed)] <- NaN
           
-          .bisrankr <- function(dep,group){
-            df <- data.frame(dep,group)
-            n <- as.numeric(table(df$group))
-            U <- wilcox.test(df$dep~df$group)$statistic
-            statistic <- 1 - (2 * U/prod(n))
-            list(statistic=statistic)
+          if(self$options$ciHL){
+            cihl <- .hl(dataMWTest$dep,dataMWTest$group,confInt)
           }
           
-          .fstat <- function(dep,group){
-            df <- data.frame(dep,group)
-            n <- as.numeric(table(df$group))
-            rangos <- tryNaN(rank(unlist(split(df$dep,df$group))))
-            R1 <- sum(rangos[1:n[1]])
-            R2 <- sum(rangos[(n[1]+1):length(rangos)])
-            R <- c(R1,R2)  
-            U <- R-(n*(n+1)/2)
-            statistic <- max(U)/prod(n)
-            list(statistic=statistic)
-          }          
+          cihl[is.na(cihl)] <- NaN
           
           if (self$options$mwu) {
             
@@ -323,6 +340,16 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "cilMed[2]"=cimed[2,1],
               "ciuMed[2]"=cimed[2,2]              
             ))
+          }
+          
+          if (self$options$ciHL) {
+            
+            cishlTable$setRow(rowKey=depName, list(
+              "dep"=depName,
+              "hlestimate"=cihl[1],
+              "cilHL"=cihl[2],
+              "ciuHL"=cihl[3]           
+            ))
           }          
         }
         },
@@ -330,6 +357,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         hypothesis <- self$options$hypothesis
         groupName <- self$options$group
+        reps <- self$options$numR
         
         groups <- NULL
         if ( ! is.null(groupName))
@@ -357,6 +385,9 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> < \u03BE\u2009<sub>{}</sub>", groups[1], groups[2]))
         else
           table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> \u2260 \u03BE\u2009<sub>{}</sub>", groups[1], groups[2]))
+         
+        if(self$options$ciMedians & self$options$ciMethod=='boot')
+          cisMed$setNote("numR", jmvcore::format("Number of replicates in Bootstrap CI(s): ",reps))
         
       }   
       )
