@@ -254,7 +254,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="", 
                         `type`="text"),
                     list(
-                        `name`="group[1]", 
+                        `name`="var[1]", 
                         `title`="Variable", 
                         `type`="text"),
                     list(
@@ -270,7 +270,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="Upper Bound", 
                         `type`="number"),
                     list(
-                        `name`="group[2]", 
+                        `name`="var[2]", 
                         `title`="Variable", 
                         `type`="text"),
                     list(

@@ -116,10 +116,10 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           if(self$options$ciMethodps=='exact'){
             cimed <- t(apply(pairsData,2,
-                             function(x) DescTools::MedianCI(x,method='exact')))
+                             function(x) DescTools::MedianCI(x,method='exact')))[,2:3]
           } else if(self$options$ciMethodps=='boot'){
             cimed <- t(apply(pairsData,2,
-                             function(x) DescTools::MedianCI(x,method='boot',R=self$options$numR)))
+                             function(x) DescTools::MedianCI(x,method='boot',R=self$options$numR)))[,2:3]
           }
           
           cimed[is.na(cimed)] <- NaN
@@ -182,7 +182,19 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             wilcoxttestTable$addFootnote(rowKey=pair, 'stat[wilcoxon]', message)
           }
           
-          
+          if (self$options$ciMediansps) {
+            
+            cismedTable$setRow(rowKey=pair, list(
+              "var[1]"=name1,
+              "median[1]"=med1,
+              "cilMed[1]"=cimed[1,1],
+              "ciuMed[1]"=cimed[1,2], 
+              "var[1]"=name2,
+              "median[2]"=med2,
+              "cilMed[2]"=cimed[2,1],
+              "ciuMed[2]"=cimed[2,2]              
+            ))
+          }          
           
           if (self$options$descps) {
             

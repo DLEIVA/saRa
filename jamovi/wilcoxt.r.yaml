@@ -103,7 +103,7 @@ items:
           title: ""
           type: text
 
-        - name: group[1]
+        - name: var[1]
           title: Variable
           type: text
 
@@ -119,7 +119,7 @@ items:
           title: Upper Bound
           type: number
 
-        - name: group[2]
+        - name: var[2]
           title: Variable
           type: text
 
