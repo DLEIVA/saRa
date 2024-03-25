@@ -296,9 +296,8 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "miss"),
                 columns=list(
                     list(
-                        `name`="dep", 
+                        `name`="vars", 
                         `title`="", 
-                        `content`="($key)", 
                         `type`="text"),
                     list(
                         `name`="hlestimate", 

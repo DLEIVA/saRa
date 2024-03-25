@@ -146,9 +146,8 @@ items:
         - miss
 
       columns:
-        - name: dep
+        - name: vars
           title: ""
-          content: ($key)
           type: text
           
         - name: hlestimate
