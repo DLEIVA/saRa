@@ -9,6 +9,7 @@ items:
       description: a table containing the Wilcoxon T test results
       type: Table
       rows: (pairs)
+      visible: (wilcoxon || zstatps || rankCorrps)      
       clearWith:
         - group
         - hypothesis
@@ -82,7 +83,7 @@ items:
           content: Rank Biserial Correlation
           visible: (rankCorrps)
 
-        - name: stat[rankCorr]
+        - name: stat[rankCorrps]
           title: Statistic
           content: .
           visible: (rankCorrps) 
