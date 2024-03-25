@@ -323,6 +323,18 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `content`="($key)", 
                         `type`="text"),
                     list(
+                        `name`="name[1]", 
+                        `title`="Sign", 
+                        `type`="text"),
+                    list(
+                        `name`="name[2]", 
+                        `title`="Sign", 
+                        `type`="text"),
+                    list(
+                        `name`="name[3]", 
+                        `title`="Sign", 
+                        `type`="text"),
+                    list(
                         `name`="num[1]", 
                         `title`="N", 
                         `type`="integer"),
