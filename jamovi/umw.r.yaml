@@ -9,6 +9,7 @@ items:
       description: a table containing the Mann-Whitney U test results
       type: Table
       rows: (vars)
+      visible: (mwu || zstat || pSup || rankCorr || fstat)      
       clearWith:
         - group
         - hypothesis

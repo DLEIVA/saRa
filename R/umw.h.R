@@ -190,6 +190,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="mwutest",
                 title="Mann-Whitney U test and ES indices",
                 rows="(vars)",
+                visible="(mwu || zstat || pSup || rankCorr || fstat)",
                 clearWith=list(
                     "group",
                     "hypothesis",
