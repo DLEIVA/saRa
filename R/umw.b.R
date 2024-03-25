@@ -133,19 +133,21 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             cimed <- matrix(unlist(tapply(dataMWTest$dep,dataMWTest$group,
                           function(x) DescTools::MedianCI(x,method='exact'))),
             nrow=2,ncol=3,byrow=TRUE)[,2:3]
+            cimed[is.na(cimed)] <- NaN
           } else if(self$options$ciMethod=='boot'){
             cimed <- matrix(unlist(tapply(dataMWTest$dep,dataMWTest$group,
                                  function(x) DescTools::MedianCI(x,method='boot',R=self$options$numR))),
-                   nrow=2,ncol=3,byrow=TRUE)[,2:3]            
+                   nrow=2,ncol=3,byrow=TRUE)[,2:3]
+            cimed[is.na(cimed)] <- NaN
+            
           }
           
-          cimed[is.na(cimed)] <- NaN
           
           if(self$options$ciHL){
             cihl <- .hl(dataMWTest$dep,dataMWTest$group,confInt)
+            cihl[is.na(cihl)] <- NaN
           }
           
-          cihl[is.na(cihl)] <- NaN
           
           if (self$options$mwu) {
             
