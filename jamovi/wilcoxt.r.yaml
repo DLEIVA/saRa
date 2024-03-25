@@ -175,6 +175,18 @@ items:
           content: ($key)
           type: text
 
+        - name: name[1]
+          title: "Sign"
+          type: text
+          
+        - name: name[2]
+          title: "Sign"
+          type: text  
+          
+        - name: name[3]
+          title: "Sign"
+          type: text          
+
         - name: num[1]
           title: "N"
           type: integer
