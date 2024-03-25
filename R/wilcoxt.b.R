@@ -194,6 +194,15 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "cilMed[2]"=cimed[2,1],
               "ciuMed[2]"=cimed[2,2]              
             ))
+          }  
+          
+          if (self$options$ciHLps) {
+            
+            cishlTable$setRow(rowKey=pair, list(
+              "hlestimate"=cihl[1],
+              "cilHL"=cihl[2],
+              "ciuHL"=cihl[3]           
+            ))
           }          
           
           if (self$options$descps) {
