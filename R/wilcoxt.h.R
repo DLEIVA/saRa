@@ -161,6 +161,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="wilcoxttest",
                 title="Wilcoxon T test and ES indices",
                 rows="(pairs)",
+                visible="(wilcoxon || zstatps || rankCorrps)",
                 clearWith=list(
                     "group",
                     "hypothesis",
@@ -234,7 +235,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `content`="Rank Biserial Correlation", 
                         `visible`="(rankCorrps)"),
                     list(
-                        `name`="stat[rankCorr]", 
+                        `name`="stat[rankCorrps]", 
                         `title`="Statistic", 
                         `content`=".", 
                         `visible`="(rankCorrps)"))))

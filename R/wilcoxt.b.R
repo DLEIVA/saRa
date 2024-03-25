@@ -61,7 +61,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           nTies <- sum(diffs==0)
           diffs <- diffs[diffs!=0]
           n <- length(diffs)
-          T <- wilcox.test(df$dep~df$group)$statistic
+          T <- wilcox.test(df$column1,df$column2,paired=TRUE)$statistic
           totalRankSum <- ((n-nTies) * ((n-nTies) + 1)) / 2
           statistic <- (2 * (T / totalRankSum)) - 1
           list(statistic=statistic)
@@ -136,13 +136,24 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           else {
             wilc <- try(suppressWarnings(wilcox.test(column1, column2,
                     alternative=Ha, paired=TRUE, conf.int=TRUE, conf.level=confInt)), silent=TRUE)
+            zstat <- .zStattest(column1,column2,Ha)
+            rankCorr <- .bisrankr(column1,column2)
           }
           
           if ( ! isError(wilc)) {
-            
+            if (self$options$wilcoxon) {            
             wilcoxttestTable$setRow(rowKey=pair, list(
               'stat[wilcoxon]'=wilc$statistic,
-              'p[wilcoxon]'=wilc$p.value))
+              'p[wilcoxon]'=wilc$p.value))}
+            if (self$options$zstatps) {
+              wilcoxttestTable$setRow(rowKey=pair, list(
+                'stat[zstatps]'=zstat$statistic,
+                'p[zstatps]'=zstat$p.value))              
+            }
+            if (self$options$rankCorrps) {
+              wilcoxttestTable$setRow(rowKey=pair, list(
+                'stat[rankCorrps]'=rankCorr$statistic))              
+            }
             
             if (nTies > 0) {
               message <- jmvcore::format(.('{n} pair(s) of values were tied'), n=nTies)
@@ -153,7 +164,10 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             
             wilcoxttestTable$setRow(rowKey=pair, list(
               'stat[wilcoxon]'=NaN,
-              'p[wilcoxon]'=''))
+              'p[wilcoxon]'='',
+              'stat[zstatps]'=NaN,
+              'p[zstatps]'='',
+              'stat[rankCorrps]'=NaN))
             
             message <- extractErrorMessage(wilc)
             if (message == "not enough 'x' observations")
@@ -167,6 +181,8 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             
             wilcoxttestTable$addFootnote(rowKey=pair, 'stat[wilcoxon]', message)
           }
+          
+          
           
           if (self$options$descps) {
             
@@ -197,7 +213,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         cisMed <- self$results$cisMedps
         cisHL <- self$results$cisHLps
         
-        ciTitleString <- .('{ciWidthps}% Confidence Interval')
+        ciTitleString <- .('{ciWidth}% Confidence Interval')
         
         ciTitle <- jmvcore::format(ciTitleString, ciWidth=self$options$ciWidthps)
         cisMed$getColumn('cilMed[1]')$setSuperTitle(ciTitle)
