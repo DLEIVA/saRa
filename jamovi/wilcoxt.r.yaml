@@ -16,9 +16,14 @@ items:
         - miss
 
       columns:
-        - name: var[wilcoxon]
+        - name: var1[wilcoxon]
           title: ""
-          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (wilcoxon)
+
+        - name: var2[wilcoxon]
+          title: ""
           type: text
           combineBelow: true
           visible: (wilcoxon)
