@@ -168,9 +168,14 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "miss"),
                 columns=list(
                     list(
-                        `name`="var[wilcoxon]", 
+                        `name`="var1[wilcoxon]", 
                         `title`="", 
-                        `content`="($key)", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(wilcoxon)"),
+                    list(
+                        `name`="var2[wilcoxon]", 
+                        `title`="", 
                         `type`="text", 
                         `combineBelow`=TRUE, 
                         `visible`="(wilcoxon)"),
@@ -266,7 +271,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="group[2]", 
-                        `title`="Group", 
+                        `title`="Variable", 
                         `type`="text"),
                     list(
                         `name`="median[2]", 
@@ -318,10 +323,15 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "miss"),
                 columns=list(
                     list(
-                        `name`="dep", 
+                        `name`="var1[1]", 
                         `title`="", 
-                        `content`="($key)", 
-                        `type`="text"),
+                        `type`="text", 
+                        `combineBelow`=TRUE),
+                    list(
+                        `name`="var2[1]", 
+                        `title`="", 
+                        `type`="text", 
+                        `combineBelow`=TRUE),
                     list(
                         `name`="name[1]", 
                         `title`="Sign", 

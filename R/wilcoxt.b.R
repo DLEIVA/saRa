@@ -103,6 +103,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           diffs <- column1-column2
           diffs <- diffs[diffs!=0]
           rangos <- rank(abs(diffs))
+          n <- length(diffs)
           np <- sum((column1 - column2) > 0, na.rm=TRUE)
           nn <- sum((column1 - column2) < 0, na.rm=TRUE)
           nt <- nTies
@@ -111,9 +112,111 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           RankSt <- ''     
           RankAp <- RankSp/np
           RankAn <- RankSn/nn
-          RankAt <- ''          
+          RankAt <- ''    
+          
+          if(self$options$ciMethodps=='exact'){
+            cimed <- t(apply(pairsData,2,
+                             function(x) DescTools::MedianCI(x,method='exact')))
+          } else if(self$options$ciMethodps=='boot'){
+            cimed <- t(apply(pairsData,2,
+                             function(x) DescTools::MedianCI(x,method='boot',R=self$options$numR)))
+          }
+          
+          cimed[is.na(cimed)] <- NaN
+          
+          if(self$options$ciHLps){
+            cihl <- .hl(column1,column2,confInt)
+            cihl[is.na(cihl)] <- NaN
+          }
+          
+          
+          if (is.factor(column1) || is.factor(column2)) {
+            wilc <- createError(.('One or both variables are not numeric'))
+          }
+          else {
+            wilc <- try(suppressWarnings(wilcox.test(column1, column2,
+                    alternative=Ha, paired=TRUE, conf.int=TRUE, conf.level=confInt)), silent=TRUE)
+          }
+          
+          if ( ! isError(wilc)) {
+            
+            wilcoxttestTable$setRow(rowKey=pair, list(
+              'stat[wilcoxon]'=wilc$statistic,
+              'p[wilcoxon]'=wilc$p.value))
+            
+            if (nTies > 0) {
+              message <- jmvcore::format(.('{n} pair(s) of values were tied'), n=nTies)
+              wilcoxttestTable$addFootnote(rowKey=pair, 'stat[wilcoxon]', message)
+            }
+            
+          } else {
+            
+            wilcoxttestTable$setRow(rowKey=pair, list(
+              'stat[wilcoxon]'=NaN,
+              'p[wilcoxon]'=''))
+            
+            message <- extractErrorMessage(wilc)
+            if (message == "not enough 'x' observations")
+              message <- .('One or both variables do not contain enough observations')
+            else if (message == 'missing value where TRUE/FALSE needed')
+              message <- .('One or both variables contain infinite values')
+            else if (message == 'cannot compute confidence interval when all observations are tied')
+              message <- .('All observations are tied')
+            else if (message == "'y' must be numeric")
+              message <- .('One or both variables contain no observations')
+            
+            wilcoxttestTable$addFootnote(rowKey=pair, 'stat[wilcoxon]', message)
+          }          
           
         }
-      }
+      },
+      .init=function() {
+        
+        hypothesis <- self$options$hypothesisps
+        reps <- self$options$numR
+        
+        table <- self$results$wilcoxttest
+        cisMed <- self$results$cisMedps
+        cisHL <- self$results$cisHLps
+        
+        ciTitleString <- .('{ciWidthps}% Confidence Interval')
+        
+        ciTitle <- jmvcore::format(ciTitleString, ciWidth=self$options$ciWidthps)
+        cisMed$getColumn('cilMed[1]')$setSuperTitle(ciTitle)
+        cisMed$getColumn('ciuMed[1]')$setSuperTitle(ciTitle)
+        cisMed$getColumn('cilMed[2]')$setSuperTitle(ciTitle)
+        cisMed$getColumn('ciuMed[2]')$setSuperTitle(ciTitle)
+        cisHL$getColumn('cilHL')$setSuperTitle(ciTitle)
+        cisHL$getColumn('ciuHL')$setSuperTitle(ciTitle)
+        
+        if (hypothesis == 'oneGreater')
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BC\u2009<sub>{}</sub> > 0", .("Measure 1 - Measure 2")))
+        else if (hypothesis == 'twoGreater')
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BC\u2009<sub>{}</sub> < 0", .("Measure 1 - Measure 2")))
+        else
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BC\u2009<sub>{}</sub> \u2260 0", .("Measure 1 - Measure 2")))
+        
+        if(self$options$ciMediansps & self$options$ciMethodps=='boot')
+          cisMed$setNote("numR", jmvcore::format(paste0("Number of replicates in Bootstrap CI(s): ",reps)))
+        
+        pairs <- self$options$pairs
+        descTable <- self$results$descps
+        plots <- self$results$plotsps
+        
+        for (i in seq_along(pairs)) {
+          
+          pair <- pairs[[i]]
+          
+          table$setRow(rowKey=pair, list(
+            `var1[wilcoxon]`=pair$i1,
+            `var2[wilcoxon]`=pair$i2))
+          
+          descTable$setRow(rowKey=pair, list(
+            `var1[1]`=pair$i1,
+            `var2[1]`=pair$i2))          
+          
+          plots$get(pair)$setTitle(paste0(pair, collapse=' - '))
+        }        
+      }      
     )
 )

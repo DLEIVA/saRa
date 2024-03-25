@@ -120,7 +120,7 @@ items:
           type: number
 
         - name: group[2]
-          title: Group
+          title: Variable
           type: text
 
         - name: median[2]
@@ -175,10 +175,15 @@ items:
         - miss
 
       columns:
-        - name: dep
+        - name: var1[1]
           title: ""
-          content: ($key)
           type: text
+          combineBelow: true
+
+        - name: var2[1]
+          title: ""
+          type: text
+          combineBelow: true
 
         - name: name[1]
           title: "Sign"
