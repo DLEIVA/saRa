@@ -107,8 +107,8 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           np <- sum((column1 - column2) > 0, na.rm=TRUE)
           nn <- sum((column1 - column2) < 0, na.rm=TRUE)
           nt <- nTies
-          RankSp <- sum(rangos[sign(rangos)>0]) 
-          RankSn <- sum(rangos[sign(rangos)<0]) 
+          RankSp <- sum(rangos[sign(diffs)>0]) 
+          RankSn <- sum(rangos[sign(diffs)<0]) 
           RankSt <- ''     
           RankAp <- RankSp/np
           RankAn <- RankSn/nn
@@ -166,6 +166,24 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               message <- .('One or both variables contain no observations')
             
             wilcoxttestTable$addFootnote(rowKey=pair, 'stat[wilcoxon]', message)
+          }
+          
+          if (self$options$descps) {
+            
+            descTable$setRow(rowKey=pair, list(
+              "name[1]"='Positive differences',
+              "num[1]"=np,
+              "rankA[1]"=RankAp,
+              "rankS[1]"=RankSp,
+              "name[2]"='Negative differences',              
+              "num[2]"=nn,
+              "rankA[2]"=RankAn,
+              "rankS[2]"=RankSn,
+              "name[3]"='Tied pairs',
+              "num[3]"= nt,
+              "rankA[3]"=RankAt,
+              "rankS[3]"=RankSt            
+            ))
           }          
           
         }
