@@ -17,17 +17,17 @@ items:
         - miss
 
       columns:
-        - name: var1[wilcoxon]
+        - name: var1
           title: ""
           type: text
           combineBelow: true
-          visible: (wilcoxon)
+          visible: (wilcoxon || zstatps)
 
-        - name: var2[wilcoxon]
+        - name: var2
           title: ""
           type: text
           combineBelow: true
-          visible: (wilcoxon)
+          visible: (wilcoxon || zstatps)
 
         - name: name[wilcoxon]
           title: ''
@@ -99,9 +99,8 @@ items:
         - miss
 
       columns:
-        - name: dep
+        - name: vars
           title: ""
-          content: ($key)
           type: text
 
         - name: group[1]

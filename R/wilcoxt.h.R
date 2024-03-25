@@ -169,17 +169,17 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "miss"),
                 columns=list(
                     list(
-                        `name`="var1[wilcoxon]", 
+                        `name`="var1", 
                         `title`="", 
                         `type`="text", 
                         `combineBelow`=TRUE, 
-                        `visible`="(wilcoxon)"),
+                        `visible`="(wilcoxon || zstatps)"),
                     list(
-                        `name`="var2[wilcoxon]", 
+                        `name`="var2", 
                         `title`="", 
                         `type`="text", 
                         `combineBelow`=TRUE, 
-                        `visible`="(wilcoxon)"),
+                        `visible`="(wilcoxon || zstatps)"),
                     list(
                         `name`="name[wilcoxon]", 
                         `title`="", 
@@ -250,9 +250,8 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "miss"),
                 columns=list(
                     list(
-                        `name`="dep", 
+                        `name`="vars", 
                         `title`="", 
-                        `content`="($key)", 
                         `type`="text"),
                     list(
                         `name`="group[1]", 

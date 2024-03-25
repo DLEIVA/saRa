@@ -242,12 +242,18 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           pair <- pairs[[i]]
           
           table$setRow(rowKey=pair, list(
-            `var1[wilcoxon]`=pair$i1,
-            `var2[wilcoxon]`=pair$i2))
+            `var1`=pair$i1,
+            `var2`=pair$i2))
           
           descTable$setRow(rowKey=pair, list(
             `var1[1]`=pair$i1,
-            `var2[1]`=pair$i2))          
+            `var2[1]`=pair$i2))
+          
+          cisMed$setRow(rowKey=pair, list(
+            `vars`=paste0(pair, collapse=' - ')))
+          
+          cisHL$setRow(rowKey=pair, list(
+            `vars`=paste0(pair, collapse=' - ')))          
           
           plots$get(pair)$setTitle(paste0(pair, collapse=' - '))
         }        
