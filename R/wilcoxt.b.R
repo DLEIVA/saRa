@@ -107,11 +107,11 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           np <- sum((column1 - column2) > 0, na.rm=TRUE)
           nn <- sum((column1 - column2) < 0, na.rm=TRUE)
           nt <- nTies
-          RankSp <- sum(rangos[sign(diffs)>0]) 
-          RankSn <- sum(rangos[sign(diffs)<0]) 
+          RankSp <- ifelse(sum(diffs>0)>0,sum(rangos[sign(diffs)>0]),NA) 
+          RankSn <- ifelse(sum(diffs<0)>0,sum(rangos[sign(diffs)<0]),NA) 
           RankSt <- ''     
-          RankAp <- RankSp/np
-          RankAn <- RankSn/nn
+          RankAp <- ifelse(!is.na(RankSp),RankSp/np,NA)
+          RankAn <- ifelse(!is.na(RankSn),RankSn/nn,NA)
           RankAt <- ''    
           
           if(self$options$ciMethodps=='exact'){
