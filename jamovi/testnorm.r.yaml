@@ -39,12 +39,12 @@ items:
           format: zto,pvalue
           visible: (chisqtest)
 
-        - name: var[chisqtest]
+        - name: var[kstest]
           title: ""
           content: ($key)
           type: text
           combineBelow: true
-          visible: (chisqtest)
+          visible: (kstest)
 
         - name: name[kstest]
           title: ''
@@ -63,6 +63,13 @@ items:
           format: zto,pvalue
           visible: (kstest)
           
+        - name: var[swtest]
+          title: ""
+          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (swtest)          
+          
         - name: name[swtest]
           title: ''
           type: text
@@ -79,6 +86,13 @@ items:
           type: number
           format: zto,pvalue
           visible: (swtest)
+          
+        - name: var[adtest]
+          title: ""
+          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (adtest)          
 
         - name: name[adtest]
           title: ''
