@@ -8,4 +8,106 @@ items:
       title: Normality tests
       type:  Preformatted
 
+    - name: normtests
+      title: Tests
+      description: A table for the normality tests
+      visible: (chisqtest || kstest || swtest || adtest)
+      type: Table
+      rows: (vars)
+      columns:
+        - name: var[chisqtest]
+          title: ""
+          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (chisqtest)
+
+        - name: name[chisqtest]
+          title: ''
+          type: text
+          content: Pearson χ² test 
+          visible: (chisqtest)
+
+        - name: stat[chisqtest]
+          title: Statistic
+          type: number
+          visible: (chisqtest)
+
+        - name: p[chisqtest]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (chisqtest)
+
+        - name: var[chisqtest]
+          title: ""
+          content: ($key)
+          type: text
+          combineBelow: true
+          visible: (chisqtest)
+
+        - name: name[kstest]
+          title: ''
+          type: text
+          content: Kolmogorov-Smirnov test 
+          visible: (kstest)
+
+        - name: stat[kstest]
+          title: Statistic
+          type: number
+          visible: (kstest)
+
+        - name: p[kstest]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (kstest)
+          
+        - name: name[swtest]
+          title: ''
+          type: text
+          content: Shapiro-Wilk test 
+          visible: (swtest)
+
+        - name: stat[swtest]
+          title: Statistic
+          type: number
+          visible: (swtest)
+
+        - name: p[swtest]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (swtest)
+
+        - name: name[adtest]
+          title: ''
+          type: text
+          content: Anderson-Darling test 
+          visible: (adtest)
+
+        - name: stat[adtest]
+          title: Statistic
+          type: number
+          visible: (adtest)
+
+        - name: p[adtest]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (adtest)          
+      
+    - name: plots
+      title: Plots
+      type: Array
+      description: An array of normality plots
+      items: (vars)
+        
+      template:
+          title: ($key)
+          type: Group
+          items: []      
+      
+      
+
 ...
