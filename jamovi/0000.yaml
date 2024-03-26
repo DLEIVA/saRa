@@ -92,6 +92,11 @@ analyses:
     menuGroup: saRa
     menuSubgroup: Miscellanea
     menuTitle: Normality tests
+  - title: normFuns
+    name: normFuns
+    ns: saRa
+    menuGroup: saRa
+    menuTitle: normFuns
 datasets:
   - name: phobia
     path: phobia.RData
