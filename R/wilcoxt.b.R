@@ -311,8 +311,6 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (is.null(image$state))
           return(FALSE)
         
-        groupName <- image$state['group']
-        
         ciw <- self$options$ciWidthps
         
         pd <- position_dodge(0.2)
