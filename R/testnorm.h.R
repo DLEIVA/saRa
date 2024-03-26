@@ -118,7 +118,9 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "testnormResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        text = function() private$.items[["text"]],
+        normtests = function() private$.items[["normtests"]],
+        plots = function() private$.items[["plots"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -129,7 +131,29 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="text",
-                title="Normality tests"))}))
+                title="Normality tests"))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="normtests",
+                title="Tests",
+                visible="(chisqtest || kstest || swtest || adtest)",
+                rows=1,
+                columns=list()))
+            self$add(jmvcore::Array$new(
+                options=options,
+                name="plots",
+                title="Plots",
+                items="(vars)",
+                template=R6::R6Class(
+                    inherit = jmvcore::Group,
+                    active = list(),
+                    private = list(),
+                    public=list(
+                        initialize=function(options) {
+                            super$initialize(
+                                options=options,
+                                name="undefined",
+                                title="($key)")}))$new(options=options)))}))
 
 testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "testnormBase",
@@ -181,7 +205,15 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$normtests} \tab \tab \tab \tab \tab A table for the normality tests \cr
+#'   \code{results$plots} \tab \tab \tab \tab \tab An array of normality plots \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$normtests$asDF}
+#'
+#' \code{as.data.frame(results$normtests)}
 #'
 #' @export
 testnorm <- function(
