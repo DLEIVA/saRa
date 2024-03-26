@@ -9,28 +9,105 @@ options:
     - name: data
       type: Data
 
-    - name: dep
-      title: Dependent Variable
+    - name: vars
+      title: Variables
+      type: Variables
+      suggested: 
+        - continuous
+      permitted: 
+        - numeric
+      description:
+          R: a vector of strings naming the variables of interest in `data`
+          
+    - name: groupBy
+      title: Group by
       type: Variable
-
-    - name: group
-      title: Grouping Variable
-      type: Variable
-
-    - name: alt
-      title: Alternative hypothesis
-      type: List
-      options:
-        - title: Not equal
-          name:  notequal
-        - title: One greater
-          name:  onegreater
-        - title: Two greater
-          name:  twogreater
-      default: notequal
-
-    - name: varEq
-      title: Assume equal variances
+      suggested:
+        - nominal
+      permitted:
+        - factor
+      default: null
+      description:
+          R: a vector of strings naming the variables used to segment `vars`
+          
+    - name: chisqtest
+      title: Pearson χ² test
       type: Bool
-      default: true
+      default: false
+      description:
+          ui: >
+            perform Pearson's χ² tests.
+          R: >
+            `TRUE` (default) or `FALSE`, perform Pearson's χ² tests          
+          
+    - name: kstest
+      title: Kolmogorov-Smirnov test
+      type: Bool
+      default: false
+      description:
+          ui: >
+            perform Kolmogorv-Smirnov tests.
+          R: >
+            `TRUE` (default) or `FALSE`, perform Kolmogorov-Smirnov tests
+            
+    - name: swtest
+      title: Shapiro-Wilk test
+      type: Bool
+      default: false
+      description:
+          ui: >
+            perform Shapiro-Wilk tests.
+          R: >
+            `TRUE` (default) or `FALSE`, perform Shapiro-Wilk tests  
+            
+    - name: adtest
+      title: Anderson-Darling test
+      type: Bool
+      default: false
+      description:
+          ui: >
+            perform Anderson-Darling tests.
+          R: >
+            `TRUE` (default) or `FALSE`, perform Anderson-Darling tests            
+
+    - name: hist
+      title: Histogram
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides histograms (continuous variables only)
+            
+    - name: dens
+      title: Density
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides density plots (continuous variables only)
+            
+    - name: norm
+      title: Normal Curve
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provides overlapped normal curve (continuous variables only)            
+            
+    - name: qq
+      title: Q-Q plot
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide Q-Q plots (continuous variables only)
+
+    - name: ecdf
+      title: ECDF plot
+      type: Bool
+      default: false
+      description:
+          R: >
+            `TRUE` or `FALSE` (default), provide ECDF plots (continuous variables only)
+
 ...

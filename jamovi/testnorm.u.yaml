@@ -2,33 +2,89 @@ title: Normality tests
 name: testnorm
 jus: '3.0'
 stage: 0
-compilerMode: aggressive
+compilerMode: tame
 children:
   - type: VariableSupplier
     persistentItems: false
-    stretchFactor: 1
+    stretchFactor: 2
     children:
       - type: TargetLayoutBox
-        label: Dependent Variable
+        label: Variables
         children:
           - type: VariablesListBox
-            name: dep
-            maxItemCount: 1
+            name: vars
             isTarget: true
       - type: TargetLayoutBox
-        label: Grouping Variable
         children:
           - type: VariablesListBox
-            name: group
-            maxItemCount: 1
+            name: groupBy
             isTarget: true
-  - type: LayoutBox
-    margin: large
+            maxItemCount: 1
+  - type: CollapseBox
+    label: Statistics and Tests
+    collapsed: true
     children:
-      - type: ComboBox
-        name: alt
-  - type: LayoutBox
-    margin: large
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 0
+          row: 0
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Normality Tests
+            children:
+              - type: CheckBox
+                name: chisqtest
+              - type: CheckBox
+                name: kstest
+              - type: CheckBox
+                name: swtest
+              - type: CheckBox
+                name: adtest
+
+  - type: CollapseBox
+    label: Plots
+    collapsed: true
     children:
-      - type: CheckBox
-        name: varEq
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 0
+          row: 0
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Histograms
+            iconPosition: right
+            children:
+              - type: CheckBox
+                name: hist
+              - type: CheckBox
+                name: dens
+              - type: CheckBox
+                name: norm
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 1
+          row: 0
+        fitToGrid: true
+        children:                
+          - type: Label
+            label: Q-Q Plots
+            iconPosition: right
+            children:
+              - type: CheckBox
+                name: qq
+                label: Q-Q
+          - type: Label
+            label: ECDF Plots
+            iconPosition: right
+            children:
+              - type: CheckBox
+                name: ecdf
+                label: ECDF                    

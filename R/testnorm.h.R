@@ -6,10 +6,17 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
-            group = NULL,
-            alt = "notequal",
-            varEq = TRUE, ...) {
+            vars = NULL,
+            groupBy = NULL,
+            chisqtest = FALSE,
+            kstest = FALSE,
+            swtest = FALSE,
+            adtest = FALSE,
+            hist = FALSE,
+            dens = FALSE,
+            norm = FALSE,
+            qq = FALSE,
+            ecdf = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -17,40 +24,94 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
-            private$..alt <- jmvcore::OptionList$new(
-                "alt",
-                alt,
-                options=list(
-                    "notequal",
-                    "onegreater",
-                    "twogreater"),
-                default="notequal")
-            private$..varEq <- jmvcore::OptionBool$new(
-                "varEq",
-                varEq,
-                default=TRUE)
+            private$..vars <- jmvcore::OptionVariables$new(
+                "vars",
+                vars,
+                suggested=list(
+                    "continuous"),
+                permitted=list(
+                    "numeric"))
+            private$..groupBy <- jmvcore::OptionVariable$new(
+                "groupBy",
+                groupBy,
+                suggested=list(
+                    "nominal"),
+                permitted=list(
+                    "factor"),
+                default=NULL)
+            private$..chisqtest <- jmvcore::OptionBool$new(
+                "chisqtest",
+                chisqtest,
+                default=FALSE)
+            private$..kstest <- jmvcore::OptionBool$new(
+                "kstest",
+                kstest,
+                default=FALSE)
+            private$..swtest <- jmvcore::OptionBool$new(
+                "swtest",
+                swtest,
+                default=FALSE)
+            private$..adtest <- jmvcore::OptionBool$new(
+                "adtest",
+                adtest,
+                default=FALSE)
+            private$..hist <- jmvcore::OptionBool$new(
+                "hist",
+                hist,
+                default=FALSE)
+            private$..dens <- jmvcore::OptionBool$new(
+                "dens",
+                dens,
+                default=FALSE)
+            private$..norm <- jmvcore::OptionBool$new(
+                "norm",
+                norm,
+                default=FALSE)
+            private$..qq <- jmvcore::OptionBool$new(
+                "qq",
+                qq,
+                default=FALSE)
+            private$..ecdf <- jmvcore::OptionBool$new(
+                "ecdf",
+                ecdf,
+                default=FALSE)
 
-            self$.addOption(private$..dep)
-            self$.addOption(private$..group)
-            self$.addOption(private$..alt)
-            self$.addOption(private$..varEq)
+            self$.addOption(private$..vars)
+            self$.addOption(private$..groupBy)
+            self$.addOption(private$..chisqtest)
+            self$.addOption(private$..kstest)
+            self$.addOption(private$..swtest)
+            self$.addOption(private$..adtest)
+            self$.addOption(private$..hist)
+            self$.addOption(private$..dens)
+            self$.addOption(private$..norm)
+            self$.addOption(private$..qq)
+            self$.addOption(private$..ecdf)
         }),
     active = list(
-        dep = function() private$..dep$value,
-        group = function() private$..group$value,
-        alt = function() private$..alt$value,
-        varEq = function() private$..varEq$value),
+        vars = function() private$..vars$value,
+        groupBy = function() private$..groupBy$value,
+        chisqtest = function() private$..chisqtest$value,
+        kstest = function() private$..kstest$value,
+        swtest = function() private$..swtest$value,
+        adtest = function() private$..adtest$value,
+        hist = function() private$..hist$value,
+        dens = function() private$..dens$value,
+        norm = function() private$..norm$value,
+        qq = function() private$..qq$value,
+        ecdf = function() private$..ecdf$value),
     private = list(
-        ..dep = NA,
-        ..group = NA,
-        ..alt = NA,
-        ..varEq = NA)
+        ..vars = NA,
+        ..groupBy = NA,
+        ..chisqtest = NA,
+        ..kstest = NA,
+        ..swtest = NA,
+        ..adtest = NA,
+        ..hist = NA,
+        ..dens = NA,
+        ..norm = NA,
+        ..qq = NA,
+        ..ecdf = NA)
 )
 
 testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -95,10 +156,28 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'
 #' 
 #' @param data .
-#' @param dep .
-#' @param group .
-#' @param alt .
-#' @param varEq .
+#' @param vars a vector of strings naming the variables of interest in
+#'   \code{data}
+#' @param groupBy a vector of strings naming the variables used to segment
+#'   \code{vars}
+#' @param chisqtest \code{TRUE} (default) or \code{FALSE}, perform Pearson's
+#'   X² tests
+#' @param kstest \code{TRUE} (default) or \code{FALSE}, perform
+#'   Kolmogorov-Smirnov tests
+#' @param swtest \code{TRUE} (default) or \code{FALSE}, perform Shapiro-Wilk
+#'   tests
+#' @param adtest \code{TRUE} (default) or \code{FALSE}, perform
+#'   Anderson-Darling tests
+#' @param hist \code{TRUE} or \code{FALSE} (default), provides histograms
+#'   (continuous variables only)
+#' @param dens \code{TRUE} or \code{FALSE} (default), provides density plots
+#'   (continuous variables only)
+#' @param norm \code{TRUE} or \code{FALSE} (default), provides overlapped
+#'   normal curve (continuous variables only)
+#' @param qq \code{TRUE} or \code{FALSE} (default), provide Q-Q plots
+#'   (continuous variables only)
+#' @param ecdf \code{TRUE} or \code{FALSE} (default), provide ECDF plots
+#'   (continuous variables only)
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
@@ -107,28 +186,43 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @export
 testnorm <- function(
     data,
-    dep,
-    group,
-    alt = "notequal",
-    varEq = TRUE) {
+    vars,
+    groupBy = NULL,
+    chisqtest = FALSE,
+    kstest = FALSE,
+    swtest = FALSE,
+    adtest = FALSE,
+    hist = FALSE,
+    dens = FALSE,
+    norm = FALSE,
+    qq = FALSE,
+    ecdf = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("testnorm requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
+    if ( ! missing(vars)) vars <- jmvcore::resolveQuo(jmvcore::enquo(vars))
+    if ( ! missing(groupBy)) groupBy <- jmvcore::resolveQuo(jmvcore::enquo(groupBy))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL),
-            `if`( ! missing(group), group, NULL))
+            `if`( ! missing(vars), vars, NULL),
+            `if`( ! missing(groupBy), groupBy, NULL))
 
+    for (v in groupBy) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
 
     options <- testnormOptions$new(
-        dep = dep,
-        group = group,
-        alt = alt,
-        varEq = varEq)
+        vars = vars,
+        groupBy = groupBy,
+        chisqtest = chisqtest,
+        kstest = kstest,
+        swtest = swtest,
+        adtest = adtest,
+        hist = hist,
+        dens = dens,
+        norm = norm,
+        qq = qq,
+        ecdf = ecdf)
 
     analysis <- testnormClass$new(
         options = options,
