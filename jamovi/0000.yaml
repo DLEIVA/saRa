@@ -87,16 +87,11 @@ analyses:
     menuSubgroup: Miscellanea
     menuTitle: Wilcoxon T test
   - title: Normality tests
-    name: testnorm
+    name: normFuns
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
     menuTitle: Normality tests
-  - title: normFuns
-    name: normFuns
-    ns: saRa
-    menuGroup: saRa
-    menuTitle: normFuns
 datasets:
   - name: phobia
     path: phobia.RData
