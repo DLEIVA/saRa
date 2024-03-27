@@ -7,11 +7,45 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     private = list(
         .run = function() {
 
-            # `self$data` contains the data
-            # `self$options` contains the options
-            # `self$results` contains the results object (to populate)
+          groupVarName <- self$options$groupBy
+          depVarNames <- self$options$vars
+          varNames <- c(groupVarName, depVarNames)
+          
+          if (is.null(groupVarName) || length(depVarNames) == 0)
+            return()
+          
+          data <- select(self$data, varNames)
+          
+          for (name in depVarNames)
+            data[[name]] <- jmvcore::toNumeric(data[[name]])
+          data[[groupVarName]] <- droplevels(as.factor(data[[groupVarName]]))
+          
+          normtestTable <- self$results$normtests
+          
+          if (any(depVarNames == groupVarName))
+            jmvcore::reject(.("Grouping variable '{a}' must not also be a dependent variable"),
+                            code="a_is_dependent_variable", a=groupVarName)
+          
+          # exclude rows with missings in the grouping variable
+          data <- data[ ! is.na(data[[groupVarName]]),]
+          
+          for (depName in depVarNames) {
+            
+            dataNTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
+            groupLevels <- base::levels(dataNTest$group)            
+            if(length(groupLevels)>0){
+              if(length(groupLevels) > 1){
+                for(k in 1:length(groupLevels))
+                  normtestTable$addRow(rowKey=k,values=list(`depvar`=ifelse(k==1,depName,''),
+                                                            `group`=groupLevels[k],
+                                                            `name`='',`stat`='',`p`=''))
+              }        
+              
+              TableRowNo <- 1          
 
-        },
+        }
+            }
+          },
         #### Plot functions ----
         .preparePlots = function() {
           data <- self$data
