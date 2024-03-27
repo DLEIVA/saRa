@@ -25,7 +25,6 @@ items:
       
         - name: var[chisqtest]
           title: ""
-          content: ($key)
           type: text
           combineBelow: true
           visible: (chisqtest)
@@ -49,7 +48,6 @@ items:
 
         - name: var[kstest]
           title: ""
-          content: ($key)
           type: text
           combineBelow: true
           visible: (kstest)
@@ -73,7 +71,6 @@ items:
           
         - name: var[swtest]
           title: ""
-          content: ($key)
           type: text
           combineBelow: true
           visible: (swtest)          
@@ -97,7 +94,6 @@ items:
           
         - name: var[adtest]
           title: ""
-          content: ($key)
           type: text
           combineBelow: true
           visible: (adtest)          
