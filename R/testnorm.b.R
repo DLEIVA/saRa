@@ -16,6 +16,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           data <- select(self$data, varNames)
           
+          .kstest <- function(x){
+            test <- ks.test(x,'pnorm',mean=mean(x),sd=sd(x))
+            list(statistic=test$statistic,p.value=test$p.value)
+          }          
+          
           for (name in depVarNames)
             data[[name]] <- jmvcore::toNumeric(data[[name]])
           data[[groupVarName]] <- droplevels(as.factor(data[[groupVarName]]))
@@ -39,9 +44,22 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   normtestTable$addRow(rowKey=k,values=list(`depvar`=ifelse(k==1,depName,''),
                                                             `group`=groupLevels[k],
                                                             `stat`='',`p`=''))
-              }        
+              }
               
-              TableRowNo <- 1          
+              if(self$options$kstest){
+                ks <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                suppressWarnings(.kstest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+              }              
+              
+              TableRowNo <- 1  
+              
+              for(i in 1:length(groupLevels)){
+                if(self$options$kstest){
+                normtestTable$setRow(rowNo=TableRowNo, values=list(`stat[kstest]`=ks[TableRowNo,1],
+                                                                   `p[kstest]`=ks[TableRowNo,1]))
+                }
+                TableRowNo <- TableRowNo + 1  
+              }
 
         }
             }
