@@ -13,8 +13,16 @@ items:
       description: A table for the normality tests
       visible: (chisqtest || kstest || swtest || adtest)
       type: Table
-      rows: (vars)
+      rows: 0
       columns:
+        - name: depvar
+          title: Variable
+          type: text
+          
+        - name: group
+          title: Group
+          type: text          
+      
         - name: var[chisqtest]
           title: ""
           content: ($key)
