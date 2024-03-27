@@ -38,43 +38,31 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           # exclude rows with missings in the grouping variable
           data <- data[ ! is.na(data[[groupVarName]]),]
-          TableRowNo <- 1
+          
           for (depName in depVarNames) {
             
             dataNTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
-            groupLevels <- base::levels(dataNTest$group)            
+            groupLevels <- base::levels(dataNTest$group)   
+          
+              chisq <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                            suppressWarnings(.chisqtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+           
+            
+
+              ks <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                         suppressWarnings(.kstest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+            
             if(length(groupLevels)>0){
               if(length(groupLevels) > 1){
-                for(k in 1:length(groupLevels))
+                for(k in 1:length(groupLevels)){
                   normtestTable$addRow(rowKey=k,values=list(`depvar`=ifelse(k==1,depName,''),
-                                                            `group`=groupLevels[k],
-                                                            `stat`='',`p`=''))
+                  `group`=groupLevels[k],`stat`='',`p`='',`stat[kstest]`=ks[k,1],
+                  `p[kstest]`=ks[k,2],`stat[chisqtest]`=chisq[k,1],
+                  `p[chisqtest]`=chisq[k,2]))
               }
-
-              if(self$options$chisqtest){
-                chisq <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                        suppressWarnings(.chisqtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-              }              
-                            
-              if(self$options$kstest){
-                ks <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                suppressWarnings(.kstest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-              }              
-              
-              for(i in 1:length(groupLevels)){
-                if(self$options$kstest){
-                normtestTable$setRow(rowNo=TableRowNo, values=list(`stat[kstest]`=ks[TableRowNo,1],
-                                                                   `p[kstest]`=ks[TableRowNo,1]))
-                }
-                if(self$options$chisqtest){
-                  normtestTable$setRow(rowNo=TableRowNo, values=list(`stat[chisqtest]`=ks[TableRowNo,1],
-                                                                     `p[chisqtest]`=ks[TableRowNo,1]))
-                }                
-                TableRowNo <- TableRowNo + 1  
-              }
-
         }
-            }
+              }
+              }
           },
         #### Plot functions ----
         .preparePlots = function() {
