@@ -29,6 +29,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           .swtest <- function(x){
             test <- shapiro.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
+          }
+          
+          .adtest <- function(x){
+            test <- ad.test(x)
+            list(statistic=test$statistic,p.value=test$p.value)
           }          
           
           for (name in depVarNames)
@@ -57,16 +62,26 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
               sw <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
                                          suppressWarnings(.swtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-                          
+
+              ad <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                         suppressWarnings(.adtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+                                        
             if(length(groupLevels)>0){
               if(length(groupLevels) > 1){
                 for(k in 1:length(groupLevels)){
                   normtestTable$addRow(rowKey=k,values=list(`depvar`=ifelse(k==1,depName,''),
                   `group`=groupLevels[k],`stat`='',`p`='',`stat[chisqtest]`=chisq[k,1],
                   `p[chisqtest]`=chisq[k,2],`stat[kstest]`=ks[k,1],`p[kstest]`=ks[k,2],
-                  `stat[swtest]`=sw[k,1],`p[swtest]`=sw[k,2]))
+                  `stat[swtest]`=sw[k,1],`p[swtest]`=sw[k,2],`stat[adtest]`=ad[k,1],
+                  `p[adtest]`=ad[k,2]))
               }
         }
+            } else{
+              normtestTable$addRow(rowKey=1,values=list(`depvar`=depName,
+              `stat`='',`p`='',`stat[chisqtest]`=chisq[1,1],
+              `p[chisqtest]`=chisq[1,2],`stat[kstest]`=ks[1,1],`p[kstest]`=ks[1,2],
+              `stat[swtest]`=sw[1,1],`p[swtest]`=sw[1,2],`stat[adtest]`=ad[1,1],
+              `p[adtest]`=ad[1,2]))  
               }
               }
           },
