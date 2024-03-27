@@ -19,6 +19,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           .kstest <- function(x){
             test <- ks.test(x,'pnorm',mean=mean(x),sd=sd(x))
             list(statistic=test$statistic,p.value=test$p.value)
+          }
+          
+          .chisqtest <- function(x){
+            test <- pearson.test(table(x))
+            list(statistic=test$statistic,p.value=test$p.value)
           }          
           
           for (name in depVarNames)
@@ -33,7 +38,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           # exclude rows with missings in the grouping variable
           data <- data[ ! is.na(data[[groupVarName]]),]
-          
+          TableRowNo <- 1
           for (depName in depVarNames) {
             
             dataNTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
@@ -45,19 +50,26 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                                             `group`=groupLevels[k],
                                                             `stat`='',`p`=''))
               }
-              
+
+              if(self$options$chisqtest){
+                chisq <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                        suppressWarnings(.chisqtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+              }              
+                            
               if(self$options$kstest){
                 ks <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
                 suppressWarnings(.kstest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
               }              
-              
-              TableRowNo <- 1  
               
               for(i in 1:length(groupLevels)){
                 if(self$options$kstest){
                 normtestTable$setRow(rowNo=TableRowNo, values=list(`stat[kstest]`=ks[TableRowNo,1],
                                                                    `p[kstest]`=ks[TableRowNo,1]))
                 }
+                if(self$options$chisqtest){
+                  normtestTable$setRow(rowNo=TableRowNo, values=list(`stat[chisqtest]`=ks[TableRowNo,1],
+                                                                     `p[chisqtest]`=ks[TableRowNo,1]))
+                }                
                 TableRowNo <- TableRowNo + 1  
               }
 
