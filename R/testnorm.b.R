@@ -22,7 +22,12 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }
           
           .chisqtest <- function(x){
-            test <- pearson.test(table(x))
+            test <- pearson.test(x)
+            list(statistic=test$statistic,p.value=test$p.value)
+          }
+          
+          .swtest <- function(x){
+            test <- shapiro.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
           }          
           
@@ -47,18 +52,19 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               chisq <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
                                             suppressWarnings(.chisqtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
            
-            
-
               ks <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
                                          suppressWarnings(.kstest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-            
+
+              sw <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                         suppressWarnings(.swtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+                          
             if(length(groupLevels)>0){
               if(length(groupLevels) > 1){
                 for(k in 1:length(groupLevels)){
                   normtestTable$addRow(rowKey=k,values=list(`depvar`=ifelse(k==1,depName,''),
-                  `group`=groupLevels[k],`stat`='',`p`='',`stat[kstest]`=ks[k,1],
-                  `p[kstest]`=ks[k,2],`stat[chisqtest]`=chisq[k,1],
-                  `p[chisqtest]`=chisq[k,2]))
+                  `group`=groupLevels[k],`stat`='',`p`='',`stat[chisqtest]`=chisq[k,1],
+                  `p[chisqtest]`=chisq[k,2],`stat[kstest]`=ks[k,1],`p[kstest]`=ks[k,2],
+                  `stat[swtest]`=sw[k,1],`p[swtest]`=sw[k,2]))
               }
         }
               }
