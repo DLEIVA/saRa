@@ -11,8 +11,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           depVarNames <- self$options$vars
           varNames <- c(groupVarName, depVarNames)
           
-          if (is.null(groupVarName) || length(depVarNames) == 0)
-            return()
+          # if (is.null(groupVarName) || length(depVarNames) == 0)
+          #   return()
           
           data <- select(self$data, varNames)
           
@@ -53,18 +53,24 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             
             dataNTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
             groupLevels <- base::levels(dataNTest$group)   
-          
-              chisq <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                            suppressWarnings(.chisqtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-           
-              ks <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                         suppressWarnings(.kstest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-
-              sw <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                         suppressWarnings(.swtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-
-              ad <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                         suppressWarnings(.adtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+              if(length(groupLevels)>0){
+                chisq <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                              suppressWarnings(.chisqtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+                
+                ks <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                           suppressWarnings(.kstest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+                
+                sw <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                           suppressWarnings(.swtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+                
+                ad <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                           suppressWarnings(.adtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+              } else{
+                chisq <- .chisqtest(dataNTest$dep)
+                ks <- .kstest(dataNTest$dep) 
+                sw <- .swtest(dataNTest$dep) 
+                ad <- .adtest(dataNTest$dep) 
+              }
                                         
             if(length(groupLevels)>0){
               if(length(groupLevels) > 1){
