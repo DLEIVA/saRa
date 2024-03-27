@@ -9,7 +9,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
           groupVarName <- self$options$groupBy
           depVarNames <- self$options$vars
-          varNames <- c(groupVarName, depVarNames)
+          varNames <- if(is.null(groupVarName) || length(depVarNames) == 0){
+            c(depVarNames)
+          } else{
+            c(groupVarName, depVarNames) 
+          }
           
           # if (is.null(groupVarName) || length(depVarNames) == 0)
           #   return()
@@ -38,6 +42,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           for (name in depVarNames)
             data[[name]] <- jmvcore::toNumeric(data[[name]])
+          if(!is.null(groupVarName))
           data[[groupVarName]] <- droplevels(as.factor(data[[groupVarName]]))
           
           normtestTable <- self$results$normtests
@@ -47,13 +52,21 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                             code="a_is_dependent_variable", a=groupVarName)
           
           # exclude rows with missings in the grouping variable
+          if(!is.null(groupVarName))
           data <- data[ ! is.na(data[[groupVarName]]),]
           
           for (depName in depVarNames) {
+            if(!is.null(groupVarName)){
+              dataNTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
+            } else{
+              dataNTest <- data.frame(dep=data[[depName]])              
+            }
             
-            dataNTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
-            groupLevels <- base::levels(dataNTest$group)   
-              if(length(groupLevels)>0){
+            if(!is.null(groupVarName)){
+              groupLevels <- base::levels(dataNTest$group)
+            } else groupLevels <- NULL            
+
+              if(!is.null(groupLevels)){
                 chisq <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
                                               suppressWarnings(.chisqtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
                 
@@ -83,11 +96,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               }
         }
             } else{
-              normtestTable$addRow(rowKey=1,values=list(`depvar`=depName,
-              `stat`='',`p`='',`stat[chisqtest]`=chisq[1,1],
-              `p[chisqtest]`=chisq[1,2],`stat[kstest]`=ks[1,1],`p[kstest]`=ks[1,2],
-              `stat[swtest]`=sw[1,1],`p[swtest]`=sw[1,2],`stat[adtest]`=ad[1,1],
-              `p[adtest]`=ad[1,2]))  
+              normtestTable$addRow(rowKey=1,values=list(`depvar`=depName,#`group`=NA,
+              `stat`='',`p`='',`stat[chisqtest]`=chisq[[1]],
+              `p[chisqtest]`=chisq[[2]],`stat[kstest]`=ks[[1]],`p[kstest]`=ks[[2]],
+              `stat[swtest]`=sw[[1]],`p[swtest]`=sw[[2]],`stat[adtest]`=ad[[1]],
+              `p[adtest]`=ad[[2]]))  
               }
               }
           },
