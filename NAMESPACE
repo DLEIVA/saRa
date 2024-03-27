@@ -17,3 +17,5 @@ import(cowplot)
 import(ggridges)
 import(latex2exp)
 import(DescTools)
+import(nortest)
+
