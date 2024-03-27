@@ -137,8 +137,108 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="normtests",
                 title="Tests",
                 visible="(chisqtest || kstest || swtest || adtest)",
-                rows=1,
-                columns=list()))
+                rows=0,
+                columns=list(
+                    list(
+                        `name`="depvar", 
+                        `title`="Variable", 
+                        `type`="text"),
+                    list(
+                        `name`="group", 
+                        `title`="Group", 
+                        `type`="text"),
+                    list(
+                        `name`="var[chisqtest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(chisqtest)"),
+                    list(
+                        `name`="name[chisqtest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Pearson \u03C7\u00B2 test", 
+                        `visible`="(chisqtest)"),
+                    list(
+                        `name`="stat[chisqtest]", 
+                        `title`="Statistic", 
+                        `type`="number", 
+                        `visible`="(chisqtest)"),
+                    list(
+                        `name`="p[chisqtest]", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue", 
+                        `visible`="(chisqtest)"),
+                    list(
+                        `name`="var[kstest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(kstest)"),
+                    list(
+                        `name`="name[kstest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Kolmogorov-Smirnov test", 
+                        `visible`="(kstest)"),
+                    list(
+                        `name`="stat[kstest]", 
+                        `title`="Statistic", 
+                        `type`="number", 
+                        `visible`="(kstest)"),
+                    list(
+                        `name`="p[kstest]", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue", 
+                        `visible`="(kstest)"),
+                    list(
+                        `name`="var[swtest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(swtest)"),
+                    list(
+                        `name`="name[swtest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Shapiro-Wilk test", 
+                        `visible`="(swtest)"),
+                    list(
+                        `name`="stat[swtest]", 
+                        `title`="Statistic", 
+                        `type`="number", 
+                        `visible`="(swtest)"),
+                    list(
+                        `name`="p[swtest]", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue", 
+                        `visible`="(swtest)"),
+                    list(
+                        `name`="var[adtest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(adtest)"),
+                    list(
+                        `name`="name[adtest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Anderson-Darling test", 
+                        `visible`="(adtest)"),
+                    list(
+                        `name`="stat[adtest]", 
+                        `title`="Statistic", 
+                        `type`="number", 
+                        `visible`="(adtest)"),
+                    list(
+                        `name`="p[adtest]", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue", 
+                        `visible`="(adtest)"))))
             self$add(jmvcore::Array$new(
                 options=options,
                 name="plots",

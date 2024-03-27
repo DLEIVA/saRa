@@ -38,7 +38,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 for(k in 1:length(groupLevels))
                   normtestTable$addRow(rowKey=k,values=list(`depvar`=ifelse(k==1,depName,''),
                                                             `group`=groupLevels[k],
-                                                            `name`='',`stat`='',`p`=''))
+                                                            `stat`='',`p`=''))
               }        
               
               TableRowNo <- 1          
