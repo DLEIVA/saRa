@@ -120,6 +120,9 @@ items:
       type: Array
       description: An array of descriptive plots
       items: (vars)
+      clearWith:
+        - depvar
+        - group      
         
       template:
           title: ($key)

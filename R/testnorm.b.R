@@ -5,11 +5,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     "testnormClass",
     inherit = testnormBase,
     private = list(
-        .init = function(){
-          private$.initPlots()           
-        },
         .run = function() {
-
+          private$.initPlots()
           groupVarName <- self$options$groupBy
           depVarNames <- self$options$vars
           varNames <- if(is.null(groupVarName) || length(depVarNames) == 0){
@@ -336,7 +333,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             s1 <- self$data[[groupBy]]
             df <- data.frame(y,s1)
             d.f <- arrange(df,s1,y)
-            d.f <- plyr::ddply(d.f, .(s1), transform,
+            d.f <- ddply(d.f, .(s1), transform,
                                z=sort(scale(y)),p=pnorm(sort(scale(y))))
             
           } else{

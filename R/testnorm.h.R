@@ -244,6 +244,9 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="plots",
                 title="Plots",
                 items="(vars)",
+                clearWith=list(
+                    "depvar",
+                    "group"),
                 template=R6::R6Class(
                     inherit = jmvcore::Group,
                     active = list(),
