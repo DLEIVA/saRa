@@ -48,6 +48,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           .sftest <- function(x){
             test <- sf.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
+          }
+          
+          .cvmtest <- function(x){
+            test <- cvm.test(x)
+            list(statistic=test$statistic,p.value=test$p.value)
           }          
           
           for (name in depVarNames)
@@ -94,14 +99,17 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 
                 sf <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
                                            suppressWarnings(.sftest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-                
+
+                cvm <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                           suppressWarnings(.cvmtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
               } else{
                 chisq <- .chisqtest(dataNTest$dep)
                 ks <- .kstest(dataNTest$dep) 
                 sw <- .swtest(dataNTest$dep) 
                 ad <- .adtest(dataNTest$dep)
                 lillie <- .lillietest(dataNTest$dep)
-                sf <- .sftest(dataNTest$dep)                
+                sf <- .sftest(dataNTest$dep)
+                cvm <- .cvmtest(dataNTest$dep)
               }
                                         
             if(length(groupLevels)>0){
@@ -113,7 +121,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   `stat[swtest]`=sw[k,1],`p[swtest]`=sw[k,2],`stat[adtest]`=ad[k,1],
                   `p[adtest]`=ad[k,2],`stat[lillietest]`=lillie[k,1],
                   `p[lillietest]`=lillie[k,2],`stat[sftest]`=sf[k,1],
-                  `p[sftest]`=sf[k,2]))
+                  `p[sftest]`=sf[k,2],`stat[cvmtest]`=cvm[k,1],
+                  `p[cvmtest]`=cvm[k,2]))
               }
         }
             } else{
@@ -122,7 +131,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               `p[chisqtest]`=chisq[[2]],`stat[kstest]`=ks[[1]],`p[kstest]`=ks[[2]],
               `stat[swtest]`=sw[[1]],`p[swtest]`=sw[[2]],`stat[adtest]`=ad[[1]],
               `p[adtest]`=ad[[2]],`stat[lillietest]`=lillie[[1]],
-              `p[lillietest]`=lillie[[2]],`stat[sftest]`=sf[[1]],`p[sftest]`=sf[[2]]))  
+              `p[lillietest]`=lillie[[2]],`stat[sftest]`=sf[[1]],`p[sftest]`=sf[[2]],
+              `stat[cvmtest]`=cvm[[1]],`p[cvmtest]`=cvm[[2]]))  
             }
           }
           

@@ -14,6 +14,7 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             lillietest = FALSE,
             adtest = FALSE,
             sftest = FALSE,
+            cvmtest = FALSE,
             hist = FALSE,
             dens = FALSE,
             norm = FALSE,
@@ -65,6 +66,10 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "sftest",
                 sftest,
                 default=FALSE)
+            private$..cvmtest <- jmvcore::OptionBool$new(
+                "cvmtest",
+                cvmtest,
+                default=FALSE)
             private$..hist <- jmvcore::OptionBool$new(
                 "hist",
                 hist,
@@ -94,6 +99,7 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..lillietest)
             self$.addOption(private$..adtest)
             self$.addOption(private$..sftest)
+            self$.addOption(private$..cvmtest)
             self$.addOption(private$..hist)
             self$.addOption(private$..dens)
             self$.addOption(private$..norm)
@@ -109,6 +115,7 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         lillietest = function() private$..lillietest$value,
         adtest = function() private$..adtest$value,
         sftest = function() private$..sftest$value,
+        cvmtest = function() private$..cvmtest$value,
         hist = function() private$..hist$value,
         dens = function() private$..dens$value,
         norm = function() private$..norm$value,
@@ -123,6 +130,7 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..lillietest = NA,
         ..adtest = NA,
         ..sftest = NA,
+        ..cvmtest = NA,
         ..hist = NA,
         ..dens = NA,
         ..norm = NA,
@@ -152,7 +160,7 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="normtests",
                 title="Tests",
-                visible="(chisqtest || kstest || swtest || adtest || lillietest || sftest)",
+                visible="(chisqtest || kstest || swtest || adtest || lillietest || sftest || cvmtest)",
                 rows=0,
                 columns=list(
                     list(
@@ -300,7 +308,30 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="p", 
                         `type`="number", 
                         `format`="zto,pvalue", 
-                        `visible`="(sftest)"))))
+                        `visible`="(sftest)"),
+                    list(
+                        `name`="var[cvmtest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(cvmtest)"),
+                    list(
+                        `name`="name[cvmtest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Cramer-von Mises test", 
+                        `visible`="(cvmtest)"),
+                    list(
+                        `name`="stat[cvmtest]", 
+                        `title`="Statistic", 
+                        `type`="number", 
+                        `visible`="(cvmtest)"),
+                    list(
+                        `name`="p[cvmtest]", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue", 
+                        `visible`="(cvmtest)"))))
             self$add(jmvcore::Array$new(
                 options=options,
                 name="plots",
@@ -361,6 +392,8 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   Anderson-Darling tests
 #' @param sftest \code{TRUE} or \code{FALSE} (default), perform
 #'   Shapiro-Francia tests
+#' @param cvmtest \code{TRUE} or \code{FALSE} (default), perform Cramer-von
+#'   Mises tests
 #' @param hist \code{TRUE} or \code{FALSE} (default), provides histograms
 #'   (continuous variables only)
 #' @param dens \code{TRUE} or \code{FALSE} (default), provides density plots
@@ -395,6 +428,7 @@ testnorm <- function(
     lillietest = FALSE,
     adtest = FALSE,
     sftest = FALSE,
+    cvmtest = FALSE,
     hist = FALSE,
     dens = FALSE,
     norm = FALSE,
@@ -423,6 +457,7 @@ testnorm <- function(
         lillietest = lillietest,
         adtest = adtest,
         sftest = sftest,
+        cvmtest = cvmtest,
         hist = hist,
         dens = dens,
         norm = norm,
