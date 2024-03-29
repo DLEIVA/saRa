@@ -160,6 +160,29 @@ items:
           type: number
           format: zto,pvalue
           visible: (sftest)          
+
+        - name: var[cvmtest]
+          title: ""
+          type: text
+          combineBelow: true
+          visible: (cvmtest)          
+          
+        - name: name[cvmtest]
+          title: ''
+          type: text
+          content: Cramer-von Mises test 
+          visible: (cvmtest)
+
+        - name: stat[cvmtest]
+          title: Statistic
+          type: number
+          visible: (cvmtest)
+
+        - name: p[cvmtest]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (cvmtest)          
           
     - name: plots
       title: Plots

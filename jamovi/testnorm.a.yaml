@@ -88,7 +88,17 @@ options:
           ui: >
             perform Shapiro-Francia tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Shapiro-Francia tests            
+            `TRUE` or `FALSE` (default), perform Shapiro-Francia tests
+            
+    - name: cvmtest
+      title: Cramer-von Mises test
+      type: Bool
+      default: false
+      description:
+          ui: >
+            perform Cramer-von Mises tests.
+          R: >
+            `TRUE` or `FALSE` (default), perform Cramer-von Mises tests            
 
     - name: hist
       title: Histogram

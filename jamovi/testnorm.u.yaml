@@ -51,7 +51,9 @@ children:
           - type: CheckBox
             name: lillietest
           - type: CheckBox
-            name: sftest            
+            name: sftest
+          - type: CheckBox
+            name: cvmtest            
 
   - type: CollapseBox
     label: Plots
