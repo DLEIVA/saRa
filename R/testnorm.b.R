@@ -5,6 +5,9 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     "testnormClass",
     inherit = testnormBase,
     private = list(
+        .init = function(){
+          private$.initPlots()           
+        },
         .run = function() {
 
           groupVarName <- self$options$groupBy
@@ -101,9 +104,67 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               `p[chisqtest]`=chisq[[2]],`stat[kstest]`=ks[[1]],`p[kstest]`=ks[[2]],
               `stat[swtest]`=sw[[1]],`p[swtest]`=sw[[2]],`stat[adtest]`=ad[[1]],
               `p[adtest]`=ad[[2]]))  
-              }
-              }
-          },
+            }
+          }
+          
+          private$.preparePlots()  
+        
+        },
+        #### Init plots ----    
+        .initPlots = function() {
+          plots <- self$results$plots
+          
+          data <- self$data
+          vars <- self$options$vars
+          
+          for (var in vars) {
+            
+            group <- plots$get(var)
+            column <- data[[var]]
+            
+            if (self$options$hist || self$options$dens  || self$options$norm) {
+              
+              image <- jmvcore::Image$new(
+                options = self$options,
+                name = "hist",
+                renderFun = ".histogram",
+                width = 550,
+                height = 550,
+                clearWith = list("hist", "dens", "norm")
+              )
+              
+              group$add(image)
+            }
+            
+            if (self$options$qq) {
+              
+              image <- jmvcore::Image$new(
+                options = self$options,
+                name = "qq",
+                renderFun = ".qq",
+                requiresData = TRUE,
+                width = 550,
+                height = 550,
+                clearWith = list("qq")
+              )
+              group$add(image)
+            }
+            
+            if (self$options$ecdf) {
+              
+              image <- jmvcore::Image$new(
+                options = self$options,
+                name = "ecdf",
+                renderFun = ".ecdf",
+                requiresData = TRUE,
+                width = 550,
+                height = 550,
+                clearWith = list("ecdf")
+              )
+              group$add(image)
+            }            
+          }
+        },
         #### Plot functions ----
         .preparePlots = function() {
           data <- self$data
@@ -122,10 +183,14 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                       Plots that expect numeric data will not be created for this variable."))
             
             hist  <- group$get('hist')
-            qq    <- group$get('qq')
+            qq <- group$get('qq')
+            ecdf <- group$get('ecdf')
             
             if (self$options$qq)
               qq$setState(var)
+            
+            if (self$options$ecdf)
+              ecdf$setState(var)            
             
             if (
               self$options$hist ||
@@ -146,9 +211,10 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   hist$setState(list(data=plotData, names=names, labels=labels))
               }
             }
-          }
+          }          
         },
         .histogram = function(image, ggtheme, theme, ...) {
+          
           if (is.null(image$state))
             return(FALSE)
           
@@ -234,7 +300,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           y <- data[[var]]
           y <- as.vector(scale(y))
-          data <- data.frame(y=y,s1=self$data[[groupBy]])
+          data <- if(!is.null(groupBy)){
+            data.frame(y=y,s1=self$data[[groupBy]]) 
+          } else{
+            data.frame(y=y)
+          }
           
           data <- na.omit(data)
           
@@ -244,8 +314,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             stat_qq_point() +
             xlab("Theoretical Quantiles") +
             ylab("Standardized Residuals") +
-            ggtheme +
-            facet_grid(cols=vars(s1))
+            {if(!is.null(groupBy))facet_grid(cols=vars(s1))} +
+            ggtheme
           
           return(plot)
         },
@@ -258,20 +328,31 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           groupBy <- self$options$groupBy
           
           y <- data[[var]]
-          y <- as.vector(scale(y))
-          data <- data.frame(y=y,s1=self$data[[groupBy]])
+          y <- as.vector(sort(scale(y)))
+          Fn <- stats::ecdf(y)          
           
-          data <- na.omit(data)
           
-          plot <- ggplot(data=data, mapping = aes(sample = y)) +
-            stat_qq_band() +
-            stat_qq_line() +
-            stat_qq_point() +
-            xlab("Theoretical Quantiles") +
-            ylab("Standardized Residuals") +
-            ggtheme +
-            facet_grid(cols=vars(s1))
+          if(!is.null(groupBy)){
+            s1 <- self$data[[groupBy]]
+            df <- data.frame(y,s1)
+            d.f <- arrange(df,s1,y)
+            d.f <- plyr::ddply(d.f, .(s1), transform,
+                               z=sort(scale(y)),p=pnorm(sort(scale(y))))
+            
+          } else{
+            d.f <- data.frame(z=sort(scale(y)),p=pnorm(sort(scale(y))))
+          }
           
+          d.f <- na.omit(d.f)
+          
+          plot <- ggplot(d.f, aes(x=z,y=p)) + geom_line(col="#7b9ee6") +
+            geom_point(aes(y=Fn(z))) + geom_line(aes(y=Fn(z))) +
+            xlab("Empirical Quantiles") +
+            ylab("Cumulative distribution") +            
+            {if(!is.null(groupBy))facet_wrap(d.f$s1)} +   
+            guides(fill=FALSE) +
+            ggtheme
+
           return(plot)
         }
         )

@@ -306,7 +306,7 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$normtests} \tab \tab \tab \tab \tab A table for the normality tests \cr
-#'   \code{results$plots} \tab \tab \tab \tab \tab An array of normality plots \cr
+#'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
