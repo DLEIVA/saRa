@@ -199,8 +199,12 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 columns <- na.omit(c(var, groupBy))
                 plotData <- naOmit(data[columns])
                 plotData[[var]] <- jmvcore::toNumeric(plotData[[var]])
-                names <- list("x"="x", "s1"="s1")
-                labels <- list("x"=var, "s1"=groupBy)
+                names <- if(!is.null(groupBy)){
+                  list("x"="x", "s1"="s1") 
+                } else{ list("x"="x")}
+                labels <- if(!is.null(groupBy)){
+                  list("x"=var, "s1"=groupBy) 
+                } else{list("x"=var)}
                 
                 colnames(plotData) <- as.character(unlist(names))
                 
@@ -229,7 +233,9 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             alpha <- 1
           
           nBins <- 12
-          nSplits <- length(groupBy)
+          nSplits <- if(!is.null(groupBy)){
+            length(groupBy) 
+          } else{ 1 }
           
           fill <- theme$fill[2]
           color <- theme$color[1]
@@ -254,7 +260,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             grids <- seq(min, max, 
                          length.out = 150)
             datos <- data.frame(val=data[[names$x]])
-            datos$s1 <- data[[names$s1]]
+            if(!is.null(groupBy)) datos$s1 <- data[[names$s1]]
             
             .getDensity <- function(x){
               data.frame(
@@ -263,7 +269,9 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               )
             }
             
-            densDAT <- datos %>% group_by(s1) %>% do(.getDensity(.)) %>% data.frame()
+            densDAT <- if(!is.null(groupBy)){
+              datos %>% group_by(s1) %>% do(.getDensity(.)) %>% data.frame() 
+            } else{ datos %>% do(.getDensity(.)) %>% data.frame() }
           }
           
           plot <- ggplot(data=data, aes_string(x=names$x)) +
@@ -280,11 +288,12 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             {if(self$options$dens) geom_density(color=color, fill=fill, alpha=alpha)}+
             {if(self$options$norm) geom_line(data = densDAT, aes_string(x='val',y = 'density'),
                                              col='red',lty=2,lwd=1.15)} +
-            facet_grid(rows=vars(s1))
+            {if(!is.null(groupBy)) facet_grid(rows=vars(s1))} +
+            ggtheme
           
           themeSpec <- theme(legend.position = 'none')
           
-          plot <- plot + ggtheme + themeSpec
+          plot <- plot + themeSpec
           return(plot)      
         },
         .qq = function(image, ggtheme, theme, ...) {
