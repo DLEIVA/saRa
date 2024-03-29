@@ -11,7 +11,7 @@ items:
     - name: normtests
       title: Tests
       description: A table for the normality tests
-      visible: (chisqtest || kstest || swtest || adtest)
+      visible: (chisqtest || kstest || swtest || adtest || lillietest)
       type: Table
       rows: 0
       columns:

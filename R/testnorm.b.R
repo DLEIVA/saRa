@@ -38,6 +38,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           .adtest <- function(x){
             test <- ad.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
+          }
+          
+          .lillietest <- function(x){
+            test <- lillie.test(x)
+            list(statistic=test$statistic,p.value=test$p.value)
           }          
           
           for (name in depVarNames)
@@ -78,11 +83,15 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 
                 ad <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
                                            suppressWarnings(.adtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
+                
+                lillie <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
+                                           suppressWarnings(.lillietest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
               } else{
                 chisq <- .chisqtest(dataNTest$dep)
                 ks <- .kstest(dataNTest$dep) 
                 sw <- .swtest(dataNTest$dep) 
-                ad <- .adtest(dataNTest$dep) 
+                ad <- .adtest(dataNTest$dep)
+                lillie <- .lillietest(dataNTest$dep)
               }
                                         
             if(length(groupLevels)>0){
@@ -92,7 +101,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   `group`=groupLevels[k],`stat`='',`p`='',`stat[chisqtest]`=chisq[k,1],
                   `p[chisqtest]`=chisq[k,2],`stat[kstest]`=ks[k,1],`p[kstest]`=ks[k,2],
                   `stat[swtest]`=sw[k,1],`p[swtest]`=sw[k,2],`stat[adtest]`=ad[k,1],
-                  `p[adtest]`=ad[k,2]))
+                  `p[adtest]`=ad[k,2],`stat[lillietest]`=lillie[k,1],
+                  `p[lillietest]`=lillie[k,2]))
               }
         }
             } else{
@@ -100,7 +110,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               `stat`='',`p`='',`stat[chisqtest]`=chisq[[1]],
               `p[chisqtest]`=chisq[[2]],`stat[kstest]`=ks[[1]],`p[kstest]`=ks[[2]],
               `stat[swtest]`=sw[[1]],`p[swtest]`=sw[[2]],`stat[adtest]`=ad[[1]],
-              `p[adtest]`=ad[[2]]))  
+              `p[adtest]`=ad[[2]],`stat[lillietest]`=lillie[[1]],
+              `p[lillietest]`=lillie[[2]]))  
             }
           }
           
