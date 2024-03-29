@@ -114,18 +114,15 @@ items:
           type: number
           format: zto,pvalue
           visible: (adtest)          
-      
+
     - name: plots
       title: Plots
       type: Array
-      description: An array of normality plots
+      description: An array of descriptive plots
       items: (vars)
         
       template:
           title: ($key)
           type: Group
-          items: []      
-      
-      
-
+          items: []  
 ...
