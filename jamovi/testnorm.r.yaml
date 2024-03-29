@@ -11,7 +11,7 @@ items:
     - name: normtests
       title: Tests
       description: A table for the normality tests
-      visible: (chisqtest || kstest || swtest || adtest || lillietest)
+      visible: (chisqtest || kstest || swtest || adtest || lillietest || sftest)
       type: Table
       rows: 0
       columns:
@@ -137,6 +137,29 @@ items:
           type: number
           format: zto,pvalue
           visible: (lillietest)
+          
+        - name: var[sftest]
+          title: ""
+          type: text
+          combineBelow: true
+          visible: (sftest)          
+          
+        - name: name[sftest]
+          title: ''
+          type: text
+          content: Shapiro-Francia test 
+          visible: (sftest)
+
+        - name: stat[sftest]
+          title: Statistic
+          type: number
+          visible: (sftest)
+
+        - name: p[sftest]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (sftest)          
           
     - name: plots
       title: Plots

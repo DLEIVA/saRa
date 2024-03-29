@@ -78,7 +78,17 @@ options:
           ui: >
             perform Anderson-Darling tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Anderson-Darling tests            
+            `TRUE` or `FALSE` (default), perform Anderson-Darling tests 
+            
+    - name: sftest
+      title: Shapiro-Francia test
+      type: Bool
+      default: false
+      description:
+          ui: >
+            perform Shapiro-Francia tests.
+          R: >
+            `TRUE` or `FALSE` (default), perform Shapiro-Francia tests            
 
     - name: hist
       title: Histogram
