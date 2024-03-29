@@ -60,6 +60,16 @@ options:
           R: >
             `TRUE` (default) or `FALSE`, perform Shapiro-Wilk tests  
             
+    - name: lillietest
+      title: Lilliefors test
+      type: Bool
+      default: false
+      description:
+          ui: >
+            perform Lilliefors tests.
+          R: >
+            `TRUE` (default) or `FALSE`, perform Lilliefors tests
+            
     - name: adtest
       title: Anderson-Darling test
       type: Bool

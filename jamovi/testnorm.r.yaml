@@ -114,7 +114,30 @@ items:
           type: number
           format: zto,pvalue
           visible: (adtest)          
+          
+        - name: var[lillietest]
+          title: ""
+          type: text
+          combineBelow: true
+          visible: (lillietest)          
+          
+        - name: name[lillietest]
+          title: ''
+          type: text
+          content: Lilliefors test 
+          visible: (lillietest)
 
+        - name: stat[lillietest]
+          title: Statistic
+          type: number
+          visible: (lillietest)
+
+        - name: p[lillietest]
+          title: p
+          type: number
+          format: zto,pvalue
+          visible: (lilietest)
+          
     - name: plots
       title: Plots
       type: Array

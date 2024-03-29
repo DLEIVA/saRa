@@ -43,6 +43,19 @@ children:
                 name: swtest
               - type: CheckBox
                 name: adtest
+      - type: LayoutBox
+        margin: large
+        stretchFactor: 2
+        cell:
+          column: 1
+          row: 0
+        fitToGrid: true
+        children:
+          - type: Label
+            label: ' '
+            children:
+              - type: CheckBox
+                name: lillietest
 
   - type: CollapseBox
     label: Plots
