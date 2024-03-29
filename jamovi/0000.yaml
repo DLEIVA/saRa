@@ -90,6 +90,7 @@ analyses:
     name: testnorm
     ns: saRa
     menuGroup: saRa
+    menuSubgroup: Miscellanea    
     menuTitle: Normality tests
 datasets:
   - name: phobia
