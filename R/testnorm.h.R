@@ -144,7 +144,7 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="normtests",
                 title="Tests",
-                visible="(chisqtest || kstest || swtest || adtest)",
+                visible="(chisqtest || kstest || swtest || adtest || lillietest)",
                 rows=0,
                 columns=list(
                     list(
