@@ -36,4 +36,5 @@ Imports: jmvcore (>= 2.2), R6,
     ggridges,
     latex2exp,
     DescTools,
-    nortest
+    nortest,
+    plyr
