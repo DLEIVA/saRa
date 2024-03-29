@@ -78,6 +78,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         private$.populateIndicesTableNum(results)
         resultsES <- private$.computeES()
         private$.populateEffSTable(resultsES)
+        private$.initPlots()
         private$.preparePlots()
       }
     },
