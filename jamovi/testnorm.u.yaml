@@ -26,36 +26,30 @@ children:
     children:
       - type: LayoutBox
         margin: large
-        stretchFactor: 2
+        stretchFactor: 1
         cell:
           column: 0
           row: 0
         fitToGrid: true
         children:
-          - type: Label
-            label: Normality Tests
-            children:
-              - type: CheckBox
-                name: chisqtest
-              - type: CheckBox
-                name: kstest
-              - type: CheckBox
-                name: swtest
-              - type: CheckBox
-                name: adtest
+          - type: CheckBox
+            name: chisqtest
+          - type: CheckBox
+            name: kstest
+          - type: CheckBox
+            name: swtest
+          - type: CheckBox
+            name: adtest
       - type: LayoutBox
         margin: large
-        stretchFactor: 2
+        stretchFactor: 1
         cell:
           column: 1
           row: 0
         fitToGrid: true
         children:
-          - type: Label
-            label: ' '
-            children:
-              - type: CheckBox
-                name: lillietest
+          - type: CheckBox
+            name: lillietest
 
   - type: CollapseBox
     label: Plots

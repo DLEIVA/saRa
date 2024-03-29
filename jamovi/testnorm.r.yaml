@@ -136,7 +136,7 @@ items:
           title: p
           type: number
           format: zto,pvalue
-          visible: (lilietest)
+          visible: (lillietest)
           
     - name: plots
       title: Plots

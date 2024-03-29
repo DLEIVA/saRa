@@ -11,6 +11,7 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             chisqtest = FALSE,
             kstest = FALSE,
             swtest = FALSE,
+            lillietest = FALSE,
             adtest = FALSE,
             hist = FALSE,
             dens = FALSE,
@@ -51,6 +52,10 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "swtest",
                 swtest,
                 default=FALSE)
+            private$..lillietest <- jmvcore::OptionBool$new(
+                "lillietest",
+                lillietest,
+                default=FALSE)
             private$..adtest <- jmvcore::OptionBool$new(
                 "adtest",
                 adtest,
@@ -81,6 +86,7 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..chisqtest)
             self$.addOption(private$..kstest)
             self$.addOption(private$..swtest)
+            self$.addOption(private$..lillietest)
             self$.addOption(private$..adtest)
             self$.addOption(private$..hist)
             self$.addOption(private$..dens)
@@ -94,6 +100,7 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         chisqtest = function() private$..chisqtest$value,
         kstest = function() private$..kstest$value,
         swtest = function() private$..swtest$value,
+        lillietest = function() private$..lillietest$value,
         adtest = function() private$..adtest$value,
         hist = function() private$..hist$value,
         dens = function() private$..dens$value,
@@ -106,6 +113,7 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..chisqtest = NA,
         ..kstest = NA,
         ..swtest = NA,
+        ..lillietest = NA,
         ..adtest = NA,
         ..hist = NA,
         ..dens = NA,
@@ -238,7 +246,30 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="p", 
                         `type`="number", 
                         `format`="zto,pvalue", 
-                        `visible`="(adtest)"))))
+                        `visible`="(adtest)"),
+                    list(
+                        `name`="var[lillietest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `combineBelow`=TRUE, 
+                        `visible`="(lillietest)"),
+                    list(
+                        `name`="name[lillietest]", 
+                        `title`="", 
+                        `type`="text", 
+                        `content`="Lilliefors test", 
+                        `visible`="(lillietest)"),
+                    list(
+                        `name`="stat[lillietest]", 
+                        `title`="Statistic", 
+                        `type`="number", 
+                        `visible`="(lillietest)"),
+                    list(
+                        `name`="p[lillietest]", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue", 
+                        `visible`="(lillietest)"))))
             self$add(jmvcore::Array$new(
                 options=options,
                 name="plots",
@@ -287,13 +318,15 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{data}
 #' @param groupBy a vector of strings naming the variables used to segment
 #'   \code{vars}
-#' @param chisqtest \code{TRUE} (default) or \code{FALSE}, perform Pearson's
+#' @param chisqtest \code{TRUE} or \code{FALSE} (default), perform Pearson's
 #'   X² tests
-#' @param kstest \code{TRUE} (default) or \code{FALSE}, perform
+#' @param kstest \code{TRUE} or \code{FALSE} (default), perform
 #'   Kolmogorov-Smirnov tests
-#' @param swtest \code{TRUE} (default) or \code{FALSE}, perform Shapiro-Wilk
+#' @param swtest \code{TRUE} or \code{FALSE} (default), perform Shapiro-Wilk
 #'   tests
-#' @param adtest \code{TRUE} (default) or \code{FALSE}, perform
+#' @param lillietest \code{TRUE} or \code{FALSE} (default), perform Lilliefors
+#'   tests
+#' @param adtest \code{TRUE} or \code{FALSE} (default), perform
 #'   Anderson-Darling tests
 #' @param hist \code{TRUE} or \code{FALSE} (default), provides histograms
 #'   (continuous variables only)
@@ -326,6 +359,7 @@ testnorm <- function(
     chisqtest = FALSE,
     kstest = FALSE,
     swtest = FALSE,
+    lillietest = FALSE,
     adtest = FALSE,
     hist = FALSE,
     dens = FALSE,
@@ -352,6 +386,7 @@ testnorm <- function(
         chisqtest = chisqtest,
         kstest = kstest,
         swtest = swtest,
+        lillietest = lillietest,
         adtest = adtest,
         hist = hist,
         dens = dens,

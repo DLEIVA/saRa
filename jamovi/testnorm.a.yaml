@@ -38,7 +38,7 @@ options:
           ui: >
             perform Pearson's χ² tests.
           R: >
-            `TRUE` (default) or `FALSE`, perform Pearson's χ² tests          
+            `TRUE` or `FALSE` (default), perform Pearson's χ² tests          
           
     - name: kstest
       title: Kolmogorov-Smirnov test
@@ -48,7 +48,7 @@ options:
           ui: >
             perform Kolmogorv-Smirnov tests.
           R: >
-            `TRUE` (default) or `FALSE`, perform Kolmogorov-Smirnov tests
+            `TRUE` or `FALSE` (default), perform Kolmogorov-Smirnov tests
             
     - name: swtest
       title: Shapiro-Wilk test
@@ -58,7 +58,7 @@ options:
           ui: >
             perform Shapiro-Wilk tests.
           R: >
-            `TRUE` (default) or `FALSE`, perform Shapiro-Wilk tests  
+            `TRUE` or `FALSE` (default), perform Shapiro-Wilk tests  
             
     - name: lillietest
       title: Lilliefors test
@@ -68,7 +68,7 @@ options:
           ui: >
             perform Lilliefors tests.
           R: >
-            `TRUE` (default) or `FALSE`, perform Lilliefors tests
+            `TRUE` or `FALSE` (default), perform Lilliefors tests
             
     - name: adtest
       title: Anderson-Darling test
@@ -78,7 +78,7 @@ options:
           ui: >
             perform Anderson-Darling tests.
           R: >
-            `TRUE` (default) or `FALSE`, perform Anderson-Darling tests            
+            `TRUE` or `FALSE` (default), perform Anderson-Darling tests            
 
     - name: hist
       title: Histogram
