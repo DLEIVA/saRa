@@ -4,7 +4,7 @@ name: saRa
 version: 0.1.0
 jms: '1.0'
 authors:
-  - 'David Leiva, Sara Martí'
+  - David Leiva, Sara Martí
 maintainer: David Leiva <dleivaur@ub.edu>
 date: '2024-02-04'
 type: R
