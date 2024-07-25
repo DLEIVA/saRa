@@ -272,11 +272,11 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         cisHL$getColumn('ciuHL')$setSuperTitle(ciTitle)
         
         if (hypothesis == 'oneGreater')
-          table$setNote("hyp", jmvcore::format("H\u2090 \u03BC\u2009<sub>{}</sub> > 0", .("Measure 1 - Measure 2")))
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> > 0", .("Measure 1 - Measure 2")))
         else if (hypothesis == 'twoGreater')
-          table$setNote("hyp", jmvcore::format("H\u2090 \u03BC\u2009<sub>{}</sub> < 0", .("Measure 1 - Measure 2")))
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> < 0", .("Measure 1 - Measure 2")))
         else
-          table$setNote("hyp", jmvcore::format("H\u2090 \u03BC\u2009<sub>{}</sub> \u2260 0", .("Measure 1 - Measure 2")))
+          table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> \u2260 0", .("Measure 1 - Measure 2")))
         
         if(self$options$ciMediansps & self$options$ciMethodps=='boot')
           cisMed$setNote("numR", jmvcore::format(paste0("Number of replicates in Bootstrap CI(s): ",reps)))
