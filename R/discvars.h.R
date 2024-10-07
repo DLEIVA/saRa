@@ -253,7 +253,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="InfoTab",
-                title="Distribution information",
+                title="Distribution Information",
                 rows=1,
                 columns=list(
                     list(
@@ -268,7 +268,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="probstab",
-                title="Probabilities table",
+                title="Probabilities Table",
                 visible="(pmf | cdf | surv)",
                 rows=1,
                 columns=list(
@@ -295,7 +295,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="quantstab",
-                title="Quantiles table",
+                title="Quantiles Table",
                 visible="(icdf)",
                 rows=1,
                 columns=list(
@@ -317,7 +317,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="pmfplot",
-                title="Probability mass function plot",
+                title="Probability Mass Function Plot",
                 width=450,
                 height=400,
                 renderFun=".ppmf",
@@ -325,7 +325,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="cdfplot",
-                title="Cumulative distribution function plot",
+                title="Cumulative Distribution Function Plot",
                 width=450,
                 height=400,
                 renderFun=".pcdf",
@@ -333,7 +333,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="survplot",
-                title="Survival function plot",
+                title="Survival Function Plot",
                 width=450,
                 height=400,
                 renderFun=".psurv",
@@ -341,7 +341,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="intervplot",
-                title="Probability interval plot",
+                title="Probability Interval Plot",
                 width=450,
                 height=400,
                 renderFun=".pinterv",
@@ -349,7 +349,7 @@ discvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="icdfplot",
-                title="Quantile (ICDF) plot",
+                title="Quantile (ICDF) Plot",
                 width=450,
                 height=400,
                 renderFun=".picdf",
