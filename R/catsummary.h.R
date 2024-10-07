@@ -175,7 +175,7 @@ catSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 items="(vars)",
                 template=jmvcore::Table$new(
                     options=options,
-                    title="Frequencies and odds of $key",
+                    title="Frequencies and Odds of $key",
                     visible="(levels($key))",
                     columns=list())))
             self$add(jmvcore::Table$new(
@@ -248,7 +248,7 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param lolli \code{TRUE} or \code{FALSE} (default), provide Lollipop charts
 #' @param f2p.lolli \code{'absolute'} (default) or \code{'relative'}
 #'   frequencies, to be used when plotting lollipop plots.
-#' @param dough \code{TRUE} or \code{FALSE} (default), provide Doughnut charts
+#' @param dough \code{TRUE} or \code{FALSE} (default), provide doughnut charts
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
