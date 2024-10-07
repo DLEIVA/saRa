@@ -235,7 +235,7 @@ bivnumResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="scat",
-                title="Plots",
+                title="Scatterplot",
                 width=450,
                 height=400,
                 renderFun=".scat",
