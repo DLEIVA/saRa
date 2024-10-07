@@ -224,7 +224,7 @@ items:
           visible: (theilsym)  
           
     - name: barplot
-      title: Plots
+      title: Bar plot
       type: Image
       width: 450
       height: 400
@@ -233,7 +233,7 @@ items:
       requiresData: true    
       
     - name: mosaicplot
-      title: Plots
+      title: Mosaic Plot
       type: Image
       width: 450
       height: 400

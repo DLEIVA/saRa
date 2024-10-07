@@ -75,7 +75,7 @@ children:
             fitToGrid: true
             children:
               - type: Label
-                label: Association indices
+                label: Association Indices
                 iconPosition: right
                 children:
                   - type: CheckBox

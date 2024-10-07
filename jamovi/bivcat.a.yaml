@@ -222,7 +222,7 @@ options:
             `TRUE` or `FALSE` (default), provide Theil's tau prediction error index (symmetric)       
 
     - name: barplot
-      title: Bar Plot
+      title: Bar plot
       type: Bool
       default: false
       description:
@@ -287,7 +287,7 @@ options:
             stack or side by side (default), barplot type
             
     - name: mosaicplot
-      title: Mosaic Plot
+      title: Mosaic plot
       type: Bool
       default: false
       description:
