@@ -74,7 +74,7 @@ analyses:
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Mixed Data
-  - title: Mann-Whitney test
+  - title: Mann-Whitney Test
     name: umw
     ns: saRa
     menuGroup: saRa
@@ -85,13 +85,13 @@ analyses:
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
-    menuTitle: Wilcoxon T Test
+    menuTitle: Wilcoxon T test
   - title: Normality tests
     name: testnorm
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
-    menuTitle: Normality Tests
+    menuTitle: Normality tests
 datasets:
   - name: phobia
     path: phobia.RData
