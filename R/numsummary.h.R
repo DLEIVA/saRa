@@ -553,8 +553,8 @@ numSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   deviation
 #' @param mad \code{TRUE} or \code{FALSE} (default), provides the mad
 #' @param rcv \code{TRUE} or \code{FALSE} (default), provides the rcv
-#' @param irange \code{TRUE} (default) or \code{FALSE}, provides the Inner
-#'   Range
+#' @param irange \code{TRUE} (default) or \code{FALSE}, provides the inner
+#'   range
 #' @param NPerc a number (detects by default the number) specifying the
 #'   percentage of data used
 #' @param min \code{TRUE} or \code{FALSE} (default), provides the minimum
