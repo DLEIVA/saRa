@@ -132,7 +132,7 @@ items:
       visible: (heatmap)
       requiresData: true  
       
-      - name: alluvial
+    - name: alluvial
       title: Alluvial Plot
       type: Image
       width: 450
