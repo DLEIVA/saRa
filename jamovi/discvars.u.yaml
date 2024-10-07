@@ -1,4 +1,4 @@
-title: Discrete distributions
+title: Discrete Distributions
 name: discvars
 jus: '3.0'
 stage: 0
@@ -102,7 +102,7 @@ children:
                         format: number
                         enable: (hypergeom)                        
   - type: CollapseBox
-    label: Values and functions
+    label: Values and Functions
     stretchFactor: 2
     collapsed: true
     children:
