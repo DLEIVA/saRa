@@ -123,6 +123,24 @@ items:
         - rows
         - cols 
         
+    - name: heatmap
+      title: Heatmap
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .heatmap
+      visible: (heatmap)
+      requiresData: true  
+      
+      - name: alluvial
+      title: Alluvial Plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .alluvial
+      visible: (alluvial)
+      requiresData: true    
+        
     - name: barplot
       title: Bar Plot
       type: Image
@@ -131,24 +149,6 @@ items:
       renderFun: .barPlot
       visible: (barplot)
       requiresData: true    
-      
-    - name: heatmap
-      title: Heatmap
-      type: Image
-      width: 450
-      height: 400
-      renderFun: .heatmap
-      visible: (heatmap)
-      requiresData: true
-      
-    - name: alluvial
-      title: Alluvial Plot
-      type: Image
-      width: 450
-      height: 400
-      renderFun: .alluvial
-      visible: (alluvial)
-      requiresData: true      
 
       clearWith:
         - rows
