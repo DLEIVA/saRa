@@ -37,14 +37,14 @@ children:
             name: Blau
           - type: CheckBox
             name: IQV
-            label: Index Qualitative Variation (IQV)
+            label: Index qualitative variation (IQV)
             style: inline
             verticalAlignment: center
             children:
               - type: TextBox
                 name: NCat
                 label: ''
-                suffix: '# Categories (0: Automatic detection)'
+                suffix: '# categories (0: automatic detection)'
                 format: number
                 enable: (IQV)
       - type: LayoutBox
@@ -81,7 +81,7 @@ children:
               - name: f2p.lolli
                 margin: small
                 type: ComboBox
-                label: Frequencies (Y-Axis)
+                label: Frequencies (Y-axis)
       - type: LayoutBox
         margin: large
         stretchFactor: 1
@@ -98,4 +98,4 @@ children:
               - name: f2p.bar
                 margin: small
                 type: ComboBox
-                label: Frequencies (Y-Axis)
+                label: Frequencies (Y-axis)

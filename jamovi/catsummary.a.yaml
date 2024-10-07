@@ -36,7 +36,7 @@ options:
           R: >
             `TRUE` or `FALSE` (default), provide the mode 
     - name: VR
-      title: Variation Ratio
+      title: Variation ratio
       type: Bool
       default: false
       description:
@@ -68,7 +68,7 @@ options:
             `TRUE` (default) or `FALSE`, provide the Index Qualitative Variation
  
     - name: NCat
-      title: Number of Categories
+      title: Number of categories
       type: Integer
       default: 0
       description:
@@ -84,7 +84,7 @@ options:
             `TRUE` or `FALSE` (default), provide bar plots
     
     - name: f2p.bar
-      title: Frequencies (Y-Axis)
+      title: Frequencies (Y-axis)
       type: List
       options:
         - name: absolutefreq
@@ -122,7 +122,7 @@ options:
             `TRUE` or `FALSE` (default), provide Lollipop charts
 
     - name: f2p.lolli
-      title: Frequencies (Y-Axis)
+      title: Frequencies (Y-axis)
       type: List
       options:
         - name: absolutefreq
@@ -141,6 +141,6 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Doughnut charts
+            `TRUE` or `FALSE` (default), provide doughnut charts
     
 ...

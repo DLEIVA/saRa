@@ -16,7 +16,7 @@ items:
 
       items: (vars)
       template:
-          title: Frequencies and odds of $key
+          title: Frequencies and Odds of $key
           type: Table
           visible: (levels($key))
           columns: []
