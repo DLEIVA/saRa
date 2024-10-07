@@ -1,4 +1,4 @@
-title: Mann-Whitney test
+title: Mann-Whitney Test
 name: umw
 jus: '3.0'
 stage: 0
@@ -73,7 +73,7 @@ children:
                 label: "Group 1 < Group 2"
 
           - type: Label
-            label: Missing values
+            label: Missing Values
             children:
               - type: RadioButton
                 name: miss_perAnalysis

@@ -1,6 +1,6 @@
 ---
 name:  umw
-title: Mann-Whitney test
+title: Mann-Whitney Test
 menuGroup: saRa
 version: '1.0.0'
 jas: '1.2'
@@ -69,7 +69,7 @@ options:
             `TRUE` (default) or `FALSE`, perform Z tests 
             
     - name: pSup
-      title: Probability of Superiority
+      title: Probability of superiority
       type: Bool
       default: false
       description:
@@ -89,7 +89,7 @@ options:
             `TRUE` or `FALSE` (default), compute rank biserial correlation.
             
     - name: fstat
-      title: f Statistic
+      title: f statistic
       type: Bool
       default: false
       description:
@@ -120,7 +120,7 @@ options:
             group 1 respectively
 
     - name: ciMedians
-      title: Groups Medians CIs
+      title: Groups medians CIs
       type: Bool
       default: false
       description:
@@ -130,7 +130,7 @@ options:
             `TRUE` or `FALSE` (default), provide confidence intervals for the medians
             
     - name: ciHL
-      title: Hodges-Lehmann (Difference in location)
+      title: Hodges-Lehmann (difference in location)
       type: Bool
       default: false
       description:
