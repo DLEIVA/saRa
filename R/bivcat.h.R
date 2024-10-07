@@ -531,7 +531,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="barplot",
-                title="Plots",
+                title="Bar plot",
                 width=450,
                 height=400,
                 renderFun=".barPlot",
@@ -540,7 +540,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="mosaicplot",
-                title="Plots",
+                title="Mosaic Plot",
                 width=450,
                 height=400,
                 renderFun=".mosaicPlot",
