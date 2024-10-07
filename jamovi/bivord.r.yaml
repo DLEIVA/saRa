@@ -17,7 +17,7 @@ items:
         - rows
         - cols
     - name: desc
-      title: Paired comparisons description
+      title: Paired Comparisons Description
       type: Table
       description: a table with a summary for all possible comparisons
       columns:
@@ -124,7 +124,7 @@ items:
         - cols 
         
     - name: barplot
-      title: Plots
+      title: Bar Plot
       type: Image
       width: 450
       height: 400
@@ -133,7 +133,7 @@ items:
       requiresData: true    
       
     - name: heatmap
-      title: Plots
+      title: Heatmap
       type: Image
       width: 450
       height: 400
@@ -142,7 +142,7 @@ items:
       requiresData: true
       
     - name: alluvial
-      title: Plots
+      title: Alluvial Plot
       type: Image
       width: 450
       height: 400

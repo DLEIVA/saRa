@@ -128,7 +128,7 @@ options:
             
 
     - name: barplot
-      title: Bar Plot
+      title: Bar plot
       type: Bool
       default: false
       description:
@@ -201,7 +201,7 @@ options:
             `TRUE` or `FALSE` (default), show heatmaps
             
     - name: alluvial
-      title: Alluvial Plot
+      title: Alluvial plot
       type: Bool
       default: false
       description:
