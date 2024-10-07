@@ -61,7 +61,7 @@ options:
             `TRUE` or `FALSE` (default), provide the trimean
             
     - name: avquartile
-      title: Quartiles' Average
+      title: Quartiles' average
       type: Bool
       default: false
       description:
@@ -69,7 +69,7 @@ options:
             `TRUE` or `FALSE` (default), provide the quartiles average
             
     - name: midrange
-      title: Mid-Range
+      title: Mid-range
       type: Bool
       default: false
       description:
@@ -85,7 +85,7 @@ options:
             `TRUE` or `FALSE` (default), provide the range
     
     - name: iqr
-      title: InterQuartile Range (IQR)
+      title: Interquartile range (IQR)
       type: Bool
       default: false
       description:
@@ -93,7 +93,7 @@ options:
             `TRUE` or `FALSE` (default), provide the iqr
             
     - name: qd
-      title:  Quartile Deviation (QD)
+      title:  Quartile deviation (QD)
       type: Bool
       default: false
       description:
@@ -101,7 +101,7 @@ options:
             `TRUE` or `FALSE` (default), provide the quartile deviation
 
     - name: mad
-      title: Median Absolute Deviation (MAD)
+      title: Median absolute deviation (MAD)
       type: Bool
       default: false
       description:
@@ -109,7 +109,7 @@ options:
             `TRUE` or `FALSE` (default), provide the mad
             
     - name: rcv
-      title:  Robust Coefficient of Variation (rCV)
+      title:  Robust coefficient of variation (rCV)
       type: Bool
       default: false
       description:
@@ -117,15 +117,15 @@ options:
             `TRUE` or `FALSE` (default), provide the rcv
             
     - name: irange
-      title: Inner Range
+      title: Inner range
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide the Inner Range
+            `TRUE` (default) or `FALSE`, provide the inner range
  
     - name: NPerc
-      title: Percentage of Data
+      title: Percentage of data
       type: Integer
       default: 90
       description:
@@ -183,7 +183,7 @@ options:
             `TRUE` or `FALSE` (default), provide the Percentiles
 
     - name: pcValues
-      title: Percentile Values
+      title: Percentile values
       type: String
       default: "25,50,75"
       description:
@@ -191,7 +191,7 @@ options:
             a comma-separated list (default: 25,50,75) specifying the percentiles
             
     - name: h1
-      title: H1 (Skewness)
+      title: H1 (skewness)
       type: Bool
       default: false
       description:
@@ -199,7 +199,7 @@ options:
             `TRUE` or `FALSE` (default), provide the H1 index
             
     - name: h3
-      title: H3 (Skewness)
+      title: H3 (skewness)
       type: Bool
       default: false
       description:
@@ -207,7 +207,7 @@ options:
             `TRUE` or `FALSE` (default), provide the H3 index
             
     - name: k2
-      title: K2 (Kurtosis)
+      title: K2 (kurtosis)
       type: Bool
       default: false
       description:
@@ -215,7 +215,7 @@ options:
             `TRUE` or `FALSE` (default), provide the K2 index
             
     - name: k3
-      title: K3 (Kurtosis)
+      title: K3 (kurtosis)
       type: Bool
       default: false
       description:
@@ -231,7 +231,7 @@ options:
             `TRUE` or `FALSE` (default), provide bar plots
             
     - name: f2p.bar
-      title: Frequencies (Y-Axis)
+      title: Frequencies (Y-axis)
       type: List
       options:
         - name: absolutefreq
@@ -287,7 +287,7 @@ options:
             `TRUE` or `FALSE` (default), add mean to box plot
             
     - name: innerf
-      title: Inner Fence
+      title: Inner fence
       type: Number
       default: 1.5
       description:
@@ -295,7 +295,7 @@ options:
             a number (detects by default the number) specifying the inner fence for detecting outliers 
             
     - name: outerf
-      title: Outer Fence
+      title: Outer fence
       type: Number
       default: 3.0
       description:

@@ -161,7 +161,7 @@ children:
                       - name: f2p.bar
                         margin: small
                         type: ComboBox
-                        label: Frequencies (Y-Axis)
+                        label: Frequencies (Y-axis)
           - type: LayoutBox
             margin: small
             stretchFactor: 1
