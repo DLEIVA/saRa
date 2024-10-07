@@ -71,7 +71,7 @@ options:
             `TRUE` or `FALSE` (default), provides the mode
             
     - name: geommean
-      title: Geometric Mean
+      title: Geometric mean
       type: Bool
       default: false
       description:
@@ -87,7 +87,7 @@ options:
             `TRUE` or `FALSE` (default), provides the trimean
             
     - name: avquartile
-      title: Quartiles' Average
+      title: Quartiles' average
       type: Bool
       default: false
       description:
@@ -95,7 +95,7 @@ options:
             `TRUE` or `FALSE` (default), provides the quartiles average
             
     - name: midrange
-      title: Mid-Range
+      title: Mid-range
       type: Bool
       default: false
       description:
@@ -103,7 +103,7 @@ options:
             `TRUE` or `FALSE` (default), provides the mid-range
             
     - name: trimmean
-      title: Trimmed Mean
+      title: Trimmed mean
       type: Bool
       default: false
       description:
@@ -111,7 +111,7 @@ options:
             `TRUE` (default) or `FALSE`, provides the Trimmed Mean
             
     - name: Trim
-      title: Percentage of Trimmed Data
+      title: Percentage of trimmed data
       type: Number
       default: 5
       description:
@@ -119,7 +119,7 @@ options:
             a number (detects by default the number) specifying the percentage of data to be trimmed 
             
     - name: winsmean
-      title: Winsorized Mean
+      title: Winsorized mean
       type: Bool
       default: false
       description:
@@ -127,7 +127,7 @@ options:
             `TRUE` (default) or `FALSE`, provides the Winsorized Mean
             
     - name: Win
-      title: Percentage of Winsorized Data
+      title: Percentage of winsorized data
       type: Number
       default: 5
       description:
@@ -143,7 +143,7 @@ options:
             `TRUE` or `FALSE` (default), provides the variance
 
     - name: stddev
-      title: Standard Deviation
+      title: Standard deviation
       type: Bool
       default: false
       description:
@@ -159,7 +159,7 @@ options:
             `TRUE` or `FALSE` (default), provides the geometric standard deviation
             
     - name: meandev
-      title: Mean Deviation
+      title: Mean deviation
       type: Bool
       default: false
       description:
@@ -167,7 +167,7 @@ options:
             `TRUE` or `FALSE` (default), provides the mean deviation    
             
     - name: cv
-      title:  Coefficient of Variation (CV)
+      title:  Coefficient of variation (CV)
       type: Bool
       default: false
       description:
@@ -183,7 +183,7 @@ options:
             `TRUE` or `FALSE` (default), provides the range
     
     - name: iqr
-      title: InterQuartile Range (IQR)
+      title: Interquartile range (IQR)
       type: Bool
       default: false
       description:
@@ -191,7 +191,7 @@ options:
             `TRUE` or `FALSE` (default), provides the iqr
             
     - name: qd
-      title:  Quartile Deviation (QD)
+      title: Quartile deviation (QD)
       type: Bool
       default: false
       description:
@@ -199,7 +199,7 @@ options:
             `TRUE` or `FALSE` (default), provides the quartile deviation
 
     - name: mad
-      title: Median Absolute Deviation (MAD)
+      title: Median absolute deviation (MAD)
       type: Bool
       default: false
       description:
@@ -207,7 +207,7 @@ options:
             `TRUE` or `FALSE` (default), provides the mad
             
     - name: rcv
-      title:  Robust Coefficient of Variation (rCV)
+      title:  Robust coefficient of variation (rCV)
       type: Bool
       default: false
       description:
@@ -215,7 +215,7 @@ options:
             `TRUE` or `FALSE` (default), provides the rcv
             
     - name: irange
-      title: Inner Range
+      title: Inner range
       type: Bool
       default: false
       description:
@@ -223,7 +223,7 @@ options:
             `TRUE` (default) or `FALSE`, provides the Inner Range
             
     - name: NPerc
-      title: Percentage of Data
+      title: Percentage of data
       type: Number
       default: 90
       description:
@@ -272,7 +272,7 @@ options:
             `TRUE` or `FALSE` (default), provides the third quartile
             
     - name: beta1
-      title: "Pearson's \u03B2\u2081 (Skewness)"
+      title: "Pearson's \u03B2\u2081 (skewness)"
       type: Bool
       default: false
       description:
@@ -280,7 +280,7 @@ options:
             `TRUE` or `FALSE` (default), provide the Pearson's \u03B2\u2081 index
             
     - name: gamma1
-      title: "Fisher's \u03B3\u2081 (Skewness)"
+      title: "Fisher's \u03B3\u2081 (skewness)"
       type: Bool
       default: false
       description:
@@ -288,7 +288,7 @@ options:
             `TRUE` or `FALSE` (default), provide the Fisher's \u03B3\u2081 index
             
     - name: h1
-      title: H1 (Skewness)
+      title: H1 (skewness)
       type: Bool
       default: false
       description:
@@ -296,7 +296,7 @@ options:
             `TRUE` or `FALSE` (default), provide the H1 index
             
     - name: h3
-      title: H3 (Skewness)
+      title: H3 (skewness)
       type: Bool
       default: false
       description:
@@ -304,7 +304,7 @@ options:
             `TRUE` or `FALSE` (default), provide the H3 index            
             
     - name: beta2
-      title: "Pearson's \u03B2\u2082 (Kurtosis)"
+      title: "Pearson's \u03B2\u2082 (kurtosis)"
       type: Bool
       default: false
       description:
@@ -312,7 +312,7 @@ options:
             `TRUE` or `FALSE` (default), provide the Pearson's \u03B2\u2082 index 
             
     - name: gamma2
-      title: "Fisher's \u03B3\u2082 (Kurtosis)"
+      title: "Fisher's \u03B3\u2082 (kurtosis)"
       type: Bool
       default: false
       description:
@@ -320,7 +320,7 @@ options:
             `TRUE` or `FALSE` (default), provide the Fisher's \u03B3\u2082 index            
 
     - name: k2
-      title: K2 (Kurtosis)
+      title: K2 (kurtosis)
       type: Bool
       default: false
       description:
@@ -328,7 +328,7 @@ options:
             `TRUE` or `FALSE` (default), provide the K2 index
             
     - name: k3
-      title: K3 (Kurtosis)
+      title: K3 (kurtosis)
       type: Bool
       default: false
       description:
@@ -344,7 +344,7 @@ options:
             `TRUE` or `FALSE` (default), provides the Percentiles
 
     - name: pcValues
-      title: Percentile Values
+      title: Percentile values
       type: String
       default: "25,50,75"
       description:
@@ -393,7 +393,7 @@ options:
             `TRUE` or `FALSE` (default), provides \u03C9\u00B2 effect size indicator
             
     - name: kwind
-      title: "Kruskal-Wallis  (k levels)"
+      title: "Kruskal-Wallis (k levels)"
       type: Bool
       default: false
       description:
@@ -417,7 +417,7 @@ options:
             `TRUE` or `FALSE` (default), provides density plots (continuous variables only)
             
     - name: norm
-      title: Normal Curve
+      title: Normal curve
       type: Bool
       default: false
       description:
@@ -467,7 +467,7 @@ options:
             `TRUE` or `FALSE` (default), add mean to box plot
             
     - name: innerf
-      title: Inner Fence
+      title: Inner fence
       type: Number
       default: 1.5
       description:
@@ -475,7 +475,7 @@ options:
             a number (detects by default the number) specifying the inner fence for detecting outliers 
             
     - name: outerf
-      title: Outer Fence
+      title: Outer fence
       type: Number
       default: 3.0
       description:

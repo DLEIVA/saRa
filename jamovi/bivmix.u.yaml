@@ -144,7 +144,7 @@ children:
                 name: rcv
               - type: CheckBox
                 name: irange
-                label: Inner Range
+                label: Inner range
                 style: inline
                 verticalAlignment: center
                 children:
