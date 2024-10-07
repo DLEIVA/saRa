@@ -1,4 +1,4 @@
-title: Continuous distributions
+title: Continuous Distributions
 name: contvars
 jus: '3.0'
 stage: 0
@@ -107,7 +107,7 @@ children:
                         format: number
                         enable: (unif)
   - type: CollapseBox
-    label: Values and functions
+    label: Values and Functions
     stretchFactor: 2
     collapsed: true
     children:

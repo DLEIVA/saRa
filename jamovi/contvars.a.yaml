@@ -101,14 +101,14 @@ options:
             a number specifying maximum in continuous uniform distribution           
             
     - name: contvaluesfunc
-      title: Random Variable Values
+      title: Random variable values
       type: String
       description:
           R: >
             a comma-separated list specifying random variables' values  
 
     - name: contpdf
-      title: "Probabilty Density Function (f(x))"
+      title: "Probabilty density function (f(x))"
       type: Bool
       default: false
       description:
@@ -116,7 +116,7 @@ options:
             `TRUE` or `FALSE` (default), provide probability density function for a continuous distribution            
 
     - name: contcdf
-      title: "Cumulative Distribution Function (Pr(X ≤ x))"
+      title: "Cumulative distribution function (Pr(X ≤ x))"
       type: Bool
       default: false
       description:
@@ -132,7 +132,7 @@ options:
             `TRUE` or `FALSE` (default), provide survival function for a continuous distribution            
             
     - name: conticdf
-      title: "Inverse of CDF (Quantiles)"
+      title: "Inverse of cdf (quantiles)"
       type: Bool
       default: false
       description:
@@ -140,21 +140,21 @@ options:
             `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a continuous distribution            
 
     - name: contqvalues
-      title: Quantiles Values
+      title: Quantiles values
       type: String
       description:
           R: >
             a comma-separated list specifying quantiles for a random variable     
             
     - name: contppvalue
-      title: Random Variable Value
+      title: Random variable value
       type: Number
       description:
           R: >
             a number specifying random variables' value to be plotted
 
     - name: contppdf
-      title: "Probability Density Function (f(x))"
+      title: "Probability density function (f(x))"
       type: Bool
       default: false
       description:
@@ -162,7 +162,7 @@ options:
             `TRUE` or `FALSE` (default), provide probability mass function for a continuous distribution to be plotted            
 
     - name: contpcdf
-      title: "Cumulative Distribution Function (Pr(X ≤ x))"
+      title: "Cumulative distribution function (Pr(X ≤ x))"
       type: Bool
       default: false
       description:
@@ -178,14 +178,14 @@ options:
             `TRUE` or `FALSE` (default), provide probability plot within an interval 
             
     - name: contx1value
-      title: x1 Value
+      title: x1 value
       type: Number
       description:
           R: >
             a number specifying X1 value for probability plot within interval 
           
     - name: contx2value
-      title: x2 Value
+      title: x2 value
       type: Number
       description:
           R: >
@@ -200,7 +200,7 @@ options:
             `TRUE` or `FALSE` (default), provide survival function for a cont distribution to be plotted            
             
     - name: contpicdf
-      title: "Inverse of CDF (Quantiles)"
+      title: "Inverse of cdf (quantiles)"
       type: Bool
       default: false
       description:
@@ -208,7 +208,7 @@ options:
             `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a continuous distribution to be plotted            
 
     - name: contpqvalue
-      title: Quantile Value
+      title: Quantile value
       type: Number
       description:
           R: >

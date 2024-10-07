@@ -5,7 +5,7 @@ jrs:   '1.1'
 
 items:
     - name: ContInfoTab
-      title: Distribution information
+      title: Distribution Information
       type: Table
       rows: 1
       columns:
@@ -18,7 +18,7 @@ items:
           visible: (cdistros)
           
     - name: Contprobstab
-      title: Densities/Probabilities table
+      title: Densities/Probabilities Table
       description: A table with probabilities for selected distributions
       visible: (contpdf | contcdf | contsurv)
       type: Table
@@ -42,7 +42,7 @@ items:
           visible: (contsurv) 
           
     - name: Contquantstab
-      title: Quantiles table
+      title: Quantiles Table
       description: A table with quantiles for selected distributions
       visible: (conticdf)
       type: Table
@@ -62,7 +62,7 @@ items:
           visible: (conticdf)
           
     - name: contpdfplot
-      title: Probability density function plot
+      title: Probability Density Function Plot
       type: Image
       width: 450
       height: 400
@@ -70,7 +70,7 @@ items:
       visible: (contppdf)
       
     - name: contcdfplot
-      title: Cumulative distribution function plot
+      title: Cumulative Distribution Function Plot
       type: Image
       width: 450
       height: 400
@@ -78,7 +78,7 @@ items:
       visible: (contpcdf)
       
     - name: contsurvplot
-      title: Survival function plot
+      title: Survival Function Plot
       type: Image
       width: 450
       height: 400
@@ -86,7 +86,7 @@ items:
       visible: (contpsurv)
       
     - name: contintervplot
-      title: Probability interval plot
+      title: Probability Interval Plot
       type: Image
       width: 450
       height: 400
@@ -94,7 +94,7 @@ items:
       visible: (contpinterv)
       
     - name: conticdfplot
-      title: Quantile (ICDF) plot
+      title: Quantile (ICDF) Plot
       type: Image
       width: 450
       height: 400
