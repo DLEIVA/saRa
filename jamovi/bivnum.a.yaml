@@ -72,7 +72,7 @@ options:
             `TRUE` or `FALSE` (default), provide Pearson's coefficient of determination for numeric variables (rows dependent).
 
     - name: spearmanR2
-      title: "Spearmans's R\u00B2"
+      title: "Spearman's R\u00B2"
       type: Bool
       default: false
       description:

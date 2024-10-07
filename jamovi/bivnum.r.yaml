@@ -85,7 +85,7 @@ items:
           visible: (kendallR2)          
     
     - name: scat
-      title: Plots
+      title: Scatterplot
       type: Image
       width: 450
       height: 400
