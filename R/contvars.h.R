@@ -254,7 +254,7 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="ContInfoTab",
-                title="Distribution information",
+                title="Distribution Information",
                 rows=1,
                 columns=list(
                     list(
@@ -269,7 +269,7 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="Contprobstab",
-                title="Densities/Probabilities table",
+                title="Densities/Probabilities Table",
                 visible="(contpdf | contcdf | contsurv)",
                 rows=1,
                 columns=list(
@@ -296,7 +296,7 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="Contquantstab",
-                title="Quantiles table",
+                title="Quantiles Table",
                 visible="(conticdf)",
                 rows=1,
                 columns=list(
@@ -318,7 +318,7 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="contpdfplot",
-                title="Probability density function plot",
+                title="Probability Density Function Plot",
                 width=450,
                 height=400,
                 renderFun=".contppdf",
@@ -326,7 +326,7 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="contcdfplot",
-                title="Cumulative distribution function plot",
+                title="Cumulative Distribution Function Plot",
                 width=450,
                 height=400,
                 renderFun=".contpcdf",
@@ -334,7 +334,7 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="contsurvplot",
-                title="Survival function plot",
+                title="Survival Function Plot",
                 width=450,
                 height=400,
                 renderFun=".contpsurv",
@@ -342,7 +342,7 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="contintervplot",
-                title="Probability interval plot",
+                title="Probability Interval Plot",
                 width=450,
                 height=400,
                 renderFun=".contpinterv",
@@ -350,7 +350,7 @@ contvarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="conticdfplot",
-                title="Quantile (ICDF) plot",
+                title="Quantile (ICDF) Plot",
                 width=450,
                 height=400,
                 renderFun=".contpicdf",
