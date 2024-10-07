@@ -14,7 +14,7 @@ options:
           name: binom
         - title: Poisson
           name: poiss
-        - title: Negative Binomial
+        - title: Negative binomial
           name: negbinom
         - title: Geometric
           name: geom
