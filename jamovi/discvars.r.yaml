@@ -5,7 +5,7 @@ jrs:   '1.1'
 
 items:
     - name: InfoTab
-      title: Distribution information
+      title: Distribution Information
       type: Table
       rows: 1
       columns:
@@ -18,7 +18,7 @@ items:
           visible: (distros)
           
     - name: probstab
-      title: Probabilities table
+      title: Probabilities Table
       description: A table with probabilities for selected distributions
       visible: (pmf | cdf | surv)
       type: Table
@@ -42,7 +42,7 @@ items:
           visible: (surv) 
           
     - name: quantstab
-      title: Quantiles table
+      title: Quantiles Table
       description: A table with quantiles for selected distributions
       visible: (icdf)
       type: Table
@@ -62,7 +62,7 @@ items:
           visible: (icdf)
           
     - name: pmfplot
-      title: Probability mass function plot
+      title: Probability Mass Function Plot
       type: Image
       width: 450
       height: 400
@@ -70,7 +70,7 @@ items:
       visible: (ppmf)
       
     - name: cdfplot
-      title: Cumulative distribution function plot
+      title: Cumulative Distribution Function Plot
       type: Image
       width: 450
       height: 400
@@ -78,7 +78,7 @@ items:
       visible: (pcdf)
       
     - name: survplot
-      title: Survival function plot
+      title: Survival Function Plot
       type: Image
       width: 450
       height: 400
@@ -86,7 +86,7 @@ items:
       visible: (psurv)
       
     - name: intervplot
-      title: Probability interval plot
+      title: Probability Interval Plot
       type: Image
       width: 450
       height: 400
@@ -94,7 +94,7 @@ items:
       visible: (pinterv)
       
     - name: icdfplot
-      title: Quantile (ICDF) plot
+      title: Quantile (ICDF) Plot
       type: Image
       width: 450
       height: 400
