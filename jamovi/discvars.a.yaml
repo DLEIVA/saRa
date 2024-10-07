@@ -99,14 +99,14 @@ options:
             a number specifying number of draws in hypergeometric distribution            
             
     - name: valuesfunc
-      title: Random Variable Values
+      title: Random variable values
       type: String
       description:
           R: >
             a comma-separated list specifying random variables' values  
 
     - name: pmf
-      title: "Probabilty Mass Function (Pr(X = x))"
+      title: "Probabilty mass function (Pr(X = x))"
       type: Bool
       default: false
       description:
@@ -114,7 +114,7 @@ options:
             `TRUE` or `FALSE` (default), provide probability mass function for a discrete distribution            
 
     - name: cdf
-      title: "Cumulative Distribution Function (Pr(X ≤ x))"
+      title: "Cumulative distribution function (Pr(X ≤ x))"
       type: Bool
       default: false
       description:
@@ -130,7 +130,7 @@ options:
             `TRUE` or `FALSE` (default), provide survival function for a discrete distribution            
             
     - name: icdf
-      title: "Inverse of CDF (Quantiles)"
+      title: "Inverse of cdf (quantiles)"
       type: Bool
       default: false
       description:
@@ -138,21 +138,21 @@ options:
             `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a discrete distribution            
 
     - name: qvalues
-      title: Quantiles Values
+      title: Quantiles values
       type: String
       description:
           R: >
             a comma-separated list specifying quantiles for a random variable     
             
     - name: ppvalue
-      title: Random Variable Value
+      title: Random variable value
       type: Number
       description:
           R: >
             a number specifying random variables' value to be plotted
 
     - name: ppmf
-      title: "Probability Mass Function (Pr(X = x))"
+      title: "Probability mass function (Pr(X = x))"
       type: Bool
       default: false
       description:
@@ -160,7 +160,7 @@ options:
             `TRUE` or `FALSE` (default), provide probability mass function for a discrete distribution to be plotted            
 
     - name: pcdf
-      title: "Cumulative Distribution Function (Pr(X ≤ x))"
+      title: "Cumulative distribution function (Pr(X ≤ x))"
       type: Bool
       default: false
       description:
@@ -176,14 +176,14 @@ options:
             `TRUE` or `FALSE` (default), provide probability plot within an interval 
             
     - name: x1value
-      title: x1 Value
+      title: x1 value
       type: Number
       description:
           R: >
             a number specifying X1 value for probability plot within interval 
           
     - name: x2value
-      title: x2 Value
+      title: x2 value
       type: Number
       description:
           R: >
@@ -198,7 +198,7 @@ options:
             `TRUE` or `FALSE` (default), provide survival function for a discrete distribution to be plotted            
             
     - name: picdf
-      title: "Inverse of CDF (Quantiles)"
+      title: "Inverse of cdf (quantiles)"
       type: Bool
       default: false
       description:
@@ -206,7 +206,7 @@ options:
             `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a discrete distribution to be plotted            
 
     - name: pqvalue
-      title: Quantile Value
+      title: Quantile value
       type: Number
       description:
           R: >
