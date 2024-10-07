@@ -214,9 +214,9 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         freqs = function() private$.items[["freqs"]],
         desc = function() private$.items[["desc"]],
         asocind = function() private$.items[["asocind"]],
-        barplot = function() private$.items[["barplot"]],
         heatmap = function() private$.items[["heatmap"]],
-        alluvial = function() private$.items[["alluvial"]]),
+        alluvial = function() private$.items[["alluvial"]],
+        barplot = function() private$.items[["barplot"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -239,7 +239,7 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="desc",
-                title="Paired comparisons description",
+                title="Paired Comparisons Description",
                 columns=list(
                     list(
                         `name`="names", 
@@ -344,17 +344,8 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "cols")))
             self$add(jmvcore::Image$new(
                 options=options,
-                name="barplot",
-                title="Plots",
-                width=450,
-                height=400,
-                renderFun=".barPlot",
-                visible="(barplot)",
-                requiresData=TRUE))
-            self$add(jmvcore::Image$new(
-                options=options,
                 name="heatmap",
-                title="Plots",
+                title="Heatmap",
                 width=450,
                 height=400,
                 renderFun=".heatmap",
@@ -363,11 +354,20 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="alluvial",
-                title="Plots",
+                title="Alluvial Plot",
                 width=450,
                 height=400,
                 renderFun=".alluvial",
                 visible="(alluvial)",
+                requiresData=TRUE))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="barplot",
+                title="Bar Plot",
+                width=450,
+                height=400,
+                renderFun=".barPlot",
+                visible="(barplot)",
                 requiresData=TRUE,
                 clearWith=list(
                     "rows",
@@ -445,9 +445,9 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
 #'   \code{results$desc} \tab \tab \tab \tab \tab a table with a summary for all possible comparisons \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
-#'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$heatmap} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$alluvial} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:

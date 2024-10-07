@@ -302,8 +302,8 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         freqs = function() private$.items[["freqs"]],
         asocind = function() private$.items[["asocind"]],
         errorind = function() private$.items[["errorind"]],
-        barplot = function() private$.items[["barplot"]],
-        mosaicplot = function() private$.items[["mosaicplot"]]),
+        mosaicplot = function() private$.items[["mosaicplot"]],
+        barplot = function() private$.items[["barplot"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -530,21 +530,21 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `visible`="(theilsym)"))))
             self$add(jmvcore::Image$new(
                 options=options,
-                name="barplot",
-                title="Bar plot",
-                width=450,
-                height=400,
-                renderFun=".barPlot",
-                visible="(barplot)",
-                requiresData=TRUE))
-            self$add(jmvcore::Image$new(
-                options=options,
                 name="mosaicplot",
                 title="Mosaic Plot",
                 width=450,
                 height=400,
                 renderFun=".mosaicPlot",
                 visible="(mosaicplot)",
+                requiresData=TRUE))
+            self$add(jmvcore::Image$new(
+                options=options,
+                name="barplot",
+                title="Bar plot",
+                width=450,
+                height=400,
+                renderFun=".barPlot",
+                visible="(barplot)",
                 requiresData=TRUE,
                 clearWith=list(
                     "rows",
@@ -642,8 +642,8 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
 #'   \code{results$errorind} \tab \tab \tab \tab \tab A table of different prediction error indicators \cr
-#'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$mosaicplot} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$barplot} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
