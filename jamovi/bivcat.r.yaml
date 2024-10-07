@@ -222,6 +222,15 @@ items:
         - name: v[theilsym]
           title: Value
           visible: (theilsym)  
+
+    - name: mosaicplot
+      title: Mosaic Plot
+      type: Image
+      width: 450
+      height: 400
+      renderFun: .mosaicPlot
+      visible: (mosaicplot)
+      requiresData: true
           
     - name: barplot
       title: Bar plot
@@ -231,15 +240,6 @@ items:
       renderFun: .barPlot
       visible: (barplot)
       requiresData: true    
-      
-    - name: mosaicplot
-      title: Mosaic Plot
-      type: Image
-      width: 450
-      height: 400
-      renderFun: .mosaicPlot
-      visible: (mosaicplot)
-      requiresData: true         
 
       clearWith:
         - rows
