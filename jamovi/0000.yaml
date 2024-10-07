@@ -79,19 +79,19 @@ analyses:
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
-    menuTitle: Mann-Whitney test
+    menuTitle: Mann-Whitney Test
   - title: Wilcoxon T test
     name: wilcoxT
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
-    menuTitle: Wilcoxon T test
+    menuTitle: Wilcoxon T Test
   - title: Normality tests
     name: testnorm
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
-    menuTitle: Normality tests
+    menuTitle: Normality Tests
 datasets:
   - name: phobia
     path: phobia.RData
