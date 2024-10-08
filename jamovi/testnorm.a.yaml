@@ -20,7 +20,7 @@ options:
           R: a vector of strings naming the variables of interest in `data`
           
     - name: groupBy
-      title: Group by
+      title: Group by (Optional)
       type: Variable
       suggested:
         - nominal
