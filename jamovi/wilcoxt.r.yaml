@@ -46,13 +46,6 @@ items:
           format: zto,pvalue
           visible: (wilcoxon)
 
-        - name: var[zstatps]
-          title: ""
-          content: ($key)
-          type: text
-          combineBelow: true
-          visible: (zstatps)
-
         - name: name[zstatps]
           title: ''
           type: text
@@ -69,13 +62,6 @@ items:
           type: number
           format: zto,pvalue
           visible: (zstatps)
-
-        - name: var[rankCorrps]
-          title: ""
-          content: ($key)
-          type: text
-          combineBelow: true
-          visible: (rankCorrps)
 
         - name: name[rankCorrps]
           title: ''
