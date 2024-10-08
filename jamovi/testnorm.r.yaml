@@ -4,10 +4,6 @@ title: Normality Tests
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Normality Tests
-      type:  Preformatted
-
     - name: normtests
       title: Tests
       description: A table for the normality tests
@@ -21,13 +17,7 @@ items:
           
         - name: group
           title: Group
-          type: text          
-      
-        - name: var[chisqtest]
-          title: ""
           type: text
-          combineBelow: true
-          visible: (chisqtest)
 
         - name: name[chisqtest]
           title: ''
@@ -46,12 +36,6 @@ items:
           format: zto,pvalue
           visible: (chisqtest)
 
-        - name: var[kstest]
-          title: ""
-          type: text
-          combineBelow: true
-          visible: (kstest)
-
         - name: name[kstest]
           title: ''
           type: text
@@ -69,12 +53,6 @@ items:
           format: zto,pvalue
           visible: (kstest)
           
-        - name: var[swtest]
-          title: ""
-          type: text
-          combineBelow: true
-          visible: (swtest)          
-          
         - name: name[swtest]
           title: ''
           type: text
@@ -91,12 +69,6 @@ items:
           type: number
           format: zto,pvalue
           visible: (swtest)
-          
-        - name: var[adtest]
-          title: ""
-          type: text
-          combineBelow: true
-          visible: (adtest)          
 
         - name: name[adtest]
           title: ''
@@ -115,12 +87,6 @@ items:
           format: zto,pvalue
           visible: (adtest)          
           
-        - name: var[lillietest]
-          title: ""
-          type: text
-          combineBelow: true
-          visible: (lillietest)          
-          
         - name: name[lillietest]
           title: ''
           type: text
@@ -138,12 +104,6 @@ items:
           format: zto,pvalue
           visible: (lillietest)
           
-        - name: var[sftest]
-          title: ""
-          type: text
-          combineBelow: true
-          visible: (sftest)          
-          
         - name: name[sftest]
           title: ''
           type: text
@@ -160,12 +120,6 @@ items:
           type: number
           format: zto,pvalue
           visible: (sftest)          
-
-        - name: var[cvmtest]
-          title: ""
-          type: text
-          combineBelow: true
-          visible: (cvmtest)          
           
         - name: name[cvmtest]
           title: ''
