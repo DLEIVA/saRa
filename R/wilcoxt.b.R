@@ -73,7 +73,22 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           results <- c(test$estimate,test$conf.int)
           names(results) <- NULL
           results
-        }          
+        }  
+        
+        # Adapted from DescTools::MedianCI func
+        .mybootMED <- function (x, conf.level = 0.95, na.rm = FALSE, R = 999) 
+        {
+          if (na.rm) x <- na.omit(x)
+          boot.med <- boot::boot(x, function(x, d) median(x[d], na.rm = na.rm), R = R)
+          r <- boot::boot.ci(boot.med, conf = conf.level, type = "basic")[[4]][4:5]
+          med <- median(x, na.rm = na.rm)
+          if (is.na(med)) { res <- rep(NA, 3) 
+          } else {
+            res <- c(median = med, r)
+          }
+          names(res) <- c("median", "lwr.ci", "upr.ci")
+          return(res)
+        }        
         
         for (i in seq_along(pairs)) {
           pair <- pairs[[i]]
@@ -92,8 +107,9 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             column1 <- pairsData[[name1]]
             column2 <- pairsData[[name2]]
           } else {
-            column1 <- data[[name1]]
-            column2 <- data[[name2]]
+            pairsData <- data
+            column1 <- pairsData[[name1]]
+            column2 <- pairsData[[name2]]
           }
           
           med1 <- tryNaN(median(column1))
@@ -119,7 +135,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                              function(x) DescTools::MedianCI(x,method='exact')))[,2:3]
           } else if(self$options$ciMethodps=='boot'){
             cimed <- t(apply(pairsData,2,
-                             function(x) DescTools::MedianCI(x,method='boot',R=self$options$numR)))[,2:3]
+                             function(x) .mybootMED(x,conf.level=confInt,R=self$options$numR)))[,2:3]
           }
           
           cimed[is.na(cimed)] <- NaN
