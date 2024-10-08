@@ -6,7 +6,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     inherit = umwBase,
     private = list(
       .run=function() {
-        
+    
         groupVarName <- self$options$group
         depVarNames <- self$options$vars
         varNames <- c(groupVarName, depVarNames)
@@ -14,7 +14,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (is.null(groupVarName) || length(depVarNames) == 0)
           return()
         
-        data <- select(self$data, varNames)
+        data <- jmvcore::select(self$data, varNames)
         
         for (name in depVarNames)
           data[[name]] <- jmvcore::toNumeric(data[[name]])
@@ -115,8 +115,8 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           groupLevels <- base::levels(dataMWTest$group)
           n <- tapply(dataMWTest$dep, dataMWTest$group, length)
-          med <- tapply(dataMWTest$dep, dataMWTest$group, function(x) tryNaN(median(x)))
-          rangos <- tryNaN(rank(unlist(split(dataMWTest$dep,dataMWTest$group))))
+          med <- tapply(dataMWTest$dep, dataMWTest$group, function(x) jmvcore::tryNaN(median(x)))
+          rangos <- jmvcore::tryNaN(rank(unlist(split(dataMWTest$dep,dataMWTest$group))))
           R1 <- sum(rangos[1:n[1]])
           R2 <- sum(rangos[(n[1]+1):length(rangos)])
           R <- c(R1,R2)
@@ -152,20 +152,20 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           if (self$options$mwu) {
             
             if (is.factor(dataMWTest$dep))
-              res <- createError(.('Variable is not numeric'))
+              res <- jmvcore::createError(.('Variable is not numeric'))
             else if (any(is.infinite(dataMWTest$dep)))
-              res <- createError(.('Variable contains infinite values'))
+              res <- jmvcore::createError(.('Variable contains infinite values'))
             else
-              res <- try(suppressWarnings(wilcox.test(dep ~ group, data=dataMWTest, paired=FALSE,
+              res <- try(suppressWarnings(wilcox.test(dep ~ group, data=dataMWTest,
                                 alternative=Ha, conf.level=confInt)), silent=TRUE)
             
-            if (isError(res)) {
+            if (jmvcore::isError(res)) {
               
               mwtestTable$setRow(rowKey=depName, list(
                 "stat[mwu]"=NaN,
                 "p[mwu]"=''))
               
-              message <- extractErrorMessage(res)
+              message <- jmvcore::extractErrorMessage(res)
               if (message == 'grouping factor must have exactly 2 levels')
                 message <- .('One or both groups do not contain enough observations')
               else if (message == 'not enough observations')
