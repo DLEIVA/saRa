@@ -151,11 +151,11 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Normality tests")
+                title="Normality Tests")
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="text",
-                title="Normality tests"))
+                title="Normality Tests"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="normtests",
@@ -372,7 +372,7 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Normality tests
+#' Normality Tests
 #'
 #' 
 #' @param data .
