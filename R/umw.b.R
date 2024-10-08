@@ -28,7 +28,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         confInt <- self$options$ciWidth / 100
 
         if (any(depVarNames == groupVarName))
-          jmvcore::reject(.("Grouping variable '{a}' must not also be a dependent variable"),
+          jmvcore::reject("Grouping variable '{a}' must not also be a dependent variable",
                           code="a_is_dependent_variable", a=groupVarName)
         
         # exclude rows with missings in the grouping variable
@@ -37,13 +37,13 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         groupLevels <- base::levels(data[[groupVarName]])
         
         if (length(groupLevels) != 2)
-          jmvcore::reject(.("Grouping variable '{a}' must have exactly 2 levels"),
+          jmvcore::reject("Grouping variable '{a}' must have exactly 2 levels",
                           code="grouping_var_must_have_2_levels", a=groupVarName)
         
         if (self$options$miss == "listwise") {
           data <- naOmit(data)
           if (dim(data)[1] == 0)
-            jmvcore::reject(.("Grouping variable '{a}' has less than 2 levels after missing values are excluded"),
+            jmvcore::reject("Grouping variable '{a}' has less than 2 levels after missing values are excluded",
                             code="grouping_var_must_have_2_levels", a=groupVarName)
         }
         
@@ -104,7 +104,22 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           results <- c(test$estimate,test$conf.int)
           names(results) <- NULL
           results
-        }          
+        }
+        
+        # Adapted from DescTools::MedianCI func
+        .mybootMED <- function (x, conf.level = 0.95, na.rm = FALSE, R = 999) 
+        {
+          if (na.rm) x <- na.omit(x)
+          boot.med <- boot::boot(x, function(x, d) median(x[d], na.rm = na.rm), R = R)
+          r <- boot::boot.ci(boot.med, conf = conf.level, type = "basic")[[4]][4:5]
+          med <- median(x, na.rm = na.rm)
+          if (is.na(med)) { res <- rep(NA, 3) 
+          } else {
+            res <- c(median = med, r)
+          }
+          names(res) <- c("median", "lwr.ci", "upr.ci")
+          return(res)
+        }        
         
         for (depName in depVarNames) {
           
@@ -131,13 +146,13 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           if(self$options$ciMethod=='exact'){
             cimed <- matrix(unlist(tapply(dataMWTest$dep,dataMWTest$group,
-                          function(x) DescTools::MedianCI(x,method='exact'))),
+                          function(x) DescTools::MedianCI(x,conf.level = confInt,method='exact'))),
             nrow=2,ncol=3,byrow=TRUE)[,2:3]
             cimed[is.na(cimed)] <- NaN
           } else if(self$options$ciMethod=='boot'){
             cimed <- matrix(unlist(tapply(dataMWTest$dep,dataMWTest$group,
-                                 function(x) DescTools::MedianCI(x,method='boot',R=self$options$numR))),
-                   nrow=2,ncol=3,byrow=TRUE)[,2:3]
+                                          function(x) .mybootMED(x,conf.level=confInt,R=self$options$numR))),
+                            nrow=2,ncol=3,byrow=TRUE)[,2:3]            
             cimed[is.na(cimed)] <- NaN
             
           }
