@@ -142,7 +142,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "testnormResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
         normtests = function() private$.items[["normtests"]],
         plots = function() private$.items[["plots"]]),
     private = list(),
@@ -152,10 +151,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Normality Tests")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="text",
-                title="Normality Tests"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="normtests",
@@ -171,12 +166,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="group", 
                         `title`="Group", 
                         `type`="text"),
-                    list(
-                        `name`="var[chisqtest]", 
-                        `title`="", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(chisqtest)"),
                     list(
                         `name`="name[chisqtest]", 
                         `title`="", 
@@ -195,12 +184,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `format`="zto,pvalue", 
                         `visible`="(chisqtest)"),
                     list(
-                        `name`="var[kstest]", 
-                        `title`="", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(kstest)"),
-                    list(
                         `name`="name[kstest]", 
                         `title`="", 
                         `type`="text", 
@@ -217,12 +200,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number", 
                         `format`="zto,pvalue", 
                         `visible`="(kstest)"),
-                    list(
-                        `name`="var[swtest]", 
-                        `title`="", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(swtest)"),
                     list(
                         `name`="name[swtest]", 
                         `title`="", 
@@ -241,12 +218,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `format`="zto,pvalue", 
                         `visible`="(swtest)"),
                     list(
-                        `name`="var[adtest]", 
-                        `title`="", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(adtest)"),
-                    list(
                         `name`="name[adtest]", 
                         `title`="", 
                         `type`="text", 
@@ -263,12 +234,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number", 
                         `format`="zto,pvalue", 
                         `visible`="(adtest)"),
-                    list(
-                        `name`="var[lillietest]", 
-                        `title`="", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(lillietest)"),
                     list(
                         `name`="name[lillietest]", 
                         `title`="", 
@@ -287,12 +252,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `format`="zto,pvalue", 
                         `visible`="(lillietest)"),
                     list(
-                        `name`="var[sftest]", 
-                        `title`="", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(sftest)"),
-                    list(
                         `name`="name[sftest]", 
                         `title`="", 
                         `type`="text", 
@@ -309,12 +268,6 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number", 
                         `format`="zto,pvalue", 
                         `visible`="(sftest)"),
-                    list(
-                        `name`="var[cvmtest]", 
-                        `title`="", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(cvmtest)"),
                     list(
                         `name`="name[cvmtest]", 
                         `title`="", 
@@ -406,7 +359,6 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   (continuous variables only)
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$normtests} \tab \tab \tab \tab \tab A table for the normality tests \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }
