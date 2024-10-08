@@ -1,4 +1,4 @@
-title: Wilcoxon T test
+title: Wilcoxon T Test
 name: wilcoxT
 jus: '3.0'
 stage: 0
@@ -67,7 +67,7 @@ children:
                 optionPart: twoGreater
                 label: Measure 1 < Measure 2
           - type: Label
-            label: Missing values
+            label: Missing Values
             children:
               - type: RadioButton
                 name: miss_perAnalysis
