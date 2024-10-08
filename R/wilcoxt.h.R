@@ -198,17 +198,10 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `format`="zto,pvalue", 
                         `visible`="(wilcoxon)"),
                     list(
-                        `name`="var[zstatps]", 
-                        `title`="", 
-                        `content`="($key)", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(zstatps)"),
-                    list(
                         `name`="name[zstatps]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="z Statistic", 
+                        `content`="z statistic", 
                         `visible`="(zstatps)"),
                     list(
                         `name`="stat[zstatps]", 
@@ -222,17 +215,10 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `format`="zto,pvalue", 
                         `visible`="(zstatps)"),
                     list(
-                        `name`="var[rankCorrps]", 
-                        `title`="", 
-                        `content`="($key)", 
-                        `type`="text", 
-                        `combineBelow`=TRUE, 
-                        `visible`="(rankCorrps)"),
-                    list(
                         `name`="name[rankCorrps]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Rank Biserial Correlation", 
+                        `content`="Rank biserial correlation", 
                         `visible`="(rankCorrps)"),
                     list(
                         `name`="stat[rankCorrps]", 
@@ -263,11 +249,11 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="cilMed[1]", 
-                        `title`="Lower Bound", 
+                        `title`="Lower bound", 
                         `type`="number"),
                     list(
                         `name`="ciuMed[1]", 
-                        `title`="Upper Bound", 
+                        `title`="Upper bound", 
                         `type`="number"),
                     list(
                         `name`="var[2]", 
@@ -279,11 +265,11 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="cilMed[2]", 
-                        `title`="Lower Bound", 
+                        `title`="Lower bound", 
                         `type`="number"),
                     list(
                         `name`="ciuMed[2]", 
-                        `title`="Upper Bound", 
+                        `title`="Upper bound", 
                         `type`="number"))))
             self$add(jmvcore::Table$new(
                 options=options,
@@ -301,15 +287,15 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="text"),
                     list(
                         `name`="hlestimate", 
-                        `title`="Hodges-Lehmann Estimator", 
+                        `title`="Hodges-Lehmann estimator", 
                         `type`="number"),
                     list(
                         `name`="cilHL", 
-                        `title`="Lower Bound", 
+                        `title`="Lower bound", 
                         `type`="number"),
                     list(
                         `name`="ciuHL", 
-                        `title`="Upper Bound", 
+                        `title`="Upper bound", 
                         `type`="number"))))
             self$add(jmvcore::Table$new(
                 options=options,
@@ -357,27 +343,27 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="integer"),
                     list(
                         `name`="rankA[1]", 
-                        `title`="Average Rank", 
+                        `title`="Average rank", 
                         `type`="number"),
                     list(
                         `name`="rankS[1]", 
-                        `title`="Ranks Sum", 
+                        `title`="Ranks sum", 
                         `type`="number"),
                     list(
                         `name`="rankA[2]", 
-                        `title`="Average Rank", 
+                        `title`="Average rank", 
                         `type`="number"),
                     list(
                         `name`="rankS[2]", 
-                        `title`="Ranks Sum", 
+                        `title`="Ranks sum", 
                         `type`="number"),
                     list(
                         `name`="rankA[3]", 
-                        `title`="Average Rank", 
+                        `title`="Average rank", 
                         `type`="number"),
                     list(
                         `name`="rankS[3]", 
-                        `title`="Ranks Sum", 
+                        `title`="Ranks sum", 
                         `type`="number"))))
             self$add(jmvcore::Array$new(
                 options=options,

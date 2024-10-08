@@ -188,7 +188,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="mwutest",
-                title="Mann-Whitney U test and ES indices",
+                title="Mann-Whitney U Test and ES Indices",
                 rows="(vars)",
                 visible="(mwu || zstat || pSup || rankCorr || fstat)",
                 clearWith=list(
@@ -232,7 +232,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="name[zstat]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="z Statistic", 
+                        `content`="z statistic", 
                         `visible`="(zstat)"),
                     list(
                         `name`="stat[zstat]", 
@@ -256,7 +256,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="name[pSup]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Probability of Superiority", 
+                        `content`="Probability of superiority", 
                         `visible`="(pSup)"),
                     list(
                         `name`="stat[pSup]", 
@@ -273,7 +273,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="name[rankCorr]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Rank Biserial Correlation", 
+                        `content`="Rank biserial correlation", 
                         `visible`="(rankCorr)"),
                     list(
                         `name`="stat[rankCorr]", 
@@ -291,7 +291,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="name[fstat]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="f Statistic", 
+                        `content`="f statistic", 
                         `visible`="(fstat)"),
                     list(
                         `name`="stat[fstat]", 
@@ -323,11 +323,11 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="cilMed[1]", 
-                        `title`="Lower Bound", 
+                        `title`="Lower bound", 
                         `type`="number"),
                     list(
                         `name`="ciuMed[1]", 
-                        `title`="Upper Bound", 
+                        `title`="Upper bound", 
                         `type`="number"),
                     list(
                         `name`="group[2]", 
@@ -339,11 +339,11 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="cilMed[2]", 
-                        `title`="Lower Bound", 
+                        `title`="Lower bound", 
                         `type`="number"),
                     list(
                         `name`="ciuMed[2]", 
-                        `title`="Upper Bound", 
+                        `title`="Upper bound", 
                         `type`="number"))))
             self$add(jmvcore::Table$new(
                 options=options,
@@ -362,15 +362,15 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="text"),
                     list(
                         `name`="hlestimate", 
-                        `title`="Hodges-Lehmann Estimator", 
+                        `title`="Hodges-Lehmann estimator", 
                         `type`="number"),
                     list(
                         `name`="cilHL", 
-                        `title`="Lower Bound", 
+                        `title`="Lower bound", 
                         `type`="number"),
                     list(
                         `name`="ciuHL", 
-                        `title`="Upper Bound", 
+                        `title`="Upper bound", 
                         `type`="number"))))
             self$add(jmvcore::Table$new(
                 options=options,
@@ -401,11 +401,11 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="rankA[1]", 
-                        `title`="Average Rank", 
+                        `title`="Average rank", 
                         `type`="number"),
                     list(
                         `name`="rankS[1]", 
-                        `title`="Ranks Sum", 
+                        `title`="Ranks sum", 
                         `type`="number"),
                     list(
                         `name`="group[2]", 
@@ -421,11 +421,11 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="rankA[2]", 
-                        `title`="Average Rank", 
+                        `title`="Average rank", 
                         `type`="number"),
                     list(
                         `name`="rankS[2]", 
-                        `title`="Ranks Sum", 
+                        `title`="Ranks sum", 
                         `type`="number"))))
             self$add(jmvcore::Array$new(
                 options=options,
