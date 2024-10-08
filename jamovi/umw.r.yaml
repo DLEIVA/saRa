@@ -5,7 +5,7 @@ jrs:   '1.1'
 
 items:
     - name: mwutest
-      title: Mann-Whitney U test and ES indices
+      title: Mann-Whitney U Test and ES Indices
       description: a table containing the Mann-Whitney U test results
       type: Table
       rows: (vars)
@@ -51,7 +51,7 @@ items:
         - name: name[zstat]
           title: ''
           type: text
-          content: z Statistic
+          content: z statistic
           visible: (zstat)
 
         - name: stat[zstat]
@@ -75,7 +75,7 @@ items:
         - name: name[pSup]
           title: ''
           type: text
-          content: Probability of Superiority
+          content: Probability of superiority
           visible: (pSup)
 
         - name: stat[pSup]
@@ -92,7 +92,7 @@ items:
         - name: name[rankCorr]
           title: ''
           type: text
-          content: Rank Biserial Correlation
+          content: Rank biserial correlation
           visible: (rankCorr)
 
         - name: stat[rankCorr]
@@ -110,7 +110,7 @@ items:
         - name: name[fstat]
           title: ''
           type: text
-          content: f Statistic
+          content: f statistic
           visible: (fstat)
 
         - name: stat[fstat]
@@ -143,11 +143,11 @@ items:
           type: number
 
         - name: cilMed[1]
-          title: Lower Bound
+          title: Lower bound
           type: number
 
         - name: ciuMed[1]
-          title: Upper Bound
+          title: Upper bound
           type: number
 
         - name: group[2]
@@ -159,11 +159,11 @@ items:
           type: number
 
         - name: cilMed[2]
-          title: Lower Bound
+          title: Lower bound
           type: number
 
         - name: ciuMed[2]
-          title: Upper Bound
+          title: Upper bound
           type: number
           
     - name: cisHL
@@ -183,15 +183,15 @@ items:
           type: text
           
         - name: hlestimate
-          title: "Hodges-Lehmann Estimator"
+          title: "Hodges-Lehmann estimator"
           type: number
 
         - name: cilHL
-          title: Lower Bound
+          title: Lower bound
           type: number
 
         - name: ciuHL
-          title: Upper Bound
+          title: Upper bound
           type: number          
           
 
@@ -224,11 +224,11 @@ items:
           type: number
 
         - name: rankA[1]
-          title: Average Rank
+          title: Average rank
           type: number
           
         - name: rankS[1]
-          title: Ranks Sum
+          title: Ranks sum
           type: number   
           
         - name: group[2]
@@ -244,11 +244,11 @@ items:
           type: number
 
         - name: rankA[2]
-          title: Average Rank
+          title: Average rank
           type: number
           
         - name: rankS[2]
-          title: Ranks Sum
+          title: Ranks sum
           type: number          
 
     - name: plots

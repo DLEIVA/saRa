@@ -155,11 +155,11 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Wilcoxon T test")
+                title="Wilcoxon T Test")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="wilcoxttest",
-                title="Wilcoxon T test and ES indices",
+                title="Wilcoxon T Test and ES Indices",
                 rows="(pairs)",
                 visible="(wilcoxon || zstatps || rankCorrps)",
                 clearWith=list(
@@ -429,7 +429,7 @@ wilcoxTBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Wilcoxon T test
+#' Wilcoxon T Test
 #'
 #' 
 #' @param data the data as a data frame

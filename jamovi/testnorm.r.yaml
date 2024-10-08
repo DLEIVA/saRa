@@ -1,11 +1,11 @@
 ---
 name:  testnorm
-title: Normality tests
+title: Normality Tests
 jrs:   '1.1'
 
 items:
     - name:  text
-      title: Normality tests
+      title: Normality Tests
       type:  Preformatted
 
     - name: normtests

@@ -1,11 +1,11 @@
 ---
 name:  wilcoxT
-title: Wilcoxon T test
+title: Wilcoxon T Test
 jrs:   '1.1'
 
 items:
     - name: wilcoxttest
-      title: Wilcoxon T test and ES indices
+      title: Wilcoxon T Test and ES Indices
       description: a table containing the Wilcoxon T test results
       type: Table
       rows: (pairs)
@@ -56,7 +56,7 @@ items:
         - name: name[zstatps]
           title: ''
           type: text
-          content: z Statistic
+          content: z statistic
           visible: (zstatps)
 
         - name: stat[zstatps]
@@ -80,7 +80,7 @@ items:
         - name: name[rankCorrps]
           title: ''
           type: text
-          content: Rank Biserial Correlation
+          content: Rank biserial correlation
           visible: (rankCorrps)
 
         - name: stat[rankCorrps]
@@ -112,11 +112,11 @@ items:
           type: number
 
         - name: cilMed[1]
-          title: Lower Bound
+          title: Lower bound
           type: number
 
         - name: ciuMed[1]
-          title: Upper Bound
+          title: Upper bound
           type: number
 
         - name: var[2]
@@ -128,11 +128,11 @@ items:
           type: number
 
         - name: cilMed[2]
-          title: Lower Bound
+          title: Lower bound
           type: number
 
         - name: ciuMed[2]
-          title: Upper Bound
+          title: Upper bound
           type: number
           
     - name: cisHLps
@@ -151,15 +151,15 @@ items:
           type: text
           
         - name: hlestimate
-          title: "Hodges-Lehmann Estimator"
+          title: "Hodges-Lehmann estimator"
           type: number
 
         - name: cilHL
-          title: Lower Bound
+          title: Lower bound
           type: number
 
         - name: ciuHL
-          title: Upper Bound
+          title: Upper bound
           type: number          
           
 
@@ -209,27 +209,27 @@ items:
           type: integer          
 
         - name: rankA[1]
-          title: Average Rank
+          title: Average rank
           type: number
           
         - name: rankS[1]
-          title: Ranks Sum
+          title: Ranks sum
           type: number   
           
         - name: rankA[2]
-          title: Average Rank
+          title: Average rank
           type: number
           
         - name: rankS[2]
-          title: Ranks Sum
+          title: Ranks sum
           type: number          
 
         - name: rankA[3]
-          title: Average Rank
+          title: Average rank
           type: number
           
         - name: rankS[3]
-          title: Ranks Sum
+          title: Ranks sum
           type: number          
 
 

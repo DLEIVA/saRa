@@ -184,7 +184,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Mann-Whitney test")
+                title="Mann-Whitney Test")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="mwutest",
@@ -477,7 +477,7 @@ umwBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Mann-Whitney test
+#' Mann-Whitney Test
 #'
 #' 
 #' @param data the data as a data frame

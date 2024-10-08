@@ -85,7 +85,7 @@ analyses:
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
-    menuTitle: Wilcoxon T test
+    menuTitle: Wilcoxon T Test
   - title: Normality Tests
     name: testnorm
     ns: saRa
