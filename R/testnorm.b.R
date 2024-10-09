@@ -126,7 +126,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               }
         }
             } else{
-              normtestTable$addRow(rowKey=1,values=list(`depvar`=depName,`group`='Not defined',
+              normtestTable$addRow(rowKey=1,values=list(`depvar`=depName,
               `stat`='',`p`='',`stat[chisqtest]`=chisq[[1]],
               `p[chisqtest]`=chisq[[2]],`stat[kstest]`=ks[[1]],`p[kstest]`=ks[[2]],
               `stat[swtest]`=sw[[1]],`p[swtest]`=sw[[2]],`stat[adtest]`=ad[[1]],

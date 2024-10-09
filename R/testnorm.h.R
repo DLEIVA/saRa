@@ -165,7 +165,8 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="group", 
                         `title`="Group", 
-                        `type`="text"),
+                        `type`="text", 
+                        `visible`="(groupBy)"),
                     list(
                         `name`="name[chisqtest]", 
                         `title`="", 
