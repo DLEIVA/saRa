@@ -189,11 +189,11 @@ children:
                       - type: TextBox
                         name: innerf
                         format: number
-                        enable: (box || dot)
+                        enable: (dot)
                   - type: LayoutBox
                     margin: large
                     children:
                       - type: TextBox
                         name: outerf
                         format: number
-                        enable: (box || dot)
+                        enable: (dot)
