@@ -1,13 +1,9 @@
 ---
 name:  bivmix
-title: Bivariate Data Analysis
+title: Bivariate Data Analysis (Mixed Data)
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Mixed Data
-      type:  Preformatted
-
     - name: indicesnum
       title: Statistics
       description: A table of the descriptive statistics
