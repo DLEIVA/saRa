@@ -36,7 +36,7 @@ options:
     - name: obs
       title: Observed counts
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide the observed counts
@@ -73,7 +73,7 @@ options:
     - name: tauKa
       title: "Kendall's \u03C4-a"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Kendall's tau-a association index for ordinal variables.
@@ -81,7 +81,7 @@ options:
     - name: tauKb
       title: "Kendall's \u03C4-b"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Kendall's tau-b association index for ordinal variables.            
@@ -89,7 +89,7 @@ options:
     - name: tauKc
       title: "Kendall's \u03C4-c"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Kendall's tau-c association index for ordinal variables.     
