@@ -7,7 +7,7 @@ catSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             vars = NULL,
-            freq = FALSE,
+            freq = TRUE,
             mode = FALSE,
             VR = FALSE,
             Blau = FALSE,
@@ -38,7 +38,7 @@ catSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..freq <- jmvcore::OptionBool$new(
                 "freq",
                 freq,
-                default=FALSE)
+                default=TRUE)
             private$..mode <- jmvcore::OptionBool$new(
                 "mode",
                 mode,
@@ -261,7 +261,7 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 catSummary <- function(
     data,
     vars,
-    freq = FALSE,
+    freq = TRUE,
     mode = FALSE,
     VR = FALSE,
     Blau = FALSE,

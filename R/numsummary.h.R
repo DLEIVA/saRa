@@ -7,9 +7,9 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             vars = NULL,
-            n = FALSE,
+            n = TRUE,
             missing = FALSE,
-            mean = FALSE,
+            mean = TRUE,
             median = FALSE,
             mode = FALSE,
             geommean = FALSE,
@@ -21,7 +21,7 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             winsmean = FALSE,
             Win = 5,
             variance = FALSE,
-            stddev = FALSE,
+            stddev = TRUE,
             geomsd = FALSE,
             meandev = FALSE,
             cv = FALSE,
@@ -32,8 +32,8 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             rcv = FALSE,
             irange = FALSE,
             NPerc = 90,
-            min = FALSE,
-            max = FALSE,
+            min = TRUE,
+            max = TRUE,
             q1 = FALSE,
             q2 = FALSE,
             q3 = FALSE,
@@ -75,7 +75,7 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..n <- jmvcore::OptionBool$new(
                 "n",
                 n,
-                default=FALSE)
+                default=TRUE)
             private$..missing <- jmvcore::OptionBool$new(
                 "missing",
                 missing,
@@ -83,7 +83,7 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..mean <- jmvcore::OptionBool$new(
                 "mean",
                 mean,
-                default=FALSE)
+                default=TRUE)
             private$..median <- jmvcore::OptionBool$new(
                 "median",
                 median,
@@ -131,7 +131,7 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..stddev <- jmvcore::OptionBool$new(
                 "stddev",
                 stddev,
-                default=FALSE)
+                default=TRUE)
             private$..geomsd <- jmvcore::OptionBool$new(
                 "geomsd",
                 geomsd,
@@ -175,11 +175,11 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..min <- jmvcore::OptionBool$new(
                 "min",
                 min,
-                default=FALSE)
+                default=TRUE)
             private$..max <- jmvcore::OptionBool$new(
                 "max",
                 max,
-                default=FALSE)
+                default=TRUE)
             private$..q1 <- jmvcore::OptionBool$new(
                 "q1",
                 q1,
@@ -445,7 +445,6 @@ numSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "numSummaryResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
         indicesnum = function() private$.items[["indicesnum"]],
         plots = function() private$.items[["plots"]]),
     private = list(),
@@ -454,11 +453,7 @@ numSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Univariate Data Analysis")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="text",
-                title="Numerical Data"))
+                title="Univariate Data Analysis (Numerical Data)")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesnum",
@@ -602,7 +597,6 @@ numSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   (continuous variables only)
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$indicesnum} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }
@@ -617,9 +611,9 @@ numSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 numSummary <- function(
     data,
     vars,
-    n = FALSE,
+    n = TRUE,
     missing = FALSE,
-    mean = FALSE,
+    mean = TRUE,
     median = FALSE,
     mode = FALSE,
     geommean = FALSE,
@@ -631,7 +625,7 @@ numSummary <- function(
     winsmean = FALSE,
     Win = 5,
     variance = FALSE,
-    stddev = FALSE,
+    stddev = TRUE,
     geomsd = FALSE,
     meandev = FALSE,
     cv = FALSE,
@@ -642,8 +636,8 @@ numSummary <- function(
     rcv = FALSE,
     irange = FALSE,
     NPerc = 90,
-    min = FALSE,
-    max = FALSE,
+    min = TRUE,
+    max = TRUE,
     q1 = FALSE,
     q2 = FALSE,
     q3 = FALSE,

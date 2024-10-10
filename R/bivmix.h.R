@@ -8,10 +8,10 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         initialize = function(
             vars = NULL,
             groupBy = NULL,
-            n = FALSE,
+            n = TRUE,
             missing = FALSE,
-            mean = FALSE,
-            median = FALSE,
+            mean = TRUE,
+            median = TRUE,
             mode = FALSE,
             geommean = FALSE,
             trimean = FALSE,
@@ -22,7 +22,7 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             winsmean = FALSE,
             Win = 5,
             variance = FALSE,
-            stddev = FALSE,
+            stddev = TRUE,
             geomsd = FALSE,
             meandev = FALSE,
             cv = FALSE,
@@ -33,8 +33,8 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             rcv = FALSE,
             irange = FALSE,
             NPerc = 90,
-            min = FALSE,
-            max = FALSE,
+            min = TRUE,
+            max = TRUE,
             q1 = FALSE,
             q2 = FALSE,
             q3 = FALSE,
@@ -90,7 +90,7 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..n <- jmvcore::OptionBool$new(
                 "n",
                 n,
-                default=FALSE)
+                default=TRUE)
             private$..missing <- jmvcore::OptionBool$new(
                 "missing",
                 missing,
@@ -98,11 +98,11 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..mean <- jmvcore::OptionBool$new(
                 "mean",
                 mean,
-                default=FALSE)
+                default=TRUE)
             private$..median <- jmvcore::OptionBool$new(
                 "median",
                 median,
-                default=FALSE)
+                default=TRUE)
             private$..mode <- jmvcore::OptionBool$new(
                 "mode",
                 mode,
@@ -146,7 +146,7 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..stddev <- jmvcore::OptionBool$new(
                 "stddev",
                 stddev,
-                default=FALSE)
+                default=TRUE)
             private$..geomsd <- jmvcore::OptionBool$new(
                 "geomsd",
                 geomsd,
@@ -190,11 +190,11 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..min <- jmvcore::OptionBool$new(
                 "min",
                 min,
-                default=FALSE)
+                default=TRUE)
             private$..max <- jmvcore::OptionBool$new(
                 "max",
                 max,
-                default=FALSE)
+                default=TRUE)
             private$..q1 <- jmvcore::OptionBool$new(
                 "q1",
                 q1,
@@ -505,7 +505,6 @@ bivmixResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivmixResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
         indicesnum = function() private$.items[["indicesnum"]],
         esindices = function() private$.items[["esindices"]],
         plots = function() private$.items[["plots"]]),
@@ -515,11 +514,7 @@ bivmixResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="text",
-                title="Mixed Data"))
+                title="Bivariate Data Analysis (Mixed Data)")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesnum",
@@ -684,7 +679,6 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   (continuous variables only)
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$indicesnum} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$esindices} \tab \tab \tab \tab \tab A table of different effect size indicators \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
@@ -701,10 +695,10 @@ bivmix <- function(
     data,
     vars,
     groupBy = NULL,
-    n = FALSE,
+    n = TRUE,
     missing = FALSE,
-    mean = FALSE,
-    median = FALSE,
+    mean = TRUE,
+    median = TRUE,
     mode = FALSE,
     geommean = FALSE,
     trimean = FALSE,
@@ -715,7 +709,7 @@ bivmix <- function(
     winsmean = FALSE,
     Win = 5,
     variance = FALSE,
-    stddev = FALSE,
+    stddev = TRUE,
     geomsd = FALSE,
     meandev = FALSE,
     cv = FALSE,
@@ -726,8 +720,8 @@ bivmix <- function(
     rcv = FALSE,
     irange = FALSE,
     NPerc = 90,
-    min = FALSE,
-    max = FALSE,
+    min = TRUE,
+    max = TRUE,
     q1 = FALSE,
     q2 = FALSE,
     q3 = FALSE,

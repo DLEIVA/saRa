@@ -142,7 +142,6 @@ bivnumResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivnumResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
         asocind = function() private$.items[["asocind"]],
         scat = function() private$.items[["scat"]]),
     private = list(),
@@ -151,11 +150,7 @@ bivnumResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="text",
-                title="Numerical Data"))
+                title="Bivariate Data Analysis (Numerical Data)")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="asocind",
@@ -300,7 +295,6 @@ bivnumBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   for the regression line
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
 #'   \code{results$scat} \tab \tab \tab \tab \tab an image \cr
 #' }

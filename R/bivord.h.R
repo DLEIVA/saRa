@@ -8,14 +8,14 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         initialize = function(
             rows = NULL,
             cols = NULL,
-            obs = FALSE,
+            obs = TRUE,
             pcRow = FALSE,
             pcCol = FALSE,
             pcTot = FALSE,
             gammaGK = FALSE,
-            tauKa = FALSE,
-            tauKb = FALSE,
-            tauKc = FALSE,
+            tauKa = TRUE,
+            tauKb = TRUE,
+            tauKc = TRUE,
             dSommerR = FALSE,
             dSommerC = FALSE,
             dSommerS = FALSE,
@@ -51,7 +51,7 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..obs <- jmvcore::OptionBool$new(
                 "obs",
                 obs,
-                default=FALSE)
+                default=TRUE)
             private$..pcRow <- jmvcore::OptionBool$new(
                 "pcRow",
                 pcRow,
@@ -71,15 +71,15 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..tauKa <- jmvcore::OptionBool$new(
                 "tauKa",
                 tauKa,
-                default=FALSE)
+                default=TRUE)
             private$..tauKb <- jmvcore::OptionBool$new(
                 "tauKb",
                 tauKb,
-                default=FALSE)
+                default=TRUE)
             private$..tauKc <- jmvcore::OptionBool$new(
                 "tauKc",
                 tauKc,
-                default=FALSE)
+                default=TRUE)
             private$..dSommerR <- jmvcore::OptionBool$new(
                 "dSommerR",
                 dSommerR,
@@ -210,7 +210,6 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivordResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
         freqs = function() private$.items[["freqs"]],
         desc = function() private$.items[["desc"]],
         asocind = function() private$.items[["asocind"]],
@@ -223,11 +222,7 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="text",
-                title="Ordinal Data"))
+                title="Bivariate Data Analysis (Ordinal Data)")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="freqs",
@@ -441,7 +436,6 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param alluvial \code{TRUE} or \code{FALSE} (default), show alluvial plots
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
 #'   \code{results$desc} \tab \tab \tab \tab \tab a table with a summary for all possible comparisons \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
@@ -461,14 +455,14 @@ bivord <- function(
     data,
     rows,
     cols,
-    obs = FALSE,
+    obs = TRUE,
     pcRow = FALSE,
     pcCol = FALSE,
     pcTot = FALSE,
     gammaGK = FALSE,
-    tauKa = FALSE,
-    tauKb = FALSE,
-    tauKc = FALSE,
+    tauKa = TRUE,
+    tauKb = TRUE,
+    tauKc = TRUE,
     dSommerR = FALSE,
     dSommerC = FALSE,
     dSommerS = FALSE,

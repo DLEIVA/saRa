@@ -7,22 +7,22 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             vars = NULL,
-            n = FALSE,
+            n = TRUE,
             missing = FALSE,
-            median = FALSE,
+            median = TRUE,
             mode = FALSE,
             trimean = FALSE,
             avquartile = FALSE,
             midrange = FALSE,
-            range = FALSE,
+            range = TRUE,
             iqr = FALSE,
             qd = FALSE,
             mad = FALSE,
             rcv = FALSE,
             irange = FALSE,
             NPerc = 90,
-            min = FALSE,
-            max = FALSE,
+            min = TRUE,
+            max = TRUE,
             q1 = FALSE,
             q2 = FALSE,
             q3 = FALSE,
@@ -58,7 +58,7 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..n <- jmvcore::OptionBool$new(
                 "n",
                 n,
-                default=FALSE)
+                default=TRUE)
             private$..missing <- jmvcore::OptionBool$new(
                 "missing",
                 missing,
@@ -66,7 +66,7 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..median <- jmvcore::OptionBool$new(
                 "median",
                 median,
-                default=FALSE)
+                default=TRUE)
             private$..mode <- jmvcore::OptionBool$new(
                 "mode",
                 mode,
@@ -86,7 +86,7 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..range <- jmvcore::OptionBool$new(
                 "range",
                 range,
-                default=FALSE)
+                default=TRUE)
             private$..iqr <- jmvcore::OptionBool$new(
                 "iqr",
                 iqr,
@@ -114,11 +114,11 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..min <- jmvcore::OptionBool$new(
                 "min",
                 min,
-                default=FALSE)
+                default=TRUE)
             private$..max <- jmvcore::OptionBool$new(
                 "max",
                 max,
-                default=FALSE)
+                default=TRUE)
             private$..q1 <- jmvcore::OptionBool$new(
                 "q1",
                 q1,
@@ -312,7 +312,6 @@ ordSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "ordSummaryResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
         indicesord = function() private$.items[["indicesord"]],
         plots = function() private$.items[["plots"]]),
     private = list(),
@@ -321,11 +320,7 @@ ordSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Univariate Data Analysis")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="text",
-                title="Ordinal Data"))
+                title="Univariate Data Analysis (Ordinal Data)")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesord",
@@ -432,7 +427,6 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   fence for detecting outliers
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$indicesord} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }
@@ -447,22 +441,22 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 ordSummary <- function(
     data,
     vars,
-    n = FALSE,
+    n = TRUE,
     missing = FALSE,
-    median = FALSE,
+    median = TRUE,
     mode = FALSE,
     trimean = FALSE,
     avquartile = FALSE,
     midrange = FALSE,
-    range = FALSE,
+    range = TRUE,
     iqr = FALSE,
     qd = FALSE,
     mad = FALSE,
     rcv = FALSE,
     irange = FALSE,
     NPerc = 90,
-    min = FALSE,
-    max = FALSE,
+    min = TRUE,
+    max = TRUE,
     q1 = FALSE,
     q2 = FALSE,
     q3 = FALSE,
