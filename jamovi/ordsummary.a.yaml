@@ -23,7 +23,7 @@ options:
     - name: n
       title: N
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide the N
@@ -39,7 +39,7 @@ options:
     - name: median
       title: Median
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide the median
@@ -79,7 +79,7 @@ options:
     - name: range
       title: Range
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide the range
@@ -136,7 +136,7 @@ options:
     - name: min
       title: Minimum
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide the minimum
@@ -144,7 +144,7 @@ options:
     - name: max
       title: Maximum
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide the maximum
