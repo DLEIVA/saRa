@@ -15,7 +15,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             "mode","VR","Blau","Teachman","IQV"
           ),
           title = c(
-            "Mode","Variation Ratio","Blau","Teachman","IQV"
+            "Mode","Variation ratio","Blau","Teachman","IQV"
           ),
           superTitle = c(
             "","","","",""

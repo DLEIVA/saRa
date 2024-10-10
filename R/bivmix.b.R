@@ -22,16 +22,16 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "h1","h3","beta2","gamma2","k2","k3"
         ),
         title = c(
-          "N", "Missing","Mean", "Median", "Mode", "Geometric Mean", "Trimean",
-          "Quartiles' Average", "Mid-Range", 
+          "N", "Missing","Mean", "Median", "Mode", "Geometric mean", "Trimean",
+          "Quartiles' average", "Mid-range", 
           paste0(ifelse(!is.na(private$.getTrim()*100),
-                        private$.getTrim()*100,''),'% Trimmed Mean'),
+                        private$.getTrim()*100,''),'% trimmed mean'),
           paste0(ifelse(!is.na(private$.getWin()*100),
-                        private$.getWin()*100,''),'% Winsorized Mean'),
-          "Variance","Standard Deviation", "Geometric Standard Deviation",
-          "Mean Deviation","CV", "Range", "IQR", "QD", "MAD", 
+                        private$.getWin()*100,''),'% winsorized mean'),
+          "Variance","Standard deviation", "Geometric standard deviation",
+          "Mean deviation","CV", "Range", "IQR", "QD", "MAD", 
           "rCV", paste0(ifelse(!is.na(private$.getNPerc()*100),
-                               private$.getNPerc()*100,''),'% Inner Range'),
+                               private$.getNPerc()*100,''),'% Inner range'),
           "Min", "Max", "Q1", "Q2", "Q3", "Pearson's \u03B2\u2081",
           "Fisher's \u03B3\u2081","H1","H3","Pearson's \u03B2\u2082",
           "Fisher's \u03B3\u2082","K2","K3"

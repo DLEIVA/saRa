@@ -151,7 +151,7 @@ options:
             `TRUE` or `FALSE` (default), provides the standard deviation
 
     - name: geomsd
-      title: Geometric Standard Deviation
+      title: Geometric standard deviation
       type: Bool
       default: false
       description:

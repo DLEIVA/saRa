@@ -16,7 +16,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "range", "iqr", "qd", "mad", "rcv", "min", "max", "q1", "q2", "q3", "h1","h3","k2","k3"
         ),
         title = c(
-          "N", "Missing", "Median", "Mode", "Trimean", "Quartiles' Average", "Mid-Range",
+          "N", "Missing", "Median", "Mode", "Trimean", "Quartiles' average", "Mid-range",
           "Range", "IQR", "QD", "MAD", "rCV", "Min", "Max", "Q1", "Q2", "Q3", "H1","H3","K2","K3"
         ),
         superTitle = rep("",21),
@@ -192,7 +192,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         group <- plots$get(var)
         column <- data[[var]]
         
-        if(!is.ordered(column))
+        if(!is.ordered(column) & !is.numeric(column))
           stop(paste0("The variable ", var,
                       " cannot be treated as ordinal. 
                       Plots that expect ordinal data will not be created for this variable."))
@@ -395,7 +395,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('perc', 1:npcValues), after = 17)
-          private$colArgs$title <- append(colArgs$title, paste0(round(pcValues * 100, 2), ('th Pct')), after = 17)
+          private$colArgs$title <- append(colArgs$title, paste0(round(pcValues * 100, 2), ('th pct')), after = 17)
           private$colArgs$type <- append(colArgs$type, rep('number', npcValues), after = 17)
           private$colArgs$visible <- append(colArgs$visible, rep("(pc)", npcValues), after = 17)
         }
@@ -408,7 +408,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('ir'), after = 12)
-          private$colArgs$title <- append(colArgs$title, paste0(NPerc, ('% Inner Range')), after = 12)
+          private$colArgs$title <- append(colArgs$title, paste0(NPerc, ('% Inner range')), after = 12)
           private$colArgs$type <- append(colArgs$type, rep('number', nNPerc), after = 12)
           private$colArgs$visible <- append(colArgs$visible, rep("(irange)", nNPerc), after = 12)
         }

@@ -36,10 +36,10 @@ options:
     - name: obs
       title: Observed counts
       type: Bool
-      default: false
+      default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the observed counts
+            `TRUE` (default) or `FALSE`, provide the observed counts
     - name: exp
       title: Expected counts
       type: Bool
@@ -72,10 +72,10 @@ options:
     - name: chiSq
       title: "\u03c7\u00B2 index"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Chi Squared
+            `TRUE` (default) or `FALSE`, provide Chi Squared
 
     - name: phiind
       title: "\u03c6 index"
@@ -104,10 +104,10 @@ options:
     - name: craV
       title: "Cramér's V index"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Cramér's V index   
+            `TRUE` (default) or `FALSE`, provide Cramér's V index   
 
     - name: chuprov
       title: "Chuprov's index"
@@ -168,10 +168,10 @@ options:
     - name: lambdaGKsym
       title: "Goodman-Kruskal \u03BB (symmetric)"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal lambda prediction error index (symmetric)            
+            `TRUE` (default) or `FALSE`, provide Goodman and Kruskal lambda prediction error index (symmetric)            
 
     - name: tauGKab
       title: "Goodman-Kruskal \u03C4 (A/B)"
@@ -192,10 +192,10 @@ options:
     - name: tauGKsym
       title: "Goodman-Kruskal \u03C4 (symmetric)"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal tau prediction error index (symmetric)            
+            `TRUE` (default) or `FALSE`, provide Goodman and Kruskal tau prediction error index (symmetric)            
 
     - name: theilab
       title: "Theil's index (A/B)"
@@ -216,10 +216,10 @@ options:
     - name: theilsym
       title: "Theil's index (symmetric)"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Theil's tau prediction error index (symmetric)       
+            `TRUE` (default) or `FALSE`, provide Theil's tau prediction error index (symmetric)       
 
     - name: barplot
       title: Bar plot

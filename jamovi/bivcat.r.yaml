@@ -1,17 +1,14 @@
 ---
 name:  bivcat
-title: Bivariate Data Analysis
+title: Bivariate Data Analysis (Categorical Data)
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Categorical Data
-      type:  Preformatted
 
     - name: freqs
       title: Contingency Tables
       type: Table
-      description: a table of proportions
+      description: A frequencies table
       columns: [ ]
       clearWith:
         - rows
@@ -56,7 +53,7 @@ items:
         - name: t[contCoef]
           title: ''
           type: text
-          content: "Contingency Index"
+          content: "Contingency index"
           visible: (contCoef)
         
         - name: v[contCoef]
@@ -76,7 +73,7 @@ items:
         - name: t[chuprov]
           title: ''
           type: text
-          content: "Chuprov's Index"
+          content: "Chuprov's index"
           visible: (chuprov)
         
         - name: v[chuprov]
@@ -86,7 +83,7 @@ items:
         - name: t[sakoda]
           title: ''
           type: text
-          content: "Sakoda's Index"
+          content: "Sakoda's index"
           visible: (sakoda)
           
         - name: v[sakoda]
@@ -96,7 +93,7 @@ items:
         - name: t[Qyule]
           title: ''
           type: text
-          content: "Yule's Q Index"
+          content: "Yule's Q index"
           visible: (Qyule)
       
         - name: v[Qyule]
@@ -106,7 +103,7 @@ items:
         - name: t[Yyule]
           title: ''
           type: text
-          content: "Yule's Y Index"
+          content: "Yule's Y index"
           visible: (Yyule)
       
         - name: v[Yyule]
@@ -116,7 +113,7 @@ items:
         - name: t[Vyule]
           title: ''
           type: text
-          content: "Yule's V Index"
+          content: "Yule's V index"
           visible: (Vyule)
       
         - name: v[Vyule]

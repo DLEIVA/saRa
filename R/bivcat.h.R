@@ -8,16 +8,16 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         initialize = function(
             rows = NULL,
             cols = NULL,
-            obs = FALSE,
+            obs = TRUE,
             exp = FALSE,
             pcRow = FALSE,
             pcCol = FALSE,
             pcTot = FALSE,
-            chiSq = FALSE,
+            chiSq = TRUE,
             phiind = FALSE,
             phiSq = FALSE,
             contCoef = FALSE,
-            craV = FALSE,
+            craV = TRUE,
             chuprov = FALSE,
             sakoda = FALSE,
             Qyule = FALSE,
@@ -25,13 +25,13 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             Vyule = FALSE,
             lambdaGKab = FALSE,
             lambdaGKba = FALSE,
-            lambdaGKsym = FALSE,
+            lambdaGKsym = TRUE,
             tauGKab = FALSE,
             tauGKba = FALSE,
-            tauGKsym = FALSE,
+            tauGKsym = TRUE,
             theilab = FALSE,
             theilba = FALSE,
-            theilsym = FALSE,
+            theilsym = TRUE,
             barplot = FALSE,
             yaxis = "ycounts",
             yaxisPc = "total_pc",
@@ -62,7 +62,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..obs <- jmvcore::OptionBool$new(
                 "obs",
                 obs,
-                default=FALSE)
+                default=TRUE)
             private$..exp <- jmvcore::OptionBool$new(
                 "exp",
                 exp,
@@ -82,7 +82,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..chiSq <- jmvcore::OptionBool$new(
                 "chiSq",
                 chiSq,
-                default=FALSE)
+                default=TRUE)
             private$..phiind <- jmvcore::OptionBool$new(
                 "phiind",
                 phiind,
@@ -98,7 +98,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..craV <- jmvcore::OptionBool$new(
                 "craV",
                 craV,
-                default=FALSE)
+                default=TRUE)
             private$..chuprov <- jmvcore::OptionBool$new(
                 "chuprov",
                 chuprov,
@@ -130,7 +130,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..lambdaGKsym <- jmvcore::OptionBool$new(
                 "lambdaGKsym",
                 lambdaGKsym,
-                default=FALSE)
+                default=TRUE)
             private$..tauGKab <- jmvcore::OptionBool$new(
                 "tauGKab",
                 tauGKab,
@@ -142,7 +142,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..tauGKsym <- jmvcore::OptionBool$new(
                 "tauGKsym",
                 tauGKsym,
-                default=FALSE)
+                default=TRUE)
             private$..theilab <- jmvcore::OptionBool$new(
                 "theilab",
                 theilab,
@@ -154,7 +154,7 @@ bivcatOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..theilsym <- jmvcore::OptionBool$new(
                 "theilsym",
                 theilsym,
-                default=FALSE)
+                default=TRUE)
             private$..barplot <- jmvcore::OptionBool$new(
                 "barplot",
                 barplot,
@@ -298,7 +298,6 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "bivcatResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
         freqs = function() private$.items[["freqs"]],
         asocind = function() private$.items[["asocind"]],
         errorind = function() private$.items[["errorind"]],
@@ -310,11 +309,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="text",
-                title="Categorical Data"))
+                title="Bivariate Data Analysis (Categorical Data)")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="freqs",
@@ -363,7 +358,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[contCoef]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Contingency Index", 
+                        `content`="Contingency index", 
                         `visible`="(contCoef)"),
                     list(
                         `name`="v[contCoef]", 
@@ -383,7 +378,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[chuprov]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Chuprov's Index", 
+                        `content`="Chuprov's index", 
                         `visible`="(chuprov)"),
                     list(
                         `name`="v[chuprov]", 
@@ -393,7 +388,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[sakoda]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Sakoda's Index", 
+                        `content`="Sakoda's index", 
                         `visible`="(sakoda)"),
                     list(
                         `name`="v[sakoda]", 
@@ -403,7 +398,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[Qyule]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Yule's Q Index", 
+                        `content`="Yule's Q index", 
                         `visible`="(Qyule)"),
                     list(
                         `name`="v[Qyule]", 
@@ -413,7 +408,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[Yyule]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Yule's Y Index", 
+                        `content`="Yule's Y index", 
                         `visible`="(Yyule)"),
                     list(
                         `name`="v[Yyule]", 
@@ -423,7 +418,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[Vyule]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Yule's V Index", 
+                        `content`="Yule's V index", 
                         `visible`="(Vyule)"),
                     list(
                         `name`="v[Vyule]", 
@@ -583,7 +578,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   necessary when providing a formula, see the examples)
 #' @param cols the variable to use as the columns in the contingency table
 #'   (not necessary when providing a formula, see the examples)
-#' @param obs \code{TRUE} or \code{FALSE} (default), provide the observed
+#' @param obs \code{TRUE} (default) or \code{FALSE}, provide the observed
 #'   counts
 #' @param exp \code{TRUE} or \code{FALSE} (default), provide the expected
 #'   counts
@@ -592,14 +587,14 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   percentages
 #' @param pcTot \code{TRUE} or \code{FALSE} (default), provide total
 #'   percentages
-#' @param chiSq \code{TRUE} or \code{FALSE} (default), provide Chi Squared
+#' @param chiSq \code{TRUE} (default) or \code{FALSE}, provide Chi Squared
 #' @param phiind \code{TRUE} or \code{FALSE} (default), provide Pearson's
 #'   \u03c6
 #' @param phiSq \code{TRUE} or \code{FALSE} (default), provide Pearson's
 #'   \u03c6\u00B2
 #' @param contCoef \code{TRUE} or \code{FALSE} (default), provide Pearson's
 #'   contingency index
-#' @param craV \code{TRUE} or \code{FALSE} (default), provide Cramér's V index
+#' @param craV \code{TRUE} (default) or \code{FALSE}, provide Cramér's V index
 #' @param chuprov \code{TRUE} or \code{FALSE} (default), provide Chuprov's
 #'   index
 #' @param sakoda \code{TRUE} or \code{FALSE} (default), provide Sakoda's index
@@ -613,19 +608,19 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   and Kruskal lambda prediction error index (dependent variable by rows)
 #' @param lambdaGKba \code{TRUE} or \code{FALSE} (default), provide Goodman
 #'   and Kruskal lambda prediction error index (dependent variable by columns)
-#' @param lambdaGKsym \code{TRUE} or \code{FALSE} (default), provide Goodman
+#' @param lambdaGKsym \code{TRUE} (default) or \code{FALSE}, provide Goodman
 #'   and Kruskal lambda prediction error index (symmetric)
 #' @param tauGKab \code{TRUE} or \code{FALSE} (default), provide Goodman and
 #'   Kruskal tau prediction error index (dependent variable by rows)
 #' @param tauGKba \code{TRUE} or \code{FALSE} (default), provide Goodman and
 #'   Kruskal tau prediction error index (dependent variable by columns)
-#' @param tauGKsym \code{TRUE} or \code{FALSE} (default), provide Goodman and
+#' @param tauGKsym \code{TRUE} (default) or \code{FALSE}, provide Goodman and
 #'   Kruskal tau prediction error index (symmetric)
 #' @param theilab \code{TRUE} or \code{FALSE} (default), provide Theil's
 #'   prediction error index (dependent variable by rows)
 #' @param theilba \code{TRUE} or \code{FALSE} (default), provide Theil's
 #'   prediction error index (dependent variable by columns)
-#' @param theilsym \code{TRUE} or \code{FALSE} (default), provide Theil's tau
+#' @param theilsym \code{TRUE} (default) or \code{FALSE}, provide Theil's tau
 #'   prediction error index (symmetric)
 #' @param barplot \code{TRUE} or \code{FALSE} (default), show barplots
 #' @param yaxis ycounts (default) or ypc. Use respectively \code{counts} or
@@ -638,8 +633,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param mosaicplot \code{TRUE} or \code{FALSE} (default), show mosaicplots
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
+#'   \code{results$freqs} \tab \tab \tab \tab \tab A frequencies table \cr
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr
 #'   \code{results$errorind} \tab \tab \tab \tab \tab A table of different prediction error indicators \cr
 #'   \code{results$mosaicplot} \tab \tab \tab \tab \tab an image \cr
@@ -657,16 +651,16 @@ bivcat <- function(
     data,
     rows,
     cols,
-    obs = FALSE,
+    obs = TRUE,
     exp = FALSE,
     pcRow = FALSE,
     pcCol = FALSE,
     pcTot = FALSE,
-    chiSq = FALSE,
+    chiSq = TRUE,
     phiind = FALSE,
     phiSq = FALSE,
     contCoef = FALSE,
-    craV = FALSE,
+    craV = TRUE,
     chuprov = FALSE,
     sakoda = FALSE,
     Qyule = FALSE,
@@ -674,13 +668,13 @@ bivcat <- function(
     Vyule = FALSE,
     lambdaGKab = FALSE,
     lambdaGKba = FALSE,
-    lambdaGKsym = FALSE,
+    lambdaGKsym = TRUE,
     tauGKab = FALSE,
     tauGKba = FALSE,
-    tauGKsym = FALSE,
+    tauGKsym = TRUE,
     theilab = FALSE,
     theilba = FALSE,
-    theilsym = FALSE,
+    theilsym = TRUE,
     barplot = FALSE,
     yaxis = "ycounts",
     yaxisPc = "total_pc",

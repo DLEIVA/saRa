@@ -152,9 +152,8 @@ catSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "catSummaryResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]],
-        frequencies = function() private$.items[["frequencies"]],
         indices = function() private$.items[["indices"]],
+        frequencies = function() private$.items[["frequencies"]],
         plots = function() private$.items[["plots"]]),
     private = list(),
     public=list(
@@ -162,11 +161,14 @@ catSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Univariate Data Analysis")
-            self$add(jmvcore::Preformatted$new(
+                title="Univariate Data Analysis (Categorical Data)")
+            self$add(jmvcore::Table$new(
                 options=options,
-                name="text",
-                title="Categorical Data"))
+                name="indices",
+                title="Descriptives",
+                visible="(mode || VR || Blau || Teachman || IQV)",
+                rows=1,
+                columns=list()))
             self$add(jmvcore::Array$new(
                 options=options,
                 name="frequencies",
@@ -178,13 +180,6 @@ catSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     title="Frequencies and Odds of $key",
                     visible="(levels($key))",
                     columns=list())))
-            self$add(jmvcore::Table$new(
-                options=options,
-                name="indices",
-                title="Descriptives",
-                visible="(mode || VR || Blau || Teachman || IQV)",
-                rows=1,
-                columns=list()))
             self$add(jmvcore::Array$new(
                 options=options,
                 name="plots",
@@ -251,9 +246,8 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param dough \code{TRUE} or \code{FALSE} (default), provide doughnut charts
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$frequencies} \tab \tab \tab \tab \tab Frequencies Distribution \cr
 #'   \code{results$indices} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
+#'   \code{results$frequencies} \tab \tab \tab \tab \tab Frequencies Distribution \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }
 #'
