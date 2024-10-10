@@ -22,7 +22,7 @@ options:
     - name: freq
       title: Frequency and odds tables
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide frequency tables (nominal, ordinal
