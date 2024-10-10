@@ -262,16 +262,13 @@ children:
                 name: boxMean
                 enable: (box || violin || dot)
               - type: LayoutBox
-                margin: large
+                margin: small
                 children:
                   - type: TextBox
                     name: innerf
                     format: number
-                    enable: (box || dot)
-              - type: LayoutBox
-                margin: large
-                children:
+                    enable: (dot)
                   - type: TextBox
                     name: outerf
                     format: number
-                    enable: (box || dot)
+                    enable: (dot)
