@@ -1,25 +1,9 @@
 ---
 name:  catSummary
-title: Univariate Data Analysis
+title: Univariate Data Analysis (Categorical Data)
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Categorical Data
-      type:  Preformatted
-
-    - name: frequencies
-      title: Frequencies distribution
-      type: Array
-      description: Frequencies Distribution
-      visible: (freq)
-
-      items: (vars)
-      template:
-          title: Frequencies and Odds of $key
-          type: Table
-          visible: (levels($key))
-          columns: []
     - name: indices
       title: Descriptives
       description: A table of the descriptive statistics
@@ -27,6 +11,18 @@ items:
       type: Table
       rows: 1
       columns: []
+    - name: frequencies
+      title: Frequencies distribution
+      type: Array
+      description: Frequencies Distribution
+      visible: (freq)
+      items: (vars)
+      template:
+          title: Frequencies and Odds of $key
+          type: Table
+          visible: (levels($key))
+          columns: []
+      
     - name: plots
       title: Plots
       type: Array

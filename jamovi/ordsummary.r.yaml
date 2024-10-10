@@ -1,13 +1,9 @@
 ---
 name:  ordSummary
-title: Univariate Data Analysis
+title: Univariate Data Analysis (Ordinal Data)
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Ordinal Data
-      type:  Preformatted
-
     - name: indicesord
       title: Statistics
       description: A table of the descriptive statistics
