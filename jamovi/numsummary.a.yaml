@@ -23,7 +23,7 @@ options:
     - name: n
       title: N
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provides the N
@@ -39,7 +39,7 @@ options:
     - name: mean
       title: Mean
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provides the mean
@@ -135,7 +135,7 @@ options:
     - name: stddev
       title: Standard deviation
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provides the standard deviation
@@ -223,7 +223,7 @@ options:
     - name: min
       title: Minimum
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provides the minimum
@@ -231,7 +231,7 @@ options:
     - name: max
       title: Maximum
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provides the maximum
