@@ -1,13 +1,9 @@
 ---
 name:  bivord
-title: Bivariate Data Analysis
+title: Bivariate Data Analysis (Ordinal Data)
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Ordinal Data
-      type:  Preformatted
-
     - name: freqs
       title: Contingency Tables
       type: Table
