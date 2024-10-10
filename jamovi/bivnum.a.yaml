@@ -42,7 +42,7 @@ options:
     - name: pearsonR
       title: "Pearson's correlation"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Pearson's correlation for numeric variables.
@@ -50,7 +50,7 @@ options:
     - name: spearmanR
       title: "Spearman's correlation"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Spearman's correlation for numeric variables.
@@ -58,7 +58,7 @@ options:
     - name: tauK
       title: "Kendall's correlation"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide Kendall's tau-b association index for numeric variables.
