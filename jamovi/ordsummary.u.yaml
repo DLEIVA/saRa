@@ -184,15 +184,12 @@ children:
                     name: boxMean
                     enable: (box || violin || dot)
                   - type: LayoutBox
-                    margin: large
+                    margin: small
                     children:
                       - type: TextBox
                         name: innerf
                         format: number
                         enable: (dot)
-                  - type: LayoutBox
-                    margin: large
-                    children:
                       - type: TextBox
                         name: outerf
                         format: number
