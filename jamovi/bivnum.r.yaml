@@ -1,13 +1,9 @@
 ---
 name:  bivnum
-title: Bivariate Data Analysis
+title: Bivariate Data Analysis (Numerical Data)
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Numerical Data
-      type:  Preformatted
-      
     - name: asocind
       title: Association Indices
       description: A table of different bivariate association indicators
