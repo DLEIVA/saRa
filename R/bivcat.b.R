@@ -429,7 +429,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       width <- 450
       height <- 400
       
-      image$setSize(width * 3, height*1.5)
+      image$setSize(width * 1.5, height*1.5)
     },    
     .barPlot = function(image, ggtheme, theme, ...) {
       
@@ -537,7 +537,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         xVarName <- rowVarName
         zVarName <- colVarName
       }
-      
+      par(mar=c(0,0,0,0))
       vcd::mosaic(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))),
                        gp= vcd::shading_Friendly2(interpolate = c(-4,-2,2,4)),
                        split_vertical=FALSE)
