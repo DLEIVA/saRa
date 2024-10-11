@@ -379,6 +379,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       image$setSize(width * 2, height)
     },
     .initAlluvial = function() {
+      library(ggalluvial)
       image <- self$results$get('alluvial')
       
       width <- 450
@@ -440,29 +441,29 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       if (self$options$yaxis == "ycounts") {
         if (position!='dodge') {
-          p <- ggplot(data=tab, aes_string(y="Counts", x=xVarName, fill=zVarName)) +
-            geom_col(position=position, width = 0.7)
+          p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Counts", x=xVarName, fill=zVarName)) +
+            ggplot2::geom_col(position=position, width = 0.7)
         } else {
-          p <- ggplot(data=tab, aes_string(y="Counts", x=xVarName, fill=zVarName,
+          p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Counts", x=xVarName, fill=zVarName,
                                            label='Counts')) +
-            geom_col(position=position, width = 0.7)  +
-            geom_text(position = position_dodge(.7), 
+            ggplot2::geom_col(position=position, width = 0.7)  +
+            ggplot2::geom_text(position = ggplot2::position_dodge(.7), 
                       vjust = -0.5, 
                       size = 4)         
         }
       } else {
-        if (position!='dodge') {p <- ggplot(data=tab, aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
-          geom_col(position=position, width = 0.7)} else {
-            p <- ggplot(data=tab, aes_string(y="Percentages", x=xVarName, fill=zVarName,label='Perc')) +
-              geom_col(position=position, width = 0.7) +
-              geom_text(position = position_dodge(.7), 
+        if (position!='dodge') {p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
+          ggplot2::geom_col(position=position, width = 0.7)} else {
+            p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Percentages", x=xVarName, fill=zVarName,label='Perc')) +
+              ggplot2::geom_col(position=position, width = 0.7) +
+              ggplot2::geom_text(position = ggplot2::position_dodge(.7), 
                         vjust = -0.5, 
                         size = 4)}
         
         if (self$options$yaxisPc == "total_pc") {
-          p <- p + labs(y = "Percentages of total")
+          p <- p + ggplot2::labs(y = "Percentages of total")
         } else {
-          p <- p + labs(y = paste0("Percentages within ", pctVarName))
+          p <- p + ggplot2::labs(y = paste0("Percentages within ", pctVarName))
         }
       }
       
@@ -494,17 +495,16 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       }
       
       tabla <- as.data.frame(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))))
-      p <- ggplot(tabla,aes_string(xVarName,zVarName)) +
-        geom_tile(aes(fill = Freq), colour ="black") +
-        scale_fill_gradient(low='white',high='steelblue') + theme_bw() +
-        theme(axis.text.x=element_text(size=13),
-              axis.text.y=element_text(size=13),
-              axis.title.x = element_text(size=14),
-              axis.title.y = element_text(size=14))
+      p <- ggplot2::ggplot(tabla,ggplot2::aes_string(xVarName,zVarName)) +
+        ggplot2::geom_tile(aes(fill = Freq), colour ="black") +
+        ggplot2::scale_fill_gradient(low='white',high='steelblue') + ggplot2::theme_bw() +
+        ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
+              axis.text.y=ggplot2::element_text(size=13),
+              axis.title.x = ggplot2::element_text(size=14),
+              axis.title.y = ggplot2::element_text(size=14))
       return(p)
     },
     .alluvial =  function(image, ...) {
-      library(ggalluvial)
       if (! self$options$alluvial)
         return()
       
@@ -527,18 +527,18 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       }
       
       tabla <- as.data.frame(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))))
-      p <- ggplot(data = tabla,
-             aes_string(axis1 = xVarName,axis2 = zVarName, y = "Freq")) +
-        scale_x_discrete(limits = c(xVarName, zVarName), expand = c(.2, .05)) +
-        scale_fill_gradient(low = "white", high = "steelblue") +
-        geom_alluvium(aes(fill = Freq)) +
-        geom_stratum() +
-        geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
-        theme_bw() +
-        theme(axis.text.x=element_text(size=13),
-              axis.text.y=element_text(size=13),
-              axis.title.x = element_text(size=14),
-              axis.title.y = element_text(size=14))
+      p <- ggplot2::ggplot(data = tabla,
+                           ggplot2::aes_string(axis1 = xVarName,axis2 = zVarName, y = "Freq")) +
+        ggplot2::scale_x_discrete(limits = c(xVarName, zVarName), expand = c(.2, .05)) +
+        ggplot2::scale_fill_gradient(low = "white", high = "steelblue") +
+        ggalluvial::geom_alluvium(aes(fill = Freq)) +
+        ggalluvial::geom_stratum() +
+        ggplot2::geom_text(stat = "stratum", ggplot2::aes(label = ggplot2::after_stat(stratum))) +
+        ggplot2::theme_bw() +
+        ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
+              axis.text.y=ggplot2::element_text(size=13),
+              axis.title.x = ggplot2::element_text(size=14),
+              axis.title.y = ggplot2::element_text(size=14))
       return(p)
     },
     #### Helper functions ----
