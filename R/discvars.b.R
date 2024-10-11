@@ -234,7 +234,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
                 phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
         
-        p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x==k))) +
+        p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x==k))) +
           ggplot2::geom_col() + 
           ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
@@ -294,7 +294,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
             phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})        
 
-        p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x<=k))) +
+        p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x<=k))) +
           ggplot2::geom_col() + 
           ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
@@ -354,7 +354,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
             phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
         
-        p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x>k))) +
+        p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x>k))) +
           ggplot2::geom_col() + 
           ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
@@ -423,7 +423,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
             phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
         
-        p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x>=k1 & x<=k2))) +
+        p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x>=k1 & x<=k2))) +
           ggplot2::geom_col() + 
           ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
@@ -495,11 +495,11 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               } else if(distros=='geom'){qgeom(quant1,p)} else if(distros=='hypergeom'){
                 qhyper(quant1,self$options$hyperm,self$options$hypern,self$options$hyperk)}
           q1 <- qs
-          p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==q1))) +
-            geom_col() + 
-            scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-            scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-            ggtitle(TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,'$')))          
+          p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x==q1))) +
+            ggplot2::geom_col() + 
+            ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
+            ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
+            ggplot2::ggtitle(latex2exp::TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,'$')))          
         }  else if(tail=='right'){
           quant1 <- 1-q
           qs <- if(distros=='binom'){
@@ -509,11 +509,11 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               } else if(distros=='geom'){qgeom(quant1,p)} else if(distros=='hypergeom'){
                 qhyper(quant1,self$options$hyperm,self$options$hypern,self$options$hyperk)}
           q1 <- qs
-          p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==q1))) +
-            geom_col() + 
-            scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-            scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-            ggtitle(TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,'$')))          
+          p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x==q1))) +
+            ggplot2::geom_col() + 
+            ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
+            ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
+            ggplot2::ggtitle(latex2exp::TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,'$')))          
         } else if(tail=='central'){
           quant1 <- (1-q)/2
           quant2 <- 1-(1-q)/2
@@ -526,11 +526,11 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 qhyper(c(quant1,quant2),self$options$hyperm,self$options$hypern,self$options$hyperk)}
           q1 <- qs[1]
           q2 <- qs[2]
-          p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x==q1 | x==q2))) +
+          p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x==q1 | x==q2))) +
             ggplot2::geom_col() + 
             ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
             ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-            ggplot2::ggtitle(TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,
+            ggplot2::ggtitle(latex2exp::TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,
                                ' \\phantom{xx} ','Q_{',quant2,'} = ',q2,'$')))        
         }        
         

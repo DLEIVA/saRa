@@ -309,7 +309,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           column <- data[[names$x]]
           outdata <- private$.getOUTLIERS(column)
           plot <- plot +
-            ggplot2::geom_jitter(aes(color=outdata,shape=outdata), width=0.05, ggplot2::alpha=0.6, size=3
+            ggplot2::geom_jitter(aes(color=outdata,shape=outdata), width=0.05, alpha=0.6, size=3
             ) +
             ggplot2::guides(color='none',shape='none')
         } else if (self$options$dotType == 'stack') {
