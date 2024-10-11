@@ -253,8 +253,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       labels <- image$state$labels
       type <- image$state$type
       freqtype <- image$state$freqtype
-      fill <- ggplot2::theme$fill[2]
-      color <- ggplot2::theme$color[1]
+      fill <- theme$fill[2]
+      color <- theme$color[1]
       pd <- ggplot2::position_dodge(0.85)
       plotSpecificTheme <- NULL
       
@@ -270,7 +270,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') 'Counts' else
           'Percentages')
       
-      plot <- plot + ggplot2::ggtheme + plotSpecificTheme
+      plot <- plot + ggtheme + plotSpecificTheme
       return(plot)
     },
     .boxPlot = function(image, ggtheme, theme, ...) {
@@ -285,8 +285,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       column <- data[[names$x]]
       outdata <- private$.getOUTLIERS(column)
       
-      fill <- ggplot2::theme$fill[2]
-      color <- ggplot2::theme$color[2]
+      fill <- theme$fill[2]
+      color <- theme$color[2]
       
       themeSpec <- NULL
       
@@ -295,7 +295,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       plot <- ggplot2::ggplot(data=data, aes_string(x=x, y=names$x)) +
         ggplot2::labs(x='', y=labels$x) +
-        ggplot2::scale_y_continuous(breaks=pretty_breaks())
+        ggplot2::scale_y_continuous(breaks=scales::pretty_breaks())
       
       if (self$options$violin) {
         plot <- plot +
@@ -309,7 +309,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           column <- data[[names$x]]
           outdata <- private$.getOUTLIERS(column)
           plot <- plot +
-            ggplot2::geom_jitter(aes(color=outdata,shape=outdata), width=0.05, alpha=0.6, size=3
+            ggplot2::geom_jitter(aes(color=outdata,shape=outdata), width=0.05, ggplot2::alpha=0.6, size=3
             ) +
             ggplot2::guides(color='none',shape='none')
         } else if (self$options$dotType == 'stack') {
@@ -358,9 +358,9 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           )
       }
       
-      themeSpec <- list(ggplot2::theme(axis.text.x=element_blank(),
-                              axis.ticks.x=element_blank(),
-                              axis.title.x=element_blank()),
+      themeSpec <- list(ggplot2::theme(axis.text.x=ggplot2::element_blank(),
+                              axis.ticks.x=ggplot2::element_blank(),
+                              axis.title.x=ggplot2::element_blank()),
                         ggplot2::scale_colour_manual(name = 'out', 
                                             values = setNames(c('red','blue','grey'),c('extreme','anom','normal'))),
                         ggplot2::scale_shape_manual(name = 'out',
@@ -369,7 +369,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                           values = setNames(c('red','blue','grey'),c('extreme','anom','normal'))))
       
       
-      plot <- plot + ggplot2::ggtheme + themeSpec
+      plot <- plot + ggtheme + themeSpec
       
       return(plot)
     },
