@@ -9,9 +9,9 @@ bivnumOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             xvar = NULL,
             yvar = NULL,
             covar = FALSE,
-            pearsonR = FALSE,
-            spearmanR = FALSE,
-            tauK = FALSE,
+            pearsonR = TRUE,
+            spearmanR = TRUE,
+            tauK = TRUE,
             pearsonR2 = FALSE,
             spearmanR2 = FALSE,
             kendallR2 = FALSE,
@@ -47,15 +47,15 @@ bivnumOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..pearsonR <- jmvcore::OptionBool$new(
                 "pearsonR",
                 pearsonR,
-                default=FALSE)
+                default=TRUE)
             private$..spearmanR <- jmvcore::OptionBool$new(
                 "spearmanR",
                 spearmanR,
-                default=FALSE)
+                default=TRUE)
             private$..tauK <- jmvcore::OptionBool$new(
                 "tauK",
                 tauK,
-                default=FALSE)
+                default=TRUE)
             private$..pearsonR2 <- jmvcore::OptionBool$new(
                 "pearsonR2",
                 pearsonR2,
@@ -311,9 +311,9 @@ bivnum <- function(
     xvar,
     yvar,
     covar = FALSE,
-    pearsonR = FALSE,
-    spearmanR = FALSE,
-    tauK = FALSE,
+    pearsonR = TRUE,
+    spearmanR = TRUE,
+    tauK = TRUE,
     pearsonR2 = FALSE,
     spearmanR2 = FALSE,
     kendallR2 = FALSE,
