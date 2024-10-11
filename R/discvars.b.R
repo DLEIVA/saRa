@@ -534,7 +534,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                ' \\phantom{xx} ','Q_{',quant2,'} = ',q2,'$')))        
         }        
         
-        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + theme_classic() +
+        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),

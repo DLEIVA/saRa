@@ -253,24 +253,24 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       labels <- image$state$labels
       type <- image$state$type
       freqtype <- image$state$freqtype
-      fill <- theme$fill[2]
-      color <- theme$color[1]
-      pd <- position_dodge(0.85)
+      fill <- ggplot2::theme$fill[2]
+      color <- ggplot2::theme$color[1]
+      pd <- ggplot2::position_dodge(0.85)
       plotSpecificTheme <- NULL
       
       plot <-
-        ggplot(data=data, aes_string(x=names$x, y=names$y)) +
-        geom_bar(
+        ggplot2::ggplot(data=data, aes_string(x=names$x, y=names$y)) +
+        ggplot2::geom_bar(
           stat="identity",
           position="dodge",
           width = 0.7,
           fill=fill,
           color=color
         ) +
-        labs(x=labels$x, y=if(freqtype=='absolutefreq') 'Counts' else
+        ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') 'Counts' else
           'Percentages')
       
-      plot <- plot + ggtheme + plotSpecificTheme
+      plot <- plot + ggplot2::ggtheme + plotSpecificTheme
       return(plot)
     },
     .boxPlot = function(image, ggtheme, theme, ...) {
@@ -285,21 +285,21 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       column <- data[[names$x]]
       outdata <- private$.getOUTLIERS(column)
       
-      fill <- theme$fill[2]
-      color <- theme$color[2]
+      fill <- ggplot2::theme$fill[2]
+      color <- ggplot2::theme$color[2]
       
       themeSpec <- NULL
       
       data[["placeHolder"]] <- rep('var1', nrow(data))
       x <- "placeHolder"
       
-      plot <- ggplot(data=data, aes_string(x=x, y=names$x)) +
-        labs(x='', y=labels$x) +
-        scale_y_continuous(breaks=pretty_breaks())
+      plot <- ggplot2::ggplot(data=data, aes_string(x=x, y=names$x)) +
+        ggplot2::labs(x='', y=labels$x) +
+        ggplot2::scale_y_continuous(breaks=pretty_breaks())
       
       if (self$options$violin) {
         plot <- plot +
-          geom_violin(
+          ggplot2::geom_violin(
             fill=theme$fill[1], color=theme$color[1], alpha=0.5
           )
       }
@@ -311,7 +311,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           plot <- plot +
             ggplot2::geom_jitter(aes(color=outdata,shape=outdata), width=0.05, alpha=0.6, size=3
             ) +
-            guides(color='none',shape='none')
+            ggplot2::guides(color='none',shape='none')
         } else if (self$options$dotType == 'stack') {
           plot <- plot +
             ggplot2::geom_dotplot(aes(color=outdata,fill=outdata),
@@ -321,7 +321,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                   stackratio=0.9,
                                   dotsize=0.5
             ) +
-            guides(color='none',fill='none')
+            ggplot2::guides(color='none',fill='none')
         }
       }
       
@@ -349,7 +349,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       if (self$options$boxMean) {
         plot <- plot +
-          stat_summary(
+          ggplot2::stat_summary(
             fun.y=mean,
             geom="point",
             shape=15,
@@ -358,18 +358,18 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           )
       }
       
-      themeSpec <- list(theme(axis.text.x=element_blank(),
+      themeSpec <- list(ggplot2::theme(axis.text.x=element_blank(),
                               axis.ticks.x=element_blank(),
                               axis.title.x=element_blank()),
-                        scale_colour_manual(name = 'out', 
+                        ggplot2::scale_colour_manual(name = 'out', 
                                             values = setNames(c('red','blue','grey'),c('extreme','anom','normal'))),
-                        scale_shape_manual(name = 'out',
+                        ggplot2::scale_shape_manual(name = 'out',
                                            values = setNames(c(8,19,19),c('extreme','anom','normal'))),
-                        scale_fill_manual(name = 'out',
+                        ggplot2::scale_fill_manual(name = 'out',
                                           values = setNames(c('red','blue','grey'),c('extreme','anom','normal'))))
       
       
-      plot <- plot + ggtheme + themeSpec
+      plot <- plot + ggplot2::ggtheme + themeSpec
       
       return(plot)
     },
