@@ -240,10 +240,10 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
           ggplot2::ggtitle(paste0(distroslabel,'Pr(X = ',k,') = ',round(plotData$pmf[plotData$x==k],2))) +
           ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))
+          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
+                axis.text.y= ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))
         return(p)                
       }, 
       .pcdf = function(image, ...) {
@@ -300,10 +300,10 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
           ggplot2::ggtitle(paste0(distroslabel,'Pr(X \u2264 ',k,') = ',round(plotData$cdf[plotData$x==k],2))) +
           ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))
+          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
+                axis.text.y= ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))
         return(p)                
       },
       .psurv = function(image, ...) {
@@ -360,10 +360,10 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
           ggplot2::ggtitle(paste0(distroslabel,'Pr(X > ',k,') = ',round(plotData$surv[plotData$x==k],2))) +
           ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-              axis.text.y=element_text(size=13),
-              axis.title.x = element_text(size=14),
-              axis.title.y = element_text(size=14))
+          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
+              axis.text.y= ggplot2::element_text(size=13),
+              axis.title.x = ggplot2::element_text(size=14),
+              axis.title.y = ggplot2::element_text(size=14))
         return(p)                
       },
       .pinterv = function(image, ...) {
@@ -430,10 +430,10 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::ggtitle(paste0(distroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',
                          round(sum(plotData$pmf[plotData$x>=k1 & plotData$x<=k2]),2))) +
           ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))
+          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
+                axis.text.y= ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))
         return(p)                
       },  
       .picdf = function(image, ...) {
@@ -535,10 +535,10 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }        
         
         p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))
+          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
+                axis.text.y= ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))
         return(p)                
       },
     #### Helper functions ----

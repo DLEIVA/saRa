@@ -245,10 +245,10 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::geom_segment(aes(x=k,y=0,xend=k,yend=dval),color=Color[1],lwd=1.1) +
           ggplot2::geom_point(aes(x=k,y=dval),col=Color[1]) +
           ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))        
+          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
+                axis.text.y=ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))        
         
         return(p)                
       },
@@ -306,10 +306,10 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                         xlim = c(x$xlim[1],k),geom = "area",fill=Color[1]) +          
           ggplot2::ggtitle(paste0(cdistroslabel,'Pr(X \u2264 ',k,') = ',round(lpval,2))) + 
           ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))        
+          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
+                axis.text.y=ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))        
         
         return(p)                
       },
@@ -368,10 +368,10 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             xlim = c(k,x$xlim[2]),geom = "area",fill=Color[1]) +          
           ggplot2::ggtitle(paste0(cdistroslabel,'Pr(X > ',k,') = ',round(rpval,2))) + 
           ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))        
+          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
+                axis.text.y=ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))        
         
         return(p)                
       },
@@ -436,10 +436,10 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             xlim = c(k1,k2),geom = "area",fill=Color[1]) +          
           ggplot2::ggtitle(paste0(cdistroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',round(ipval,2))) + 
           ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))      
+          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
+                axis.text.y=ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))      
         
         return(p)                
       },
@@ -566,10 +566,10 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }        
         
         p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=element_text(size=13),
-                axis.text.y=element_text(size=13),
-                axis.title.x = element_text(size=14),
-                axis.title.y = element_text(size=14))
+          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
+                axis.text.y=ggplot2::element_text(size=13),
+                axis.title.x = ggplot2::element_text(size=14),
+                axis.title.y = ggplot2::element_text(size=14))
         return(p)                
       },      
       #### Helper functions ----
