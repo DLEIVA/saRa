@@ -429,7 +429,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
           ggplot2::ggtitle(paste0(distroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',
                          round(sum(plotData$pmf[plotData$x>=k1 & plotData$x<=k2]),2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + gggplot2::uides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
