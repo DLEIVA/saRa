@@ -260,13 +260,13 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       else
         binWidth <- range / (nUniques - 1)
       
-      plot <- ggplot(data=data, aes_string(x=names$x)) +
-        labs(x=labels$x, y='density') +
-        scale_x_continuous(breaks = scales::pretty_breaks(n = 10))
+      plot <- ggplot2::ggplot(data=data, ggplot2::aes_string(x=names$x)) +
+        ggplot2::labs(x=labels$x, y='density') +
+        ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10))
       
       if (self$options$hist)
-        plot <- plot + geom_histogram(
-          aes(y=..density..),
+        plot <- plot + ggplot2::geom_histogram(
+          ggplot2::aes(y=..density..),
           position="identity",
           stat="bin",
           binwidth=binWidth,
@@ -275,12 +275,12 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         )
       
       if (self$options$dens)
-        plot <- plot + geom_density(color=color, fill=fill, alpha=alpha)
+        plot <- plot + ggplot2::geom_density(color=color, fill=fill, alpha=alpha)
       
       if (self$options$norm){
         datos <- data[[names$x]]
         plot <- plot +
-          stat_function(fun = dnorm, args = list(mean = mean(datos), 
+          ggplot2::stat_function(fun = dnorm, args = list(mean = mean(datos), 
                                                  sd = sd(datos)),col='red',lty=2,lwd=1.15)  
       }
       plot <- plot + ggtheme + plotSpecificTheme
@@ -306,13 +306,13 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data[["placeHolder"]] <- rep('var1', nrow(data))
       x <- "placeHolder"
       
-      plot <- ggplot(data=data, aes_string(x=x, y=names$x)) +
-        labs(x='', y=labels$x) +
-        scale_y_continuous( breaks=pretty_breaks())
+      plot <- ggplot2::ggplot(data=data, ggplot2::aes_string(x=x, y=names$x)) +
+        ggplot2::labs(x='', y=labels$x) +
+        ggplot2::scale_y_continuous( breaks=scales::pretty_breaks())
       
       if (self$options$violin) {
         plot <- plot +
-          geom_violin(
+          ggplot2::geom_violin(
             fill=theme$fill[1], color=theme$color[1], alpha=0.5
           )
       }
@@ -324,17 +324,17 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           plot <- plot +
             ggplot2::geom_jitter(aes(color=outdata,shape=outdata), width=0.05, alpha=0.6, size=3
             ) +
-            guides(color='none',shape='none')
+            ggplot2::guides(color='none',shape='none')
         } else if (self$options$dotType == 'stack') {
           plot <- plot +
-            ggplot2::geom_dotplot(aes(color=outdata,fill=outdata),
+            ggplot2::geom_dotplot(ggplot2::aes(color=outdata,fill=outdata),
                                   binaxis="y",
                                   stackdir="center",
                                   alpha=0.5,
                                   stackratio=0.9,
                                   dotsize=0.5
             ) +
-            guides(color='none',fill='none')
+            ggplot2::guides(color='none',fill='none')
         }
       }
       
@@ -362,7 +362,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       if (self$options$boxMean) {
         plot <- plot +
-          stat_summary(
+          ggplot2::stat_summary(
             fun.y=mean,
             geom="point",
             shape=15,
@@ -371,14 +371,14 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           )
       }
       
-      themeSpec <- list(theme(axis.text.x=element_blank(),
-                              axis.ticks.x=element_blank(),
-                              axis.title.x=element_blank()),
-                        scale_colour_manual(name = 'out', 
+      themeSpec <- list(ggplot2::theme(axis.text.x=ggplot2::element_blank(),
+                              axis.ticks.x=ggplot2::element_blank(),
+                              axis.title.x=ggplot2::element_blank()),
+                        ggplot2::scale_colour_manual(name = 'out', 
                                             values = setNames(c('red','blue','grey'),c('extreme','anom','normal'))),
-                        scale_shape_manual(name = 'out',
+                        ggplot2::scale_shape_manual(name = 'out',
                                            values = setNames(c(8,19,19),c('extreme','anom','normal'))),
-                        scale_fill_manual(name = 'out',
+                        ggplot2::scale_fill_manual(name = 'out',
                                           values = setNames(c('red','blue','grey'),c('extreme','anom','normal'))))
       
       
@@ -399,14 +399,14 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- na.omit(data)
       
-      plot <- ggplot(data=data, mapping = aes(sample = y)) +
+      plot <- ggplot2::ggplot(data=data, mapping = ggplot2::aes(sample = y)) +
         #geom_abline(slope=1, intercept=0, colour=theme$color[1]) +
         #stat_qq(aes(sample=y), size=2, colour=theme$color[1]) +
-        stat_qq_band() +
-        stat_qq_line() +
-        stat_qq_point() +
-        xlab("Theoretical Quantiles") +
-        ylab("Standardized Residuals") +
+        qqplotr::stat_qq_band() +
+        qqplotr::stat_qq_line() +
+        qqplotr::stat_qq_point() +
+        ggplot2::xlab("Theoretical Quantiles") +
+        ggplot2::ylab("Standardized Residuals") +
         ggtheme
       
       return(plot)
@@ -538,8 +538,8 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
-      .bxp1 <- boxplot.stats(as.numeric(column), coef = intervinf)
-      .bxp2 <- boxplot.stats(as.numeric(column), coef = intervsup)
+      .bxp1 <- grDevices::boxplot.stats(as.numeric(column), coef = intervinf)
+      .bxp2 <- grDevices::boxplot.stats(as.numeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out
       .anom <- .bxp1$out
       .anom[.selec] <- NA
