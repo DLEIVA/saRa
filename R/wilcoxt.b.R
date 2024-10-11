@@ -331,13 +331,13 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         pd <- position_dodge(0.2)
         
-        plot <- ggplot(data=image$state, aes(x=group, y=stat, shape=type)) +
-          geom_errorbar(aes(x=group, ymin=stat.lwr.ci, ymax=stat.upr.ci, width=.1),
+        plot <- ggplot2::ggplot(data=image$state, ggplot2::aes(x=group, y=stat, shape=type)) +
+          ggplot2::geom_errorbar(ggplot2::aes(x=group, ymin=stat.lwr.ci, ymax=stat.upr.ci, width=.1),
                         size=.8, colour=theme$color[2], position=pd) +
-          geom_point(aes(x=group, y=stat, shape=type), color=theme$color[1],
+          ggplot2::geom_point(ggplot2::aes(x=group, y=stat, shape=type), color=theme$color[1],
                      fill=theme$fill[1], size=3, position=pd) +
-          labs(x=NULL, y=NULL) +
-          scale_shape_manual(
+          ggplot2::labs(x=NULL, y=NULL) +
+          ggplot2::scale_shape_manual(
             name='',
             values=c(median=22),
             labels=c(
@@ -345,7 +345,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             )
           ) +
           ggtheme +
-          theme(
+          ggplot2::theme(
             plot.title=ggplot2::element_text(margin=ggplot2::margin(b = 5.5 * 1.2)),
             plot.margin = ggplot2::margin(5.5, 5.5, 5.5, 5.5)
           )

@@ -26,7 +26,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }
           
           .chisqtest <- function(x){
-            test <- pearson.test(x)
+            test <- nortest::pearson.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
           }
           
@@ -36,22 +36,22 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }
           
           .adtest <- function(x){
-            test <- ad.test(x)
+            test <- nortest::ad.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
           }
           
           .lillietest <- function(x){
-            test <- lillie.test(x)
+            test <- nortest::lillie.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
           }
           
           .sftest <- function(x){
-            test <- sf.test(x)
+            test <- nortest::sf.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
           }
           
           .cvmtest <- function(x){
-            test <- cvm.test(x)
+            test <- nortest::cvm.test(x)
             list(statistic=test$statistic,p.value=test$p.value)
           }          
           
@@ -229,7 +229,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               
               if (length(na.omit(column)) > 0) {
                 columns <- na.omit(c(var, groupBy))
-                plotData <- naOmit(data[columns])
+                plotData <- jmvcore::naOmit(data[columns])
                 plotData[[var]] <- jmvcore::toNumeric(plotData[[var]])
                 names <- if(!is.null(groupBy)){
                   list("x"="x", "s1"="s1") 
@@ -256,8 +256,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           labels <- image$state$labels
           groupBy <- self$options$groupBy
           
-          plotSpecificTheme <- theme(axis.text.y=element_blank(),
-                                     axis.ticks.y=element_blank())
+          plotSpecificTheme <- ggplot2::theme(axis.text.y=ggplot2::element_blank(),
+                                     axis.ticks.y=ggplot2::element_blank())
           
           if (self$options$hist && self$options$dens)
             alpha <- 0.4
@@ -302,28 +302,28 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             
             densDAT <- if(!is.null(groupBy)){
-              datos %>% group_by(s1) %>% do(.getDensity(.)) %>% data.frame() 
-            } else{ datos %>% do(.getDensity(.)) %>% data.frame() }
+              datos |>  dplyr::group_by(s1) |>  dplyr::do(.getDensity(.)) |>  data.frame() 
+            } else{ datos |>  dplyr::do(.getDensity(.)) |>  data.frame() }
           }
           
-          plot <- ggplot(data=data, aes_string(x=names$x)) +
-            labs(x=labels$x, y='density') +
-            scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
-            {if(self$options$hist)geom_histogram(
-              aes(y=..density..),
+          plot <- ggplot2::ggplot(data=data, ggplot2::aes_string(x=names$x)) +
+            ggplot2::labs(x=labels$x, y='density') +
+            ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+            {if(self$options$hist) ggplot2::geom_histogram(
+              ggplot2::aes(y=..density..),
               position="identity",
               stat="bin",
               binwidth=binWidth,
               color=color,
               fill=fill
             )}+
-            {if(self$options$dens) geom_density(color=color, fill=fill, alpha=alpha)}+
-            {if(self$options$norm) geom_line(data = densDAT, aes_string(x='val',y = 'density'),
+            {if(self$options$dens) ggplot2::geom_density(color=color, fill=fill, alpha=alpha)}+
+            {if(self$options$norm) ggplot2::geom_line(data = densDAT, aes_string(x='val',y = 'density'),
                                              col='red',lty=2,lwd=1.15)} +
-            {if(!is.null(groupBy)) facet_grid(rows=vars(s1))} +
+            {if(!is.null(groupBy)) ggplot2::facet_grid(rows=vars(s1))} +
             ggtheme
           
-          themeSpec <- theme(legend.position = 'none')
+          themeSpec <- ggplot2::theme(legend.position = 'none')
           
           plot <- plot + themeSpec
           return(plot)      
@@ -346,13 +346,13 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           data <- na.omit(data)
           
-          plot <- ggplot(data=data, mapping = aes(sample = y)) +
-            stat_qq_band() +
-            stat_qq_line() +
-            stat_qq_point() +
-            xlab("Theoretical Quantiles") +
-            ylab("Standardized Residuals") +
-            {if(!is.null(groupBy))facet_grid(cols=vars(s1))} +
+          plot <- ggplot2::ggplot(data=data, mapping = ggplot2::aes(sample = y)) +
+            qqplotr::stat_qq_band() +
+            qqplotr::stat_qq_line() +
+            qqplotr::stat_qq_point() +
+            ggplot2::xlab("Theoretical Quantiles") +
+            ggplot2::ylab("Standardized Residuals") +
+            {if(!is.null(groupBy)) ggplot2::facet_grid(cols=vars(s1))} +
             ggtheme
           
           return(plot)
@@ -373,8 +373,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           if(!is.null(groupBy)){
             s1 <- self$data[[groupBy]]
             df <- data.frame(y,s1)
-            d.f <- arrange(df,s1,y)
-            d.f <- ddply(d.f, .(s1), transform,
+            d.f <- ddplyr::arrange(df,s1,y)
+            d.f <- plyr::ddply(d.f, .(s1), dplyr::transform,
                                z=sort(scale(y)),p=pnorm(sort(scale(y))))
             
           } else{
@@ -383,12 +383,12 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           d.f <- na.omit(d.f)
           
-          plot <- ggplot(d.f, aes(x=z,y=p)) + geom_line(col="#7b9ee6") +
-            geom_point(aes(y=Fn(z))) + geom_line(aes(y=Fn(z))) +
-            xlab("Empirical Quantiles") +
-            ylab("Cumulative distribution") +            
-            {if(!is.null(groupBy))facet_wrap(d.f$s1)} +   
-            guides(fill=FALSE) +
+          plot <- ggplot2::ggplot(d.f, ggplot2::aes(x=z,y=p)) + ggplot2::geom_line(col="#7b9ee6") +
+            ggplot2::geom_point(ggplot2::aes(y=Fn(z))) + ggplot2::geom_line(ggplot2::aes(y=Fn(z))) +
+            ggplot2::xlab("Empirical Quantiles") +
+            ggplot2::ylab("Cumulative distribution") +            
+            {if(!is.null(groupBy)) ggplot2::facet_wrap(d.f$s1)} +   
+            ggplot2::guides(fill=FALSE) +
             ggtheme
 
           return(plot)
