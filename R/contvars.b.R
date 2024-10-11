@@ -231,8 +231,8 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
             'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
         
-        p <- ggplot(x,aes(x=xlim)) +
-          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+        p <- ggplot2::ggplot(x,aes(x=xlim)) +
+          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
             dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
               df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
             args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -241,11 +241,11 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
                   list(rate=self$options$rate)} else if(cdistros=='unif'){
                     list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-          ggtitle(paste0(cdistroslabel,'f(X = ',k,') = ',round(dval,2))) + 
-          geom_segment(aes(x=k,y=0,xend=k,yend=dval),color=Color[1],lwd=1.1) +
-          geom_point(aes(x=k,y=dval),col=Color[1]) +
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+          ggplot2::ggtitle(paste0(cdistroslabel,'f(X = ',k,') = ',round(dval,2))) + 
+          ggplot2::geom_segment(aes(x=k,y=0,xend=k,yend=dval),color=Color[1],lwd=1.1) +
+          ggplot2::geom_point(aes(x=k,y=dval),col=Color[1]) +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))        
@@ -284,8 +284,8 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
             'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
         
-        p <- ggplot(x,aes(x=xlim)) +
-          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+        p <- ggplot2::ggplot(x,aes(x=xlim)) +
+          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
             dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
               df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
             args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -294,7 +294,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
                   list(rate=self$options$rate)} else if(cdistros=='unif'){
                     list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
             dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
               df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
             args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -304,9 +304,9 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   list(rate=self$options$rate)} else if(cdistros=='unif'){
                     list(min=self$options$unifmin,max=self$options$unifmax)}, 
                         xlim = c(x$xlim[1],k),geom = "area",fill=Color[1]) +          
-          ggtitle(paste0(cdistroslabel,'Pr(X \u2264 ',k,') = ',round(lpval,2))) + 
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+          ggplot2::ggtitle(paste0(cdistroslabel,'Pr(X \u2264 ',k,') = ',round(lpval,2))) + 
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))        
@@ -346,8 +346,8 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
         
         
-        p <- ggplot(x,aes(x=xlim)) +
-          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+        p <- ggplot2::ggplot(x,aes(x=xlim)) +
+          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
             dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
               df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
             args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -356,7 +356,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
                   list(rate=self$options$rate)} else if(cdistros=='unif'){
                     list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
             dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
               df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
             args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -366,9 +366,9 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   list(rate=self$options$rate)} else if(cdistros=='unif'){
                     list(min=self$options$unifmin,max=self$options$unifmax)}, 
             xlim = c(k,x$xlim[2]),geom = "area",fill=Color[1]) +          
-          ggtitle(paste0(cdistroslabel,'Pr(X > ',k,') = ',round(rpval,2))) + 
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+          ggplot2::ggtitle(paste0(cdistroslabel,'Pr(X > ',k,') = ',round(rpval,2))) + 
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))        
@@ -414,8 +414,8 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         } else if(cdistros=='exp'){diff(pexp(c(k1,k2),self$options$rate))
         } else if(cdistros=='unif'){diff(punif(c(k1,k2),self$options$unifmin,self$options$unifmax))}        
         
-        p <- ggplot(x,aes(x=xlim)) +
-          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+        p <- ggplot2::ggplot(x,aes(x=xlim)) +
+          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
             dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
               df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
             args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -424,7 +424,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
                   list(rate=self$options$rate)} else if(cdistros=='unif'){
                     list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-          stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
             dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
               df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
             args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -434,9 +434,9 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   list(rate=self$options$rate)} else if(cdistros=='unif'){
                     list(min=self$options$unifmin,max=self$options$unifmax)}, 
             xlim = c(k1,k2),geom = "area",fill=Color[1]) +          
-          ggtitle(paste0(cdistroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',round(ipval,2))) + 
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+          ggplot2::ggtitle(paste0(cdistroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',round(ipval,2))) + 
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))      
@@ -479,8 +479,8 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(cdistros=='exp'){qexp(quant1,self$options$rate)
           } else if(cdistros=='unif'){qunif(quant1,self$options$unifmin,self$options$unifmax)}
           q1 <- qs
-          p <- ggplot(x,aes(x=xlim)) +
-            stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+          p <- ggplot2::ggplot(x,aes(x=xlim)) +
+            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
               dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
                 df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
               args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -489,7 +489,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
                     list(rate=self$options$rate)} else if(cdistros=='unif'){
                       list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-            stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
               dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
                 df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
               args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -499,7 +499,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     list(rate=self$options$rate)} else if(cdistros=='unif'){
                       list(min=self$options$unifmin,max=self$options$unifmax)}, 
               xlim = c(x$xlim[1],q1),geom = "area",fill=Color[1]) +          
-            ggtitle(TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,'$')))
+            ggplot2::ggtitle(TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,'$')))
         }  else if(tail=='right'){
           quant1 <- 1-q
           qs <- if(cdistros=='norm'){qnorm(quant1,self$options$mu,self$options$sigma)
@@ -509,8 +509,8 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(cdistros=='exp'){qexp(quant1,self$options$rate)
           } else if(cdistros=='unif'){qunif(quant1,self$options$unifmin,self$options$unifmax)}
           q1 <- qs
-          p <- ggplot(x,aes(x=xlim)) +
-            stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+          p <- ggplot2::ggplot(x,aes(x=xlim)) +
+            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
               dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
                 df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
               args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -519,7 +519,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
                     list(rate=self$options$rate)} else if(cdistros=='unif'){
                       list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-            stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
               dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
                 df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
               args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -529,7 +529,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     list(rate=self$options$rate)} else if(cdistros=='unif'){
                       list(min=self$options$unifmin,max=self$options$unifmax)}, 
               xlim = c(q1,x$xlim[2]),geom = "area",fill=Color[1]) +          
-            ggtitle(TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,'$')))
+            ggplot2::ggtitle(TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,'$')))
         } else if(tail=='central'){
           quant1 <- (1-q)/2
           quant2 <- 1-(1-q)/2
@@ -541,7 +541,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(cdistros=='unif'){qunif(c(quant1,quant2),self$options$unifmin,self$options$unifmax)}
           q1 <- qs[1]
           q2 <- qs[2]
-          p <- ggplot(x,aes(x=xlim)) +
+          p <- ggplot2::ggplot(x,aes(x=xlim)) +
             stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
               dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
                 df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
@@ -551,7 +551,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                   list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
                     list(rate=self$options$rate)} else if(cdistros=='unif'){
                       list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-            stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
               dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
                 df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
               args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
@@ -561,12 +561,12 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     list(rate=self$options$rate)} else if(cdistros=='unif'){
                       list(min=self$options$unifmin,max=self$options$unifmax)}, 
               xlim = c(q1,q2),geom = "area",fill=Color[1]) +          
-            ggtitle(TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,
+            ggplot2::ggtitle(TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,
                                ' \\phantom{xx} ','Q_{',quant2,'} = ',q2,'$')))
         }        
         
-        p <- p + ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))
