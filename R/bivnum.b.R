@@ -79,17 +79,17 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           line <- self$options$line
           method <- if (line == 'linear') 'lm' else 'auto'          
           
-          p <- ggplot(
-            data, aes_string(x=xVarName, y=yVarName)) + 
-            geom_point(alpha=.8, size=2.5) +
-            labs(x=xVarName, y=yVarName) + ggtheme
+          p <- ggplot2::ggplot(
+            data, ggplot2::aes_string(x=xVarName, y=yVarName)) + 
+            ggplot2::geom_point(alpha=.8, size=2.5) +
+            ggplot2::labs(x=xVarName, y=yVarName) + ggtheme
           
           if (line != 'none') {
-            p <- p + geom_smooth(method = method, se = self$options$se
+            p <- p + ggplot2::geom_smooth(method = method, se = self$options$se
             )
           }
           
-          p <- p + theme(legend.position = 'none')
+          p <- p + ggplot2::theme(legend.position = 'none')
           
           if (marg == 'dens') {
             xdens <- cowplot::axis_canvas(p, axis='x') +
