@@ -344,7 +344,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           if (length(na.omit(column)) > 0) {
             columns <- na.omit(c(var, groupBy))
-            plotData <- naOmit(data[columns])
+            plotData <- jmvcore::naOmit(data[columns])
             plotData[[var]] <- jmvcore::toNumeric(plotData[[var]])
             names <- list("x"="x", "s1"="s1")
             labels <- list("x"=var, "s1"=groupBy)
@@ -369,8 +369,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         labels <- image$state$labels
         groupBy <- self$options$groupBy
 
-        plotSpecificTheme <- theme(axis.text.y=element_blank(),
-                                   axis.ticks.y=element_blank())
+        plotSpecificTheme <- ggplot2::theme(axis.text.y=ggplot2::element_blank(),
+                                   axis.ticks.y=ggplot2::element_blank())
         
         if (self$options$hist && self$options$dens)
           alpha <- 0.4
@@ -412,7 +412,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             )
           }
           
-          densDAT <- datos %>% group_by(s1) %>% do(.getDensity(.)) %>% data.frame()
+          densDAT <- datos |>  dplyr::group_by(s1) |>  dplyr::do(.getDensity(.)) |>  data.frame()
           #dens <- plyr::ddply(datos,.(s1), function(x){
           #  data.frame(
           #    y = grids,
@@ -421,21 +421,21 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           #})
         }
         
-        plot <- ggplot(data=data, aes_string(x=names$x)) +
-          labs(x=labels$x, y='density') +
-          scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
-          {if(self$options$hist)geom_histogram(
-            aes(y=..density..),
+        plot <- ggplot2::ggplot(data=data, ggplot2::aes_string(x=names$x)) +
+          ggplot2::labs(x=labels$x, y='density') +
+          ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+          {if(self$options$hist) ggplot2::geom_histogram(
+            ggplot2::aes(y=..density..),
             position="identity",
             stat="bin",
             binwidth=binWidth,
             color=color,
             fill=fill
           )}+
-          {if(self$options$dens) geom_density(color=color, fill=fill, alpha=alpha)}+
-          {if(self$options$norm) geom_line(data = densDAT, aes_string(x='val',y = 'density'),
+          {if(self$options$dens) ggplot2::geom_density(color=color, fill=fill, alpha=alpha)}+
+          {if(self$options$norm) ggplot2::geom_line(data = densDAT, ggplot2::aes_string(x='val',y = 'density'),
                                           col='red',lty=2,lwd=1.15)} +
-          facet_grid(rows=vars(s1))
+          ggplot2::facet_grid(rows=vars(s1))
         
         #data$s1rev <- factor(data$s1, rev(levels(data$s1)))
         #
@@ -462,7 +462,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         #  plot <- plot + facet_grid(cols=vars(s2), rows=vars(s3))
         #}
         
-        themeSpec <- theme(legend.position = 'none')
+        themeSpec <- ggplot2::theme(legend.position = 'none')
         
         plot <- plot + ggtheme + themeSpec
         return(plot)      
@@ -488,16 +488,16 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       column <- data[[names$x]]
       datos <- data.frame(column=column,grupo=data[[names$s1]])
       outdata <- unlist(tapply(datos$column,datos$grupo,private$.getOUTLIERS))      
-      data <- data %>% arrange(datos$grupo)
+      data <- data |>  dplyr::arrange(datos$grupo)
       data$outdata <- outdata
       
-      plot <- ggplot(data=data, aes_string(x=x, y=names$x)) +
-        labs(x=labels$s1, y=labels$x) +
-        scale_y_continuous( breaks=pretty_breaks())
+      plot <- ggplot2::ggplot(data=data, ggplot2::aes_string(x=x, y=names$x)) +
+        ggplot2::labs(x=labels$s1, y=labels$x) +
+        ggplot2::scale_y_continuous( breaks=scales::pretty_breaks())
       
       if (self$options$violin) {
         plot <- plot +
-          geom_violin(
+          ggplot2::geom_violin(
             fill=theme$fill[1], color=theme$color[1], alpha=0.5
           )
       }
@@ -505,9 +505,9 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$dot) {
         if (self$options$dotType == 'jitter') {
           plot <- plot +
-            ggplot2::geom_jitter(aes(color=outdata,shape=outdata), width=0.05, alpha=0.6, size=3
+            ggplot2::geom_jitter(ggplot2::aes(color=outdata,shape=outdata), width=0.05, alpha=0.6, size=3
             ) +
-            guides(color='none',shape='none')
+            ggplot2::guides(color='none',shape='none')
         } else if (self$options$dotType == 'stack') {
           plot <- plot +
             ggplot2::geom_dotplot(aes(color=outdata,fill=outdata),
@@ -517,7 +517,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                   stackratio=0.9,
                                   dotsize=0.5
             ) +
-            guides(color='none',fill='none')
+            ggplot2::guides(color='none',fill='none')
         }
       }
       
@@ -545,7 +545,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       if (self$options$boxMean) {
         plot <- plot +
-          stat_summary(
+          ggplot2::stat_summary(
             fun.y=mean,
             geom="point",
             shape=15,
@@ -554,14 +554,14 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           )
       }
       
-      themeSpec <- list(theme(
-                              axis.ticks.x=element_blank(),
-                              axis.title.x=element_blank()),
-                        scale_colour_manual(name = 'out', 
+      themeSpec <- list(ggplot2::theme(
+                              axis.ticks.x=ggplot2::element_blank(),
+                              axis.title.x=ggplot2::element_blank()),
+                        ggplot2::scale_colour_manual(name = 'out', 
                                             values = setNames(c('red','blue','grey'),c('extreme','anom','normal'))),
-                        scale_shape_manual(name = 'out',
+                        ggplot2::scale_shape_manual(name = 'out',
                                            values = setNames(c(8,19,19),c('extreme','anom','normal'))),
-                        scale_fill_manual(name = 'out',
+                        ggplot2::scale_fill_manual(name = 'out',
                                           values = setNames(c('red','blue','grey'),c('extreme','anom','normal'))))
       
       
@@ -583,14 +583,14 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- na.omit(data)
       
-      plot <- ggplot(data=data, mapping = aes(sample = y)) +
-        stat_qq_band() +
-        stat_qq_line() +
-        stat_qq_point() +
-        xlab("Theoretical Quantiles") +
-        ylab("Standardized Residuals") +
+      plot <- ggplot2::ggplot(data=data, mapping = ggplot2::aes(sample = y)) +
+        qqplotr::stat_qq_band() +
+        qqplotr::stat_qq_line() +
+        qqplotr::stat_qq_point() +
+        ggplot2::xlab("Theoretical Quantiles") +
+        ggplot2::ylab("Standardized Residuals") +
         ggtheme +
-        facet_grid(cols=vars(s1))
+        ggplot2::facet_grid(cols=vars(s1))
       
       return(plot)
     },   
@@ -888,8 +888,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
-      .bxp1 <- boxplot.stats(as.numeric(column), coef = intervinf)
-      .bxp2 <- boxplot.stats(as.numeric(column), coef = intervsup)
+      .bxp1 <- grDevices::boxplot.stats(as.numeric(column), coef = intervinf)
+      .bxp2 <- grDevices::boxplot.stats(as.numeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out
       .anom <- .bxp1$out
       .anom[.selec] <- NA
