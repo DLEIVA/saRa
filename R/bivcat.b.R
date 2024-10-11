@@ -485,29 +485,29 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       if (self$options$yaxis == "ycounts") {
         if (position!='dodge') {
-        p <- ggplot(data=tab, aes_string(y="Counts", x=xVarName, fill=zVarName)) +
-          geom_col(position=position, width = 0.7)
+        p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Counts", x=xVarName, fill=zVarName)) +
+          ggplot2::geom_col(position=position, width = 0.7)
         } else {
-          p <- ggplot(data=tab, aes_string(y="Counts", x=xVarName, fill=zVarName,
+          p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Counts", x=xVarName, fill=zVarName,
                                            label='Counts')) +
-            geom_col(position=position, width = 0.7)  +
-            geom_text(position = position_dodge(.7), 
+            ggplot2::geom_col(position=position, width = 0.7)  +
+            ggplot2::geom_text(position = ggplot2::position_dodge(.7), 
                       vjust = -0.5, 
                       size = 4)         
         }
       } else {
-        if (position!='dodge') {p <- ggplot(data=tab, aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
-          geom_col(position=position, width = 0.7)} else {
-                p <- ggplot(data=tab, aes_string(y="Percentages", x=xVarName, fill=zVarName,label='Perc')) +
-          geom_col(position=position, width = 0.7) +
-          geom_text(position = position_dodge(.7), 
+        if (position!='dodge') {p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
+          ggplot2::geom_col(position=position, width = 0.7)} else {
+                p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Percentages", x=xVarName, fill=zVarName,label='Perc')) +
+                  ggplot2::geom_col(position=position, width = 0.7) +
+                  ggplot2::geom_text(position = ggplot2::position_dodge(.7), 
                     vjust = -0.5, 
                     size = 4)}
       
         if (self$options$yaxisPc == "total_pc") {
-          p <- p + labs(y = "Percentages of total")
+          p <- p + ggplot2::labs(y = "Percentages of total")
         } else {
-          p <- p + labs(y = paste0("Percentages within ", pctVarName))
+          p <- p + ggplot2::labs(y = paste0("Percentages within ", pctVarName))
         }
       }
       
