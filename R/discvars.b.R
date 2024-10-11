@@ -234,13 +234,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
                 phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
         
-        p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==k))) +
-          geom_col() + 
-          scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-          scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
-          ggtitle(paste0(distroslabel,'Pr(X = ',k,') = ',round(plotData$pmf[plotData$x==k],2))) +
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+        p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x==k))) +
+          ggplot2::geom_col() + 
+          ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
+          ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
+          ggplot2::ggtitle(paste0(distroslabel,'Pr(X = ',k,') = ',round(plotData$pmf[plotData$x==k],2))) +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))
@@ -294,13 +294,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
             phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})        
 
-        p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x<=k))) +
-          geom_col() + 
-          scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-          scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-          ggtitle(paste0(distroslabel,'Pr(X \u2264 ',k,') = ',round(plotData$cdf[plotData$x==k],2))) +
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+        p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x<=k))) +
+          ggplot2::geom_col() + 
+          ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
+          ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
+          ggplot2::ggtitle(paste0(distroslabel,'Pr(X \u2264 ',k,') = ',round(plotData$cdf[plotData$x==k],2))) +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))
@@ -354,13 +354,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
             phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
         
-        p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x>k))) +
-          geom_col() + 
-          scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-          scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
-          ggtitle(paste0(distroslabel,'Pr(X > ',k,') = ',round(plotData$surv[plotData$x==k],2))) +
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-        theme(axis.text.x=element_text(size=13),
+        p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x>k))) +
+          ggplot2::geom_col() + 
+          ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
+          ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
+          ggplot2::ggtitle(paste0(distroslabel,'Pr(X > ',k,') = ',round(plotData$surv[plotData$x==k],2))) +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
               axis.text.y=element_text(size=13),
               axis.title.x = element_text(size=14),
               axis.title.y = element_text(size=14))
@@ -423,14 +423,14 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
             phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
         
-        p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x>=k1 & x<=k2))) +
-          geom_col() + 
-          scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-          scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-          ggtitle(paste0(distroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',
+        p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x>=k1 & x<=k2))) +
+          ggplot2::geom_col() + 
+          ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
+          ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
+          ggplot2::ggtitle(paste0(distroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',
                          round(sum(plotData$pmf[plotData$x>=k1 & plotData$x<=k2]),2))) +
-          ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+          ggplot2::ylab('') + ggplot2::xlab('') + gggplot2::uides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))
@@ -526,16 +526,16 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 qhyper(c(quant1,quant2),self$options$hyperm,self$options$hypern,self$options$hyperk)}
           q1 <- qs[1]
           q2 <- qs[2]
-          p <- ggplot(plotData,aes(x=x,y=pmf,fill= (x==q1 | x==q2))) +
-            geom_col() + 
-            scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-            scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-            ggtitle(TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,
+          p <- ggplot2::ggplot(plotData,aes(x=x,y=pmf,fill= (x==q1 | x==q2))) +
+            ggplot2::geom_col() + 
+            ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
+            ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
+            ggplot2::ggtitle(TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,
                                ' \\phantom{xx} ','Q_{',quant2,'} = ',q2,'$')))        
         }        
         
-        p <- p + ylab('') + xlab('') + guides(fill=FALSE) + theme_classic() +
-          theme(axis.text.x=element_text(size=13),
+        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + theme_classic() +
+          ggplot2::theme(axis.text.x=element_text(size=13),
                 axis.text.y=element_text(size=13),
                 axis.title.x = element_text(size=14),
                 axis.title.y = element_text(size=14))
