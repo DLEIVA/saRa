@@ -329,7 +329,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         ciw <- self$options$ciWidthps
         
-        pd <- position_dodge(0.2)
+        pd <- ggplot2::position_dodge(0.2)
         
         plot <- ggplot2::ggplot(data=image$state, ggplot2::aes(x=group, y=stat, shape=type)) +
           ggplot2::geom_errorbar(ggplot2::aes(x=group, ymin=stat.lwr.ci, ymax=stat.upr.ci, width=.1),
