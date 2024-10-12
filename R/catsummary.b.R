@@ -421,7 +421,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               
               plotData <- plotData |> 
                 arrange(y) |> 
-                mutate(x=factor(x, x))
+                dplyr::mutate(x=factor(x, x))
               
               labels <- list("x"=var)
               
