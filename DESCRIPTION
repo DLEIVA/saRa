@@ -2,16 +2,14 @@ Package: saRa
 Type: Package
 Title: Statistical Analyses with R Add-in for Jamovi
 Version: 0.1.0
-Date: 2024-02-04
+Date: 2024-10-11
 Author: David Leiva, Sara Martí
 Maintainer: David Leiva <dleivaur@ub.edu>
-Description: An R package for a basic course on Statistics in jamovi.
+Description: An R package for a basic course on Statistics in jamovi. 
     Basically based on jmv package, the add-in includes a suite of (univariate and bivariate) 
-    descriptive methods  for nominal, ordinal, and numeric variables.
-    The add-in also incorporates a module of probability distributions, continuous and discrete, to
-    be used in a Statistics course. This package is primarily thought and developed to 
-    be useable within the jamovi statistical spreadsheet (see <https://www.jamovi.org> for more
-    information).
+    descriptive methods  for nominal, ordinal, and numeric variables, as well as probability 
+    distributions for continuous and discrete random variables. It is also available as a module 
+    for 'jamovi' (see <https://www.jamovi.org> for more information).
 BugReports: https://github.com/DLEIVA/saRa/issues
 License: GPL (>=2)
 Depends:
