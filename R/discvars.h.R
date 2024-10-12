@@ -26,11 +26,11 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             ppmf = FALSE,
             pcdf = FALSE,
             pinterv = FALSE,
-            x1value = NULL,
-            x2value = NULL,
+            x1value = 0,
+            x2value = 1,
             psurv = FALSE,
             picdf = FALSE,
-            pqvalue = NULL,
+            pqvalue = 0.5,
             tail = "left", ...) {
 
             super$initialize(
@@ -52,14 +52,18 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..binomn <- jmvcore::OptionInteger$new(
                 "binomn",
                 binomn,
+                min=0,
                 default=10)
             private$..binomp <- jmvcore::OptionNumber$new(
                 "binomp",
                 binomp,
+                min=0,
+                max=1,
                 default=0.5)
             private$..lambda <- jmvcore::OptionNumber$new(
                 "lambda",
                 lambda,
+                min=0,
                 default=10)
             private$..negbinomr <- jmvcore::OptionInteger$new(
                 "negbinomr",
@@ -68,18 +72,24 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..negbinomp <- jmvcore::OptionNumber$new(
                 "negbinomp",
                 negbinomp,
+                min=0,
+                max=1,
                 default=0.5)
             private$..geomp <- jmvcore::OptionNumber$new(
                 "geomp",
                 geomp,
+                min=0,
+                max=1,
                 default=0.5)
             private$..hyperm <- jmvcore::OptionInteger$new(
                 "hyperm",
                 hyperm,
+                min=0,
                 default=10)
             private$..hypern <- jmvcore::OptionInteger$new(
                 "hypern",
                 hypern,
+                min=0,
                 default=10)
             private$..hyperk <- jmvcore::OptionInteger$new(
                 "hyperk",
@@ -124,10 +134,12 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=FALSE)
             private$..x1value <- jmvcore::OptionNumber$new(
                 "x1value",
-                x1value)
+                x1value,
+                default=0)
             private$..x2value <- jmvcore::OptionNumber$new(
                 "x2value",
-                x2value)
+                x2value,
+                default=1)
             private$..psurv <- jmvcore::OptionBool$new(
                 "psurv",
                 psurv,
@@ -138,7 +150,10 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=FALSE)
             private$..pqvalue <- jmvcore::OptionNumber$new(
                 "pqvalue",
-                pqvalue)
+                pqvalue,
+                min=0,
+                max=1,
+                default=0.5)
             private$..tail <- jmvcore::OptionList$new(
                 "tail",
                 tail,
@@ -470,11 +485,11 @@ discvars <- function(
     ppmf = FALSE,
     pcdf = FALSE,
     pinterv = FALSE,
-    x1value,
-    x2value,
+    x1value = 0,
+    x2value = 1,
     psurv = FALSE,
     picdf = FALSE,
-    pqvalue,
+    pqvalue = 0.5,
     tail = "left") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
