@@ -419,8 +419,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               plotData <- plotData[order(plotData$y,decreasing=TRUE), ]
               plotData$x <- factor(plotData$x, levels=plotData$x)
               
-              plotData <- plotData %>% 
-                arrange(y) %>% 
+              plotData <- plotData |> 
+                arrange(y) |> 
                 mutate(x=factor(x, x))
               
               labels <- list("x"=var)
