@@ -9,8 +9,8 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             vars = NULL,
             groupBy = NULL,
             chisqtest = FALSE,
-            kstest = FALSE,
-            swtest = FALSE,
+            kstest = TRUE,
+            swtest = TRUE,
             lillietest = FALSE,
             adtest = FALSE,
             sftest = FALSE,
@@ -49,11 +49,11 @@ testnormOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..kstest <- jmvcore::OptionBool$new(
                 "kstest",
                 kstest,
-                default=FALSE)
+                default=TRUE)
             private$..swtest <- jmvcore::OptionBool$new(
                 "swtest",
                 swtest,
-                default=FALSE)
+                default=TRUE)
             private$..lillietest <- jmvcore::OptionBool$new(
                 "lillietest",
                 lillietest,
@@ -376,8 +376,8 @@ testnorm <- function(
     vars,
     groupBy = NULL,
     chisqtest = FALSE,
-    kstest = FALSE,
-    swtest = FALSE,
+    kstest = TRUE,
+    swtest = TRUE,
     lillietest = FALSE,
     adtest = FALSE,
     sftest = FALSE,
