@@ -259,7 +259,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       plotSpecificTheme <- NULL
       
       plot <-
-        ggplot2::ggplot(data=data, aes_string(x=names$x, y=names$y)) +
+        ggplot2::ggplot(data=data, ggplot2::aes_string(x=names$x, y=names$y)) +
         ggplot2::geom_bar(
           stat="identity",
           position="dodge",
@@ -293,7 +293,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data[["placeHolder"]] <- rep('var1', nrow(data))
       x <- "placeHolder"
       
-      plot <- ggplot2::ggplot(data=data, aes_string(x=x, y=names$x)) +
+      plot <- ggplot2::ggplot(data=data, ggplot2::aes_string(x=x, y=names$x)) +
         ggplot2::labs(x='', y=labels$x) +
         ggplot2::scale_y_continuous(breaks=scales::pretty_breaks())
       

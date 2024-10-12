@@ -231,8 +231,8 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       names <- image$state$names
       labels <- image$state$labels
       
-      plotSpecificTheme <- ggplot2::theme(axis.text.y=element_blank(),
-                                 axis.ticks.y=element_blank())
+      plotSpecificTheme <- ggplot2::theme(axis.text.y=ggplot2::element_blank(),
+                                 axis.ticks.y=ggplot2::element_blank())
       
       if (self$options$hist && self$options$dens)
         alpha <- 0.4
