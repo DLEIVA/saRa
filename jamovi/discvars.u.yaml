@@ -4,11 +4,11 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 children:
-  - type: CollapseBox
-    label: Distributions
+  - type: LayoutBox
     stretchFactor: 2
-    collapsed: true
     children:
+      - type: Label
+        label: Distributions    
       - type: LayoutBox
         margin: large
         stretchFactor: 1
@@ -119,17 +119,17 @@ children:
               - type: LayoutBox
                 margin: large
                 children:
-                  - type: TextBox
-                    name: valuesfunc
-                    width: large
-                    format: string  
-                    enable: (pmf || cdf || surv)
                   - type: CheckBox
                     name: pmf
                   - type: CheckBox
                     name: cdf
                   - type: CheckBox
                     name: surv
+                  - type: TextBox
+                    name: valuesfunc
+                    width: large
+                    format: string  
+                    enable: (pmf || cdf || surv)                    
           - type: LayoutBox
             cell:
               column: 1
@@ -139,13 +139,14 @@ children:
               - type: LayoutBox
                 margin: large
                 children:
+                  - type: CheckBox
+                    name: icdf
                   - type: TextBox
                     name: qvalues
                     width: large
                     format: string
                     enable: (icdf)
-                  - type: CheckBox
-                    name: icdf
+                    
 
   - type: CollapseBox
     label: Plots

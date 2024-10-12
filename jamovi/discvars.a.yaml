@@ -111,6 +111,7 @@ options:
     - name: valuesfunc
       title: Random variable values
       type: String
+      default: "0"
       description:
           R: >
             a comma-separated list specifying random variables' values  
@@ -118,7 +119,7 @@ options:
     - name: pmf
       title: "Probabilty mass function (Pr(X = x))"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide probability mass function for a discrete distribution            
@@ -142,7 +143,7 @@ options:
     - name: icdf
       title: "Inverse of cdf (quantiles)"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a discrete distribution            
@@ -150,6 +151,7 @@ options:
     - name: qvalues
       title: Quantiles values
       type: String
+      default: "0.5"
       description:
           R: >
             a comma-separated list specifying quantiles for a random variable     
