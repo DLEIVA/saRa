@@ -43,7 +43,7 @@ options:
     - name: kstest
       title: Kolmogorov-Smirnov test
       type: Bool
-      default: false
+      default: true
       description:
           ui: >
             perform Kolmogorv-Smirnov tests.
@@ -53,7 +53,7 @@ options:
     - name: swtest
       title: Shapiro-Wilk test
       type: Bool
-      default: false
+      default: true
       description:
           ui: >
             perform Shapiro-Wilk tests.
