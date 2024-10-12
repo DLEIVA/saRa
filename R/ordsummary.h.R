@@ -38,7 +38,6 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             violin = FALSE,
             dot = FALSE,
             dotType = "jitter",
-            boxMean = FALSE,
             innerf = 1.5,
             outerf = 3, ...) {
 
@@ -185,10 +184,6 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "jitter",
                     "stack"),
                 default="jitter")
-            private$..boxMean <- jmvcore::OptionBool$new(
-                "boxMean",
-                boxMean,
-                default=FALSE)
             private$..innerf <- jmvcore::OptionNumber$new(
                 "innerf",
                 innerf,
@@ -230,7 +225,6 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..violin)
             self$.addOption(private$..dot)
             self$.addOption(private$..dotType)
-            self$.addOption(private$..boxMean)
             self$.addOption(private$..innerf)
             self$.addOption(private$..outerf)
         }),
@@ -267,7 +261,6 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         violin = function() private$..violin$value,
         dot = function() private$..dot$value,
         dotType = function() private$..dotType$value,
-        boxMean = function() private$..boxMean$value,
         innerf = function() private$..innerf$value,
         outerf = function() private$..outerf$value),
     private = list(
@@ -303,7 +296,6 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..violin = NA,
         ..dot = NA,
         ..dotType = NA,
-        ..boxMean = NA,
         ..innerf = NA,
         ..outerf = NA)
 )
@@ -420,7 +412,6 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param dot \code{TRUE} or \code{FALSE} (default), provide dot plots
 #'   (continuous variables only)
 #' @param dotType .
-#' @param boxMean \code{TRUE} or \code{FALSE} (default), add mean to box plot
 #' @param innerf a number (detects by default the number) specifying the inner
 #'   fence for detecting outliers
 #' @param outerf a number (detects by default the number) specifying the outer
@@ -472,7 +463,6 @@ ordSummary <- function(
     violin = FALSE,
     dot = FALSE,
     dotType = "jitter",
-    boxMean = FALSE,
     innerf = 1.5,
     outerf = 3) {
 
@@ -519,7 +509,6 @@ ordSummary <- function(
         violin = violin,
         dot = dot,
         dotType = dotType,
-        boxMean = boxMean,
         innerf = innerf,
         outerf = outerf)
 
