@@ -135,7 +135,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             renderFun = ".boxPlot",
             width = 550,
             height = 550,
-            clearWith = list("box", "violin", "dot", "dotType", "boxMean")
+            clearWith = list("box", "violin", "dot", "dotType")
           )
           
           group$add(image)
@@ -309,12 +309,12 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           column <- data[[names$x]]
           outdata <- private$.getOUTLIERS(column)
           plot <- plot +
-            ggplot2::geom_jitter(aes(color=outdata,shape=outdata), width=0.05, alpha=0.6, size=3
+            ggplot2::geom_jitter(ggplot2::aes(color=outdata,shape=outdata), width=0.05, alpha=0.6, size=3
             ) +
             ggplot2::guides(color='none',shape='none')
         } else if (self$options$dotType == 'stack') {
           plot <- plot +
-            ggplot2::geom_dotplot(aes(color=outdata,fill=outdata),
+            ggplot2::geom_dotplot(ggplot2::aes(color=outdata,fill=outdata),
                                   binaxis="y",
                                   stackdir="center",
                                   alpha=0.5,
@@ -344,17 +344,6 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             alpha=0.9,
             coef= self$options$innerf,
             outlier.alpha = 0.0
-          )
-      }
-      
-      if (self$options$boxMean) {
-        plot <- plot +
-          ggplot2::stat_summary(
-            fun.y=mean,
-            geom="point",
-            shape=15,
-            size=3.5,
-            color=theme$color[1]
           )
       }
       
