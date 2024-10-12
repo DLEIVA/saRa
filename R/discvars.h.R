@@ -16,12 +16,12 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             hyperm = 10,
             hypern = 10,
             hyperk = 5,
-            valuesfunc = NULL,
-            pmf = FALSE,
-            cdf = FALSE,
+            valuesfunc = "0",
+            pmf = TRUE,
+            cdf = TRUE,
             surv = FALSE,
-            icdf = FALSE,
-            qvalues = NULL,
+            icdf = TRUE,
+            qvalues = "0.5",
             ppvalue = NULL,
             ppmf = FALSE,
             pcdf = FALSE,
@@ -97,15 +97,16 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=5)
             private$..valuesfunc <- jmvcore::OptionString$new(
                 "valuesfunc",
-                valuesfunc)
+                valuesfunc,
+                default="0")
             private$..pmf <- jmvcore::OptionBool$new(
                 "pmf",
                 pmf,
-                default=FALSE)
+                default=TRUE)
             private$..cdf <- jmvcore::OptionBool$new(
                 "cdf",
                 cdf,
-                default=FALSE)
+                default=TRUE)
             private$..surv <- jmvcore::OptionBool$new(
                 "surv",
                 surv,
@@ -113,10 +114,11 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..icdf <- jmvcore::OptionBool$new(
                 "icdf",
                 icdf,
-                default=FALSE)
+                default=TRUE)
             private$..qvalues <- jmvcore::OptionString$new(
                 "qvalues",
-                qvalues)
+                qvalues,
+                default="0.5")
             private$..ppvalue <- jmvcore::OptionNumber$new(
                 "ppvalue",
                 ppvalue)
@@ -475,12 +477,12 @@ discvars <- function(
     hyperm = 10,
     hypern = 10,
     hyperk = 5,
-    valuesfunc,
-    pmf = FALSE,
-    cdf = FALSE,
+    valuesfunc = "0",
+    pmf = TRUE,
+    cdf = TRUE,
     surv = FALSE,
-    icdf = FALSE,
-    qvalues,
+    icdf = TRUE,
+    qvalues = "0.5",
     ppvalue,
     ppmf = FALSE,
     pcdf = FALSE,
