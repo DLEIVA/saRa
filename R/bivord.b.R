@@ -379,7 +379,6 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       image$setSize(width * 2, height)
     },
     .initAlluvial = function() {
-      library(ggalluvial)
       image <- self$results$get('alluvial')
       
       width <- 450
@@ -496,7 +495,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       tabla <- as.data.frame(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))))
       p <- ggplot2::ggplot(tabla,ggplot2::aes_string(xVarName,zVarName)) +
-        ggplot2::geom_tile(aes(fill = Freq), colour ="black") +
+        ggplot2::geom_tile(ggplot2::aes(fill = Freq), colour ="black") +
         ggplot2::scale_fill_gradient(low='white',high='steelblue') + ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
               axis.text.y=ggplot2::element_text(size=13),
@@ -531,9 +530,9 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                            ggplot2::aes_string(axis1 = xVarName,axis2 = zVarName, y = "Freq")) +
         ggplot2::scale_x_discrete(limits = c(xVarName, zVarName), expand = c(.2, .05)) +
         ggplot2::scale_fill_gradient(low = "white", high = "steelblue") +
-        ggalluvial::geom_alluvium(aes(fill = Freq)) +
+        ggalluvial::geom_alluvium(ggplot2::aes(fill = Freq)) +
         ggalluvial::geom_stratum() +
-        ggplot2::geom_text(stat = "stratum", ggplot2::aes(label = ggplot2::after_stat(stratum))) +
+        ggplot2::geom_text(stat = ggalluvial::StatStratum, ggplot2::aes(label = ggplot2::after_stat(stratum))) +
         ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
               axis.text.y=ggplot2::element_text(size=13),
