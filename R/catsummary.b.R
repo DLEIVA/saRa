@@ -420,7 +420,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               plotData$x <- factor(plotData$x, levels=plotData$x)
               
               plotData <- plotData |> 
-                arrange(y) |> 
+                dplyr::arrange(y) |> 
                 dplyr::mutate(x=factor(x, x))
               
               labels <- list("x"=var)
@@ -595,7 +595,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::geom_point(ggplot2::aes_string(y=names$cumulative),col='grey',pch=16,size=4) +
           ggplot2::geom_path(ggplot2::aes_string(y=names$cumulative,group=1),lty=2,col='grey',
                     size=0.7) +
-          ggplot2::scale_y_continuous(sec.axis=sec_axis(~.*scaleRight, 
+          ggplot2::scale_y_continuous(sec.axis=ggplot2::sec_axis(~.*scaleRight, 
                                                name = "Cumulative percent (%)",
                                                breaks=seq(0,100,20))) +
           ggplot2::ylab('Counts') + ggplot2::xlab('')
@@ -614,7 +614,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         freqtype <- image$state$freqtype
         fill <- theme$fill[2]
         color <- theme$color[1]
-        pd <- position_dodge(0.85)
+        pd <- ggplot2::position_dodge(0.85)
         plotSpecificTheme <- NULL
         
         plot <-
