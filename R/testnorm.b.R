@@ -318,7 +318,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               fill=fill
             )}+
             {if(self$options$dens) ggplot2::geom_density(color=color, fill=fill, alpha=alpha)}+
-            {if(self$options$norm) ggplot2::geom_line(data = densDAT, aes_string(x='val',y = 'density'),
+            {if(self$options$norm) ggplot2::geom_line(data = densDAT, ggplot2::aes_string(x='val',y = 'density'),
                                              col='red',lty=2,lwd=1.15)} +
             {if(!is.null(groupBy)) ggplot2::facet_grid(rows=vars(s1))} +
             ggtheme
@@ -373,7 +373,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           if(!is.null(groupBy)){
             s1 <- self$data[[groupBy]]
             df <- data.frame(y,s1)
-            d.f <- ddplyr::arrange(df,s1,y)
+            d.f <- dplyr::arrange(df,s1,y)
             d.f <- plyr::ddply(d.f, .(s1), dplyr::transform,
                                z=sort(scale(y)),p=pnorm(sort(scale(y))))
             
