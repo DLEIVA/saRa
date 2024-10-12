@@ -435,7 +435,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           {if(self$options$dens) ggplot2::geom_density(color=color, fill=fill, alpha=alpha)}+
           {if(self$options$norm) ggplot2::geom_line(data = densDAT, ggplot2::aes_string(x='val',y = 'density'),
                                           col='red',lty=2,lwd=1.15)} +
-          ggplot2::facet_grid(rows=vars(s1))
+          ggplot2::facet_grid(rows=ggplot2::vars(s1))
         
         #data$s1rev <- factor(data$s1, rev(levels(data$s1)))
         #
@@ -590,7 +590,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         ggplot2::xlab("Theoretical Quantiles") +
         ggplot2::ylab("Standardized Residuals") +
         ggtheme +
-        ggplot2::facet_grid(cols=vars(s1))
+        ggplot2::facet_grid(cols=ggplot2::vars(s1))
       
       return(plot)
     },   
