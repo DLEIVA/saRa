@@ -29,6 +29,7 @@ options:
     - name: binomn
       title: Number of trials
       type: Integer
+      min: 0
       default: 10
       description:
           R: >
@@ -37,6 +38,8 @@ options:
     - name: binomp
       title: Probability
       type: Number
+      min: 0.
+      max: 1.
       default: 0.5
       description:
           R: >
@@ -45,6 +48,7 @@ options:
     - name: lambda
       title: "Mean (\u03BB)"
       type: Number
+      min: 0
       default: 10      
       description:
           R: >
@@ -61,6 +65,8 @@ options:
     - name: negbinomp
       title: Probability
       type: Number
+      min: 0.
+      max: 1.
       default: 0.5
       description:
           R: >
@@ -69,6 +75,8 @@ options:
     - name: geomp
       title: Probability
       type: Number
+      min: 0.
+      max: 1.      
       default: 0.5
       description:
           R: >
@@ -77,6 +85,7 @@ options:
     - name: hyperm
       title: Successes
       type: Integer
+      min: 0
       default: 10
       description:
           R: >
@@ -85,6 +94,7 @@ options:
     - name: hypern
       title: Failures
       type: Integer
+      min: 0
       default: 10
       description:
           R: >
@@ -178,6 +188,7 @@ options:
     - name: x1value
       title: x1 value
       type: Number
+      default: 0
       description:
           R: >
             a number specifying X1 value for probability plot within interval 
@@ -185,6 +196,7 @@ options:
     - name: x2value
       title: x2 value
       type: Number
+      default: 1
       description:
           R: >
             a number specifying X2 value for probability plot within interval
@@ -208,6 +220,9 @@ options:
     - name: pqvalue
       title: Quantile value
       type: Number
+      min: 0.
+      max: 1.
+      default: 0.5
       description:
           R: >
             a number specifying a quantile for a random variable to be plotted              
