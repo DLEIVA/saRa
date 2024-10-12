@@ -1,8 +1,7 @@
 # saRa <img src="img/saRa_logo.png" align="right" />
 
-An R package for a basic course on Statistics in jamovi. Basically based on jmv package, the add-in includes a suite of (univariate and bivariate) 
-descriptive methods  for nominal, ordinal, and numeric variables. The add-in also incorporates a module of probability distributions, continuous and discrete, to
-be used in a Statistics course. This package is primarily thought and developed to be useable within the 'jamovi' statistical spreadsheet (see <https://www.jamovi.org> for more information).
+An R package for a basic course on Statistics in jamovi. 
+Basically based on jmv package, the add-in includes a suite of (univariate and bivariate) descriptive methods  for nominal, ordinal, and numeric variables. The add-in also incorporates a module of probability distributions, continuous and discrete, to be used in a Statistics course. This package is primarily thought and developed to be useable within the 'jamovi' statistical spreadsheet (see <https://www.jamovi.org> for more information).
 
 ![Screenshot of saRa](https://github.com/DLEIVA/saRa/blob/main/img/screenshot_saRa.png)
 
