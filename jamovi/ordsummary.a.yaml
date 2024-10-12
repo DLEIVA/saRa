@@ -277,14 +277,6 @@ options:
         - name: stack
           title: "Stacked"
       default: jitter
-
-    - name: boxMean
-      title: Mean
-      type: Bool
-      default: false
-      description:
-          R: >
-            `TRUE` or `FALSE` (default), add mean to box plot
             
     - name: innerf
       title: Inner fence
