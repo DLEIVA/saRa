@@ -372,7 +372,7 @@ contvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "contvars",
-                version = c(0,1,0),
+                version = c(0,1,1),
                 options = options,
                 results = contvarsResults$new(options=options),
                 data = data,
