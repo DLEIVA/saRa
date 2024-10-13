@@ -60,12 +60,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             
             ProbRowNo <- 1
             
-            if(any(!(varValues%%1==0 & sign(varValues)>=0))){
-                jmvcore::reject(paste0("Random variable values must be positive integers (",
-                                      paste0(varValues[!(varValues%%1==0 & sign(varValues)>=0)],
-                                             collapse=','),")."))
-              }
-            
             for(i in 1:length(varValues)){
               varname <- paste0('x = ',varValues[i])
               pmfval <- if(distros=='binom'){
@@ -111,19 +105,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }
           
           quantValues <- private$.getQuantValues()
-          
-          if(any(quantValues<0 | quantValues>1)){
-            jmvcore::reject(paste0("Quantiles values must be real numbers between 0 and 1 (",
-                                   paste0(quantValues[quantValues<0 | quantValues>1],
-                                          collapse=','),")."))
-          }          
-          
-          for (i in 1:length(quantValues)){
-            if(quantValues[i]<0 | quantValues[i] > 1){
-              jmvcore::reject("Quantiles values must be real numbers between 0 and 1 ('{a}').",
-                              a=quantValues)            
-            }
-          }
           
           if(length(quantValues)>0){
             if(length(quantValues) > 1){
@@ -565,23 +546,38 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         probValues <- self$options$valuesfunc
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
-        #probValues[probValues < 0 ] <- NA
-        probValues <- unique(probValues[!is.na(probValues)])
+        if(any(is.na(as.numeric(probValues)))){
+          jmvcore::reject(paste0('Random variable values must be positive integers (',
+                                 paste0(unlist(strsplit(self$options$valuesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$valuesfunc, ","))))],collapse=','),').'))          
+        }        
+        if(any(!(probValues%%1==0 & sign(probValues)>=0))){
+          jmvcore::reject(paste0("Random variable values must be positive integers (",
+                                 paste0(varValues[!(varValues%%1==0 & sign(varValues)>=0)],
+                                        collapse=','),")."))
+        }
+        probValues <- sort(unique(probValues[!is.na(probValues)]))
         return(probValues)
       },
     .getQuantValues = function(){
       quantValues <- self$options$qvalues
       if (!is.na(quantValues) && is.character(quantValues))
         quantValues <- as.numeric(unlist(strsplit(quantValues, ",")))
-      #quantValues[quantValues < 0 | quantValues > 1] <- NA
-      quantValues <- unique(quantValues[!is.na(quantValues)])
+      if(any(is.na(as.numeric(quantValues)))){
+        jmvcore::reject(paste0('Random variable values must be a real number between 0 and 1(',
+                               paste0(unlist(strsplit(self$options$qvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$qvalues, ","))))],collapse=','),').'))          
+      }
+      if(any(quantValues<0 | quantValues>1)){
+        jmvcore::reject(paste0("Quantiles values must be real numbers between 0 and 1 (",
+                               paste0(quantValues[quantValues<0 | quantValues>1],
+                                      collapse=','),")."))
+      }      
+      quantValues <- sort(unique(quantValues[!is.na(quantValues)]))
       return(quantValues)
     },
     .getppvalue = function(){
       ppval <- self$options$ppvalue
       if (!is.na(ppval) && is.character(ppval))
         ppval <- as.numeric(unlist(strsplit(ppval, ",")))
-      #ppval[ppval < 0] <- NA
       ppval <- unique(ppval[!is.na(ppval)])[1]
       return(ppval)
     },    
@@ -589,7 +585,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       X1val <- self$options$x1value
       if (!is.na(X1val) && is.character(X1val))
         X1val <- as.numeric(unlist(strsplit(X1val, ",")))
-      #X1val[X1val < 0] <- NA
       X1val <- unique(X1val[!is.na(X1val)])[1]
       return(X1val)
     },
@@ -597,7 +592,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       X2val <- self$options$x2value
       if (!is.na(X2val) && is.character(X2val))
         X2val <- as.numeric(unlist(strsplit(X2val, ",")))
-      #X2val[X2val < 0] <- NA
       X2val <- unique(X2val[!is.na(X2val)])[1]
       return(X2val)
     },
@@ -605,7 +599,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       pqvalue <- self$options$pqvalue
       if (!is.na(pqvalue) && is.character(pqvalue))
         pqvalue <- as.numeric(unlist(strsplit(pqvalue, ",")))
-      #pqvalue[pqvalue < 0 | pqvalue > 1] <- NA
       pqvalue <- unique(pqvalue[!is.na(pqvalue)])
       return(pqvalue)
     }  
