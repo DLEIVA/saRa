@@ -580,7 +580,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
         if(any(is.na(as.numeric(probValues)))){
           jmvcore::reject(paste0('Random variable values must be a real number (',
-                                 paste0(probValues[is.na(as.numeric(probValues))],collapse=','),').'))          
+                                 paste0(unlist(strsplit(self$options$contvaluesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$contvaluesfunc, ","))))],collapse=','),').'))          
         }
         if(cdistros%in%c('chisqdist','fdist','exp')){
           if(any(probValues < 0)) jmvcore::reject(paste0('Random variable values must be positive (',
@@ -599,11 +599,14 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       .getcontQuantValues = function(){
         quantValues <- self$options$contqvalues
         if (!is.na(quantValues) && is.character(quantValues))
-          quantValues <- sort(as.numeric(unlist(strsplit(quantValues, ","))))
-        #quantValues[quantValues < 0 | quantValues > 1] <- NA
+          quantValues <- as.numeric(unlist(strsplit(quantValues, ",")))
+        if(any(is.na(as.numeric(quantValues)))){
+          jmvcore::reject(paste0('Random variable values must be a real number between 0 and 1(',
+                                 paste0(unlist(strsplit(self$options$contqvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$contqvalues, ","))))],collapse=','),').'))          
+        }
         if(any(quantValues<0 | quantValues>1)){
           jmvcore::reject(paste0('Quantile values must be between 0 and 1 (',
-                                 paste0(quantValues),').'))
+                                 paste0(quantValues[quantValues<0 | quantValues>1],collapse=','),').'))
         }
         quantValues <- sort(unique(quantValues[!is.na(quantValues)]))
         return(quantValues)
