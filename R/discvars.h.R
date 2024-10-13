@@ -22,7 +22,7 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             surv = FALSE,
             icdf = TRUE,
             qvalues = "0.5",
-            ppvalue = NULL,
+            ppvalue = 0,
             ppmf = FALSE,
             pcdf = FALSE,
             pinterv = FALSE,
@@ -119,9 +119,10 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "qvalues",
                 qvalues,
                 default="0.5")
-            private$..ppvalue <- jmvcore::OptionNumber$new(
+            private$..ppvalue <- jmvcore::OptionInteger$new(
                 "ppvalue",
                 ppvalue,
+                default=0,
                 min=0)
             private$..ppmf <- jmvcore::OptionBool$new(
                 "ppmf",
@@ -135,11 +136,11 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "pinterv",
                 pinterv,
                 default=FALSE)
-            private$..x1value <- jmvcore::OptionNumber$new(
+            private$..x1value <- jmvcore::OptionInteger$new(
                 "x1value",
                 x1value,
                 default=0)
-            private$..x2value <- jmvcore::OptionNumber$new(
+            private$..x2value <- jmvcore::OptionInteger$new(
                 "x2value",
                 x2value,
                 default=1)
@@ -484,7 +485,7 @@ discvars <- function(
     surv = FALSE,
     icdf = TRUE,
     qvalues = "0.5",
-    ppvalue,
+    ppvalue = 0,
     ppmf = FALSE,
     pcdf = FALSE,
     pinterv = FALSE,

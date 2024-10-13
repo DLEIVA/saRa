@@ -158,7 +158,8 @@ options:
             
     - name: ppvalue
       title: Random variable value
-      type: Number
+      type: Integer
+      default: 0      
       min: 0
       description:
           R: >
@@ -190,7 +191,7 @@ options:
             
     - name: x1value
       title: x1 value
-      type: Number
+      type: Integer
       default: 0
       description:
           R: >
@@ -198,7 +199,7 @@ options:
           
     - name: x2value
       title: x2 value
-      type: Number
+      type: Integer
       default: 1
       description:
           R: >
