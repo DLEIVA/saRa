@@ -578,6 +578,10 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       ppval <- self$options$ppvalue
       if (!is.na(ppval) && is.character(ppval))
         ppval <- as.numeric(unlist(strsplit(ppval, ",")))
+      if(any(is.na(as.numeric(ppval)))){
+        jmvcore::reject(paste0('Random variable values must be a positive integer(',
+                               paste0(unlist(strsplit(self$options$ppval, ","))[is.na(as.numeric(unlist(strsplit(self$options$ppval, ","))))],collapse=','),').'))          
+      }      
       ppval <- unique(ppval[!is.na(ppval)])[1]
       return(ppval)
     },    
