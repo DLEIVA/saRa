@@ -581,7 +581,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       ppval <- self$options$ppvalue
       if (!is.na(ppval) && is.character(ppval))
         ppval <- as.numeric(unlist(strsplit(ppval, ",")))
-      ppval[ppval < 0] <- NA
+      #ppval[ppval < 0] <- NA
       ppval <- unique(ppval[!is.na(ppval)])[1]
       return(ppval)
     },    
@@ -589,7 +589,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       X1val <- self$options$x1value
       if (!is.na(X1val) && is.character(X1val))
         X1val <- as.numeric(unlist(strsplit(X1val, ",")))
-      X1val[X1val < 0] <- NA
+      #X1val[X1val < 0] <- NA
       X1val <- unique(X1val[!is.na(X1val)])[1]
       return(X1val)
     },
@@ -597,7 +597,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       X2val <- self$options$x2value
       if (!is.na(X2val) && is.character(X2val))
         X2val <- as.numeric(unlist(strsplit(X2val, ",")))
-      X2val[X2val < 0] <- NA
+      #X2val[X2val < 0] <- NA
       X2val <- unique(X2val[!is.na(X2val)])[1]
       return(X2val)
     },
@@ -605,7 +605,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       pqvalue <- self$options$pqvalue
       if (!is.na(pqvalue) && is.character(pqvalue))
         pqvalue <- as.numeric(unlist(strsplit(pqvalue, ",")))
-      pqvalue[pqvalue < 0 | pqvalue > 1] <- NA
+      #pqvalue[pqvalue < 0 | pqvalue > 1] <- NA
       pqvalue <- unique(pqvalue[!is.na(pqvalue)])
       return(pqvalue)
     }  
