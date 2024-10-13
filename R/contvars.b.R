@@ -663,7 +663,6 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         pqvalue <- self$options$contpqvalue
         if (!is.na(pqvalue) && is.character(pqvalue))
           pqvalue <- as.numeric(unlist(strsplit(pqvalue, ",")))
-        #pqvalue[pqvalue < 0 | pqvalue > 1] <- NA
         pqvalue <- unique(pqvalue[!is.na(pqvalue)])
         return(pqvalue)
       }      
