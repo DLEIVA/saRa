@@ -578,21 +578,34 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         probValues <- self$options$contvaluesfunc
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
+        if(any(is.na(as.numeric(probValues)))){
+          jmvcore::reject(paste0('Random variable values must be a real number (',
+                                 paste0(probValues[is.na(as.numeric(probValues))],collapse=','),').'))          
+        }
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          probValues[probValues < 0] <- NA 
+          if(any(probValues < 0)) jmvcore::reject(paste0('Random variable values must be positive (',
+                                                  paste0(probValues[probValues < 0],collapse=','),').')) 
         }
         if(cdistros=='unif'){
-          probValues[probValues < self$options$unifmin |probValues > self$options$unifmax] <- NA           
+          probValues[probValues < self$options$unifmin | probValues > self$options$unifmax]   
+          if(any(probValues < self$options$unifmin | probValues > self$options$unifmax)){
+            jmvcore::reject(paste0('Random variable values must be between ',self$options$unifmin,' and ',self$options$unifmax,' (',
+                            paste0(probValues[probValues < self$options$unifmin | probValues > self$options$unifmax],collapse=','),').'))
+          }
         }
-        probValues <- unique(probValues[!is.na(probValues)])
+        probValues <- sort(unique(probValues[!is.na(probValues)]))
         return(probValues)
       },
       .getcontQuantValues = function(){
         quantValues <- self$options$contqvalues
         if (!is.na(quantValues) && is.character(quantValues))
-          quantValues <- as.numeric(unlist(strsplit(quantValues, ",")))
-        quantValues[quantValues < 0 | quantValues > 1] <- NA
-        quantValues <- unique(quantValues[!is.na(quantValues)])
+          quantValues <- sort(as.numeric(unlist(strsplit(quantValues, ","))))
+        #quantValues[quantValues < 0 | quantValues > 1] <- NA
+        if(any(quantValues<0 | quantValues>1)){
+          jmvcore::reject(paste0('Quantile values must be between 0 and 1 (',
+                                 paste0(quantValues),').'))
+        }
+        quantValues <- sort(unique(quantValues[!is.na(quantValues)]))
         return(quantValues)
       },
       .getcontppvalue = function(){
@@ -601,10 +614,12 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(ppval) && is.character(ppval))
           ppval <- as.numeric(unlist(strsplit(ppval, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          ppval[ppval < 0] <- NA 
+          if(ppval<0) jmvcore::reject(paste0('Random variable value must be a positive number (',ppval,').')) 
         }
         if(cdistros=='unif'){
-          ppval[ppval < self$options$unifmin |ppval > self$options$unifmax] <- NA           
+          if(ppval < self$options$unifmin | ppval > self$options$unifmax)  
+            jmvcore::reject(paste0('Random variable value must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
+                                   ppval,').'))           
         }
         ppval <- unique(ppval[!is.na(ppval)])
         return(ppval)
@@ -615,10 +630,12 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(X1val) && is.character(X1val))
           X1val <- as.numeric(unlist(strsplit(X1val, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          X1val[X1val < 0] <- NA 
+          if(X1val<0) jmvcore::reject(paste0('X1 must be a positive number (',X1val,').'))
         }
         if(cdistros=='unif'){
-          X1val[X1val < self$options$unifmin |X1val > self$options$unifmax] <- NA           
+          if(X1val < self$options$unifmin | X1val > self$options$unifmax)  
+            jmvcore::reject(paste0('X1 must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
+                                   X1val,').'))
         }
         X1val <- unique(X1val[!is.na(X1val)])[1]
         return(X1val)
@@ -629,10 +646,12 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(X2val) && is.character(X2val))
           X2val <- as.numeric(unlist(strsplit(X2val, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          X2val[X2val < 0] <- NA 
+          if(X2val<0) jmvcore::reject(paste0('X2 must be a positive number (',X2val,').'))
         }
         if(cdistros=='unif'){
-          X2val[X2val < self$options$unifmin |X2val > self$options$unifmax] <- NA           
+          if(X2val < self$options$unifmin | X2val > self$options$unifmax)
+          jmvcore::reject(paste0('X2 must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
+          X2val,').'))
         }
         X2val <- unique(X2val[!is.na(X2val)])[1]
         return(X2val)
@@ -641,7 +660,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         pqvalue <- self$options$contpqvalue
         if (!is.na(pqvalue) && is.character(pqvalue))
           pqvalue <- as.numeric(unlist(strsplit(pqvalue, ",")))
-        pqvalue[pqvalue < 0 | pqvalue > 1] <- NA
+        #pqvalue[pqvalue < 0 | pqvalue > 1] <- NA
         pqvalue <- unique(pqvalue[!is.na(pqvalue)])
         return(pqvalue)
       }      

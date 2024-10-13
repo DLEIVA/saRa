@@ -145,7 +145,9 @@ contvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..contpqvalue <- jmvcore::OptionNumber$new(
                 "contpqvalue",
                 contpqvalue,
-                default=0.5)
+                default=0.5,
+                min=0,
+                max=1)
             private$..conttail <- jmvcore::OptionList$new(
                 "conttail",
                 conttail,
