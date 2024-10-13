@@ -121,7 +121,8 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default="0.5")
             private$..ppvalue <- jmvcore::OptionNumber$new(
                 "ppvalue",
-                ppvalue)
+                ppvalue,
+                min=0)
             private$..ppmf <- jmvcore::OptionBool$new(
                 "ppmf",
                 ppmf,
