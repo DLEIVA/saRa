@@ -159,6 +159,7 @@ options:
     - name: ppvalue
       title: Random variable value
       type: Number
+      min: 0
       description:
           R: >
             a number specifying random variables' value to be plotted
