@@ -18,7 +18,7 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             hyperk = 5,
             valuesfunc = "0",
             pmf = TRUE,
-            cdf = TRUE,
+            cdf = FALSE,
             surv = FALSE,
             icdf = TRUE,
             qvalues = "0.5",
@@ -106,7 +106,7 @@ discvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..cdf <- jmvcore::OptionBool$new(
                 "cdf",
                 cdf,
-                default=TRUE)
+                default=FALSE)
             private$..surv <- jmvcore::OptionBool$new(
                 "surv",
                 surv,
@@ -479,7 +479,7 @@ discvars <- function(
     hyperk = 5,
     valuesfunc = "0",
     pmf = TRUE,
-    cdf = TRUE,
+    cdf = FALSE,
     surv = FALSE,
     icdf = TRUE,
     qvalues = "0.5",

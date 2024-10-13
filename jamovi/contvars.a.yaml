@@ -103,6 +103,7 @@ options:
     - name: contvaluesfunc
       title: Random variable values
       type: String
+      default: "0"
       description:
           R: >
             a comma-separated list specifying random variables' values  
@@ -110,7 +111,7 @@ options:
     - name: contpdf
       title: "Probabilty density function (f(x))"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide probability density function for a continuous distribution            
@@ -134,7 +135,7 @@ options:
     - name: conticdf
       title: "Inverse of cdf (quantiles)"
       type: Bool
-      default: false
+      default: true
       description:
           R: >
             `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a continuous distribution            
@@ -142,6 +143,7 @@ options:
     - name: contqvalues
       title: Quantiles values
       type: String
+      default: '0.5'
       description:
           R: >
             a comma-separated list specifying quantiles for a random variable     
@@ -149,6 +151,7 @@ options:
     - name: contppvalue
       title: Random variable value
       type: Number
+      default: 0
       description:
           R: >
             a number specifying random variables' value to be plotted
@@ -180,6 +183,7 @@ options:
     - name: contx1value
       title: x1 value
       type: Number
+      default: 0
       description:
           R: >
             a number specifying X1 value for probability plot within interval 
@@ -187,6 +191,7 @@ options:
     - name: contx2value
       title: x2 value
       type: Number
+      default: 1
       description:
           R: >
             a number specifying X2 value for probability plot within interval
@@ -210,6 +215,7 @@ options:
     - name: contpqvalue
       title: Quantile value
       type: Number
+      default: 0.5
       description:
           R: >
             a number specifying a quantile for a random variable to be plotted              

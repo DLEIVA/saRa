@@ -16,21 +16,21 @@ contvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             rate = 10,
             unifmin = 0,
             unifmax = 1,
-            contvaluesfunc = NULL,
-            contpdf = FALSE,
+            contvaluesfunc = "0",
+            contpdf = TRUE,
             contcdf = FALSE,
             contsurv = FALSE,
-            conticdf = FALSE,
-            contqvalues = NULL,
-            contppvalue = NULL,
+            conticdf = TRUE,
+            contqvalues = "0.5",
+            contppvalue = 0,
             contppdf = FALSE,
             contpcdf = FALSE,
             contpinterv = FALSE,
-            contx1value = NULL,
-            contx2value = NULL,
+            contx1value = 0,
+            contx2value = 1,
             contpsurv = FALSE,
             contpicdf = FALSE,
-            contpqvalue = NULL,
+            contpqvalue = 0.5,
             conttail = "left", ...) {
 
             super$initialize(
@@ -88,11 +88,12 @@ contvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=1)
             private$..contvaluesfunc <- jmvcore::OptionString$new(
                 "contvaluesfunc",
-                contvaluesfunc)
+                contvaluesfunc,
+                default="0")
             private$..contpdf <- jmvcore::OptionBool$new(
                 "contpdf",
                 contpdf,
-                default=FALSE)
+                default=TRUE)
             private$..contcdf <- jmvcore::OptionBool$new(
                 "contcdf",
                 contcdf,
@@ -104,13 +105,15 @@ contvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..conticdf <- jmvcore::OptionBool$new(
                 "conticdf",
                 conticdf,
-                default=FALSE)
+                default=TRUE)
             private$..contqvalues <- jmvcore::OptionString$new(
                 "contqvalues",
-                contqvalues)
+                contqvalues,
+                default="0.5")
             private$..contppvalue <- jmvcore::OptionNumber$new(
                 "contppvalue",
-                contppvalue)
+                contppvalue,
+                default=0)
             private$..contppdf <- jmvcore::OptionBool$new(
                 "contppdf",
                 contppdf,
@@ -125,10 +128,12 @@ contvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=FALSE)
             private$..contx1value <- jmvcore::OptionNumber$new(
                 "contx1value",
-                contx1value)
+                contx1value,
+                default=0)
             private$..contx2value <- jmvcore::OptionNumber$new(
                 "contx2value",
-                contx2value)
+                contx2value,
+                default=1)
             private$..contpsurv <- jmvcore::OptionBool$new(
                 "contpsurv",
                 contpsurv,
@@ -139,7 +144,8 @@ contvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=FALSE)
             private$..contpqvalue <- jmvcore::OptionNumber$new(
                 "contpqvalue",
-                contpqvalue)
+                contpqvalue,
+                default=0.5)
             private$..conttail <- jmvcore::OptionList$new(
                 "conttail",
                 conttail,
@@ -459,21 +465,21 @@ contvars <- function(
     rate = 10,
     unifmin = 0,
     unifmax = 1,
-    contvaluesfunc,
-    contpdf = FALSE,
+    contvaluesfunc = "0",
+    contpdf = TRUE,
     contcdf = FALSE,
     contsurv = FALSE,
-    conticdf = FALSE,
-    contqvalues,
-    contppvalue,
+    conticdf = TRUE,
+    contqvalues = "0.5",
+    contppvalue = 0,
     contppdf = FALSE,
     contpcdf = FALSE,
     contpinterv = FALSE,
-    contx1value,
-    contx2value,
+    contx1value = 0,
+    contx2value = 1,
     contpsurv = FALSE,
     contpicdf = FALSE,
-    contpqvalue,
+    contpqvalue = 0.5,
     conttail = "left") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))

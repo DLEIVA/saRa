@@ -166,16 +166,16 @@ children:
               - type: LayoutBox
                 margin: large
                 children:
-                  - type: TextBox
-                    name: ppvalue
-                    format: number
-                    enable: (ppmf || pcdf || psurv)
                   - type: CheckBox
                     name: ppmf
                   - type: CheckBox
                     name: pcdf
                   - type: CheckBox
                     name: psurv
+                  - type: TextBox
+                    name: ppvalue
+                    format: number
+                    enable: (ppmf || pcdf || psurv)
                   - type: CheckBox
                     name: pinterv
                     children:
@@ -193,10 +193,6 @@ children:
               row: 0
             stretchFactor: 1
             children:                    
-                  - type: TextBox
-                    name: pqvalue
-                    format: number 
-                    enable: (picdf)
                   - type: CheckBox
                     name: picdf
                     children:
@@ -214,4 +210,8 @@ children:
                         name: central
                         optionName: tail
                         optionPart: central                       
-                        enable: (picdf)                        
+                        enable: (picdf)  
+                  - type: TextBox
+                    name: pqvalue
+                    format: number 
+                    enable: (picdf)

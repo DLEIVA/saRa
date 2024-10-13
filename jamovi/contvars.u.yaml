@@ -4,11 +4,11 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 children:
-  - type: CollapseBox
-    label: Distributions
+  - type: LayoutBox
     stretchFactor: 2
-    collapsed: true
     children:
+      - type: Label
+        label: Distributions    
       - type: LayoutBox
         margin: large
         stretchFactor: 1
@@ -124,17 +124,17 @@ children:
               - type: LayoutBox
                 margin: large
                 children:
-                  - type: TextBox
-                    name: contvaluesfunc
-                    width: large
-                    format: string
-                    enable: (contpdf || contcdf || contsurv)
                   - type: CheckBox
                     name: contpdf
                   - type: CheckBox
                     name: contcdf
                   - type: CheckBox
                     name: contsurv
+                  - type: TextBox
+                    name: contvaluesfunc
+                    width: large
+                    format: string
+                    enable: (contpdf || contcdf || contsurv)
           - type: LayoutBox
             cell:
               column: 1
@@ -144,13 +144,13 @@ children:
               - type: LayoutBox
                 margin: large
                 children:
+                  - type: CheckBox
+                    name: conticdf
                   - type: TextBox
                     name: contqvalues
                     width: large
                     format: string
-                    enable: (conticdf)
-                  - type: CheckBox
-                    name: conticdf
+                    enable: (conticdf)                    
   - type: CollapseBox
     label: Plots
     stretchFactor: 2
@@ -169,16 +169,16 @@ children:
               - type: LayoutBox
                 margin: large
                 children:
-                  - type: TextBox
-                    name: contppvalue
-                    format: number
-                    enable: (contppdf || contpcdf || contpsurv)
                   - type: CheckBox
                     name: contppdf                    
                   - type: CheckBox
                     name: contpcdf
                   - type: CheckBox
                     name: contpsurv
+                  - type: TextBox
+                    name: contppvalue
+                    format: number
+                    enable: (contppdf || contpcdf || contpsurv)
                   - type: CheckBox
                     name: contpinterv
                     children:
@@ -196,10 +196,6 @@ children:
               row: 0
             stretchFactor: 1
             children:
-              - type: TextBox
-                name: contpqvalue
-                format: number
-                enable: (contpicdf)
               - type: CheckBox
                 name: contpicdf
                 children:
@@ -218,3 +214,7 @@ children:
                     optionName: conttail
                     optionPart: central
                     enable: (contpicdf)
+              - type: TextBox
+                name: contpqvalue
+                format: number
+                enable: (contpicdf)
