@@ -510,7 +510,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             ggplot2::guides(color='none',shape='none')
         } else if (self$options$dotType == 'stack') {
           plot <- plot +
-            ggplot2::geom_dotplot(aes(color=outdata,fill=outdata),
+            ggplot2::geom_dotplot(ggplot2::aes(color=outdata,fill=outdata),
                                   binaxis="y",
                                   stackdir="center",
                                   alpha=0.5,
