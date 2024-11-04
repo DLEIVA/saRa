@@ -251,7 +251,7 @@ bivnumBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "bivnum",
-                version = c(0,1,1),
+                version = c(0,1,2),
                 options = options,
                 results = bivnumResults$new(options=options),
                 data = data,

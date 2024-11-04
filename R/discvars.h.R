@@ -382,7 +382,7 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "discvars",
-                version = c(0,1,1),
+                version = c(0,1,2),
                 options = options,
                 results = discvarsResults$new(options=options),
                 data = data,

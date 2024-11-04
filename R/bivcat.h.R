@@ -557,7 +557,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "bivcat",
-                version = c(0,1,1),
+                version = c(0,1,2),
                 options = options,
                 results = bivcatResults$new(options=options),
                 data = data,
