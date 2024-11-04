@@ -402,9 +402,9 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       plot <- ggplot2::ggplot(data=data, mapping = ggplot2::aes(sample = y)) +
         #geom_abline(slope=1, intercept=0, colour=theme$color[1]) +
         #stat_qq(aes(sample=y), size=2, colour=theme$color[1]) +
-        qqplotr::stat_qq_band() +
-        qqplotr::stat_qq_line() +
-        qqplotr::stat_qq_point() +
+        stat_qq_band() +
+        stat_qq_line() +
+        stat_qq_point() +
         ggplot2::xlab("Theoretical Quantiles") +
         ggplot2::ylab("Standardized Residuals") +
         ggtheme
@@ -911,6 +911,292 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         )
       }
       return(stats)  
-    } 
+    }
+    #' Quantile-quantile lines
+    #'
+    #' Draws a quantile-quantile line, functions and stats taken from qqplotr package.
+    
+    stat_qq_line <- function(
+    mapping = NULL,
+    data = NULL,
+    geom = "path",
+    position = "identity",
+    na.rm = TRUE,
+    show.legend = NA,
+    inherit.aes = TRUE,
+    distribution = "norm",
+    dparams = list(),
+    qtype = 7,
+    qprobs = c(.25, .75),
+    ...
+    ) {
+      ggplot2::layer(
+        data = data,
+        mapping = mapping,
+        stat = StatQqLine,
+        geom = geom,
+        position = position,
+        show.legend = show.legend,
+        inherit.aes = inherit.aes,
+        params = list(
+          na.rm = na.rm,
+          distribution = distribution,
+          dparams = dparams,
+          qtype = qtype,
+          qprobs = qprobs,
+          ...
+        )
+      )
+    }
+    
+    #' StatQqLine
+    
+    StatQqLine <- ggplot2::ggproto(
+      `_class` = "StatQqLine",
+      `_inherit` = ggplot2::Stat,
+      
+      required_aes = c("sample"),
+      
+      dropped_aes = c("sample"),
+      
+      default_aes = ggplot2::aes(
+        x = ..xline..,
+        y = ..yline..
+      ),
+      
+      compute_group = {
+        function(data,
+                 self,
+                 scales,
+                 distribution,
+                 dparams,
+                 qtype,
+                 qprobs) {
+          # distributional function
+          qFunc <- eval(parse(text = paste0("q", distribution)))
+          
+          smp <- sort(data$sample)
+          n <- length(smp)
+          quantiles <- ppoints(n)
+          
+          dparams <- MASS::fitdistr(x = smp, densfun = "normal")$estimate
+          
+          theoretical <- do.call(qFunc, c(list(p = quantiles), dparams))
+          
+          xCoords <- do.call(qFunc, c(list(p = qprobs), dparams))
+          yCoords <- do.call(quantile, list(x = smp, probs = qprobs, type = qtype))
+          slope <- diff(yCoords) / diff(xCoords)
+          intercept <- yCoords[1] - slope * xCoords[1]
+          
+          out <- data.frame(xline = c(min(theoretical), max(theoretical)))
+          out$yline <- slope * out$xline + intercept
+          
+          out$size <- .8
+          
+          out
+        }
+      }
+    )
+    
+    #' Quantile-quantile points
+    #'
+    #' Draws quantile-quantile points, functions and stats taken from qqplotr package.
+    
+    stat_qq_point <- function(
+    mapping = NULL,
+    data = NULL,
+    geom = "point",
+    position = "identity",
+    na.rm = TRUE,
+    show.legend = NA,
+    inherit.aes = TRUE,
+    distribution = "norm",
+    dparams = list(),
+    qtype = 7,
+    qprobs = c(.25, .75),
+    ...
+    ) {
+      ggplot2::layer(
+        data = data,
+        mapping = mapping,
+        stat = StatQqPoint,
+        geom = geom,
+        position = position,
+        show.legend = show.legend,
+        inherit.aes = inherit.aes,
+        params = list(
+          na.rm = na.rm,
+          distribution = distribution,
+          dparams = dparams,
+          qtype = qtype,
+          qprobs = qprobs,
+          ...
+        )
+      )
+    }
+    
+    #' StatQqPoint
+    
+    StatQqPoint <- ggplot2::ggproto(
+      `_class` = "StatQqPoint",
+      `_inherit` = ggplot2::Stat,
+      
+      default_aes = ggplot2::aes(
+        x = ..theoretical..,
+        y = ..sample..
+      ),
+      
+      required_aes = c("sample"),
+      
+      optional_aes = c("label"),
+      
+      compute_group = function(data,
+                               self,
+                               scales,
+                               distribution = "norm",
+                               dparams = list(),
+                               qtype = 7,
+                               qprobs = c(.25)) {
+        # distributional function
+        qFunc <- eval(parse(text = paste0("q", distribution)))
+        
+        samp <- data$sample
+        
+        oidx <- order(samp)
+        smp <- samp[oidx]
+        n <- length(smp)
+        quantiles <- ppoints(n)
+        
+        dparams <- MASS::fitdistr(x = smp, densfun = "normal")$estimate
+        
+        theoretical <- do.call(qFunc, c(list(p = quantiles), dparams))
+        
+        out <- data.frame(sample = smp, theoretical = theoretical)
+        
+        if (!is.null(data$label)) out$label <- data$label[oidx]
+        out
+      }
+    )
+    
+    #' Quantile-quantile confidence bands
+    #'
+    #' Draws quantile-quantile confidence bands, functions and stats taken from qqplotr package.
+    
+    stat_qq_band <- function(
+    mapping = NULL,
+    data = NULL,
+    geom = "qq_band",
+    position = "identity",
+    na.rm = TRUE,
+    show.legend = NA,
+    inherit.aes = TRUE,
+    distribution = "norm",
+    dparams = list(),
+    qtype = 7,
+    qprobs = c(.25, .75),
+    conf = .95,
+    mu = NULL,
+    sigma = NULL,
+    ...
+    ) {
+      
+      ggplot2::layer(
+        data = data,
+        mapping = mapping,
+        stat = StatQqBand,
+        geom = geom,
+        position = position,
+        show.legend = show.legend,
+        inherit.aes = inherit.aes,
+        params = list(
+          na.rm = na.rm,
+          distribution = distribution,
+          dparams = dparams,
+          qtype = qtype,
+          qprobs = qprobs,
+          conf = conf,
+          mu = mu,
+          sigma = sigma,
+          ...
+        )
+      )
+    }
+    
+    #' StatQqBand
+    
+    StatQqBand <- ggplot2::ggproto(
+      `_class` = "StatQqBand",
+      `_inherit` = StatQqLine,
+      
+      default_aes = ggplot2::aes(
+        x = ..x..,
+        ymin = ..lower..,
+        ymax = ..upper..
+      ),
+      
+      required_aes = c("sample"),
+      
+      dropped_aes = c("sample"),
+      
+      compute_group = {
+        function(data,
+                 self,
+                 scales,
+                 distribution,
+                 dparams,
+                 qtype,
+                 qprobs,
+                 conf,
+                 mu,
+                 sigma) {
+          # distributional functions
+          dFunc <- eval(parse(text = paste0("d", distribution)))
+          qFunc <- eval(parse(text = paste0("q", distribution)))
+          rFunc <- eval(parse(text = paste0("r", distribution)))
+          
+          smp <- sort(data$sample)
+          n <- length(smp)
+          quantiles <- ppoints(n)
+          
+          dparams <- MASS::fitdistr(x = smp, densfun = "normal")$estimate
+          
+          theoretical <- do.call(qFunc, c(list(p = quantiles), dparams))
+          
+          # inherit from StatQqLine
+          xline <- self$super()$compute_group(data = data,
+                                              distribution = distribution,
+                                              dparams = dparams,
+                                              qtype = qtype,
+                                              qprobs = qprobs)$xline
+          yline <- self$super()$compute_group(data = data,
+                                              distribution = distribution,
+                                              dparams = dparams,
+                                              qtype = qtype,
+                                              qprobs = qprobs)$yline
+          
+          slope <- diff(yline) / diff(xline)
+          intercept <- yline[1L] - slope * xline[1L]
+          
+          fittedValues <- (slope * theoretical) + intercept
+          
+          
+          probs <- ppoints(n)
+          stdErr <- (slope / do.call(dFunc, c(list(x = theoretical), dparams))) * sqrt(probs * (1 - probs) / n)
+          zCrit <- qnorm(p = (1 - (1 - conf) / 2))
+          
+          upper <- fittedValues + (stdErr * zCrit)
+          lower <- fittedValues - (stdErr * zCrit)
+          
+          out <- data.frame(
+            x = theoretical,
+            upper = upper,
+            lower = lower,
+            fill = if (is.null(data$fill)) rgb(.6, .6, .6, .5) else data$fill
+          )
+          
+          out
+        }
+      }
+    )
   )
 )
