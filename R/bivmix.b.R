@@ -943,9 +943,9 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       )      
       
       plot <- ggplot2::ggplot(data=data, mapping = ggplot2::aes(sample = y)) +
-        stat_qq_band() +
-        stat_qq_line() +
-        stat_qq_point() +
+        .stat_qq_band() +
+        .stat_qq_line() +
+        .stat_qq_point() +
         ggplot2::xlab("Theoretical Quantiles") +
         ggplot2::ylab("Standardized Residuals") +
         ggtheme +
