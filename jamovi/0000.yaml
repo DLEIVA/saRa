@@ -1,12 +1,12 @@
 ---
 title: Statistical Analyses with R Add-in for Jamovi
 name: saRa
-version: 0.1.1
+version: 0.1.2
 jms: '1.0'
 authors:
   - David Leiva, Sara Martí
 maintainer: David Leiva <dleivaur@ub.edu>
-date: '2024-02-04'
+date: '2024-11-04'
 type: R
 description: >-
   A basic course on Statistics in jamovi. Basically based on
