@@ -542,7 +542,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           q1 <- qs[1]
           q2 <- qs[2]
           p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
-            stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
+            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
               dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
                 df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
               args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
