@@ -376,7 +376,7 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param mode \code{TRUE} or \code{FALSE} (default), provide the mode
 #' @param trimean \code{TRUE} or \code{FALSE} (default), provide the trimean
 #' @param avquartile \code{TRUE} or \code{FALSE} (default), provide the
-#'   quartiles average
+#'   midhinge
 #' @param midrange \code{TRUE} or \code{FALSE} (default), provide the
 #'   mid-range
 #' @param range \code{TRUE} or \code{FALSE} (default), provide the range
