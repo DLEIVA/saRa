@@ -1,0 +1,12 @@
+-------------
+VERSION 0.1.2
+-------------
+*Description and 000.yaml modified.
+*Univariate Ordinal and Numerical; and Bivariate Mixed Data: label for quartiles' average is now midhinge.
+*Bivariate Mixed Data: Data stacked aes() dependence error now solved.
+*Continuous variables: stat_function() dependence error now solved.
+
+-------------
+VERSION 0.1.1
+-------------
+*First public version available at jamovi library
