@@ -23,7 +23,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         ),
         title = c(
           "N", "Missing","Mean", "Median", "Mode", "Geometric mean", "Trimean",
-          "Quartiles' average", "Mid-range", 
+          "Midhinge", "Mid-range", 
           paste0(ifelse(!is.na(private$.getTrim()*100),
                         private$.getTrim()*100,''),'% trimmed mean'),
           paste0(ifelse(!is.na(private$.getWin()*100),

@@ -592,7 +592,7 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   geometric mean
 #' @param trimean \code{TRUE} or \code{FALSE} (default), provides the trimean
 #' @param avquartile \code{TRUE} or \code{FALSE} (default), provides the
-#'   quartiles average
+#'   midhinge
 #' @param midrange \code{TRUE} or \code{FALSE} (default), provides the
 #'   mid-range
 #' @param trimmean \code{TRUE} (default) or \code{FALSE}, provides the Trimmed
