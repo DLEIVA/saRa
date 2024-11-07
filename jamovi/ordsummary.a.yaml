@@ -61,12 +61,12 @@ options:
             `TRUE` or `FALSE` (default), provide the trimean
             
     - name: avquartile
-      title: Quartiles' average
+      title: Midhinge
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the quartiles average
+            `TRUE` or `FALSE` (default), provide the midhinge
             
     - name: midrange
       title: Mid-range

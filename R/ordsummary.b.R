@@ -16,7 +16,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "range", "iqr", "qd", "mad", "rcv", "min", "max", "q1", "q2", "q3", "h1","h3","k2","k3"
         ),
         title = c(
-          "N", "Missing", "Median", "Mode", "Trimean", "Quartiles' average", "Mid-range",
+          "N", "Missing", "Median", "Mode", "Trimean", "Midhinge", "Mid-range",
           "Range", "IQR", "QD", "MAD", "rCV", "Min", "Max", "Q1", "Q2", "Q3", "H1","H3","K2","K3"
         ),
         superTitle = rep("",21),
