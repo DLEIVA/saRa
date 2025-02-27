@@ -43,7 +43,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           sigma <- if(any(t>1)){
             sqrt(n*(n+1)*(2*n+1)/24-1/48*sum(t^3-t))
           } else{sqrt(n*(n+1)*(2*n+1)/24)}
-          T <- wilcox.test(df$column1,df$column2)$statistic
+          T <- wilcox.test(df$column1,df$column2,paired=TRUE)$statistic
           statistic <- (T-mu)/sigma
           names(statistic) <- NULL
           p.value <- min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))
