@@ -1,0 +1,11 @@
+---
+name:  linReg
+title: linReg
+menuGroup: saRa
+version: '0.1.2'
+jas: '1.2'
+addonFor: 'jmv::linReg'
+export: false
+
+options: []
+...
