@@ -11,8 +11,8 @@ linRegClass <- if (requireNamespace('jmvcore')) R6::R6Class(
   private = list(
     .init = function() {
       
-      if (! self$parent$options$norm)
-        return(){
+      if (! self$parent$options$norm){
+        return()} else {
           termsAll <- private$.getModelTerms()
           for (i in seq_along(termsAll)) {
             
@@ -47,8 +47,8 @@ linRegClass <- if (requireNamespace('jmvcore')) R6::R6Class(
             treset$setNote('saRa', 'Additional results provided by <em>saRa</em>')
           }
           
-          if (! self$parent$options$durbin)
-            return(){
+          if (! self$parent$options$durbin){
+            return()} else{
               image <- self$results$get('acfplot')
               
               width <- 450
@@ -59,8 +59,8 @@ linRegClass <- if (requireNamespace('jmvcore')) R6::R6Class(
     },
     .run = function() {
       
-      if (! self$parent$options$norm)
-        return(){
+      if (! self$parent$options$norm){
+        return()} else{
           groups <- self$parent$results$models
           termsAll <- private$.getModelTerms()
           .residuals <- private$.computeResiduals()
@@ -85,8 +85,8 @@ linRegClass <- if (requireNamespace('jmvcore')) R6::R6Class(
             treset$setRow(rowNo=1, values)
           }
           
-          if (! self$parent$options$durbin)
-            return(){ groups <- self$parent$results$models
+          if (! self$parent$options$durbin){
+            return()} else{ groups <- self$parent$results$models
             termsAll <- private$.getModelTerms()
             .residuals <- private$.computeResiduals()
             
