@@ -92,6 +92,12 @@ analyses:
     menuGroup: saRa
     menuSubgroup: Miscellanea
     menuTitle: Normality Tests
+  - title: linReg
+    name: linReg
+    ns: saRa
+    menuGroup: saRa
+    menuTitle: linReg
+    addonFor: jmv::linReg
 datasets:
   - name: phobia
     path: phobia.RData
