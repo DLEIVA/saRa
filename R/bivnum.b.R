@@ -80,7 +80,7 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           method <- if (line == 'linear') 'lm' else 'auto'          
           
           p <- ggplot2::ggplot(
-            data, ggplot2::aes_string(x=xVarName, y=yVarName)) + 
+            data, ggplot2::aes(x=.data[[xVarName]], y=.data[[yVarName]])) + 
             ggplot2::geom_point(alpha=.8, size=2.5) +
             ggplot2::labs(x=xVarName, y=yVarName) + ggtheme
           
@@ -95,12 +95,10 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             xdens <- cowplot::axis_canvas(p, axis='x') +
               ggridges::geom_ridgeline(
                 data=data, 
-                ggplot2::aes_string(
-                  xVarName, y=0, height="..density.."
-                ),
+                ggplot2::aes(x=.data[[xVarName]], y=0, height=ggplot2::after_stat(density)),
                 stat='density', 
                 alpha=0.5, 
-                size=.2,
+                linewidth=.2,
                 trim=FALSE,
                 fill="#ADD8E6"
               ) + ggtheme
@@ -108,12 +106,10 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             ydens <- cowplot::axis_canvas(p, axis='y') +
               ggridges::geom_vridgeline(
                 data=data, 
-                ggplot2::aes_string(
-                  x=0, y=yVarName, width="..density.."
-                ),
+                ggplot2::aes(x=0, y=.data[[yVarName]], width=ggplot2::after_stat(density)),
                 stat='ydensity', 
                 alpha=0.5, 
-                size=.2, 
+                linewidth=.2, 
                 trim=FALSE,
                 fill ="#ADD8E6"
               ) + ggtheme
@@ -141,7 +137,7 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             xbox <- ggplot2::ggplot() +
               ggplot2::geom_boxplot(
                 data=data, 
-                ggplot2::aes_string(y=xVarName), 
+                ggplot2::aes(y=.data[[xVarName]]), 
                 position=ggplot2::position_dodge(0.8),
                 width=0.5, 
                 alpha=0.9, 
@@ -155,7 +151,7 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             ybox <- ggplot2::ggplot() +
               ggplot2::geom_boxplot(
                 data=data, 
-                ggplot2::aes_string(y=yVarName), 
+                ggplot2::aes(y=.data[[yVarName]]), 
                 position=ggplot2::position_dodge(0.8),
                 width=0.5, 
                 alpha=0.9, 
@@ -191,7 +187,7 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             xhist <- ggplot2::ggplot() +
               ggplot2::geom_histogram(
                 data=data, 
-                ggplot2::aes_string(y=xVarName), 
+                ggplot2::aes(y=.data[[xVarName]]), 
 #                position=ggplot2::position_dodge(0.8),
                 alpha=0.9,
                 fill ="#ADD8E6"
@@ -203,7 +199,7 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             yhist <- ggplot2::ggplot() +
               ggplot2::geom_histogram(
                 data=data, 
-                ggplot2::aes_string(y=yVarName), 
+                ggplot2::aes(y=.data[[yVarName]]), 
 #                position=ggplot2::position_dodge(0.8),
                 alpha=0.9, 
                 fill ="#ADD8E6"

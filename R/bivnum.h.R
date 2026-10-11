@@ -221,7 +221,7 @@ bivnumResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[kendallR2]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Kendall's R\u00B2", 
+                        `content`="Squared Kendall\u2019s \u03C4", 
                         `visible`="(kendallR2)"),
                     list(
                         `name`="v[kendallR2]", 
@@ -251,7 +251,7 @@ bivnumBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "bivnum",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = bivnumResults$new(options=options),
                 data = data,
@@ -270,29 +270,33 @@ bivnumBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data .
 #' @param xvar x variable. It must be numeric
 #' @param yvar y variable. It must be numeric
-#' @param covar \code{TRUE} or \code{FALSE} (default), provide linear
-#'   covariance for numeric variables.
-#' @param pearsonR \code{TRUE} or \code{FALSE} (default), provide Pearson's
-#'   correlation for numeric variables.
-#' @param spearmanR \code{TRUE} or \code{FALSE} (default), provide Spearman's
-#'   correlation for numeric variables.
-#' @param tauK \code{TRUE} or \code{FALSE} (default), provide Kendall's tau-b
-#'   association index for numeric variables.
-#' @param pearsonR2 \code{TRUE} or \code{FALSE} (default), provide Pearson's
-#'   coefficient of determination for numeric variables (rows dependent).
-#' @param spearmanR2 \code{TRUE} or \code{FALSE} (default), provide Spearman's
-#'   coefficient of determination for numeric variables (rows dependent).
-#' @param kendallR2 \code{TRUE} or \code{FALSE} (default), provide Kendall's
-#'   coefficient of determination for numeric variables (rows dependent).
-#' @param scat \code{TRUE} or \code{FALSE} (default), show scatterplots
+#' @param covar \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   linear covariance for numeric variables.
+#' @param pearsonR \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Pearson's correlation for numeric variables.
+#' @param spearmanR \code{TRUE} or \code{FALSE} (default: \code{TRUE}),
+#'   provide Spearman's correlation for numeric variables.
+#' @param tauK \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Kendall's tau-b association index for numeric variables.
+#' @param pearsonR2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide Pearson's coefficient of determination for numeric variables (rows
+#'   dependent).
+#' @param spearmanR2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide Spearman's coefficient of determination for numeric variables (rows
+#'   dependent).
+#' @param kendallR2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide squared Kendall’s tau-b association index for numeric variables
+#'   (rows dependent).
+#' @param scat \code{TRUE} or \code{FALSE} (default: \code{FALSE}), show
+#'   scatterplots
 #' @param marg \code{none} (default), \code{dens}, 'hist', or \code{box},
 #'   provide respectively no plots, density plots, histograms, or box plots on
 #'   the axes
 #' @param line \code{none} (default), \code{linear}, or \code{smooth}, provide
 #'   respectively no fitted function,  a fitted regression line, or a smoothed
 #'   curve
-#' @param se \code{TRUE} or \code{FALSE} (default), show the standard error
-#'   for the regression line
+#' @param se \code{TRUE} or \code{FALSE} (default: \code{FALSE}), show the
+#'   standard error for the regression line
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$asocind} \tab \tab \tab \tab \tab A table of different bivariate association indicators \cr

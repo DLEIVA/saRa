@@ -27,14 +27,15 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (is.null(rowVarName) || is.null(colVarName)){
         return() 
       } else{
-        if(!is.ordered(data[[rowVarName]]))
-          stop(paste0("The variable ", rowVarName,
-                      " cannot be treated as ordinal.Please select only ordinal variables."))
-        if(!is.ordered(data[[colVarName]]))
-          stop(paste0("The variable ", colVarName,
-                      " cannot be treated as ordinal.Please select only ordinal variables."))
+        if (!is.ordered(data[[rowVarName]]))
+          jmvcore::reject("Select ordinal variables with ordered levels", code="requires_ordinal_variables")
+        if (!is.ordered(data[[colVarName]]))
+          jmvcore::reject("Select ordinal variables with ordered levels", code="requires_ordinal_variables")
       }
       
+      if (!any(complete.cases(data[c(rowVarName, colVarName)])))
+        jmvcore::reject("No complete observations are available for the selected variables", code="no_complete_observations")
+
       freqs <- self$results$freqs
       
       freqRowNo <- 1
@@ -142,7 +143,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       sommers.x.y <- (C-D)/(C+D+E.X-E.XY)
       sommers.y.x <- (C-D)/(C+D+E.Y-E.XY)
       .sommers <- (C-D)/(C+D+(E.X+E.Y)/2-E.XY)      
-      .wilson <- 2*(C-D)/(choose(n,2)-E.XY)
+      .wilson <- .saraWilson(C, D, n, E.XY)
       
       values <- list(`v[gammaGK]` = gammaGK,
                      `v[tauKa]` = tau.a,
@@ -440,20 +441,19 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       if (self$options$yaxis == "ycounts") {
         if (position!='dodge') {
-          p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Counts", x=xVarName, fill=zVarName)) +
+          p <- ggplot2::ggplot(data=tab, ggplot2::aes(y=.data[["Counts"]], x=.data[[xVarName]], fill=.data[[zVarName]])) +
             ggplot2::geom_col(position=position, width = 0.7)
         } else {
-          p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Counts", x=xVarName, fill=zVarName,
-                                           label='Counts')) +
+          p <- ggplot2::ggplot(data=tab, ggplot2::aes(y=.data[["Counts"]], x=.data[[xVarName]], fill=.data[[zVarName]], label=.data[['Counts']])) +
             ggplot2::geom_col(position=position, width = 0.7)  +
             ggplot2::geom_text(position = ggplot2::position_dodge(.7), 
                       vjust = -0.5, 
                       size = 4)         
         }
       } else {
-        if (position!='dodge') {p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
+        if (position!='dodge') {p <- ggplot2::ggplot(data=tab, ggplot2::aes(y=.data[["Percentages"]], x=.data[[xVarName]], fill=.data[[zVarName]])) +
           ggplot2::geom_col(position=position, width = 0.7)} else {
-            p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Percentages", x=xVarName, fill=zVarName,label='Perc')) +
+            p <- ggplot2::ggplot(data=tab, ggplot2::aes(y=.data[["Percentages"]], x=.data[[xVarName]], fill=.data[[zVarName]], label=.data[['Perc']])) +
               ggplot2::geom_col(position=position, width = 0.7) +
               ggplot2::geom_text(position = ggplot2::position_dodge(.7), 
                         vjust = -0.5, 
@@ -493,8 +493,8 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         zVarName <- colVarName
       }
       
-      tabla <- as.data.frame(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))))
-      p <- ggplot2::ggplot(tabla,ggplot2::aes_string(xVarName,zVarName)) +
+      tabla <- as.data.frame(table(data[[xVarName]], data[[zVarName]], dnn=c(xVarName, zVarName)))
+      p <- ggplot2::ggplot(tabla,ggplot2::aes(x=.data[[xVarName]], y=.data[[zVarName]])) +
         ggplot2::geom_tile(ggplot2::aes(fill = Freq), colour ="black") +
         ggplot2::scale_fill_gradient(low='white',high='steelblue') + ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
@@ -525,9 +525,9 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         zVarName <- colVarName
       }
       
-      tabla <- as.data.frame(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))))
+      tabla <- as.data.frame(table(data[[xVarName]], data[[zVarName]], dnn=c(xVarName, zVarName)))
       p <- ggplot2::ggplot(data = tabla,
-                           ggplot2::aes_string(axis1 = xVarName,axis2 = zVarName, y = "Freq")) +
+                           ggplot2::aes(axis1=.data[[xVarName]], axis2=.data[[zVarName]], y=.data[["Freq"]])) +
         ggplot2::scale_x_discrete(limits = c(xVarName, zVarName), expand = c(.2, .05)) +
         ggplot2::scale_fill_gradient(low = "white", high = "steelblue") +
         ggalluvial::geom_alluvium(ggplot2::aes(fill = Freq)) +

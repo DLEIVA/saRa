@@ -2,7 +2,7 @@
 name:  contvars
 title: Continuous Distributions
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -40,6 +40,7 @@ options:
       title: "Std. Deviation (σ)"
       type: Number
       default: 1
+      min: 0
       description:
           R: >
             a number specifying standard deviation in normal distribution 
@@ -48,6 +49,7 @@ options:
       title: df (ν)
       type: Number
       default: 10      
+      min: 0
       description:
           R: >
             Degrees of freedom for the t distribution  
@@ -56,6 +58,7 @@ options:
       title: df (ν)
       type: Number
       default: 10      
+      min: 0
       description:
           R: >
             Degrees of freedom for the \u03c6\u00B2 distribution  
@@ -64,6 +67,7 @@ options:
       title: df numerator (ν1)
       type: Number
       default: 10      
+      min: 0
       description:
           R: >
             Degrees of freedom in the numerator for the F distribution  
@@ -72,6 +76,7 @@ options:
       title: df denominator (ν2)
       type: Number
       default: 10      
+      min: 0
       description:
           R: >
             Degrees of freedom in the denominator for the F distribution 
@@ -80,6 +85,7 @@ options:
       title: Rate (λ)
       type: Number
       default: 10
+      min: 0
       description:
           R: >
             a number specifying rate (lambda) in the exponential distribution            
@@ -109,12 +115,12 @@ options:
             a comma-separated list specifying random variables' values  
 
     - name: contpdf
-      title: "Probabilty density function (f(x))"
+      title: "Probability density function (f(x))"
       type: Bool
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide probability density function for a continuous distribution            
+            `TRUE` or `FALSE` (default: `TRUE`), provide probability density function for a continuous distribution            
 
     - name: contcdf
       title: "Cumulative distribution function (Pr(X ≤ x))"
@@ -122,7 +128,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide cumulative distribution function for a continuous distribution 
+            `TRUE` or `FALSE` (default: `FALSE`), provide cumulative distribution function for a continuous distribution 
             
     - name: contsurv
       title: "Survival function (Pr(X > x))"
@@ -130,7 +136,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide survival function for a continuous distribution            
+            `TRUE` or `FALSE` (default: `FALSE`), provide survival function for a continuous distribution            
             
     - name: conticdf
       title: "Inverse of cdf (quantiles)"
@@ -138,10 +144,10 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a continuous distribution            
+            `TRUE` or `FALSE` (default: `TRUE`), provide inverse of cumulative distribution function for a continuous distribution            
 
     - name: contqvalues
-      title: Quantiles values
+      title: Quantile values
       type: String
       default: '0.5'
       description:
@@ -162,7 +168,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide probability mass function for a continuous distribution to be plotted            
+            `TRUE` or `FALSE` (default: `FALSE`), provide probability mass function for a continuous distribution to be plotted            
 
     - name: contpcdf
       title: "Cumulative distribution function (Pr(X ≤ x))"
@@ -170,7 +176,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide cumulative distribution function for a continuous distribution to be plotted
+            `TRUE` or `FALSE` (default: `FALSE`), provide cumulative distribution function for a continuous distribution to be plotted
             
     - name: contpinterv
       title: "Pr(x1 ≤ X ≤ x2)"
@@ -178,7 +184,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide probability plot within an interval 
+            `TRUE` or `FALSE` (default: `FALSE`), provide probability plot within an interval 
             
     - name: contx1value
       title: x1 value
@@ -202,7 +208,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide survival function for a cont distribution to be plotted            
+            `TRUE` or `FALSE` (default: `FALSE`), provide survival function for a cont distribution to be plotted            
             
     - name: contpicdf
       title: "Inverse of cdf (quantiles)"
@@ -210,7 +216,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a continuous distribution to be plotted            
+            `TRUE` or `FALSE` (default: `FALSE`), provide inverse of cumulative distribution function for a continuous distribution to be plotted            
 
     - name: contpqvalue
       title: Quantile value

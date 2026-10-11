@@ -309,7 +309,9 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis (Categorical Data)")
+                title="Bivariate Data Analysis (Categorical Data)",
+                refs=list(
+                    "vcd"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="freqs",
@@ -322,7 +324,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="asocind",
                 title="Association Indices",
-                visible="( chiSq || phiind || phisSq || contCoef || chuprov || sakoda || Qyule || Yyule || Vyule )",
+                visible="( chiSq || phiind || phiSq || craV || contCoef || chuprov || sakoda || Qyule || Yyule || Vyule )",
                 columns=list(
                     list(
                         `name`="t[chiSq]", 
@@ -431,7 +433,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="errorind",
                 title="Prediction Error Indices",
-                visible="( lambdaGKab || lambdaGKba || lambdaGKsym)",
+                visible="( lambdaGKab || lambdaGKba || lambdaGKsym || tauGKab || tauGKba || tauGKsym || theilab || theilba || theilsym)",
                 columns=list(
                     list(
                         `name`="t[lambdaGKab]", 
@@ -526,7 +528,7 @@ bivcatResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="mosaicplot",
-                title="Mosaic Plot",
+                title="Mosaic plot",
                 width=450,
                 height=400,
                 renderFun=".mosaicPlot",
@@ -557,7 +559,7 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "bivcat",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = bivcatResults$new(options=options),
                 data = data,
@@ -578,51 +580,59 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   necessary when providing a formula, see the examples)
 #' @param cols the variable to use as the columns in the contingency table
 #'   (not necessary when providing a formula, see the examples)
-#' @param obs \code{TRUE} (default) or \code{FALSE}, provide the observed
-#'   counts
-#' @param exp \code{TRUE} or \code{FALSE} (default), provide the expected
-#'   counts
-#' @param pcRow \code{TRUE} or \code{FALSE} (default), provide row percentages
-#' @param pcCol \code{TRUE} or \code{FALSE} (default), provide column
-#'   percentages
-#' @param pcTot \code{TRUE} or \code{FALSE} (default), provide total
-#'   percentages
-#' @param chiSq \code{TRUE} (default) or \code{FALSE}, provide Chi Squared
-#' @param phiind \code{TRUE} or \code{FALSE} (default), provide Pearson's
-#'   \u03c6
-#' @param phiSq \code{TRUE} or \code{FALSE} (default), provide Pearson's
-#'   \u03c6\u00B2
-#' @param contCoef \code{TRUE} or \code{FALSE} (default), provide Pearson's
-#'   contingency index
-#' @param craV \code{TRUE} (default) or \code{FALSE}, provide Cramér's V index
-#' @param chuprov \code{TRUE} or \code{FALSE} (default), provide Chuprov's
-#'   index
-#' @param sakoda \code{TRUE} or \code{FALSE} (default), provide Sakoda's index
-#' @param Qyule \code{TRUE} or \code{FALSE} (default), provide Yule's Q index
-#'   for 2x2 contingency tables
-#' @param Yyule \code{TRUE} or \code{FALSE} (default), provide Yule's Y index
-#'   for 2x2 contingency tables
-#' @param Vyule \code{TRUE} or \code{FALSE} (default), provide Yule's V index
-#'   for 2x2 contingency tables
-#' @param lambdaGKab \code{TRUE} or \code{FALSE} (default), provide Goodman
-#'   and Kruskal lambda prediction error index (dependent variable by rows)
-#' @param lambdaGKba \code{TRUE} or \code{FALSE} (default), provide Goodman
-#'   and Kruskal lambda prediction error index (dependent variable by columns)
-#' @param lambdaGKsym \code{TRUE} (default) or \code{FALSE}, provide Goodman
-#'   and Kruskal lambda prediction error index (symmetric)
-#' @param tauGKab \code{TRUE} or \code{FALSE} (default), provide Goodman and
-#'   Kruskal tau prediction error index (dependent variable by rows)
-#' @param tauGKba \code{TRUE} or \code{FALSE} (default), provide Goodman and
-#'   Kruskal tau prediction error index (dependent variable by columns)
-#' @param tauGKsym \code{TRUE} (default) or \code{FALSE}, provide Goodman and
-#'   Kruskal tau prediction error index (symmetric)
-#' @param theilab \code{TRUE} or \code{FALSE} (default), provide Theil's
-#'   prediction error index (dependent variable by rows)
-#' @param theilba \code{TRUE} or \code{FALSE} (default), provide Theil's
-#'   prediction error index (dependent variable by columns)
-#' @param theilsym \code{TRUE} (default) or \code{FALSE}, provide Theil's tau
-#'   prediction error index (symmetric)
-#' @param barplot \code{TRUE} or \code{FALSE} (default), show barplots
+#' @param obs \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide the
+#'   observed counts
+#' @param exp \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   expected counts
+#' @param pcRow \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   row percentages
+#' @param pcCol \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   column percentages
+#' @param pcTot \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   total percentages
+#' @param chiSq \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Chi Squared
+#' @param phiind \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Pearson's \u03c6
+#' @param phiSq \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Pearson's \u03c6\u00B2
+#' @param contCoef \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide Pearson's contingency index
+#' @param craV \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Cramér's V index
+#' @param chuprov \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Chuprov's index
+#' @param sakoda \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Sakoda's index
+#' @param Qyule \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Yule's Q index for 2x2 contingency tables
+#' @param Yyule \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Yule's Y index for 2x2 contingency tables
+#' @param Vyule \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Yule's V index for 2x2 contingency tables
+#' @param lambdaGKab \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide Goodman and Kruskal lambda prediction error index (dependent
+#'   variable by rows)
+#' @param lambdaGKba \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide Goodman and Kruskal lambda prediction error index (dependent
+#'   variable by columns)
+#' @param lambdaGKsym \code{TRUE} or \code{FALSE} (default: \code{TRUE}),
+#'   provide Goodman and Kruskal lambda prediction error index (symmetric)
+#' @param tauGKab \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Goodman and Kruskal tau prediction error index (dependent variable by rows)
+#' @param tauGKba \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Goodman and Kruskal tau prediction error index (dependent variable by
+#'   columns)
+#' @param tauGKsym \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Goodman and Kruskal tau prediction error index (symmetric)
+#' @param theilab \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Theil's prediction error index (dependent variable by rows)
+#' @param theilba \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Theil's prediction error index (dependent variable by columns)
+#' @param theilsym \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Theil's tau prediction error index (symmetric)
+#' @param barplot \code{TRUE} or \code{FALSE} (default: \code{FALSE}), show
+#'   barplots
 #' @param yaxis ycounts (default) or ypc. Use respectively \code{counts} or
 #'   \code{percentages} for the bar plot y-axis
 #' @param yaxisPc total_pc (default), column_pc, or row_pc. Use respectively
@@ -630,7 +640,8 @@ bivcatBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   for the bar plot y-axis.
 #' @param xaxis rows (default), or columns in bar plot X axis
 #' @param bartype stack or side by side (default), barplot type
-#' @param mosaicplot \code{TRUE} or \code{FALSE} (default), show mosaicplots
+#' @param mosaicplot \code{TRUE} or \code{FALSE} (default: \code{FALSE}), show
+#'   mosaicplots
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab A frequencies table \cr

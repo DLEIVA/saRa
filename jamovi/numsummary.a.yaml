@@ -2,7 +2,7 @@
 name:  numSummary
 title: Numerical Data
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -26,7 +26,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the N
+            `TRUE` or `FALSE` (default: `TRUE`), provides the N
 
     - name: missing
       title: Missing
@@ -34,7 +34,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the missing values
+            `TRUE` or `FALSE` (default: `FALSE`), provides the missing values
 
     - name: mean
       title: Mean
@@ -42,7 +42,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the mean
+            `TRUE` or `FALSE` (default: `TRUE`), provides the mean
           
     - name: median
       title: Median
@@ -50,7 +50,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the median
+            `TRUE` or `FALSE` (default: `FALSE`), provides the median
   
     - name: mode
       title: Mode
@@ -58,7 +58,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the mode
+            `TRUE` or `FALSE` (default: `FALSE`), provides the mode
             
     - name: geommean
       title: Geometric mean
@@ -66,7 +66,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the geometric mean          
+            `TRUE` or `FALSE` (default: `FALSE`), provides the geometric mean          
     
     - name: trimean
       title: Trimean
@@ -74,7 +74,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the trimean
+            `TRUE` or `FALSE` (default: `FALSE`), provides the trimean
             
     - name: avquartile
       title: Midhinge
@@ -82,7 +82,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the midhinge
+            `TRUE` or `FALSE` (default: `FALSE`), provides the midhinge
             
     - name: midrange
       title: Mid-range
@@ -90,7 +90,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the mid-range
+            `TRUE` or `FALSE` (default: `FALSE`), provides the mid-range
             
     - name: trimmean
       title: Trimmed mean
@@ -98,7 +98,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provides the Trimmed Mean
+            `TRUE` or `FALSE` (default: `FALSE`), provides the Trimmed mean
             
     - name: Trim
       title: Percentage of trimmed data
@@ -114,7 +114,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provides the Winsorized Mean
+            `TRUE` or `FALSE` (default: `FALSE`), provides the Winsorized mean
             
     - name: Win
       title: Percentage of winsorized data
@@ -130,7 +130,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the variance
+            `TRUE` or `FALSE` (default: `FALSE`), provides the variance
 
     - name: stddev
       title: Standard deviation
@@ -138,7 +138,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the standard deviation
+            `TRUE` or `FALSE` (default: `TRUE`), provides the standard deviation
 
     - name: geomsd
       title: Geometric standard deviation
@@ -146,7 +146,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the geometric standard deviation
+            `TRUE` or `FALSE` (default: `FALSE`), provides the geometric standard deviation
             
     - name: meandev
       title: Mean deviation
@@ -154,7 +154,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the mean deviation    
+            `TRUE` or `FALSE` (default: `FALSE`), provides the mean deviation    
             
     - name: cv
       title:  Coefficient of variation (CV)
@@ -162,7 +162,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the cv            
+            `TRUE` or `FALSE` (default: `FALSE`), provides the cv            
 
     - name: range
       title: Range
@@ -170,7 +170,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the range
+            `TRUE` or `FALSE` (default: `FALSE`), provides the range
     
     - name: iqr
       title: Interquartile range (IQR)
@@ -178,7 +178,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the iqr
+            `TRUE` or `FALSE` (default: `FALSE`), provides the iqr
             
     - name: qd
       title:  Quartile deviation (QD)
@@ -186,7 +186,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the quartile deviation
+            `TRUE` or `FALSE` (default: `FALSE`), provides the quartile deviation
 
     - name: mad
       title: Median absolute deviation (MAD)
@@ -194,15 +194,15 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the mad
+            `TRUE` or `FALSE` (default: `FALSE`), provides the mad
             
     - name: rcv
-      title:  Robust coefficient of variation (rCV)
+      title:  Quartile coefficient of dispersion
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the rcv
+            `TRUE` or `FALSE` (default: `FALSE`), provides the rcv
             
     - name: irange
       title: Inner range
@@ -210,7 +210,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provides the inner range
+            `TRUE` or `FALSE` (default: `FALSE`), provides the inner range
             
     - name: NPerc
       title: Percentage of data
@@ -226,7 +226,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the minimum
+            `TRUE` or `FALSE` (default: `TRUE`), provides the minimum
 
     - name: max
       title: Maximum
@@ -234,7 +234,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the maximum
+            `TRUE` or `FALSE` (default: `TRUE`), provides the maximum
 
             
     - name: q1
@@ -243,7 +243,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the first quartile
+            `TRUE` or `FALSE` (default: `FALSE`), provides the first quartile
             
     - name: q2
       title: Quartile 2 (Q2)
@@ -251,7 +251,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the second quartile
+            `TRUE` or `FALSE` (default: `FALSE`), provides the second quartile
             
     - name: q3
       title: Quartile 3 (Q3)
@@ -259,7 +259,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the third quartile
+            `TRUE` or `FALSE` (default: `FALSE`), provides the third quartile
             
     - name: beta1
       title: "Pearson's \u03B2\u2081 (skewness)"
@@ -267,7 +267,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the Pearson's \u03B2\u2081 index
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Pearson's \u03B2\u2081 index
             
     - name: gamma1
       title: "Fisher's \u03B3\u2081 (skewness)"
@@ -275,7 +275,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the Fisher's \u03B3\u2081 index
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Fisher's \u03B3\u2081 index
             
     - name: h1
       title: H1 (skewness)
@@ -283,7 +283,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the H1 index
+            `TRUE` or `FALSE` (default: `FALSE`), provide the H1 index
             
     - name: h3
       title: H3 (skewness)
@@ -291,7 +291,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the H3 index            
+            `TRUE` or `FALSE` (default: `FALSE`), provide the H3 index            
             
     - name: beta2
       title: "Pearson's \u03B2\u2082 (Kurtosis)"
@@ -299,7 +299,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the Pearson's \u03B2\u2082 index 
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Pearson's \u03B2\u2082 index 
             
     - name: gamma2
       title: "Fisher's \u03B3\u2082 (kurtosis)"
@@ -307,7 +307,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the Fisher's \u03B3\u2082 index            
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Fisher's \u03B3\u2082 index            
 
     - name: k2
       title: K2 (kurtosis)
@@ -315,7 +315,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the K2 index
+            `TRUE` or `FALSE` (default: `FALSE`), provide the K2 index
             
     - name: k3
       title: K3 (kurtosis)
@@ -323,7 +323,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the K3 index            
+            `TRUE` or `FALSE` (default: `FALSE`), provide the K3 index            
 
     - name: pc
       title: Percentiles
@@ -331,7 +331,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides the Percentiles
+            `TRUE` or `FALSE` (default: `FALSE`), provides the Percentiles
 
     - name: pcValues
       title: Percentile values
@@ -347,7 +347,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides histograms (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provides histograms (continuous variables only)
             
     - name: dens
       title: Density
@@ -355,7 +355,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides density plots (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provides density plots (continuous variables only)
             
     - name: norm
       title: Normal curve
@@ -363,7 +363,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides overlapped normal curve (continuous variables only)            
+            `TRUE` or `FALSE` (default: `FALSE`), provides overlapped normal curve (continuous variables only)            
             
     - name: box
       title: Box plot
@@ -371,7 +371,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide box plots (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provide box plots (continuous variables only)
             
     - name: violin
       title: Violin
@@ -379,7 +379,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide violin plots (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provide violin plots (continuous variables only)
             
     - name: dot
       title: Data
@@ -387,7 +387,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide dot plots (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provide dot plots (continuous variables only)
             
     - name: dotType
       title: ''
@@ -405,7 +405,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), add mean to box plot
+            `TRUE` or `FALSE` (default: `FALSE`), add mean to box plot
             
     - name: innerf
       title: Inner fence
@@ -429,5 +429,5 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Q-Q plots (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provide Q-Q plots (continuous variables only)
 ...

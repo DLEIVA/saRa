@@ -9,14 +9,14 @@ children:
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: X-Axis
+        label: X variable
         children:
           - type: VariablesListBox
             name: xvar
             maxItemCount: 1
             isTarget: true
       - type: TargetLayoutBox
-        label: Y-Axis
+        label: Y variable
         children:
           - type: VariablesListBox
             name: yvar
@@ -84,7 +84,7 @@ children:
                     name: scat
 
               - type: Label
-                label: Regression Line / Curve
+                label: Regression line / curve
                 cell:
                   column: 0
                   row: 1

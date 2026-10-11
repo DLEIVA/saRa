@@ -1,0 +1,76 @@
+---
+refs:
+  car:
+    type: book
+    author: John Fox, Sanford Weisberg
+    year: 2019
+    title: An R Companion to Applied Regression, Third Edition
+    publisher: Sage
+    url: https://socialsciences.mcmaster.ca/jfox/Books/Companion/
+  lmtest:
+    type: article
+    author: Achim Zeileis, Torsten Hothorn
+    year: 2002
+    title: Diagnostic Checking in Regression Relationships
+    publisher: R News, 2(3), 7-10
+    url: https://CRAN.R-project.org/package=lmtest
+  nortest:
+    type: software
+    author: Juergen Gross, Uwe Ligges
+    year: 2015
+    title: 'nortest: Tests for Normality'
+    publisher: R package version 1.0-4
+    url: https://CRAN.R-project.org/package=nortest
+  rcompanion:
+    type: software
+    author: Salvatore Mangiafico
+    year: 2024
+    title: 'rcompanion: Functions to Support Extension Education Program Evaluation'
+    publisher: R package version 2.4.36
+    url: https://CRAN.R-project.org/package=rcompanion
+  effectsize:
+    type: software
+    author: Mattan S. Ben-Shachar, Dominique Makowski, Daniel Lüdecke, Indrajeet Patil,
+      Brenton M. Wiernik, Rémi Thériault, Ken Kelley, David Stanley, Aaron Caldwell,
+      Jessica Burnett, Johannes Karreth, Philip Waggoner
+    year: 2024
+    title: 'effectsize: Indices of Effect Size'
+    publisher: R package version 0.8.9
+    url: https://CRAN.R-project.org/package=effectsize
+  DescTools:
+    type: software
+    author: Andri Signorell and contributors
+    year: 2024
+    title: 'DescTools: Tools for Descriptive Statistics'
+    publisher: R package version 0.99.55
+    url: https://CRAN.R-project.org/package=DescTools
+  WRS2:
+    type: software
+    author: Patrick Mair, Rand Wilcox, Indrajeet Patil
+    year: 2024
+    title: 'WRS2: A Collection of Robust Statistical Methods'
+    publisher: R package version 1.1-6
+    url: https://CRAN.R-project.org/package=WRS2
+
+  vcd:
+    type: article
+    author: David Meyer, Achim Zeileis, and Kurt Hornik
+    title: 'The Strucplot Framework: Visualizing Multi-way Contingency Tables with
+      vcd'
+    publisher: Journal of Statistical Software, 17(3), 1–48
+    url: https://doi.org/10.18637/jss.v017.i03
+    year: 2006
+  Somers1962:
+    type: article
+    author: Robert H. Somers
+    year: 1962
+    title: A New Asymmetric Measure of Association for Ordinal Variables
+    publisher: American Sociological Review, 27(6), 799–811
+  Wilson1974:
+    type: article
+    author: Thomas P. Wilson
+    year: 1974
+    title: On “Ordinal Path Analysis”
+    publisher: Social Forces, 53(1), 120–123
+    url: https://doi.org/10.1093/sf/53.1.120
+...

@@ -100,7 +100,7 @@ children:
                 name: ciWidth
                 suffix: "%"
                 format: number
-                enable: (ciMedians || ciHL)
+                enable: (ciMedians || ciHL || plots)
               - type: CheckBox
                 name: ciMedians
                 children:
@@ -108,12 +108,12 @@ children:
                     name: exact
                     optionName: ciMethod
                     optionPart: exact
-                    enable: (ciMedians)
+                    enable: (ciMedians || plots)
                   - type: RadioButton
                     name: boot
                     optionName: ciMethod
                     optionPart: boot
-                    enable: (ciMedians)
+                    enable: (ciMedians || plots)
                     children:
                       - type: TextBox
                         name: numR

@@ -2,7 +2,7 @@
 name:  bivord
 title: Ordinal Data
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -17,7 +17,7 @@ options:
       suggested:
         - ordinal
       permitted:
-        - numeric
+        - factor
       description:
           R: >
               the variable to use as the rows in the contingency table (not
@@ -28,7 +28,7 @@ options:
       suggested:
         - ordinal
       permitted:
-        - numeric
+        - factor
       description:
           R: >
               the variable to use as the columns in the contingency table (not
@@ -39,28 +39,28 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the observed counts
+            `TRUE` or `FALSE` (default: `TRUE`), provide the observed counts
     - name: pcRow
       title: Row
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide row percentages
+            `TRUE` or `FALSE` (default: `FALSE`), provide row percentages
     - name: pcCol
       title: Column
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide column percentages
+            `TRUE` or `FALSE` (default: `FALSE`), provide column percentages
     - name: pcTot
       title: Total
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide total percentages
+            `TRUE` or `FALSE` (default: `FALSE`), provide total percentages
 
     - name: gammaGK
       title: "Goodman-Kruskal's \u03B3"
@@ -68,7 +68,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman-Kruskal's gamma association index for ordinal variables.
+            `TRUE` or `FALSE` (default: `FALSE`), provide Goodman-Kruskal's gamma association index for ordinal variables.
 
     - name: tauKa
       title: "Kendall's \u03C4-a"
@@ -76,7 +76,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Kendall's tau-a association index for ordinal variables.
+            `TRUE` or `FALSE` (default: `TRUE`), provide Kendall's tau-a association index for ordinal variables.
             
     - name: tauKb
       title: "Kendall's \u03C4-b"
@@ -84,7 +84,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Kendall's tau-b association index for ordinal variables.            
+            `TRUE` or `FALSE` (default: `TRUE`), provide Kendall's tau-b association index for ordinal variables.            
      
     - name: tauKc
       title: "Kendall's \u03C4-c"
@@ -92,31 +92,31 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Kendall's tau-c association index for ordinal variables.     
+            `TRUE` or `FALSE` (default: `TRUE`), provide Kendall's tau-c association index for ordinal variables.     
             
     - name: dSommerR
-      title: "Sommer's d (rows)"
+      title: "Somers' d (rows)"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Sommer's d association index for ordinal variables (rows dependent).
+            `TRUE` or `FALSE` (default: `FALSE`), provide Somers' d association index for ordinal variables (rows dependent).
             
     - name: dSommerC
-      title: "Sommer's d (columns)"
+      title: "Somers' d (columns)"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Sommer's d association index for ordinal variables (columns dependent).            
+            `TRUE` or `FALSE` (default: `FALSE`), provide Somers' d association index for ordinal variables (columns dependent).            
       
     - name: dSommerS
-      title: "Sommer's d (symmetric)"
+      title: "Somers' d (symmetric)"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Sommer's d association index for ordinal variables (symmetric).      
+            `TRUE` or `FALSE` (default: `FALSE`), provide Somers' d association index for ordinal variables (symmetric).      
             
     - name: eWilson
       title: "Wilson's e"
@@ -124,7 +124,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Wilson's e association index for ordinal variables.
+            `TRUE` or `FALSE` (default: `FALSE`), provide Wilson's e association index for ordinal variables.
             
 
     - name: barplot
@@ -133,7 +133,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), show barplots
+            `TRUE` or `FALSE` (default: `FALSE`), show barplots
 
     - name: yaxis
       title: Y-axis
@@ -180,7 +180,7 @@ options:
             rows (default), or columns in bar plot X axis
 
     - name: bartype
-      title: Bar Type
+      title: Bar type
       type: List
       options:
         - name: dodge
@@ -198,7 +198,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), show heatmaps
+            `TRUE` or `FALSE` (default: `FALSE`), show heatmaps
             
     - name: alluvial
       title: Alluvial plot
@@ -206,4 +206,4 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), show alluvial plots           
+            `TRUE` or `FALSE` (default: `FALSE`), show alluvial plots           

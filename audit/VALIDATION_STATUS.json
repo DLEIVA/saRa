@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-11",
+  "candidate_version": "1.0.0",
+  "basis_version": "0.1.2",
+  "audit_version": "0.1.1",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0; grammar check, not R execution",
+  "R_files_parsed": 32,
+  "YAML_files_parsed": 39,
+  "testthat_blocks_added": 26,
+  "source_option_visibility_reference_dependency_issues": [],
+  "R_statistical_tests": "PASS: testthat completed without failures in supplied log (user environment; not executed here)",
+  "jmvtools_build": "PASS: compiler and package installation completed; saRa_1.0.0.jmo written; PASS: Module installed successfully",
+  "submission_target": "jamovi library",
+  "R_CMD_check": "OPTIONAL supplementary diagnostic; NOT RUN",
+  "private_Regression_API_review": "PENDING maintainer review",
+  "jamovi_GUI_and_exports": "PASS: developer reports modules working; coverage is developer-confirmed, not independently observed here; PASS: developer confirms HTML/PDF exports and .omv save/reopen checks on 11 October 2026",
+  "user_runtime_evidence": {
+    "reported_date": "2026-10-11",
+    "candidate_version": "1.0.0",
+    "jamovi_version": "2.7.30",
+    "platform": "Linux Flatpak",
+    "testthat_blocks": 26,
+    "build": "PASS: compiler and package installation completed; saRa_1.0.0.jmo written",
+    "module_install": "PASS: Module installed successfully",
+    "R_statistical_tests": "PASS: testthat completed without failures in supplied log",
+    "GUI": "PASS: developer reports modules working; coverage is developer-confirmed, not independently observed here",
+    "exports_and_persistence": "PASS: developer confirms HTML/PDF exports and .omv save/reopen checks on 11 October 2026",
+    "warnings": [
+      "jmvtools unavailable in embedded dependency repository; build nevertheless completed",
+      "fill scale replacement message",
+      "Flatpak DBus/GTK messages and engine ConnectionLostException during installation"
+    ],
+    "R_version": "not recorded in supplied log",
+    "jmvtools_version": "not recorded in supplied log",
+    "evidence_file": "audit/USER_VALIDATION_LOG.md"
+  }
+}

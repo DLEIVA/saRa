@@ -382,7 +382,7 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "discvars",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = discvarsResults$new(options=options),
                 data = data,
@@ -419,31 +419,32 @@ discvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   distribution
 #' @param valuesfunc a comma-separated list specifying random variables'
 #'   values
-#' @param pmf \code{TRUE} or \code{FALSE} (default), provide probability mass
-#'   function for a discrete distribution
-#' @param cdf \code{TRUE} or \code{FALSE} (default), provide cumulative
-#'   distribution function for a discrete distribution
-#' @param surv \code{TRUE} or \code{FALSE} (default), provide survival
-#'   function for a discrete distribution
-#' @param icdf \code{TRUE} or \code{FALSE} (default), provide inverse of
+#' @param pmf \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   probability mass function for a discrete distribution
+#' @param cdf \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   cumulative distribution function for a discrete distribution
+#' @param surv \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   survival function for a discrete distribution
+#' @param icdf \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   inverse of cumulative distribution function for a discrete distribution
 #' @param qvalues a comma-separated list specifying quantiles for a random
 #'   variable
 #' @param ppvalue a number specifying random variables' value to be plotted
-#' @param ppmf \code{TRUE} or \code{FALSE} (default), provide probability mass
-#'   function for a discrete distribution to be plotted
-#' @param pcdf \code{TRUE} or \code{FALSE} (default), provide cumulative
-#'   distribution function for a discrete distribution to be plotted
-#' @param pinterv \code{TRUE} or \code{FALSE} (default), provide probability
-#'   plot within an interval
+#' @param ppmf \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   probability mass function for a discrete distribution to be plotted
+#' @param pcdf \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   cumulative distribution function for a discrete distribution to be plotted
+#' @param pinterv \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   probability plot within an interval
 #' @param x1value a number specifying X1 value for probability plot within
 #'   interval
 #' @param x2value a number specifying X2 value for probability plot within
 #'   interval
-#' @param psurv \code{TRUE} or \code{FALSE} (default), provide survival
-#'   function for a discrete distribution to be plotted
-#' @param picdf \code{TRUE} or \code{FALSE} (default), provide inverse of
-#'   cumulative distribution function for a discrete distribution to be plotted
+#' @param psurv \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   survival function for a discrete distribution to be plotted
+#' @param picdf \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   inverse of cumulative distribution function for a discrete distribution to
+#'   be plotted
 #' @param pqvalue a number specifying a quantile for a random variable to be
 #'   plotted
 #' @param tail \code{left} (default), \code{right}, or \code{central},

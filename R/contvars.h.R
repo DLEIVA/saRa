@@ -57,27 +57,33 @@ contvarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..sigma <- jmvcore::OptionNumber$new(
                 "sigma",
                 sigma,
-                default=1)
+                default=1,
+                min=0)
             private$..tnu <- jmvcore::OptionNumber$new(
                 "tnu",
                 tnu,
-                default=10)
+                default=10,
+                min=0)
             private$..chinu <- jmvcore::OptionNumber$new(
                 "chinu",
                 chinu,
-                default=10)
+                default=10,
+                min=0)
             private$..f1nu <- jmvcore::OptionNumber$new(
                 "f1nu",
                 f1nu,
-                default=10)
+                default=10,
+                min=0)
             private$..f2nu <- jmvcore::OptionNumber$new(
                 "f2nu",
                 f2nu,
-                default=10)
+                default=10,
+                min=0)
             private$..rate <- jmvcore::OptionNumber$new(
                 "rate",
                 rate,
-                default=10)
+                default=10,
+                min=0)
             private$..unifmin <- jmvcore::OptionNumber$new(
                 "unifmin",
                 unifmin,
@@ -372,7 +378,7 @@ contvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "contvars",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = contvarsResults$new(options=options),
                 data = data,
@@ -405,33 +411,35 @@ contvarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   distribution
 #' @param contvaluesfunc a comma-separated list specifying random variables'
 #'   values
-#' @param contpdf \code{TRUE} or \code{FALSE} (default), provide probability
-#'   density function for a continuous distribution
-#' @param contcdf \code{TRUE} or \code{FALSE} (default), provide cumulative
-#'   distribution function for a continuous distribution
-#' @param contsurv \code{TRUE} or \code{FALSE} (default), provide survival
-#'   function for a continuous distribution
-#' @param conticdf \code{TRUE} or \code{FALSE} (default), provide inverse of
+#' @param contpdf \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   probability density function for a continuous distribution
+#' @param contcdf \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   cumulative distribution function for a continuous distribution
+#' @param contsurv \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide survival function for a continuous distribution
+#' @param conticdf \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   inverse of cumulative distribution function for a continuous distribution
 #' @param contqvalues a comma-separated list specifying quantiles for a random
 #'   variable
 #' @param contppvalue a number specifying random variables' value to be
 #'   plotted
-#' @param contppdf \code{TRUE} or \code{FALSE} (default), provide probability
-#'   mass function for a continuous distribution to be plotted
-#' @param contpcdf \code{TRUE} or \code{FALSE} (default), provide cumulative
-#'   distribution function for a continuous distribution to be plotted
-#' @param contpinterv \code{TRUE} or \code{FALSE} (default), provide
-#'   probability plot within an interval
+#' @param contppdf \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide probability mass function for a continuous distribution to be
+#'   plotted
+#' @param contpcdf \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide cumulative distribution function for a continuous distribution to
+#'   be plotted
+#' @param contpinterv \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide probability plot within an interval
 #' @param contx1value a number specifying X1 value for probability plot within
 #'   interval
 #' @param contx2value a number specifying X2 value for probability plot within
 #'   interval
-#' @param contpsurv \code{TRUE} or \code{FALSE} (default), provide survival
-#'   function for a cont distribution to be plotted
-#' @param contpicdf \code{TRUE} or \code{FALSE} (default), provide inverse of
-#'   cumulative distribution function for a continuous distribution to be
-#'   plotted
+#' @param contpsurv \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide survival function for a cont distribution to be plotted
+#' @param contpicdf \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide inverse of cumulative distribution function for a continuous
+#'   distribution to be plotted
 #' @param contpqvalue a number specifying a quantile for a random variable to
 #'   be plotted
 #' @param conttail \code{left} (default), \code{right}, or \code{central},

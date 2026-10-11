@@ -2,7 +2,7 @@
 name:  catSummary
 title: Categorical Data
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -25,23 +25,22 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide frequency tables (nominal, ordinal
+            `TRUE` or `FALSE` (default: `TRUE`), provide frequency tables (nominal, ordinal
             variables only)
-            - name: mode
     - name: mode 
       title: Mode
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the mode 
+            `TRUE` or `FALSE` (default: `FALSE`), provide the mode 
     - name: VR
       title: Variation ratio
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide the variation ratio
+            `TRUE` or `FALSE` (default: `FALSE`), provide the variation ratio
       
     - name: Blau
       title: Blau
@@ -49,7 +48,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide the Blau's Index
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Blau's Index
             
     - name: Teachman
       title: Teachman
@@ -57,7 +56,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide the Teachman's Index
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Teachman's Index
             
     - name: IQV
       title: IQV
@@ -65,7 +64,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide the Index Qualitative Variation
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Index Qualitative Variation
  
     - name: NCat
       title: Number of categories
@@ -81,7 +80,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide bar plots
+            `TRUE` or `FALSE` (default: `FALSE`), provide bar plots
     
     - name: f2p.bar
       title: Frequencies (Y-axis)
@@ -103,7 +102,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide pie charts
+            `TRUE` or `FALSE` (default: `FALSE`), provide pie charts
 
     - name: pareto
       title: Pareto plot
@@ -111,7 +110,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pareto charts
+            `TRUE` or `FALSE` (default: `FALSE`), provide Pareto charts
 
     - name: lolli
       title: Lollipop 
@@ -119,7 +118,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Lollipop charts
+            `TRUE` or `FALSE` (default: `FALSE`), provide Lollipop charts
 
     - name: f2p.lolli
       title: Frequencies (Y-axis)
@@ -141,6 +140,6 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide doughnut charts
+            `TRUE` or `FALSE` (default: `FALSE`), provide doughnut charts
     
 ...

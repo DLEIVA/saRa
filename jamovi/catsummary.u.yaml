@@ -37,7 +37,7 @@ children:
             name: Blau
           - type: CheckBox
             name: IQV
-            label: Index qualitative variation (IQV)
+            label: Index of qualitative variation (IQV)
             style: inline
             verticalAlignment: center
             children:

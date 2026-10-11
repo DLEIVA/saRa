@@ -2,7 +2,7 @@
 name:  testnorm
 title: Normality Tests
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -20,7 +20,7 @@ options:
           R: a vector of strings naming the variables of interest in `data`
           
     - name: groupBy
-      title: Group by (Optional)
+      title: Group by (optional)
       type: Variable
       suggested:
         - nominal
@@ -38,7 +38,7 @@ options:
           ui: >
             perform Pearson's χ² tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Pearson's χ² tests          
+            `TRUE` or `FALSE` (default: `FALSE`), perform Pearson's χ² tests          
           
     - name: kstest
       title: Kolmogorov-Smirnov test
@@ -46,9 +46,9 @@ options:
       default: true
       description:
           ui: >
-            perform Kolmogorv-Smirnov tests.
+            perform Kolmogorov-Smirnov tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Kolmogorov-Smirnov tests
+            `TRUE` or `FALSE` (default: `TRUE`), perform Kolmogorov-Smirnov tests
             
     - name: swtest
       title: Shapiro-Wilk test
@@ -58,7 +58,7 @@ options:
           ui: >
             perform Shapiro-Wilk tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Shapiro-Wilk tests  
+            `TRUE` or `FALSE` (default: `TRUE`), perform Shapiro-Wilk tests  
             
     - name: lillietest
       title: Lilliefors test
@@ -68,7 +68,7 @@ options:
           ui: >
             perform Lilliefors tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Lilliefors tests
+            `TRUE` or `FALSE` (default: `FALSE`), perform Lilliefors tests
             
     - name: adtest
       title: Anderson-Darling test
@@ -78,7 +78,7 @@ options:
           ui: >
             perform Anderson-Darling tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Anderson-Darling tests 
+            `TRUE` or `FALSE` (default: `FALSE`), perform Anderson-Darling tests 
             
     - name: sftest
       title: Shapiro-Francia test
@@ -88,17 +88,17 @@ options:
           ui: >
             perform Shapiro-Francia tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Shapiro-Francia tests
+            `TRUE` or `FALSE` (default: `FALSE`), perform Shapiro-Francia tests
             
     - name: cvmtest
-      title: Cramer-von Mises test
+      title: Cramér–von Mises test
       type: Bool
       default: false
       description:
           ui: >
-            perform Cramer-von Mises tests.
+            perform Cramér–von Mises tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Cramer-von Mises tests            
+            `TRUE` or `FALSE` (default: `FALSE`), perform Cramér–von Mises tests            
 
     - name: hist
       title: Histogram
@@ -106,7 +106,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides histograms (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provides histograms (continuous variables only)
             
     - name: dens
       title: Density
@@ -114,7 +114,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides density plots (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provides density plots (continuous variables only)
             
     - name: norm
       title: Normal Curve
@@ -122,7 +122,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provides overlapped normal curve (continuous variables only)            
+            `TRUE` or `FALSE` (default: `FALSE`), provides overlapped normal curve (continuous variables only)            
             
     - name: qq
       title: Q-Q plot
@@ -130,7 +130,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Q-Q plots (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provide Q-Q plots (continuous variables only)
 
     - name: ecdf
       title: ECDF plot
@@ -138,6 +138,6 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide ECDF plots (continuous variables only)
+            `TRUE` or `FALSE` (default: `FALSE`), provide ECDF plots (continuous variables only)
 
 ...

@@ -2,7 +2,7 @@
 name:  umw
 title: Mann-Whitney Test
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 formula:
@@ -56,7 +56,7 @@ options:
           ui: >
             perform Mann-Whitney's U t-tests.
           R: >
-            `TRUE` (default) or `FALSE`, perform Mann Whitney's U tests
+            `TRUE` or `FALSE` (default: `TRUE`), perform Mann Whitney's U tests
             
     - name: zstat
       title: Z statistic
@@ -64,9 +64,9 @@ options:
       default: true
       description:
           ui: >
-            perform assymptotic Z tests.
+            perform asymptotic Z tests.
           R: >
-            `TRUE` (default) or `FALSE`, perform Z tests 
+            `TRUE` or `FALSE` (default: `TRUE`), perform Z tests 
             
     - name: pSup
       title: Probability of superiority
@@ -76,17 +76,17 @@ options:
           ui: >
             compute probability of superiority index.
           R: >
-            `TRUE` or `FALSE` (default), compute probability of superiority index
+            `TRUE` or `FALSE` (default: `FALSE`), compute probability of superiority index
 
     - name: rankCorr
-      title: Rank biserial correlation
+      title: Rank-biserial correlation
       type: Bool
       default: false
       description:
           ui: >
             compute rank biserial correlation.
           R: >
-            `TRUE` or `FALSE` (default), compute rank biserial correlation.
+            `TRUE` or `FALSE` (default: `FALSE`), compute rank biserial correlation.
             
     - name: fstat
       title: f statistic
@@ -96,7 +96,7 @@ options:
           ui: >
             compute f statistic.
           R: >
-            `TRUE` or `FALSE` (default), compute f statistic.
+            `TRUE` or `FALSE` (default: `FALSE`), compute f statistic.
             
             
     - name: hypothesis
@@ -120,14 +120,14 @@ options:
             group 1 respectively
 
     - name: ciMedians
-      title: Groups medians CIs
+      title: Group median confidence intervals
       type: Bool
       default: false
       description:
           ui: >
             provide confidence intervals for the medians.
           R: >
-            `TRUE` or `FALSE` (default), provide confidence intervals for the medians
+            `TRUE` or `FALSE` (default: `FALSE`), provide confidence intervals for the medians
             
     - name: ciHL
       title: Hodges-Lehmann (difference in location)
@@ -137,7 +137,7 @@ options:
           ui: >
             provide confidence intervals for the Hodges-Lehmann estimator.
           R: >
-            `TRUE` or `FALSE` (default), provide confidence intervals for the 
+            `TRUE` or `FALSE` (default: `FALSE`), provide confidence intervals for the 
             Hodges-Lehmann estimator          
 
     - name: ciWidth
@@ -187,7 +187,7 @@ options:
           ui: >
             provide descriptives for each group.
           R: >
-            `TRUE` or `FALSE` (default), provide descriptive statistics
+            `TRUE` or `FALSE` (default: `FALSE`), provide descriptive statistics
 
     - name: plots
       title: Descriptives Plots
@@ -197,7 +197,7 @@ options:
           ui: >
             provide descriptives plots.
           R: >
-            `TRUE` or `FALSE` (default), provide descriptive plots
+            `TRUE` or `FALSE` (default: `FALSE`), provide descriptive plots
 
     - name: miss
       title: Missing values

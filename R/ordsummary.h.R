@@ -53,7 +53,7 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 suggested=list(
                     "ordinal"),
                 permitted=list(
-                    "numeric"))
+                    "factor"))
             private$..n <- jmvcore::OptionBool$new(
                 "n",
                 n,
@@ -350,7 +350,7 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "ordSummary",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = ordSummaryResults$new(options=options),
                 data = data,
@@ -369,48 +369,65 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data .
 #' @param vars a vector of strings naming the variables of interest in
 #'   \code{data}
-#' @param n \code{TRUE} or \code{FALSE} (default), provide the N
-#' @param missing \code{TRUE} or \code{FALSE} (default), provide the missing
-#'   values
-#' @param median \code{TRUE} or \code{FALSE} (default), provide the median
-#' @param mode \code{TRUE} or \code{FALSE} (default), provide the mode
-#' @param trimean \code{TRUE} or \code{FALSE} (default), provide the trimean
-#' @param avquartile \code{TRUE} or \code{FALSE} (default), provide the
-#'   midhinge
-#' @param midrange \code{TRUE} or \code{FALSE} (default), provide the
-#'   mid-range
-#' @param range \code{TRUE} or \code{FALSE} (default), provide the range
-#' @param iqr \code{TRUE} or \code{FALSE} (default), provide the iqr
-#' @param qd \code{TRUE} or \code{FALSE} (default), provide the quartile
-#'   deviation
-#' @param mad \code{TRUE} or \code{FALSE} (default), provide the mad
-#' @param rcv \code{TRUE} or \code{FALSE} (default), provide the rcv
-#' @param irange \code{TRUE} (default) or \code{FALSE}, provide the inner
-#'   range
+#' @param n \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide the N
+#' @param missing \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the missing values
+#' @param median \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   the median
+#' @param mode \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the mode
+#' @param trimean \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the trimean
+#' @param avquartile \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide the midhinge
+#' @param midrange \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide the mid-range
+#' @param range \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   the range
+#' @param iqr \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   iqr
+#' @param qd \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   quartile deviation
+#' @param mad \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   mad
+#' @param rcv \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   rcv
+#' @param irange \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the inner range
 #' @param NPerc an integer (detects by default the number) specifying the
 #'   percentage of data used
-#' @param min \code{TRUE} or \code{FALSE} (default), provide the minimum
-#' @param max \code{TRUE} or \code{FALSE} (default), provide the maximum
-#' @param q1 \code{TRUE} or \code{FALSE} (default), provide the first quartile
-#' @param q2 \code{TRUE} or \code{FALSE} (default), provide the second
-#'   quartile
-#' @param q3 \code{TRUE} or \code{FALSE} (default), provide the third quartile
-#' @param pc \code{TRUE} or \code{FALSE} (default), provide the Percentiles
+#' @param min \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide the
+#'   minimum
+#' @param max \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide the
+#'   maximum
+#' @param q1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   first quartile
+#' @param q2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   second quartile
+#' @param q3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   third quartile
+#' @param pc \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   Percentiles
 #' @param pcValues a comma-separated list (default: 25,50,75) specifying the
 #'   percentiles
-#' @param h1 \code{TRUE} or \code{FALSE} (default), provide the H1 index
-#' @param h3 \code{TRUE} or \code{FALSE} (default), provide the H3 index
-#' @param k2 \code{TRUE} or \code{FALSE} (default), provide the K2 index
-#' @param k3 \code{TRUE} or \code{FALSE} (default), provide the K3 index
-#' @param bar \code{TRUE} or \code{FALSE} (default), provide bar plots
+#' @param h1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   H1 index
+#' @param h3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   H3 index
+#' @param k2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   K2 index
+#' @param k3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   K3 index
+#' @param bar \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide bar
+#'   plots
 #' @param f2p.bar \code{'absolute'} (default) or \code{'relative'}
 #'   frequencies, to be used when plotting barplots.
-#' @param box \code{TRUE} or \code{FALSE} (default), provide box plots
-#'   (continuous variables only)
-#' @param violin \code{TRUE} or \code{FALSE} (default), provide violin plots
-#'   (continuous variables only)
-#' @param dot \code{TRUE} or \code{FALSE} (default), provide dot plots
-#'   (continuous variables only)
+#' @param box \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide box
+#'   plots (continuous variables only)
+#' @param violin \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   violin plots (continuous variables only)
+#' @param dot \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide dot
+#'   plots (continuous variables only)
 #' @param dotType .
 #' @param innerf a number (detects by default the number) specifying the inner
 #'   fence for detecting outliers
@@ -475,6 +492,7 @@ ordSummary <- function(
             parent.frame(),
             `if`( ! missing(vars), vars, NULL))
 
+    for (v in vars) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
 
     options <- ordSummaryOptions$new(
         vars = vars,

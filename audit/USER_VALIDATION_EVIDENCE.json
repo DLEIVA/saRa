@@ -1,0 +1,20 @@
+{
+  "reported_date": "2026-10-11",
+  "candidate_version": "1.0.0",
+  "jamovi_version": "2.7.30",
+  "platform": "Linux Flatpak",
+  "testthat_blocks": 26,
+  "build": "PASS: compiler and package installation completed; saRa_1.0.0.jmo written",
+  "module_install": "PASS: Module installed successfully",
+  "R_statistical_tests": "PASS: testthat completed without failures in supplied log",
+  "GUI": "PASS: developer reports modules working; coverage is developer-confirmed, not independently observed here",
+  "exports_and_persistence": "PASS: developer confirms HTML/PDF exports and .omv save/reopen checks on 11 October 2026",
+  "warnings": [
+    "jmvtools unavailable in embedded dependency repository; build nevertheless completed",
+    "fill scale replacement message",
+    "Flatpak DBus/GTK messages and engine ConnectionLostException during installation"
+  ],
+  "R_version": "not recorded in supplied log",
+  "jmvtools_version": "not recorded in supplied log",
+  "evidence_file": "audit/USER_VALIDATION_LOG.md"
+}

@@ -26,6 +26,9 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- self$data
       
+      if (!any(complete.cases(data[c(rowVarName, colVarName)])))
+        jmvcore::reject("No complete observations are available for the selected variables", code="no_complete_observations")
+
       freqs <- self$results$freqs
       
       freqRowNo <- 1
@@ -119,7 +122,11 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       tabla <- table(data[[rowVarName]],data[[colVarName]])
       n <- sum(tabla)
-      CHI <- chisq.test(tabla,correct=FALSE)$statistic
+      valid <- n > 0 && all(rowSums(tabla) > 0) && all(colSums(tabla) > 0) && all(dim(tabla) > 1)
+      CHI <- if (valid) suppressWarnings(chisq.test(tabla,correct=FALSE)$statistic) else NaN
+      if (!valid)
+        self$results$asocind$addFootnote(rowKey=1, "v[chiSq]",
+          "Association indices require at least two observed levels in each variable and complete observations")
       
       if(dim(tabla)[1]==2 & dim(tabla)[2]==2){
         a <- tabla[1,1]
@@ -128,7 +135,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         d <- tabla[2,2] 
         QY <- (a*d-b*c)/(a*d+b*c)
         YY <- (sqrt(a*d)-sqrt(b*c))/(sqrt(a*d)+sqrt(b*c))
-        VY <- (a*d-b*c)/((a+b)*(a+c)*(b+d)*(c+d))
+        VY <- .saraYulePhi(tabla)
       } else{
         QY <- NA
         YY <- NA
@@ -141,7 +148,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         `v[phiSq]`=CHI/n,
         `v[contCoef]`=sqrt(CHI/(n+CHI)),
         `v[craV]`=sqrt(CHI/((min(dim(tabla))-1)*n)),        
-        `v[chuprov]`=sqrt(CHI/(n*(dim(tabla)[1]-1)*(dim(tabla)[2]-1))),
+        `v[chuprov]`=.saraChuprov(CHI, n, nrow(tabla), ncol(tabla)),
         `v[sakoda]`=sqrt(min(dim(tabla))*CHI/((min(dim(tabla))-1)*(n+CHI))),
         `v[Qyule]` = QY,
         `v[Yyule]` = YY,
@@ -485,20 +492,19 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       if (self$options$yaxis == "ycounts") {
         if (position!='dodge') {
-        p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Counts", x=xVarName, fill=zVarName)) +
+        p <- ggplot2::ggplot(data=tab, ggplot2::aes(y=.data[["Counts"]], x=.data[[xVarName]], fill=.data[[zVarName]])) +
           ggplot2::geom_col(position=position, width = 0.7)
         } else {
-          p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Counts", x=xVarName, fill=zVarName,
-                                           label='Counts')) +
+          p <- ggplot2::ggplot(data=tab, ggplot2::aes(y=.data[["Counts"]], x=.data[[xVarName]], fill=.data[[zVarName]], label=.data[['Counts']])) +
             ggplot2::geom_col(position=position, width = 0.7)  +
             ggplot2::geom_text(position = ggplot2::position_dodge(.7), 
                       vjust = -0.5, 
                       size = 4)         
         }
       } else {
-        if (position!='dodge') {p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Percentages", x=xVarName, fill=zVarName)) +
+        if (position!='dodge') {p <- ggplot2::ggplot(data=tab, ggplot2::aes(y=.data[["Percentages"]], x=.data[[xVarName]], fill=.data[[zVarName]])) +
           ggplot2::geom_col(position=position, width = 0.7)} else {
-                p <- ggplot2::ggplot(data=tab, ggplot2::aes_string(y="Percentages", x=xVarName, fill=zVarName,label='Perc')) +
+                p <- ggplot2::ggplot(data=tab, ggplot2::aes(y=.data[["Percentages"]], x=.data[[xVarName]], fill=.data[[zVarName]], label=.data[['Perc']])) +
                   ggplot2::geom_col(position=position, width = 0.7) +
                   ggplot2::geom_text(position = ggplot2::position_dodge(.7), 
                     vjust = -0.5, 
@@ -538,7 +544,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         zVarName <- colVarName
       }
       par(mar=c(0,0,0,0))
-      vcd::mosaic(with(data,xtabs(as.formula(paste0('~',xVarName,'+',zVarName)))),
+      vcd::mosaic(table(data[[xVarName]], data[[zVarName]], dnn=c(xVarName, zVarName)),
                        gp= vcd::shading_Friendly2(interpolate = c(-4,-2,2,4)),
                        split_vertical=FALSE)
     },        

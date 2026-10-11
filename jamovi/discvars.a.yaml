@@ -2,7 +2,7 @@
 name: discvars
 title: Discrete Distributions
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -117,12 +117,12 @@ options:
             a comma-separated list specifying random variables' values  
 
     - name: pmf
-      title: "Probabilty mass function (Pr(X = x))"
+      title: "Probability mass function (Pr(X = x))"
       type: Bool
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide probability mass function for a discrete distribution            
+            `TRUE` or `FALSE` (default: `TRUE`), provide probability mass function for a discrete distribution            
 
     - name: cdf
       title: "Cumulative distribution function (Pr(X ≤ x))"
@@ -130,7 +130,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide cumulative distribution function for a discrete distribution 
+            `TRUE` or `FALSE` (default: `FALSE`), provide cumulative distribution function for a discrete distribution 
             
     - name: surv
       title: "Survival function (Pr(X > x))"
@@ -138,7 +138,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide survival function for a discrete distribution            
+            `TRUE` or `FALSE` (default: `FALSE`), provide survival function for a discrete distribution            
             
     - name: icdf
       title: "Inverse of cdf (quantiles)"
@@ -146,10 +146,10 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a discrete distribution            
+            `TRUE` or `FALSE` (default: `TRUE`), provide inverse of cumulative distribution function for a discrete distribution            
 
     - name: qvalues
-      title: Quantiles values
+      title: Quantile values
       type: String
       default: "0.5"
       description:
@@ -171,7 +171,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide probability mass function for a discrete distribution to be plotted            
+            `TRUE` or `FALSE` (default: `FALSE`), provide probability mass function for a discrete distribution to be plotted            
 
     - name: pcdf
       title: "Cumulative distribution function (Pr(X ≤ x))"
@@ -179,7 +179,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide cumulative distribution function for a discrete distribution to be plotted
+            `TRUE` or `FALSE` (default: `FALSE`), provide cumulative distribution function for a discrete distribution to be plotted
             
     - name: pinterv
       title: "Pr(x1 ≤ X ≤ x2)"
@@ -187,7 +187,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide probability plot within an interval 
+            `TRUE` or `FALSE` (default: `FALSE`), provide probability plot within an interval 
             
     - name: x1value
       title: x1 value
@@ -211,7 +211,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide survival function for a discrete distribution to be plotted            
+            `TRUE` or `FALSE` (default: `FALSE`), provide survival function for a discrete distribution to be plotted            
             
     - name: picdf
       title: "Inverse of cdf (quantiles)"
@@ -219,7 +219,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide inverse of cumulative distribution function for a discrete distribution to be plotted            
+            `TRUE` or `FALSE` (default: `FALSE`), provide inverse of cumulative distribution function for a discrete distribution to be plotted            
 
     - name: pqvalue
       title: Quantile value

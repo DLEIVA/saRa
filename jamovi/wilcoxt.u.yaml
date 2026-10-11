@@ -43,7 +43,7 @@ children:
             children:
               - type: CheckBox
                 name: wilcoxon
-                label: Wilcoxon rank
+                label: Wilcoxon signed-rank
               - type: CheckBox
                 name: zstatps
               - type: CheckBox
@@ -92,7 +92,7 @@ children:
                 name: ciWidthps
                 suffix: '%'
                 format: number
-                enable: (ciMediansps || ciHLps)
+                enable: (ciMediansps || ciHLps || plotsps)
               - type: CheckBox
                 name: ciMediansps
                 children:
@@ -100,12 +100,12 @@ children:
                     name: exact
                     optionName: ciMethodps
                     optionPart: exact
-                    enable: (ciMediansps)
+                    enable: (ciMediansps || plotsps)
                   - type: RadioButton
                     name: boot
                     optionName: ciMethodps
                     optionPart: boot
-                    enable: (ciMediansps)
+                    enable: (ciMediansps || plotsps)
                     children:
                       - type: TextBox
                         name: numR

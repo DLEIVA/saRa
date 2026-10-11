@@ -17,7 +17,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         ),
         title = c(
           "N", "Missing", "Median", "Mode", "Trimean", "Midhinge", "Mid-range",
-          "Range", "IQR", "QD", "MAD", "rCV", "Min", "Max", "Q1", "Q2", "Q3", "H1","H3","K2","K3"
+          "Range", "IQR", "QD", "MAD", "Quartile dispersion", "Min", "Max", "Q1", "Q2", "Q3", "H1","H3","K2","K3"
         ),
         superTitle = rep("",21),
         type = c("integer","integer","number","text",rep("number",17)),
@@ -133,9 +133,10 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             options = self$options,
             name = "box",
             renderFun = ".boxPlot",
+            requiresData = TRUE,
             width = 550,
             height = 550,
-            clearWith = list("box", "violin", "dot", "dotType")
+            clearWith = list("vars", "box", "violin", "dot", "dotType", "innerf", "outerf")
           )
           
           group$add(image)
@@ -192,10 +193,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         group <- plots$get(var)
         column <- data[[var]]
         
-        if(!is.ordered(column) & !is.numeric(column))
-          stop(paste0("The variable ", var,
-                      " cannot be treated as ordinal. 
-                      Plots that expect ordinal data will not be created for this variable."))
+        if (!is.numeric(column) && !is.factor(column)) next
         
         
         if (self$options$bar) {
@@ -228,7 +226,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           if(length(na.omit(column)) > 0){
             columns <- na.omit(c(var))
             plotData <- na.omit(data[columns])
-            plotData[[var]] <- as.numeric(plotData[[var]])
+            plotData[[var]] <- jmvcore::toNumeric(plotData[[var]])
             names <- list("x"="x")
             labels <- list("x"=var)
           }
@@ -240,7 +238,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colnames(plotData) <- as.character(unlist(names))
           
           if (self$options$box || self$options$violin || self$options$dot)
-            box$setState(list(data=plotData, names=names, labels=labels))
+            box$setState(list(names=names, labels=labels))
         }
       }
     },
@@ -259,7 +257,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       plotSpecificTheme <- NULL
       
       plot <-
-        ggplot2::ggplot(data=data, ggplot2::aes_string(x=names$x, y=names$y)) +
+        ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[names$x]], y=.data[[names$y]])) +
         ggplot2::geom_bar(
           stat="identity",
           position="dodge",
@@ -277,7 +275,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (is.null(image$state))
         return(FALSE)
       
-      data <- image$state$data
+      data <- .saraPlotFrame(self$data, image$state)
+      if (nrow(data) == 0L) return(FALSE)
       type <- image$state$type
       names <- image$state$names
       labels <- image$state$labels
@@ -293,7 +292,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data[["placeHolder"]] <- rep('var1', nrow(data))
       x <- "placeHolder"
       
-      plot <- ggplot2::ggplot(data=data, ggplot2::aes_string(x=x, y=names$x)) +
+      plot <- ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[x]], y=.data[[names$x]])) +
         ggplot2::labs(x='', y=labels$x) +
         ggplot2::scale_y_continuous(breaks=scales::pretty_breaks())
       
@@ -370,6 +369,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       pcValues <- self$options$pcValues
       if (is.character(pcValues))
         pcValues <- as.numeric(unlist(strsplit(pcValues, ",")))
+      if (any(!is.finite(pcValues)) || any(pcValues < 0 | pcValues > 100))
+        jmvcore::reject("Percentiles must be numbers between 0 and 100", code="invalid_percentiles")
       pcValues <- pcValues / 100
       pcValues <- pcValues[!is.na(pcValues)]
       
@@ -384,14 +385,14 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('perc', 1:npcValues), after = 17)
-          private$colArgs$title <- append(colArgs$title, paste0(round(pcValues * 100, 2), ('th pct')), after = 17)
+          private$colArgs$title <- append(colArgs$title, paste0("Percentile ", round(pcValues * 100, 2)), after = 17)
           private$colArgs$type <- append(colArgs$type, rep('number', npcValues), after = 17)
           private$colArgs$visible <- append(colArgs$visible, rep("(pc)", npcValues), after = 17)
         }
       }
       if(self$options$irange){
         NPerc <- self$options$NPerc
-        nNPerc <- length(NPerc)
+        nNPerc <- NPerc / 100
         
         if(nNPerc > 0){
           colArgs <- private$colArgs
@@ -413,8 +414,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
-      .bxp1 <- boxplot.stats(as.numeric(column), coef = intervinf)
-      .bxp2 <- boxplot.stats(as.numeric(column), coef = intervsup)
+      .bxp1 <- boxplot.stats(jmvcore::toNumeric(column), coef = intervinf)
+      .bxp2 <- boxplot.stats(jmvcore::toNumeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out
       .anom <- .bxp1$out
       .anom[.selec] <- NA
@@ -424,6 +425,13 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       return(out)
     },
     .computeIndicesOrd = function(column) {
+      converted <- jmvcore::toNumeric(column)
+      if (is.factor(converted)) {
+        converted <- suppressWarnings(as.numeric(as.character(converted)))
+        if (any(is.na(converted) & !is.na(column)))
+          stop("Ordinal summaries require numeric stored values.")
+      }
+      column <- converted
       stats <- list()
       
       total <- length(column)
@@ -433,9 +441,9 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       stats[['missing']] <- total - n
       
       if (n > 0) {
-        ni <- as.numeric(column)
+        ni <- jmvcore::toNumeric(column)
         trimedia <- function(x){
-          FN <- fivenum(as.numeric(x)) 
+          FN <- fivenum(jmvcore::toNumeric(x)) 
           Finf <- FN[2]
           Md <- FN[3]
           Fsup <- FN[4]
@@ -443,14 +451,14 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           res
         }
         promcuar <- function(x){
-          FN <- fivenum(as.numeric(x),na.rm=TRUE)
+          FN <- fivenum(jmvcore::toNumeric(x),na.rm=TRUE)
           Q1 <- FN[2]
           Q3 <- FN[4]
           res <- (Q1+Q3)/2
           res
         }
         midR <- function(x){
-          QU <- quantile(as.numeric(x),na.rm=TRUE)
+          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE)
           min <- QU[1]
           max <- QU[5]
           res <- (min+max)/2
@@ -458,7 +466,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         
         rango <- function(x){
-          QU <- quantile(as.numeric(x),na.rm=TRUE)
+          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE)
           min <- QU[1]
           max <- QU[5]
           res <- max-min
@@ -466,7 +474,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         
         IQR <- function(x){
-          QU <- quantile(as.numeric(x),na.rm=TRUE)
+          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE)
           Q1 <- QU[2]
           Q3 <- QU[4]
           res <- Q3-Q1
@@ -474,7 +482,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         
         QD <- function(x){
-          QU <- quantile(as.numeric(x),na.rm=TRUE)
+          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE)
           Q1 <- QU[2]
           Q3 <- QU[4]
           res <- (Q3-Q1)/2
@@ -482,13 +490,13 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         
         MAD <- function(x){
-          mediana <- median(as.numeric(x),na.rm=TRUE)
-          res <- median(abs(as.numeric(x)-mediana),na.rm=TRUE)
+          mediana <- median(jmvcore::toNumeric(x),na.rm=TRUE)
+          res <- median(abs(jmvcore::toNumeric(x)-mediana),na.rm=TRUE)
           res
         }
         
         RCV <- function(x){
-          FN <- fivenum(as.numeric(x))
+          FN <- fivenum(jmvcore::toNumeric(x))
           Finf <- FN[2]
           Fsup <- FN[4]
           res <- (Fsup-Finf)/(Finf+Fsup)
@@ -496,7 +504,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         
         H1 <- function(x) {
-          FN <- fivenum(as.numeric(x))
+          FN <- fivenum(jmvcore::toNumeric(x))
           Finf <- FN[2]
           Md <- FN[3]
           Fsup <- FN[4]
@@ -504,25 +512,25 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           res
         }
         H3 <- function(x) {
-          AC90 <- quantile(as.numeric(x),probs=0.9,na.rm=TRUE)
-          AC10 <- quantile(as.numeric(x),probs=0.1,na.rm=TRUE)
-          Md <- fivenum(as.numeric(x))[3]
+          AC90 <- quantile(jmvcore::toNumeric(x),probs=0.9,na.rm=TRUE)
+          AC10 <- quantile(jmvcore::toNumeric(x),probs=0.1,na.rm=TRUE)
+          Md <- fivenum(jmvcore::toNumeric(x))[3]
           res <- (AC90+AC10-2*Md)/(2*Md)
           res
         }
         K2 <- function(x){
-          QU <- quantile(as.numeric(x),na.rm=TRUE) 
-          AC90 <- quantile(as.numeric(x),probs=0.9,na.rm=TRUE)
-          AC10 <- quantile(as.numeric(x),probs=0.1,na.rm=TRUE)
+          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE) 
+          AC90 <- quantile(jmvcore::toNumeric(x),probs=0.9,na.rm=TRUE)
+          AC10 <- quantile(jmvcore::toNumeric(x),probs=0.1,na.rm=TRUE)
           Q1 <- QU[2]
           Q3 <- QU[4]
           res <- (AC90-AC10)/(1.9*(Q3-Q1))        
           res
         }
         K3 <- function(x){
-          FN <- fivenum(as.numeric(x))
-          Einf <- quantile(as.numeric(x),probs=0.125,na.rm=TRUE)
-          Esup <- quantile(as.numeric(x),probs=0.875,na.rm=TRUE)
+          FN <- fivenum(jmvcore::toNumeric(x))
+          Einf <- quantile(jmvcore::toNumeric(x),probs=0.125,na.rm=TRUE)
+          Esup <- quantile(jmvcore::toNumeric(x),probs=0.875,na.rm=TRUE)
           Finf <- FN[2]
           Fsup <- FN[4]
           res <- (Esup-Einf)/(1.7*(Fsup-Finf))        
@@ -562,26 +570,26 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           stats[['rcv']] <- RCV(column)
         
         if(self$options$min)
-          stats[['min']] <- min(as.numeric(column), na.rm=TRUE)
+          stats[['min']] <- min(jmvcore::toNumeric(column), na.rm=TRUE)
         
         if(self$options$max)
-          stats[['max']] <- max(as.numeric(column), na.rm=TRUE)
+          stats[['max']] <- max(jmvcore::toNumeric(column), na.rm=TRUE)
         
         if (self$options$q1)
-          stats[['q1']] <- quantile(as.numeric(column),na.rm=TRUE)[2]
+          stats[['q1']] <- quantile(jmvcore::toNumeric(column),na.rm=TRUE)[2]
         
         if (self$options$q2)
-          stats[['q2']] <- quantile(as.numeric(column),na.rm=TRUE)[3]
+          stats[['q2']] <- quantile(jmvcore::toNumeric(column),na.rm=TRUE)[3]
         
         if (self$options$q3)
-          stats[['q3']] <- quantile(as.numeric(column),na.rm=TRUE)[4]
+          stats[['q3']] <- quantile(jmvcore::toNumeric(column),na.rm=TRUE)[4]
         
         if(self$options$pc){
           pcValues <- private$.getPcValues()
           npcValues <- length(pcValues)
           
           if( npcValues > 0 ){
-            quants <- quantile(as.numeric(column), pcValues)
+            quants <- quantile(jmvcore::toNumeric(column), pcValues, na.rm=TRUE)
             for(i in 1:npcValues)
               stats[[paste0('perc', i)]] <- quants[i]
           }
@@ -589,11 +597,11 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         if(self$options$irange){
           NPerc <- self$options$NPerc
-          nNPerc <- length(NPerc)
+          nNPerc <- NPerc / 100
           
           if( nNPerc > 0 ){
-            .ACinf <- quantile(as.numeric(column),probs=(1-nNPerc)/2,na.rm=TRUE)
-            .ACsup <- quantile(as.numeric(column),probs=1-(1-nNPerc)/2,na.rm=TRUE)
+            .ACinf <- quantile(jmvcore::toNumeric(column),probs=(1-nNPerc)/2,na.rm=TRUE)
+            .ACsup <- quantile(jmvcore::toNumeric(column),probs=1-(1-nNPerc)/2,na.rm=TRUE)
             res <- .ACsup-.ACinf
             stats[[paste0('ir')]] <- res
           }
@@ -613,8 +621,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
       }
       else if (n==0) {
-        l <- list(
-          n=NaN, missing=NaN, median=NaN, mode=NaN, trimean=NaN, avquartile=NaN, midrange=NaN,
+        stats <- list(
+          n=0, missing=total, median=NaN, mode=NaN, trimean=NaN, avquartile=NaN, midrange=NaN,
           range=NaN, iqr=NaN, qd=NaN, mad=NaN, rcv=NaN, min=NaN, max=NaN, q1=NaN, q2=NaN, q3=NaN,
           h1=NaN, h3=NaN, k2=NaN, k3=NaN
         )

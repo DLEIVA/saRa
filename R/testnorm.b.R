@@ -5,139 +5,59 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     "testnormClass",
     inherit = testnormBase,
     private = list(
-        .run = function() {
+        .init = function() {
           private$.initPlots()
-          groupVarName <- self$options$groupBy
-          depVarNames <- self$options$vars
-          varNames <- if(is.null(groupVarName) || length(depVarNames) == 0){
-            c(depVarNames)
-          } else{
-            c(groupVarName, depVarNames) 
-          }
-          
-          # if (is.null(groupVarName) || length(depVarNames) == 0)
-          #   return()
-          
-          data <- select(self$data, varNames)
-          
-          .kstest <- function(x){
-            test <- ks.test(x,'pnorm',mean=mean(x),sd=sd(x))
-            list(statistic=test$statistic,p.value=test$p.value)
-          }
-          
-          .chisqtest <- function(x){
-            test <- nortest::pearson.test(x)
-            list(statistic=test$statistic,p.value=test$p.value)
-          }
-          
-          .swtest <- function(x){
-            test <- shapiro.test(x)
-            list(statistic=test$statistic,p.value=test$p.value)
-          }
-          
-          .adtest <- function(x){
-            test <- nortest::ad.test(x)
-            list(statistic=test$statistic,p.value=test$p.value)
-          }
-          
-          .lillietest <- function(x){
-            test <- nortest::lillie.test(x)
-            list(statistic=test$statistic,p.value=test$p.value)
-          }
-          
-          .sftest <- function(x){
-            test <- nortest::sf.test(x)
-            list(statistic=test$statistic,p.value=test$p.value)
-          }
-          
-          .cvmtest <- function(x){
-            test <- nortest::cvm.test(x)
-            list(statistic=test$statistic,p.value=test$p.value)
-          }          
-          
-          for (name in depVarNames)
-            data[[name]] <- jmvcore::toNumeric(data[[name]])
-          if(!is.null(groupVarName))
-          data[[groupVarName]] <- droplevels(as.factor(data[[groupVarName]]))
-          
-          normtestTable <- self$results$normtests
-          
-          if (any(depVarNames == groupVarName))
-            jmvcore::reject(.("Grouping variable '{a}' must not also be a dependent variable"),
-                            code="a_is_dependent_variable", a=groupVarName)
-          
-          # exclude rows with missings in the grouping variable
-          if(!is.null(groupVarName))
-          data <- data[ ! is.na(data[[groupVarName]]),]
-          
-          for (depName in depVarNames) {
-            if(!is.null(groupVarName)){
-              dataNTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
-            } else{
-              dataNTest <- data.frame(dep=data[[depName]])              
-            }
-            
-            if(!is.null(groupVarName)){
-              groupLevels <- base::levels(dataNTest$group)
-            } else groupLevels <- NULL            
 
-              if(!is.null(groupLevels)){
-                chisq <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                              suppressWarnings(.chisqtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-                
-                ks <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                           suppressWarnings(.kstest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-                
-                sw <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                           suppressWarnings(.swtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-                
-                ad <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                           suppressWarnings(.adtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-                
-                lillie <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                           suppressWarnings(.lillietest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-                
-                sf <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                           suppressWarnings(.sftest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-
-                cvm <- matrix(unlist(tapply(dataNTest$dep,dataNTest$group,
-                                           suppressWarnings(.cvmtest))),nrow=length(levels(dataNTest$group)),byrow=TRUE)
-              } else{
-                chisq <- .chisqtest(dataNTest$dep)
-                ks <- .kstest(dataNTest$dep) 
-                sw <- .swtest(dataNTest$dep) 
-                ad <- .adtest(dataNTest$dep)
-                lillie <- .lillietest(dataNTest$dep)
-                sf <- .sftest(dataNTest$dep)
-                cvm <- .cvmtest(dataNTest$dep)
+        },
+        .run = function() {
+          groupName <- self$options$groupBy
+          variables <- self$options$vars
+          if (!is.null(groupName) && groupName %in% variables)
+            jmvcore::reject("Grouping variable must not also be a dependent variable",
+                            code="a_is_dependent_variable")
+          tests <- list(
+            chisqtest=function(x) nortest::pearson.test(x),
+            kstest=function(x) stats::ks.test(x, "pnorm", mean=mean(x), sd=sd(x)),
+            swtest=function(x) stats::shapiro.test(x),
+            adtest=function(x) nortest::ad.test(x),
+            lillietest=function(x) nortest::lillie.test(x),
+            sftest=function(x) nortest::sf.test(x),
+            cvmtest=function(x) nortest::cvm.test(x))
+          table <- self$results$normtests
+          # Group membership depends on observations; init may receive headers only.
+          # Rebuild rows from the full dataset to avoid missing/stale group keys.
+          table$deleteRows()
+          for (variable in variables) {
+            values <- jmvcore::toNumeric(self$data[[variable]])
+            groups <- if (is.null(groupName)) rep("", length(values)) else as.character(self$data[[groupName]])
+            groupLevels <- if (is.null(groupName)) "" else levels(droplevels(as.factor(self$data[[groupName]])))
+            for (group in groupLevels) {
+              key <- list(variable=variable, group=group)
+              table$addRow(rowKey=key, values=list(depvar=variable, group=group))
+              x <- values[!is.na(groups) & groups == group & !is.na(values)]
+              for (testName in names(tests)) {
+                if (!self$options[[testName]]) next
+                result <- tryCatch({
+                  if (length(x) < 2L) stop("Requires at least two non-missing observations")
+                  if (any(!is.finite(x))) stop("Infinite values are not supported")
+                  if (sd(x) == 0) stop("Requires a non-constant variable")
+                  suppressWarnings(tests[[testName]](x))
+                }, error=function(e) e)
+                statColumn <- paste0("stat[", testName, "]")
+                pColumn <- paste0("p[", testName, "]")
+                if (inherits(result, "error")) {
+                  table$setRow(rowKey=key, setNames(list(NaN, NaN), c(statColumn, pColumn)))
+                  table$addFootnote(rowKey=key, statColumn, conditionMessage(result))
+                } else {
+                  table$setRow(rowKey=key, setNames(list(unname(result$statistic), result$p.value), c(statColumn, pColumn)))
+                }
+                if (testName == "kstest")
+                  table$addFootnote(rowKey=key, pColumn,
+                    "Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference.")
               }
-                                        
-            if(length(groupLevels)>0){
-              if(length(groupLevels) > 1){
-                for(k in 1:length(groupLevels)){
-                  normtestTable$addRow(rowKey=k,values=list(`depvar`=ifelse(k==1,depName,''),
-                  `group`=groupLevels[k],`stat`='',`p`='',`stat[chisqtest]`=chisq[k,1],
-                  `p[chisqtest]`=chisq[k,2],`stat[kstest]`=ks[k,1],`p[kstest]`=ks[k,2],
-                  `stat[swtest]`=sw[k,1],`p[swtest]`=sw[k,2],`stat[adtest]`=ad[k,1],
-                  `p[adtest]`=ad[k,2],`stat[lillietest]`=lillie[k,1],
-                  `p[lillietest]`=lillie[k,2],`stat[sftest]`=sf[k,1],
-                  `p[sftest]`=sf[k,2],`stat[cvmtest]`=cvm[k,1],
-                  `p[cvmtest]`=cvm[k,2]))
-              }
-        }
-            } else{
-              normtestTable$addRow(rowKey=1,values=list(`depvar`=depName,
-              `stat`='',`p`='',`stat[chisqtest]`=chisq[[1]],
-              `p[chisqtest]`=chisq[[2]],`stat[kstest]`=ks[[1]],`p[kstest]`=ks[[2]],
-              `stat[swtest]`=sw[[1]],`p[swtest]`=sw[[2]],`stat[adtest]`=ad[[1]],
-              `p[adtest]`=ad[[2]],`stat[lillietest]`=lillie[[1]],
-              `p[lillietest]`=lillie[[2]],`stat[sftest]`=sf[[1]],`p[sftest]`=sf[[2]],
-              `stat[cvmtest]`=cvm[[1]],`p[cvmtest]`=cvm[[2]]))  
             }
           }
-          
-          private$.preparePlots()  
-        
+          private$.preparePlots()
         },
         #### Init plots ----    
         .initPlots = function() {
@@ -157,9 +77,10 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 options = self$options,
                 name = "hist",
                 renderFun = ".histogram",
+            requiresData = TRUE,
                 width = 550,
                 height = 550,
-                clearWith = list("hist", "dens", "norm")
+                clearWith = list("vars", "groupBy", "hist", "dens", "norm")
               )
               
               group$add(image)
@@ -174,7 +95,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 requiresData = TRUE,
                 width = 550,
                 height = 550,
-                clearWith = list("qq")
+                clearWith = list("vars", "groupBy", "qq")
               )
               group$add(image)
             }
@@ -188,7 +109,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 requiresData = TRUE,
                 width = 550,
                 height = 550,
-                clearWith = list("ecdf")
+                clearWith = list("vars", "groupBy", "ecdf")
               )
               group$add(image)
             }            
@@ -206,10 +127,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             group <- plots$get(var)
             column <- data[[var]]
             
-            if(!is.numeric(column))
-              stop(paste0("The variable ", var,
-                          " cannot be treated as numeric. 
-                      Plots that expect numeric data will not be created for this variable."))
+            if (!is.numeric(column) && !is.factor(column)) next
             
             hist  <- group$get('hist')
             qq <- group$get('qq')
@@ -241,7 +159,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 colnames(plotData) <- as.character(unlist(names))
                 
                 if (self$options$hist || self$options$dens || self$options$norm)
-                  hist$setState(list(data=plotData, names=names, labels=labels))
+                  hist$setState(list(names=names, labels=labels))
               }
             }
           }          
@@ -251,7 +169,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           if (is.null(image$state))
             return(FALSE)
           
-          data <- image$state$data
+          data <- .saraPlotFrame(self$data, image$state)
+      if (nrow(data) == 0L) return(FALSE)
           names <- image$state$names
           labels <- image$state$labels
           groupBy <- self$options$groupBy
@@ -284,9 +203,9 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           nUniques <- length(unique(data[[names$x]]))
           if (nUniques > nBins)
-            binWidth <- range / nBins
+            binWidth <- if (range > 0) range / nBins else 1
           else
-            binWidth <- range / (nUniques - 1)
+            binWidth <- if (nUniques > 1) range / (nUniques - 1) else 1
           
           if(self$options$norm){
             grids <- seq(min, max, 
@@ -306,11 +225,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             } else{ datos |>  dplyr::do(.getDensity(.)) |>  data.frame() }
           }
           
-          plot <- ggplot2::ggplot(data=data, ggplot2::aes_string(x=names$x)) +
+          plot <- ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[names$x]])) +
             ggplot2::labs(x=labels$x, y='density') +
             ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
             {if(self$options$hist) ggplot2::geom_histogram(
-              ggplot2::aes(y=..density..),
+              ggplot2::aes(y=ggplot2::after_stat(density)),
               position="identity",
               stat="bin",
               binwidth=binWidth,
@@ -318,7 +237,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               fill=fill
             )}+
             {if(self$options$dens) ggplot2::geom_density(color=color, fill=fill, alpha=alpha)}+
-            {if(self$options$norm) ggplot2::geom_line(data = densDAT, ggplot2::aes_string(x='val',y = 'density'),
+            {if(self$options$norm) ggplot2::geom_line(data = densDAT, ggplot2::aes(x=.data[['val']], y=.data[['density']]),
                                              col='red',lty=2,lwd=1.15)} +
             {if(!is.null(groupBy)) ggplot2::facet_grid(rows=ggplot2::vars(s1))} +
             ggtheme
@@ -328,35 +247,10 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           plot <- plot + themeSpec
           return(plot)      
         },
-        .qq = function(image, ggtheme, theme, ...) {
-          if (is.null(image$state))
-            return(FALSE)
-          
-          var <- image$state
-          data <- self$data
-          groupBy <- self$options$groupBy
-          
-          y <- data[[var]]
-          y <- as.vector(scale(y))
-          data <- if(!is.null(groupBy)){
-            data.frame(y=y,s1=self$data[[groupBy]]) 
-          } else{
-            data.frame(y=y)
-          }
-          
-          data <- na.omit(data)
-          
-          plot <- ggplot2::ggplot(data=data, mapping = ggplot2::aes(sample = y)) +
-            qqplotr::stat_qq_band() +
-            qqplotr::stat_qq_line() +
-            qqplotr::stat_qq_point() +
-            ggplot2::xlab("Theoretical Quantiles") +
-            ggplot2::ylab("Standardized Residuals") +
-            {if(!is.null(groupBy)) ggplot2::facet_grid(cols=ggplot2::vars(s1))} +
-            ggtheme
-          
-          return(plot)
-        },
+    .qq = function(image, ggtheme, theme, ...) {
+      if (is.null(image$state)) return(FALSE)
+      .saraQQPlot(self$data, image$state, self$options$groupBy, ggtheme)
+    },
         .ecdf = function(image, ggtheme, theme, ...) {
           if (is.null(image$state))
             return(FALSE)
@@ -365,31 +259,16 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           data <- self$data
           groupBy <- self$options$groupBy
           
-          y <- data[[var]]
-          y <- as.vector(sort(scale(y)))
-          Fn <- stats::ecdf(y)          
-          
-          
-          if(!is.null(groupBy)){
-            s1 <- self$data[[groupBy]]
-            df <- data.frame(y,s1)
-            d.f <- dplyr::arrange(df,s1,y)
-            d.f <- plyr::ddply(d.f, plyr::.(s1), transform,
-                               z=sort(scale(y)),p=pnorm(sort(scale(y))))
-            
-          } else{
-            d.f <- data.frame(z=sort(scale(y)),p=pnorm(sort(scale(y))))
-          }
-          
-          d.f <- na.omit(d.f)
-          
-          plot <- ggplot2::ggplot(d.f, ggplot2::aes(x=z,y=p)) + ggplot2::geom_line(col="#7b9ee6") +
-            ggplot2::geom_point(ggplot2::aes(y=Fn(z))) + ggplot2::geom_line(ggplot2::aes(y=Fn(z))) +
-            ggplot2::xlab("Empirical Quantiles") +
-            ggplot2::ylab("Cumulative distribution") +            
-            {if(!is.null(groupBy)) ggplot2::facet_wrap(d.f$s1)} +   
-            ggplot2::guides(fill=FALSE) +
-            ggtheme
+          df <- .saraECDFData(jmvcore::toNumeric(data[[var]]),
+                              if (is.null(groupBy)) NULL else data[[groupBy]])
+          if (is.null(df) || nrow(df) == 0L) return(FALSE)
+          plot <- ggplot2::ggplot(df, ggplot2::aes(x=z)) +
+            ggplot2::geom_line(ggplot2::aes(y=normal), colour="#7b9ee6") +
+            ggplot2::geom_step(ggplot2::aes(y=empirical)) +
+            ggplot2::geom_point(ggplot2::aes(y=empirical)) +
+            ggplot2::xlab("Standardised values") +
+            ggplot2::ylab("Cumulative probability") + ggtheme
+          if (!is.null(groupBy)) plot <- plot + ggplot2::facet_wrap(~ group)
 
           return(plot)
         }

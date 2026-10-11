@@ -8,6 +8,9 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       .run=function() {
         
         data <- self$data
+        selectedPairs <- self$options$pairs
+        selectedVariables <- unique(unlist(lapply(selectedPairs, function(pair) c(pair$i1, pair$i2))))
+        if (length(selectedVariables) > 0) data <- data[selectedVariables]
         
         wilcoxttestTable <- self$results$wilcoxttest
         cismedTable <- self$results$cisMedps
@@ -17,7 +20,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         confInt <- self$options$ciWidthps / 100
         
         if (self$options$get('missps') == 'listwise')
-          data <- naOmit(data)
+          data <- jmvcore::naOmit(data)
         
         confInt <- self$options$get("ciWidthps") / 100
         
@@ -32,64 +35,22 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           Ha <- "two.sided"
         
         ## Additional functions                
-        .zStattest <- function(column1,column2,Ha){
-          df <- data.frame(column1,column2)
-          med <- c(median(df$column1),median(df$column2))
-          diffs <- df$column1-df$column2
-          diffs <- diffs[diffs!=0]
-          n <- length(diffs)
-          t <- table(abs(diffs))
-          mu <- n*(n+1)/4
-          sigma <- if(any(t>1)){
-            sqrt(n*(n+1)*(2*n+1)/24-1/48*sum(t^3-t))
-          } else{sqrt(n*(n+1)*(2*n+1)/24)}
-          T <- wilcox.test(df$column1,df$column2,paired=TRUE)$statistic
-          statistic <- (T-mu)/sigma
-          names(statistic) <- NULL
-          p.value <- min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))
-          p.value <- if(Ha=='two.sided'){(p.value)*2
-          } else if((Ha=='greater' & med[1]<med[2]) | (Ha=='less' & med[1]>med[2])){
-            1-p.value
-          } else{p.value}
-          names(p.value) <- NULL
-          list(statistic=statistic,p.value=p.value,mu=mu,sigma=sigma,n=n,t=t)
-        } 
-        
-        .bisrankr <- function(column1,column2){
-          df <- data.frame(column1,column2)
-          diffs <- df$column1-df$column2
-          nTies <- sum(diffs==0)
-          diffs <- diffs[diffs!=0]
-          n <- length(diffs)
-          T <- wilcox.test(df$column1,df$column2,paired=TRUE)$statistic
-          totalRankSum <- ((n-nTies) * ((n-nTies) + 1)) / 2
-          statistic <- (2 * (T / totalRankSum)) - 1
-          list(statistic=statistic)
-        }
-        
+        .zStattest <- function(column1, column2, Ha)
+          .saraSignedRanks(column1, column2, Ha)
+        .bisrankr <- function(column1, column2)
+          list(statistic=.saraSignedRanks(column1, column2)$correlation)
+
         .hl <- function(column1,column2,conflevel){
           df <- data.frame(column1,column2)
-          test <- wilcox.test(df$column1,df$column2,conf.int=TRUE,conf.level=conflevel)
+          test <- wilcox.test(df$column1,df$column2,paired=TRUE,conf.int=TRUE,conf.level=conflevel)
           results <- c(test$estimate,test$conf.int)
           names(results) <- NULL
           results
         }  
         
         # Adapted from DescTools::MedianCI func
-        .mybootMED <- function (x, conf.level = 0.95, na.rm = FALSE, R = 999) 
-        {
-          if (na.rm) x <- na.omit(x)
-          boot.med <- boot::boot(x, function(x, d) median(x[d], na.rm = na.rm), R = R)
-          r <- boot::boot.ci(boot.med, conf = conf.level, type = "basic")[[4]][4:5]
-          med <- median(x, na.rm = na.rm)
-          if (is.na(med)) { res <- rep(NA, 3) 
-          } else {
-            res <- c(median = med, r)
-          }
-          names(res) <- c("median", "lwr.ci", "upr.ci")
-          return(res)
-        }        
-        
+        .mybootMED <- .saraBootstrapMedian
+
         for (i in seq_along(pairs)) {
           pair <- pairs[[i]]
           
@@ -103,17 +64,17 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           data[[name2]] <- jmvcore::toNumeric(data[[name2]])
           
           if (self$options$get('missps') == "perAnalysis") {
-            pairsData <- naOmit(data[c(name1, name2)])
+            pairsData <- jmvcore::naOmit(data[c(name1, name2)])
             column1 <- pairsData[[name1]]
             column2 <- pairsData[[name2]]
           } else {
-            pairsData <- data
+            pairsData <- data[c(name1, name2)]
             column1 <- pairsData[[name1]]
             column2 <- pairsData[[name2]]
           }
           
-          med1 <- tryNaN(median(column1))
-          med2 <- tryNaN(median(column2))
+          med1 <- jmvcore::tryNaN(median(column1))
+          med2 <- jmvcore::tryNaN(median(column2))
           nTies <- sum((column1 - column2) == 0, na.rm=TRUE) 
           
           diffs <- column1-column2
@@ -130,43 +91,44 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           RankAn <- ifelse(!is.na(RankSn),RankSn/nn,NA)
           RankAt <- ''    
           
-          if(self$options$ciMethodps=='exact'){
-            cimed <- t(apply(pairsData,2,
-                             function(x) DescTools::MedianCI(x,method='exact')))[,2:3]
-          } else if(self$options$ciMethodps=='boot'){
-            cimed <- t(apply(pairsData,2,
-                             function(x) .mybootMED(x,conf.level=confInt,R=self$options$numR)))[,2:3]
+          cimed <- matrix(NaN, nrow=2, ncol=2)
+          if (self$options$ciMediansps || self$options$plotsps) {
+            ciResult <- try(suppressWarnings(t(vapply(pairsData, function(x) {
+              if (self$options$ciMethodps == 'exact')
+                DescTools::MedianCI(x, conf.level=confInt, method='exact')[2:3]
+              else .mybootMED(x, conf.level=confInt, R=self$options$numR)[2:3]
+            }, numeric(2)))), silent=TRUE)
+            if (!jmvcore::isError(ciResult)) cimed <- ciResult
+            else cismedTable$addFootnote(rowKey=pair, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
           }
-          
-          cimed[is.na(cimed)] <- NaN
-          
-          if(self$options$ciHLps){
-            cihl <- .hl(column1,column2,confInt)
-            cihl[is.na(cihl)] <- NaN
+          cihl <- rep(NaN, 3)
+          if (self$options$ciHLps) {
+            hlResult <- try(suppressWarnings(.hl(column1, column2, confInt)), silent=TRUE)
+            if (!jmvcore::isError(hlResult)) cihl <- hlResult
+            else cishlTable$addFootnote(rowKey=pair, 'hlestimate', jmvcore::extractErrorMessage(hlResult))
           }
-          
-          
+
           if (is.factor(column1) || is.factor(column2)) {
-            wilc <- createError(.('One or both variables are not numeric'))
+            wilc <- jmvcore::createError(.('One or both variables are not numeric'))
           }
           else {
             wilc <- try(suppressWarnings(wilcox.test(column1, column2,
-                    alternative=Ha, paired=TRUE, conf.int=TRUE, conf.level=confInt)), silent=TRUE)
-            zstat <- .zStattest(column1,column2,Ha)
-            rankCorr <- .bisrankr(column1,column2)
+                    alternative=Ha, paired=TRUE, conf.int=FALSE)), silent=TRUE)
+            zstat <- try(.zStattest(column1,column2,Ha), silent=TRUE)
+            rankCorr <- try(.bisrankr(column1,column2), silent=TRUE)
           }
           
-          if ( ! isError(wilc)) {
+          if ( ! jmvcore::isError(wilc)) {
             if (self$options$wilcoxon) {            
             wilcoxttestTable$setRow(rowKey=pair, list(
               'stat[wilcoxon]'=wilc$statistic,
               'p[wilcoxon]'=wilc$p.value))}
-            if (self$options$zstatps) {
+            if (self$options$zstatps && !jmvcore::isError(zstat)) {
               wilcoxttestTable$setRow(rowKey=pair, list(
                 'stat[zstatps]'=zstat$statistic,
                 'p[zstatps]'=zstat$p.value))              
             }
-            if (self$options$rankCorrps) {
+            if (self$options$rankCorrps && !jmvcore::isError(rankCorr)) {
               wilcoxttestTable$setRow(rowKey=pair, list(
                 'stat[rankCorrps]'=rankCorr$statistic))              
             }
@@ -185,7 +147,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               'p[zstatps]'='',
               'stat[rankCorrps]'=NaN))
             
-            message <- extractErrorMessage(wilc)
+            message <- jmvcore::extractErrorMessage(wilc)
             if (message == "not enough 'x' observations")
               message <- .('One or both variables do not contain enough observations')
             else if (message == 'missing value where TRUE/FALSE needed')
@@ -205,7 +167,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "median[1]"=med1,
               "cilMed[1]"=cimed[1,1],
               "ciuMed[1]"=cimed[1,2], 
-              "var[1]"=name2,
+              "var[2]"=name2,
               "median[2]"=med2,
               "cilMed[2]"=cimed[2,1],
               "ciuMed[2]"=cimed[2,2]              
@@ -222,23 +184,16 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }          
           
           if (self$options$descps) {
-            
-            descTable$setRow(rowKey=pair, list(
-              "name[1]"='Positive differences',
-              "num[1]"=np,
-              "rankA[1]"=RankAp,
-              "rankS[1]"=RankSp,
-              "name[2]"='Negative differences',              
-              "num[2]"=nn,
-              "rankA[2]"=RankAn,
-              "rankS[2]"=RankSn,
-              "name[3]"='Tied pairs',
-              "num[3]"= nt,
-              "rankA[3]"=RankAt,
-              "rankS[3]"=RankSt            
-            ))
+            categories <- c("Positive differences", "Negative differences", "Tied pairs")
+            counts <- c(np, nn, nt)
+            averages <- c(RankAp, RankAn, NaN)
+            sums <- c(RankSp, RankSn, NaN)
+            for (category in seq_along(categories))
+              descTable$setRow(rowKey=list(pair=pair, category=category), list(
+                var1=name1, var2=name2, sign=categories[category],
+                num=counts[category], rankA=averages[category], rankS=sums[category]))
           }
-          
+
           if (self$options$plotsps) {
             
             image <- self$results$plotsps$get(key=pair)$descps
@@ -309,10 +264,10 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             `var1`=pair$i1,
             `var2`=pair$i2))
           
-          descTable$setRow(rowKey=pair, list(
-            `var1[1]`=pair$i1,
-            `var2[1]`=pair$i2))
-          
+          for (category in seq_len(3L))
+            descTable$addRow(rowKey=list(pair=pair, category=category),
+                             values=list(var1=pair$i1, var2=pair$i2))
+
           cisMed$setRow(rowKey=pair, list(
             `vars`=paste0(pair, collapse=' - ')))
           
@@ -333,7 +288,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         plot <- ggplot2::ggplot(data=image$state, ggplot2::aes(x=group, y=stat, shape=type)) +
           ggplot2::geom_errorbar(ggplot2::aes(x=group, ymin=stat.lwr.ci, ymax=stat.upr.ci, width=.1),
-                        size=.8, colour=theme$color[2], position=pd) +
+                        linewidth=.8, colour=theme$color[2], position=pd) +
           ggplot2::geom_point(ggplot2::aes(x=group, y=stat, shape=type), color=theme$color[1],
                      fill=theme$fill[1], size=3, position=pd) +
           ggplot2::labs(x=NULL, y=NULL) +

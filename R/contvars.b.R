@@ -11,9 +11,27 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         private$.initcontpsurv()                  
         private$.initcontpinterv()
         private$.initcontpicdf()         
+        values <- private$.getcontProbValues()
+        if (length(values) > 1L)
+          for (k in seq.int(2L, length(values))) self$results$Contprobstab$addRow(rowKey=k)
+        values <- private$.getcontQuantValues()
+        if (length(values) > 1L)
+          for (k in seq.int(2L, length(values))) self$results$Contquantstab$addRow(rowKey=k)
       },
       .run = function() {
         cdistros <- self$options$cdistros
+        parameterNames <- switch(cdistros, norm="sigma", tdist="tnu", chisqdist="chinu",
+                                 fdist=c("f1nu", "f2nu"), exp="rate", character())
+        # Distribution names are validated independently of UI limits.
+        if (cdistros %in% c("chisq", "chi")) parameterNames <- "chinu"
+        if (cdistros %in% c("expon", "expdist")) parameterNames <- "rate"
+        for (parameter in parameterNames)
+          if (!is.finite(self$options[[parameter]]) || self$options[[parameter]] <= 0)
+            jmvcore::reject("Scale, rate and degrees of freedom must be positive", code="invalid_distribution_parameters")
+        if (cdistros %in% c("unif", "uniform") &&
+            (!is.finite(self$options$unifmin) || !is.finite(self$options$unifmax) ||
+             self$options$unifmin >= self$options$unifmax))
+          jmvcore::reject("Uniform minimum must be smaller than maximum", code="invalid_distribution_parameters")
         ContInfoTab <- self$results$ContInfoTab
         Contprobstab <- self$results$Contprobstab
         Contquantstab <- self$results$Contquantstab
@@ -57,12 +75,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         ContvarValues <- private$.getcontProbValues()
         
-        if(length(ContvarValues)>0){
-          if(length(ContvarValues) > 1){
-            for(k in 2:length(ContvarValues))
-              Contprobstab$addRow(rowKey=k,values=list(`x`='',
-                                                       `contpdf`='',`contcdf`='',`contsurv`=''))
-          }        
+        if(length(ContvarValues)>0){        
         
         ProbRowNo <- 1
         
@@ -116,11 +129,6 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         ContquantValues <- private$.getcontQuantValues()
         
         if(length(ContquantValues)>0){
-          if(length(ContquantValues) > 1){
-            for(k in 2:length(ContquantValues))
-              Contquantstab$addRow(rowKey=k,values=list(`Prob`='',
-                                                        `lTail`='',`rTail`=''))
-          }
           
           ProbRowNo <- 1
           
@@ -244,7 +252,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::ggtitle(paste0(cdistroslabel,'f(X = ',k,') = ',round(dval,2))) + 
           ggplot2::geom_segment(ggplot2::aes(x=k,y=0,xend=k,yend=dval),color=Color[1],lwd=1.1) +
           ggplot2::geom_point(ggplot2::aes(x=k,y=dval),col=Color[1]) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
                 axis.text.y=ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),
@@ -305,7 +313,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     list(min=self$options$unifmin,max=self$options$unifmax)}, 
                         xlim = c(x$xlim[1],k),geom = "area",fill=Color[1]) +          
           ggplot2::ggtitle(paste0(cdistroslabel,'Pr(X \u2264 ',k,') = ',round(lpval,2))) + 
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
                 axis.text.y=ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),
@@ -367,7 +375,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     list(min=self$options$unifmin,max=self$options$unifmax)}, 
             xlim = c(k,x$xlim[2]),geom = "area",fill=Color[1]) +          
           ggplot2::ggtitle(paste0(cdistroslabel,'Pr(X > ',k,') = ',round(rpval,2))) + 
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
                 axis.text.y=ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),
@@ -435,7 +443,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     list(min=self$options$unifmin,max=self$options$unifmax)}, 
             xlim = c(k1,k2),geom = "area",fill=Color[1]) +          
           ggplot2::ggtitle(paste0(cdistroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',round(ipval,2))) + 
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
                 axis.text.y=ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),
@@ -565,7 +573,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                ' \\phantom{xx} ','Q_{',quant2,'} = ',q2,'$')))
         }        
         
-        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
                 axis.text.y=ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),

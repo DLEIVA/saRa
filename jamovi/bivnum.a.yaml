@@ -2,7 +2,7 @@
 name:  bivnum
 title: Numerical Data
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -10,7 +10,7 @@ options:
       type: Data
 
     - name: xvar
-      title: X-Axis
+      title: X variable
       type: Variable
       suggested:
         - continuous
@@ -21,7 +21,7 @@ options:
             x variable. It must be numeric  
             
     - name: yvar
-      title: Y-Axis
+      title: Y variable
       type: Variable
       suggested:
         - continuous
@@ -37,7 +37,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide linear covariance for numeric variables.
+            `TRUE` or `FALSE` (default: `FALSE`), provide linear covariance for numeric variables.
             
     - name: pearsonR
       title: "Pearson's correlation"
@@ -45,7 +45,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pearson's correlation for numeric variables.
+            `TRUE` or `FALSE` (default: `TRUE`), provide Pearson's correlation for numeric variables.
 
     - name: spearmanR
       title: "Spearman's correlation"
@@ -53,7 +53,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Spearman's correlation for numeric variables.
+            `TRUE` or `FALSE` (default: `TRUE`), provide Spearman's correlation for numeric variables.
 
     - name: tauK
       title: "Kendall's correlation"
@@ -61,7 +61,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Kendall's tau-b association index for numeric variables.
+            `TRUE` or `FALSE` (default: `TRUE`), provide Kendall's tau-b association index for numeric variables.
             
     - name: pearsonR2
       title: "Pearson's R\u00B2"
@@ -69,7 +69,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pearson's coefficient of determination for numeric variables (rows dependent).
+            `TRUE` or `FALSE` (default: `FALSE`), provide Pearson's coefficient of determination for numeric variables (rows dependent).
 
     - name: spearmanR2
       title: "Spearman's R\u00B2"
@@ -77,15 +77,15 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Spearman's coefficient of determination for numeric variables (rows dependent).
+            `TRUE` or `FALSE` (default: `FALSE`), provide Spearman's coefficient of determination for numeric variables (rows dependent).
 
     - name: kendallR2
-      title: "Kendall's R\u00B2"
+      title: "Squared Kendall’s τ"
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Kendall's coefficient of determination for numeric variables (rows dependent).
+            `TRUE` or `FALSE` (default: `FALSE`), provide squared Kendall’s tau-b association index for numeric variables (rows dependent).
     
     - name: scat
       title: Scatterplot
@@ -93,7 +93,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), show scatterplots   
+            `TRUE` or `FALSE` (default: `FALSE`), show scatterplots   
             
     - name: marg
       title: Marginals
@@ -114,7 +114,7 @@ options:
             density plots, histograms, or box plots on the axes
             
     - name: line
-      title: Regression Line / Curve
+      title: Regression line / curve
       type: List
       options:
         - title: None
@@ -135,5 +135,5 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), show the standard error for the regression line            
+            `TRUE` or `FALSE` (default: `FALSE`), show the standard error for the regression line            
 ...

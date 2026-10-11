@@ -39,7 +39,7 @@ linRegBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "linReg",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = linRegResults$new(options=options),
                 data = data,

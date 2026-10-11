@@ -184,7 +184,10 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Mann-Whitney Test")
+                title="Mann-Whitney Test",
+                refs=list(
+                    "DescTools",
+                    "rcompanion"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="mwutest",
@@ -194,7 +197,6 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 clearWith=list(
                     "group",
                     "hypothesis",
-                    "ciWidth",
                     "miss"),
                 columns=list(
                     list(
@@ -273,7 +275,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="name[rankCorr]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Rank biserial correlation", 
+                        `content`="Rank-biserial correlation", 
                         `visible`="(rankCorr)"),
                     list(
                         `name`="stat[rankCorr]", 
@@ -306,7 +308,10 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 rows="(vars)",
                 clearWith=list(
                     "group",
-                    "miss"),
+                    "miss",
+                    "ciWidth",
+                    "ciMethod",
+                    "numR"),
                 columns=list(
                     list(
                         `name`="dep", 
@@ -353,7 +358,10 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 rows="(vars)",
                 clearWith=list(
                     "group",
-                    "miss"),
+                    "miss",
+                    "ciWidth",
+                    "ciMethod",
+                    "numR"),
                 columns=list(
                     list(
                         `name`="dep", 
@@ -380,7 +388,10 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 rows="(vars)",
                 clearWith=list(
                     "group",
-                    "miss"),
+                    "miss",
+                    "ciWidth",
+                    "ciMethod",
+                    "numR"),
                 columns=list(
                     list(
                         `name`="dep", 
@@ -405,7 +416,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="rankS[1]", 
-                        `title`="Ranks sum", 
+                        `title`="Rank sum", 
                         `type`="number"),
                     list(
                         `name`="group[2]", 
@@ -425,7 +436,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number"),
                     list(
                         `name`="rankS[2]", 
-                        `title`="Ranks sum", 
+                        `title`="Rank sum", 
                         `type`="number"))))
             self$add(jmvcore::Array$new(
                 options=options,
@@ -435,7 +446,9 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 clearWith=list(
                     "group",
                     "miss",
-                    "ciWidth"),
+                    "ciWidth",
+                    "ciMethod",
+                    "numR"),
                 template=R6::R6Class(
                     inherit = jmvcore::Group,
                     active = list(
@@ -454,7 +467,10 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 height=400,
                                 visible="(plots)",
                                 renderFun=".desc",
-                                clearWith=list()))}))$new(options=options)))}))
+                                clearWith=list(
+                                    "ciWidth",
+                                    "ciMethod",
+                                    "numR")))}))$new(options=options)))}))
 
 umwBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "umwBase",
@@ -464,7 +480,7 @@ umwBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "umw",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = umwResults$new(options=options),
                 data = data,
@@ -483,32 +499,34 @@ umwBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data the data as a data frame
 #' @param vars the dependent variables
 #' @param group the grouping variable with two levels
-#' @param mwu \code{TRUE} (default) or \code{FALSE}, perform Mann Whitney's U
+#' @param mwu \code{TRUE} or \code{FALSE} (default: \code{TRUE}), perform Mann
+#'   Whitney's U tests
+#' @param zstat \code{TRUE} or \code{FALSE} (default: \code{TRUE}), perform Z
 #'   tests
-#' @param zstat \code{TRUE} (default) or \code{FALSE}, perform Z tests
-#' @param pSup \code{TRUE} or \code{FALSE} (default), compute probability of
-#'   superiority index
-#' @param rankCorr \code{TRUE} or \code{FALSE} (default), compute rank
-#'   biserial correlation.
-#' @param fstat \code{TRUE} or \code{FALSE} (default), compute f statistic.
+#' @param pSup \code{TRUE} or \code{FALSE} (default: \code{FALSE}), compute
+#'   probability of superiority index
+#' @param rankCorr \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   compute rank biserial correlation.
+#' @param fstat \code{TRUE} or \code{FALSE} (default: \code{FALSE}), compute f
+#'   statistic.
 #' @param hypothesis \code{'different'} (default), \code{'oneGreater'} or
 #'   \code{'twoGreater'}, the alternative hypothesis; group 1 different to group
 #'   2, group 1 greater than group 2, and group 2 greater than group 1
 #'   respectively
-#' @param ciMedians \code{TRUE} or \code{FALSE} (default), provide confidence
-#'   intervals for the medians
-#' @param ciHL \code{TRUE} or \code{FALSE} (default), provide confidence
-#'   intervals for the  Hodges-Lehmann estimator
+#' @param ciMedians \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide confidence intervals for the medians
+#' @param ciHL \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   confidence intervals for the  Hodges-Lehmann estimator
 #' @param ciWidth a number between 50 and 99.9 (default: 95), the width of
 #'   confidence intervals
 #' @param ciMethod \code{exact} (default), or \code{boot}, specifies the
 #'   method for obtaining CIs
 #' @param numR a number between 499 and 9999 (default: 999), the number of
 #'   replications for Bootstrap CIs.
-#' @param desc \code{TRUE} or \code{FALSE} (default), provide descriptive
-#'   statistics
-#' @param plots \code{TRUE} or \code{FALSE} (default), provide descriptive
-#'   plots
+#' @param desc \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   descriptive statistics
+#' @param plots \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   descriptive plots
 #' @param miss \code{'perAnalysis'} or \code{'listwise'}, how to handle
 #'   missing values; \code{'perAnalysis'} excludes missing values for individual
 #'   dependent variables, \code{'listwise'} excludes a row from all analyses if

@@ -2,7 +2,7 @@
 name:  wilcoxT
 title: Wilcoxon T Test
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -33,7 +33,7 @@ options:
           ui: >
             perform Wilcoxon signed rank tests.
           R: >
-            `TRUE` or `FALSE` (default), perform Wilcoxon signed rank tests
+            `TRUE` or `FALSE` (default: `TRUE`), perform Wilcoxon signed rank tests
             
     - name: zstatps
       title: Z statistic
@@ -41,19 +41,19 @@ options:
       default: true
       description:
           ui: >
-            perform assymptotic Z tests.
+            perform asymptotic Z tests.
           R: >
-            `TRUE` (default) or `FALSE`, perform Z tests 
+            `TRUE` or `FALSE` (default: `TRUE`), perform Z tests 
 
     - name: rankCorrps
-      title: Rank biserial correlation
+      title: Rank-biserial correlation
       type: Bool
       default: false
       description:
           ui: >
             compute rank biserial correlation.
           R: >
-            `TRUE` or `FALSE` (default), compute rank biserial correlation.
+            `TRUE` or `FALSE` (default: `FALSE`), compute rank biserial correlation.
             
     - name: hypothesisps
       title: Alternative hypothesis
@@ -80,7 +80,7 @@ options:
           ui: >
             provide confidence intervals for the medians.
           R: >
-            `TRUE` or `FALSE` (default), provide confidence intervals for the medians
+            `TRUE` or `FALSE` (default: `FALSE`), provide confidence intervals for the medians
             
     - name: ciHLps
       title: Hodges-Lehmann (pseudo-median)
@@ -90,7 +90,7 @@ options:
           ui: >
             provide confidence intervals for the Hodges-Lehmann estimator.
           R: >
-            `TRUE` or `FALSE` (default), provide confidence intervals for the 
+            `TRUE` or `FALSE` (default: `FALSE`), provide confidence intervals for the 
             Hodges-Lehmann estimator                      
 
     - name: ciWidthps
@@ -138,7 +138,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide descriptive statistics
+            `TRUE` or `FALSE` (default: `FALSE`), provide descriptive statistics
 
     - name: plotsps
       title: Descriptives Plots
@@ -148,7 +148,7 @@ options:
           ui: >
             provide descriptives for each group of measurements.
           R: >
-            `TRUE` or `FALSE` (default), provide descriptive plots
+            `TRUE` or `FALSE` (default: `FALSE`), provide descriptive plots
 
     - name: missps
       title: Missing values

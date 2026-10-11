@@ -40,14 +40,14 @@ bivordOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 suggested=list(
                     "ordinal"),
                 permitted=list(
-                    "numeric"))
+                    "factor"))
             private$..cols <- jmvcore::OptionVariable$new(
                 "cols",
                 cols,
                 suggested=list(
                     "ordinal"),
                 permitted=list(
-                    "numeric"))
+                    "factor"))
             private$..obs <- jmvcore::OptionBool$new(
                 "obs",
                 obs,
@@ -222,7 +222,10 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis (Ordinal Data)")
+                title="Bivariate Data Analysis (Ordinal Data)",
+                refs=list(
+                    "Somers1962",
+                    "Wilson1974"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="freqs",
@@ -252,7 +255,7 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="asocind",
                 title="Association Indices",
-                visible="( gammaGK || tauk || dSommer || eWilson )",
+                visible="( gammaGK || tauKa || tauKb || tauKc || dSommerR || dSommerC || dSommerS || eWilson )",
                 columns=list(
                     list(
                         `name`="t[gammaGK]", 
@@ -298,7 +301,7 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[dSommerR]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Sommer's d (rows)", 
+                        `content`="Somers' d (rows)", 
                         `visible`="(dSommerR)"),
                     list(
                         `name`="v[dSommerR]", 
@@ -308,7 +311,7 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[dSommerC]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Sommer's d (columns)", 
+                        `content`="Somers' d (columns)", 
                         `visible`="(dSommerC)"),
                     list(
                         `name`="v[dSommerC]", 
@@ -318,7 +321,7 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[dSommerS]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Sommer's d (symmetric)", 
+                        `content`="Somers' d (symmetric)", 
                         `visible`="(dSommerS)"),
                     list(
                         `name`="v[dSommerS]", 
@@ -380,7 +383,7 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "bivord",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = bivordResults$new(options=options),
                 data = data,
@@ -401,30 +404,33 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   necessary when providing a formula, see the examples)
 #' @param cols the variable to use as the columns in the contingency table
 #'   (not necessary when providing a formula, see the examples)
-#' @param obs \code{TRUE} or \code{FALSE} (default), provide the observed
-#'   counts
-#' @param pcRow \code{TRUE} or \code{FALSE} (default), provide row percentages
-#' @param pcCol \code{TRUE} or \code{FALSE} (default), provide column
-#'   percentages
-#' @param pcTot \code{TRUE} or \code{FALSE} (default), provide total
-#'   percentages
-#' @param gammaGK \code{TRUE} or \code{FALSE} (default), provide
+#' @param obs \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide the
+#'   observed counts
+#' @param pcRow \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   row percentages
+#' @param pcCol \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   column percentages
+#' @param pcTot \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   total percentages
+#' @param gammaGK \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   Goodman-Kruskal's gamma association index for ordinal variables.
-#' @param tauKa \code{TRUE} or \code{FALSE} (default), provide Kendall's tau-a
-#'   association index for ordinal variables.
-#' @param tauKb \code{TRUE} or \code{FALSE} (default), provide Kendall's tau-b
-#'   association index for ordinal variables.
-#' @param tauKc \code{TRUE} or \code{FALSE} (default), provide Kendall's tau-c
-#'   association index for ordinal variables.
-#' @param dSommerR \code{TRUE} or \code{FALSE} (default), provide Sommer's d
-#'   association index for ordinal variables (rows dependent).
-#' @param dSommerC \code{TRUE} or \code{FALSE} (default), provide Sommer's d
-#'   association index for ordinal variables (columns dependent).
-#' @param dSommerS \code{TRUE} or \code{FALSE} (default), provide Sommer's d
-#'   association index for ordinal variables (symmetric).
-#' @param eWilson \code{TRUE} or \code{FALSE} (default), provide Wilson's e
-#'   association index for ordinal variables.
-#' @param barplot \code{TRUE} or \code{FALSE} (default), show barplots
+#' @param tauKa \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Kendall's tau-a association index for ordinal variables.
+#' @param tauKb \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Kendall's tau-b association index for ordinal variables.
+#' @param tauKc \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   Kendall's tau-c association index for ordinal variables.
+#' @param dSommerR \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide Somers' d association index for ordinal variables (rows dependent).
+#' @param dSommerC \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide Somers' d association index for ordinal variables (columns
+#'   dependent).
+#' @param dSommerS \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide Somers' d association index for ordinal variables (symmetric).
+#' @param eWilson \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Wilson's e association index for ordinal variables.
+#' @param barplot \code{TRUE} or \code{FALSE} (default: \code{FALSE}), show
+#'   barplots
 #' @param yaxis ycounts (default) or ypc. Use respectively \code{counts} or
 #'   \code{percentages} for the bar plot y-axis
 #' @param yaxisPc total_pc (default), column_pc, or row_pc. Use respectively
@@ -432,8 +438,10 @@ bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   for the bar plot y-axis.
 #' @param xaxis rows (default), or columns in bar plot X axis
 #' @param bartype stack or side by side (default), barplot type
-#' @param heatmap \code{TRUE} or \code{FALSE} (default), show heatmaps
-#' @param alluvial \code{TRUE} or \code{FALSE} (default), show alluvial plots
+#' @param heatmap \code{TRUE} or \code{FALSE} (default: \code{FALSE}), show
+#'   heatmaps
+#' @param alluvial \code{TRUE} or \code{FALSE} (default: \code{FALSE}), show
+#'   alluvial plots
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$freqs} \tab \tab \tab \tab \tab a table of proportions \cr
@@ -486,6 +494,8 @@ bivord <- function(
             `if`( ! missing(rows), rows, NULL),
             `if`( ! missing(cols), cols, NULL))
 
+    for (v in rows) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
+    for (v in cols) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
 
     options <- bivordOptions$new(
         rows = rows,

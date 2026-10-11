@@ -2,7 +2,7 @@
 name:  bivcat
 title: Categorical Data
 menuGroup: saRa
-version: '0.1.2'
+version: '1.0.0'
 jas: '1.2'
 
 options:
@@ -39,35 +39,35 @@ options:
       default: true
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide the observed counts
+            `TRUE` or `FALSE` (default: `TRUE`), provide the observed counts
     - name: exp
       title: Expected counts
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide the expected counts
+            `TRUE` or `FALSE` (default: `FALSE`), provide the expected counts
     - name: pcRow
       title: Row
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide row percentages
+            `TRUE` or `FALSE` (default: `FALSE`), provide row percentages
     - name: pcCol
       title: Column
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide column percentages
+            `TRUE` or `FALSE` (default: `FALSE`), provide column percentages
     - name: pcTot
       title: Total
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide total percentages
+            `TRUE` or `FALSE` (default: `FALSE`), provide total percentages
 
     - name: chiSq
       title: "\u03c7\u00B2 index"
@@ -75,7 +75,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide Chi Squared
+            `TRUE` or `FALSE` (default: `TRUE`), provide Chi Squared
 
     - name: phiind
       title: "\u03c6 index"
@@ -83,7 +83,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pearson's \u03c6
+            `TRUE` or `FALSE` (default: `FALSE`), provide Pearson's \u03c6
 
     - name: phiSq
       title: "\u03c6\u00B2 index"
@@ -91,7 +91,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pearson's \u03c6\u00B2
+            `TRUE` or `FALSE` (default: `FALSE`), provide Pearson's \u03c6\u00B2
 
     - name: contCoef
       title: "Pearson's contingency index"
@@ -99,7 +99,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Pearson's contingency index
+            `TRUE` or `FALSE` (default: `FALSE`), provide Pearson's contingency index
             
     - name: craV
       title: "Cramér's V index"
@@ -107,7 +107,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide Cramér's V index   
+            `TRUE` or `FALSE` (default: `TRUE`), provide Cramér's V index   
 
     - name: chuprov
       title: "Chuprov's index"
@@ -115,7 +115,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Chuprov's index             
+            `TRUE` or `FALSE` (default: `FALSE`), provide Chuprov's index             
 
     - name: sakoda
       title: "Sakoda's index"
@@ -123,7 +123,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Sakoda's index   
+            `TRUE` or `FALSE` (default: `FALSE`), provide Sakoda's index   
 
     - name: Qyule
       title: "Yule's Q index (2x2 tables)"
@@ -131,7 +131,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Yule's Q index for 2x2 contingency tables
+            `TRUE` or `FALSE` (default: `FALSE`), provide Yule's Q index for 2x2 contingency tables
             
     - name: Yyule
       title: "Yule's Y index (2x2 tables)"
@@ -139,7 +139,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Yule's Y index for 2x2 contingency tables            
+            `TRUE` or `FALSE` (default: `FALSE`), provide Yule's Y index for 2x2 contingency tables            
 
     - name: Vyule
       title: "Yule's V index (2x2 tables)"
@@ -147,7 +147,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Yule's V index for 2x2 contingency tables            
+            `TRUE` or `FALSE` (default: `FALSE`), provide Yule's V index for 2x2 contingency tables            
 
     - name: lambdaGKab
       title: "Goodman-Kruskal \u03BB (A/B)"
@@ -155,7 +155,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal lambda prediction error index (dependent variable by rows)
+            `TRUE` or `FALSE` (default: `FALSE`), provide Goodman and Kruskal lambda prediction error index (dependent variable by rows)
 
     - name: lambdaGKba
       title: "Goodman-Kruskal \u03BB (B/A)"
@@ -163,7 +163,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal lambda prediction error index (dependent variable by columns)
+            `TRUE` or `FALSE` (default: `FALSE`), provide Goodman and Kruskal lambda prediction error index (dependent variable by columns)
             
     - name: lambdaGKsym
       title: "Goodman-Kruskal \u03BB (symmetric)"
@@ -171,7 +171,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide Goodman and Kruskal lambda prediction error index (symmetric)            
+            `TRUE` or `FALSE` (default: `TRUE`), provide Goodman and Kruskal lambda prediction error index (symmetric)            
 
     - name: tauGKab
       title: "Goodman-Kruskal \u03C4 (A/B)"
@@ -179,7 +179,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal tau prediction error index (dependent variable by rows)
+            `TRUE` or `FALSE` (default: `FALSE`), provide Goodman and Kruskal tau prediction error index (dependent variable by rows)
 
     - name: tauGKba
       title: "Goodman-Kruskal \u03C4 (B/A)"
@@ -187,7 +187,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Goodman and Kruskal tau prediction error index (dependent variable by columns)
+            `TRUE` or `FALSE` (default: `FALSE`), provide Goodman and Kruskal tau prediction error index (dependent variable by columns)
             
     - name: tauGKsym
       title: "Goodman-Kruskal \u03C4 (symmetric)"
@@ -195,7 +195,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide Goodman and Kruskal tau prediction error index (symmetric)            
+            `TRUE` or `FALSE` (default: `TRUE`), provide Goodman and Kruskal tau prediction error index (symmetric)            
 
     - name: theilab
       title: "Theil's index (A/B)"
@@ -203,7 +203,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Theil's prediction error index (dependent variable by rows)
+            `TRUE` or `FALSE` (default: `FALSE`), provide Theil's prediction error index (dependent variable by rows)
 
     - name: theilba
       title: "Theil's index (B/A)"
@@ -211,7 +211,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), provide Theil's prediction error index (dependent variable by columns)
+            `TRUE` or `FALSE` (default: `FALSE`), provide Theil's prediction error index (dependent variable by columns)
             
     - name: theilsym
       title: "Theil's index (symmetric)"
@@ -219,7 +219,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` (default) or `FALSE`, provide Theil's tau prediction error index (symmetric)       
+            `TRUE` or `FALSE` (default: `TRUE`), provide Theil's tau prediction error index (symmetric)       
 
     - name: barplot
       title: Bar plot
@@ -227,7 +227,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), show barplots
+            `TRUE` or `FALSE` (default: `FALSE`), show barplots
 
     - name: yaxis
       title: Y-axis
@@ -274,7 +274,7 @@ options:
             rows (default), or columns in bar plot X axis
 
     - name: bartype
-      title: Bar Type
+      title: Bar type
       type: List
       options:
         - name: dodge
@@ -292,6 +292,6 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default), show mosaicplots
+            `TRUE` or `FALSE` (default: `FALSE`), show mosaicplots
             
 ...
