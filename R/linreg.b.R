@@ -46,29 +46,34 @@ linRegClass <- if (requireNamespace('jmvcore')) R6::R6Class(
             
             treset$setNote('saRa', 'Additional results provided by <em>saRa</em>')
           }
+        }
           
           if (! self$parent$options$durbin){
             return()} else{
-              image <- self$results$get('acfplot')
-              
-              width <- 450
-              height <- 400
-              
+              termsAll <- private$.getModelTerms()
+              for (i in seq_along(termsAll)) {
+              image <- jmvcore::Image$new(options=self$options,
+                                          width = 450,height = 300,
+                                          renderFun = '.acfPlot',
+                                          visible = '(durbin)',
+                                          title ='Autocorrelation Function Plot')
+              width=450
+              height=300
               image$setSize(width * 2, height)
-      }
+              image$setState(i)
+              self$parent$results$models$get(key=i)$assump$insert(4, image)
+              }
+            }
     },
     .run = function() {
       
       if (! self$parent$options$norm){
-        return()} else{
+        return()
+        } else{
           groups <- self$parent$results$models
           termsAll <- private$.getModelTerms()
-          .residuals <- private$.computeResiduals()
           
           for (i in seq_along(termsAll)) {
-            residuals <- .residuals[[i]]
-            residuals <- scale(residuals)
-            
             
             # Specification Tests
             treset <- groups$get(key=i)$assump$get('reset')
@@ -84,19 +89,17 @@ linRegClass <- if (requireNamespace('jmvcore')) R6::R6Class(
             
             treset$setRow(rowNo=1, values)
           }
+          }
           
-          if (! self$parent$options$durbin){
-            return()} else{ groups <- self$parent$results$models
-            termsAll <- private$.getModelTerms()
-            .residuals <- private$.computeResiduals()
-            
-            for (i in seq_along(termsAll)) {
-              residuals <- .residuals[[i]]
-              residuals <- scale(residuals)
-              acf(residuals,main='ACF plot')
-            }
-        }
-      
+        #   if (! self$parent$options$durbin){
+        #     return()
+        #     } else{ groups <- self$parent$results$models
+        #     termsAll <- private$.getModelTerms()
+        #     
+        #     for (i in seq_along(termsAll)) {
+        #       self$parent$results$models$get(key=i)$assump$insert(4, private$.acfplot())
+        #     }
+        # }
     },
     .modelTerms = NULL,
     .getModelTerms = function() {
@@ -116,12 +119,14 @@ linRegClass <- if (requireNamespace('jmvcore')) R6::R6Class(
       
       return(private$.modelTerms)
     },
-    .computeResiduals = function() {
-      res <- list()
-      for (i in seq_along(self$parent$models))
-        res[[i]] <- self$parent$models[[i]]$residuals
-      
-      return(res)
+    .acfPlot =  function(image, ...) {
+      if (! self$options$durbin)
+        return()
+      termsAll <- private$.getModelTerms()
+      for (i in seq_along(termsAll)) {
+        model <- self$parent$models[[i]]
+        acf(model$residuals,main='ACF plot')
+      }
     }
   )
 )
