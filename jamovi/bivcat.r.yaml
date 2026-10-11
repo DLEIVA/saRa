@@ -3,6 +3,8 @@ name:  bivcat
 title: Bivariate Data Analysis (Categorical Data)
 jrs:   '1.1'
 
+refs: [vcd]
+
 items:
 
     - name: freqs
@@ -16,7 +18,7 @@ items:
     - name: asocind
       title: Association Indices
       description: A table of different bivariate association indicators
-      visible: ( chiSq || phiind || phisSq || contCoef || chuprov || sakoda || Qyule || Yyule || Vyule )
+      visible: ( chiSq || phiind || phiSq || craV || contCoef || chuprov || sakoda || Qyule || Yyule || Vyule )
       type: Table
       columns:
         - name: t[chiSq]
@@ -127,7 +129,7 @@ items:
     - name: errorind
       title: Prediction Error Indices
       description: A table of different prediction error indicators
-      visible: ( lambdaGKab || lambdaGKba || lambdaGKsym)
+      visible: ( lambdaGKab || lambdaGKba || lambdaGKsym || tauGKab || tauGKba || tauGKsym || theilab || theilba || theilsym)
       type: Table
       columns:
         - name: t[lambdaGKab]
@@ -221,7 +223,7 @@ items:
           visible: (theilsym)  
 
     - name: mosaicplot
-      title: Mosaic Plot
+      title: Mosaic plot
       type: Image
       width: 450
       height: 400

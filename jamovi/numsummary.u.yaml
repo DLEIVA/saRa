@@ -239,9 +239,9 @@ children:
                   - type: TextBox
                     name: innerf
                     format: number
-                    enable: (dot)
+                    enable: (box || violin || dot)
                   - type: TextBox
                     name: outerf
                     format: number
-                    enable: (dot)
+                    enable: (box || violin || dot)
 

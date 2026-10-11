@@ -155,7 +155,9 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Wilcoxon T Test")
+                title="Wilcoxon T Test",
+                refs=list(
+                    "DescTools"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="wilcoxttest",
@@ -163,10 +165,10 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 rows="(pairs)",
                 visible="(wilcoxon || zstatps || rankCorrps)",
                 clearWith=list(
-                    "group",
-                    "hypothesis",
-                    "ciWidth",
-                    "miss"),
+                    "hypothesisps",
+                    "ciWidthps",
+                    "missps",
+                    "pairs"),
                 columns=list(
                     list(
                         `name`="var1", 
@@ -218,7 +220,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="name[rankCorrps]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Rank biserial correlation", 
+                        `content`="Rank-biserial correlation", 
                         `visible`="(rankCorrps)"),
                     list(
                         `name`="stat[rankCorrps]", 
@@ -232,8 +234,11 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 visible="(ciMediansps)",
                 rows="(pairs)",
                 clearWith=list(
-                    "group",
-                    "miss"),
+                    "missps",
+                    "pairs",
+                    "ciWidthps",
+                    "ciMethodps",
+                    "numR"),
                 columns=list(
                     list(
                         `name`="vars", 
@@ -278,8 +283,11 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 visible="(ciHLps)",
                 rows="(pairs)",
                 clearWith=list(
-                    "group",
-                    "miss"),
+                    "missps",
+                    "pairs",
+                    "ciWidthps",
+                    "ciMethodps",
+                    "numR"),
                 columns=list(
                     list(
                         `name`="vars", 
@@ -302,68 +310,36 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="descps",
                 title="Variables Descriptives",
                 visible="(descps)",
-                rows="(pairs)",
+                rows=0,
                 clearWith=list(
-                    "group",
-                    "miss"),
+                    "pairs",
+                    "missps"),
                 columns=list(
                     list(
-                        `name`="var1[1]", 
-                        `title`="", 
+                        `name`="var1", 
+                        `title`="Measure 1", 
                         `type`="text", 
                         `combineBelow`=TRUE),
                     list(
-                        `name`="var2[1]", 
-                        `title`="", 
+                        `name`="var2", 
+                        `title`="Measure 2", 
                         `type`="text", 
                         `combineBelow`=TRUE),
                     list(
-                        `name`="name[1]", 
-                        `title`="Sign", 
+                        `name`="sign", 
+                        `title`="Differences", 
                         `type`="text"),
                     list(
-                        `name`="name[2]", 
-                        `title`="Sign", 
-                        `type`="text"),
-                    list(
-                        `name`="name[3]", 
-                        `title`="Sign", 
-                        `type`="text"),
-                    list(
-                        `name`="num[1]", 
+                        `name`="num", 
                         `title`="N", 
                         `type`="integer"),
                     list(
-                        `name`="num[2]", 
-                        `title`="N", 
-                        `type`="integer"),
-                    list(
-                        `name`="num[3]", 
-                        `title`="N", 
-                        `type`="integer"),
-                    list(
-                        `name`="rankA[1]", 
+                        `name`="rankA", 
                         `title`="Average rank", 
                         `type`="number"),
                     list(
-                        `name`="rankS[1]", 
-                        `title`="Ranks sum", 
-                        `type`="number"),
-                    list(
-                        `name`="rankA[2]", 
-                        `title`="Average rank", 
-                        `type`="number"),
-                    list(
-                        `name`="rankS[2]", 
-                        `title`="Ranks sum", 
-                        `type`="number"),
-                    list(
-                        `name`="rankA[3]", 
-                        `title`="Average rank", 
-                        `type`="number"),
-                    list(
-                        `name`="rankS[3]", 
-                        `title`="Ranks sum", 
+                        `name`="rankS", 
+                        `title`="Rank sum", 
                         `type`="number"))))
             self$add(jmvcore::Array$new(
                 options=options,
@@ -371,9 +347,11 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 title="Plots",
                 items="(pairs)",
                 clearWith=list(
-                    "group",
-                    "miss",
-                    "ciWidth"),
+                    "missps",
+                    "ciWidthps",
+                    "pairs",
+                    "ciMethodps",
+                    "numR"),
                 template=R6::R6Class(
                     inherit = jmvcore::Group,
                     active = list(
@@ -392,7 +370,12 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 height=400,
                                 visible="(plotsps)",
                                 renderFun=".desc",
-                                clearWith=list()))}))$new(options=options)))}))
+                                clearWith=list(
+                                    "pairs",
+                                    "missps",
+                                    "ciWidthps",
+                                    "ciMethodps",
+                                    "numR")))}))$new(options=options)))}))
 
 wilcoxTBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "wilcoxTBase",
@@ -402,7 +385,7 @@ wilcoxTBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "wilcoxT",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = wilcoxTResults$new(options=options),
                 data = data,
@@ -421,29 +404,30 @@ wilcoxTBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data the data as a data frame
 #' @param pairs a list of lists specifying the pairs of measurement in
 #'   \code{data}
-#' @param wilcoxon \code{TRUE} or \code{FALSE} (default), perform Wilcoxon
-#'   signed rank tests
-#' @param zstatps \code{TRUE} (default) or \code{FALSE}, perform Z tests
-#' @param rankCorrps \code{TRUE} or \code{FALSE} (default), compute rank
-#'   biserial correlation.
+#' @param wilcoxon \code{TRUE} or \code{FALSE} (default: \code{TRUE}), perform
+#'   Wilcoxon signed rank tests
+#' @param zstatps \code{TRUE} or \code{FALSE} (default: \code{TRUE}), perform
+#'   Z tests
+#' @param rankCorrps \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   compute rank biserial correlation.
 #' @param hypothesisps \code{'different'} (default), \code{'oneGreater'} or
 #'   \code{'twoGreater'}, the alternative hypothesis; measure 1 different to
 #'   measure 2, measure 1 greater than measure 2, and measure 2 greater than
 #'   measure 1 respectively
-#' @param ciMediansps \code{TRUE} or \code{FALSE} (default), provide
-#'   confidence intervals for the medians
-#' @param ciHLps \code{TRUE} or \code{FALSE} (default), provide confidence
-#'   intervals for the  Hodges-Lehmann estimator
+#' @param ciMediansps \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide confidence intervals for the medians
+#' @param ciHLps \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   confidence intervals for the  Hodges-Lehmann estimator
 #' @param ciWidthps a number between 50 and 99.9 (default: 95), the width of
 #'   confidence intervals
 #' @param ciMethodps \code{exact} (default), or \code{boot}, specifies the
 #'   method for obtaining CIs
 #' @param numR a number between 499 and 9999 (default: 999), the number of
 #'   replications for Bootstrap CIs.
-#' @param descps \code{TRUE} or \code{FALSE} (default), provide descriptive
-#'   statistics
-#' @param plotsps \code{TRUE} or \code{FALSE} (default), provide descriptive
-#'   plots
+#' @param descps \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   descriptive statistics
+#' @param plotsps \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   descriptive plots
 #' @param missps \code{'perAnalysis'} or \code{'listwise'}, how to handle
 #'   missing values; \code{'perAnalysis'} excludes missing values for individual
 #'   dependent variables, \code{'listwise'} excludes a row from all analyses if

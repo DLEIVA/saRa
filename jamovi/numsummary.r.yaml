@@ -3,6 +3,8 @@ name:  numSummary
 title: Univariate Data Analysis (Numerical Data)
 jrs:   '1.1'
 
+refs: [WRS2]
+
 items:
     - name: indicesnum
       title: Statistics

@@ -1,155 +1,132 @@
 ---
-name:  testnorm
+name: testnorm
 title: Normality Tests
-jrs:   '1.1'
+jrs: '1.1'
+refs: [nortest]
 
 items:
-    - name: normtests
-      title: Tests
-      description: A table for the normality tests
-      visible: (chisqtest || kstest || swtest || adtest || lillietest || sftest || cvmtest)
-      type: Table
-      rows: 0
-      columns:
-        - name: depvar
-          title: Variable
-          type: text
-          
-        - name: group
-          title: Group
-          type: text
-          visible: (groupBy)
-
-        - name: name[chisqtest]
-          title: ''
-          type: text
-          content: Pearson χ² test 
-          visible: (chisqtest)
-
-        - name: stat[chisqtest]
-          title: Statistic
-          type: number
-          visible: (chisqtest)
-
-        - name: p[chisqtest]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (chisqtest)
-
-        - name: name[kstest]
-          title: ''
-          type: text
-          content: Kolmogorov-Smirnov test 
-          visible: (kstest)
-
-        - name: stat[kstest]
-          title: Statistic
-          type: number
-          visible: (kstest)
-
-        - name: p[kstest]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (kstest)
-          
-        - name: name[swtest]
-          title: ''
-          type: text
-          content: Shapiro-Wilk test 
-          visible: (swtest)
-
-        - name: stat[swtest]
-          title: Statistic
-          type: number
-          visible: (swtest)
-
-        - name: p[swtest]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (swtest)
-
-        - name: name[adtest]
-          title: ''
-          type: text
-          content: Anderson-Darling test 
-          visible: (adtest)
-
-        - name: stat[adtest]
-          title: Statistic
-          type: number
-          visible: (adtest)
-
-        - name: p[adtest]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (adtest)          
-          
-        - name: name[lillietest]
-          title: ''
-          type: text
-          content: Lilliefors test 
-          visible: (lillietest)
-
-        - name: stat[lillietest]
-          title: Statistic
-          type: number
-          visible: (lillietest)
-
-        - name: p[lillietest]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (lillietest)
-          
-        - name: name[sftest]
-          title: ''
-          type: text
-          content: Shapiro-Francia test 
-          visible: (sftest)
-
-        - name: stat[sftest]
-          title: Statistic
-          type: number
-          visible: (sftest)
-
-        - name: p[sftest]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (sftest)          
-          
-        - name: name[cvmtest]
-          title: ''
-          type: text
-          content: Cramer-von Mises test 
-          visible: (cvmtest)
-
-        - name: stat[cvmtest]
-          title: Statistic
-          type: number
-          visible: (cvmtest)
-
-        - name: p[cvmtest]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (cvmtest)          
-          
-    - name: plots
-      title: Plots
-      type: Array
-      description: An array of descriptive plots
-      items: (vars)
-      clearWith:
-        - depvar
-        - group      
-        
-      template:
-          title: ($key)
-          type: Group
-          items: []  
+- name: normtests
+  title: Tests
+  description: A table for the normality tests
+  visible: (chisqtest || kstest || swtest || adtest || lillietest || sftest || cvmtest)
+  type: Table
+  rows: 0
+  columns:
+  - name: depvar
+    title: Variable
+    type: text
+  - name: group
+    title: Group
+    type: text
+    visible: (groupBy)
+  - name: name[chisqtest]
+    title: ''
+    type: text
+    content: Pearson χ² test
+    visible: (chisqtest)
+  - name: stat[chisqtest]
+    title: Statistic
+    type: number
+    visible: (chisqtest)
+  - name: p[chisqtest]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (chisqtest)
+  - name: name[kstest]
+    title: ''
+    type: text
+    content: Kolmogorov-Smirnov test
+    visible: (kstest)
+  - name: stat[kstest]
+    title: Statistic
+    type: number
+    visible: (kstest)
+  - name: p[kstest]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (kstest)
+  - name: name[swtest]
+    title: ''
+    type: text
+    content: Shapiro-Wilk test
+    visible: (swtest)
+  - name: stat[swtest]
+    title: Statistic
+    type: number
+    visible: (swtest)
+  - name: p[swtest]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (swtest)
+  - name: name[adtest]
+    title: ''
+    type: text
+    content: Anderson-Darling test
+    visible: (adtest)
+  - name: stat[adtest]
+    title: Statistic
+    type: number
+    visible: (adtest)
+  - name: p[adtest]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (adtest)
+  - name: name[lillietest]
+    title: ''
+    type: text
+    content: Lilliefors test
+    visible: (lillietest)
+  - name: stat[lillietest]
+    title: Statistic
+    type: number
+    visible: (lillietest)
+  - name: p[lillietest]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (lillietest)
+  - name: name[sftest]
+    title: ''
+    type: text
+    content: Shapiro-Francia test
+    visible: (sftest)
+  - name: stat[sftest]
+    title: Statistic
+    type: number
+    visible: (sftest)
+  - name: p[sftest]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (sftest)
+  - name: name[cvmtest]
+    title: ''
+    type: text
+    content: Cramér–von Mises test
+    visible: (cvmtest)
+  - name: stat[cvmtest]
+    title: Statistic
+    type: number
+    visible: (cvmtest)
+  - name: p[cvmtest]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (cvmtest)
+- name: plots
+  title: Plots
+  type: Array
+  description: An array of descriptive plots
+  items: (vars)
+  clearWith:
+  - vars
+  - groupBy
+  template:
+    title: ($key)
+    type: Group
+    items: []
 ...

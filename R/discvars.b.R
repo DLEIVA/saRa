@@ -8,8 +8,15 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
          private$.initpsurv()                  
          private$.initpinterv()
          private$.initpicdf()         
+        values <- private$.getProbValues()
+        if (length(values) > 1L)
+          for (k in seq.int(2L, length(values))) self$results$probstab$addRow(rowKey=k)
+        values <- private$.getQuantValues()
+        if (length(values) > 1L)
+          for (k in seq.int(2L, length(values))) self$results$quantstab$addRow(rowKey=k)
       },       
         .run = function() {
+        .saraDiscreteUpper(self$options)
           distros <- self$options$distros
           InfoTab <- self$results$InfoTab
           probstab <- self$results$probstab
@@ -34,7 +41,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             param1 <- paste('p:',self$options$geomp)
             paramlabel <- param1
           } else if (distros=='hypergeom'){
-            distroslabel <- 'Geometric'
+            distroslabel <- 'Hypergeometric'
             param1 <- paste('m:',self$options$hyperm)
             param2 <- paste('n:',self$options$hypern)
             param3 <- paste('k:',self$options$hyperk)
@@ -52,11 +59,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           varValues <- private$.getProbValues()
           
           if(length(varValues)>0){
-            if(length(varValues) > 1){
-              for(k in 2:length(varValues))
-                probstab$addRow(rowKey=k,values=list(`x`='',
-                                                     `pmf`='',`cdf`='',`surv`=''))
-            }
             
             ProbRowNo <- 1
             
@@ -107,11 +109,6 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           quantValues <- private$.getQuantValues()
           
           if(length(quantValues)>0){
-            if(length(quantValues) > 1){
-              for(k in 2:length(quantValues))
-                quantstab$addRow(rowKey=k,values=list(`Prob`='',
-                                                     `lTail`='',`rTail`=''))
-            }
             
             ProbRowNo <- 1
             
@@ -196,18 +193,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         distros <- self$options$distros
         
-        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
-            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
-                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
-          } else if(distros=='geom'){
-            round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){
-            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
-              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
-                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
-                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
-                       (self$options$hyperm+self$options$hypern)-1)}
+        n <- .saraDiscreteUpper(self$options)
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -239,7 +225,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
           ggplot2::ggtitle(paste0(distroslabel,'Pr(X = ',k,') = ',round(plotData$pmf[plotData$x==k],2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
                 axis.text.y= ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),
@@ -255,19 +241,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         distros <- self$options$distros
         
-        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
-            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
-                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
-          } else if(distros=='geom'){
-            round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){
-            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
-              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
-                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
-                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
-                       (self$options$hyperm+self$options$hypern)-1)
-          }
+        n <- .saraDiscreteUpper(self$options)
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -299,7 +273,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
           ggplot2::ggtitle(paste0(distroslabel,'Pr(X \u2264 ',k,') = ',round(plotData$cdf[plotData$x==k],2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
                 axis.text.y= ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),
@@ -315,19 +289,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         distros <- self$options$distros
         
-        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
-            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
-                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
-          } else if(distros=='geom'){
-            round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){
-            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
-              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
-                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
-                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
-                       (self$options$hyperm+self$options$hypern)-1)
-          }
+        n <- .saraDiscreteUpper(self$options)
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -359,7 +321,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
           ggplot2::ggtitle(paste0(distroslabel,'Pr(X > ',k,') = ',round(plotData$surv[plotData$x==k],2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
               axis.text.y= ggplot2::element_text(size=13),
               axis.title.x = ggplot2::element_text(size=14),
@@ -375,19 +337,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         distros <- self$options$distros
         
-        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
-            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
-                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
-          } else if(distros=='geom'){
-            round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){
-            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
-              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
-                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
-                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
-                       (self$options$hyperm+self$options$hypern)-1)
-          }
+        n <- .saraDiscreteUpper(self$options)
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -429,7 +379,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
           ggplot2::ggtitle(paste0(distroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',
                          round(sum(plotData$pmf[plotData$x>=k1 & plotData$x<=k2]),2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
                 axis.text.y= ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),
@@ -447,19 +397,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         tail <- self$options$tail
         
-        n <- if(distros=='binom'){self$options$binomn} else if(distros=='poiss'){
-          round(self$options$lambda+4*sqrt(self$options$lambda))} else if(distros=='negbinom'){
-            round((self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp+
-                    3*sqrt(self$options$negbinomr*(1-self$options$negbinomp))/self$options$negbinomp^2)  
-          } else if(distros=='geom'){
-            round((1-self$options$geomp)/self$options$geomp+3*sqrt((1-self$options$geomp)/self$options$geomp^2))
-          } else if(distros=='hypergeom'){
-            self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)+
-              4*sqrt(self$options$hyperk*self$options$hyperm/(self$options$hyperm+self$options$hypern)*
-                       (1-self$options$hyperm/(self$options$hyperm+self$options$hypern))*
-                       (self$options$hyperm+self$options$hypern+self$options$hyperk)/
-                       (self$options$hyperm+self$options$hypern)-1)
-          }
+        n <- .saraDiscreteUpper(self$options)
         p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
           self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
         lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
@@ -534,7 +472,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                ' \\phantom{xx} ','Q_{',quant2,'} = ',q2,'$')))        
         }        
         
-        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill=FALSE) + ggplot2::theme_classic() +
+        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
           ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
                 axis.text.y= ggplot2::element_text(size=13),
                 axis.title.x = ggplot2::element_text(size=14),
@@ -546,13 +484,13 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         probValues <- self$options$valuesfunc
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
-        if(any(is.na(as.numeric(probValues)))){
+        if(any(!is.finite(as.numeric(probValues)))){
           jmvcore::reject(paste0('Random variable values must be positive integers (',
                                  paste0(unlist(strsplit(self$options$valuesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$valuesfunc, ","))))],collapse=','),').'))          
         }        
         if(any(!(probValues%%1==0 & sign(probValues)>=0))){
           jmvcore::reject(paste0("Random variable values must be positive integers (",
-                                 paste0(varValues[!(varValues%%1==0 & sign(varValues)>=0)],
+                                 paste0(probValues[!(probValues%%1==0 & sign(probValues)>=0)],
                                         collapse=','),")."))
         }
         probValues <- sort(unique(probValues[!is.na(probValues)]))
@@ -567,7 +505,7 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                paste0(unlist(strsplit(self$options$qvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$qvalues, ","))))],collapse=','),').'))          
       }
       if(any(quantValues<0 | quantValues>1)){
-        jmvcore::reject(paste0("Quantiles values must be real numbers between 0 and 1 (",
+        jmvcore::reject(paste0("Quantile values must be real numbers between 0 and 1 (",
                                paste0(quantValues[quantValues<0 | quantValues>1],
                                       collapse=','),")."))
       }      

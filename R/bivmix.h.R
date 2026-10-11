@@ -514,7 +514,11 @@ bivmixResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis (Mixed Data)")
+                title="Bivariate Data Analysis (Mixed Data)",
+                refs=list(
+                    "WRS2",
+                    "effectsize",
+                    "rcompanion"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesnum",
@@ -561,7 +565,7 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "bivmix",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = bivmixResults$new(options=options),
                 data = data,
@@ -582,101 +586,118 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{data}
 #' @param groupBy a vector of strings naming the variables used to segment
 #'   \code{vars}
-#' @param n \code{TRUE} or \code{FALSE} (default), provides the N
-#' @param missing \code{TRUE} or \code{FALSE} (default), provides the missing
-#'   values
-#' @param mean \code{TRUE} or \code{FALSE} (default), provides the mean
-#' @param median \code{TRUE} or \code{FALSE} (default), provides the median
-#' @param mode \code{TRUE} or \code{FALSE} (default), provides the mode
-#' @param geommean \code{TRUE} or \code{FALSE} (default), provides the
-#'   geometric mean
-#' @param trimean \code{TRUE} or \code{FALSE} (default), provides the trimean
-#' @param avquartile \code{TRUE} or \code{FALSE} (default), provides the
-#'   midhinge
-#' @param midrange \code{TRUE} or \code{FALSE} (default), provides the
-#'   mid-range
-#' @param trimmean \code{TRUE} (default) or \code{FALSE}, provides the Trimmed
-#'   Mean
+#' @param n \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides the N
+#' @param missing \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the missing values
+#' @param mean \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides
+#'   the mean
+#' @param median \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides
+#'   the median
+#' @param mode \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   the mode
+#' @param geommean \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the geometric mean
+#' @param trimean \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the trimean
+#' @param avquartile \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the midhinge
+#' @param midrange \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the mid-range
+#' @param trimmean \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the Trimmed mean
 #' @param Trim a number (detects by default the number) specifying the
 #'   percentage of data to be trimmed
-#' @param winsmean \code{TRUE} (default) or \code{FALSE}, provides the
-#'   Winsorized Mean
+#' @param winsmean \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the Winsorized mean
 #' @param Win a number (detects by default the number) specifying the
 #'   percentage of data to be Winsorized
-#' @param variance \code{TRUE} or \code{FALSE} (default), provides the
-#'   variance
-#' @param stddev \code{TRUE} or \code{FALSE} (default), provides the standard
-#'   deviation
-#' @param geomsd \code{TRUE} or \code{FALSE} (default), provides the geometric
-#'   standard deviation
-#' @param meandev \code{TRUE} or \code{FALSE} (default), provides the mean
-#'   deviation
-#' @param cv \code{TRUE} or \code{FALSE} (default), provides the cv
-#' @param range \code{TRUE} or \code{FALSE} (default), provides the range
-#' @param iqr \code{TRUE} or \code{FALSE} (default), provides the iqr
-#' @param qd \code{TRUE} or \code{FALSE} (default), provides the quartile
-#'   deviation
-#' @param mad \code{TRUE} or \code{FALSE} (default), provides the mad
-#' @param rcv \code{TRUE} or \code{FALSE} (default), provides the rcv
-#' @param irange \code{TRUE} (default) or \code{FALSE}, provides the Inner
-#'   Range
+#' @param variance \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the variance
+#' @param stddev \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides
+#'   the standard deviation
+#' @param geomsd \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   the geometric standard deviation
+#' @param meandev \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides the mean deviation
+#' @param cv \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides the
+#'   cv
+#' @param range \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   the range
+#' @param iqr \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   the iqr
+#' @param qd \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides the
+#'   quartile deviation
+#' @param mad \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   the mad
+#' @param rcv \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   the rcv
+#' @param irange \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   the Inner range
 #' @param NPerc a number (detects by default the number) specifying the
 #'   percentage of data used
-#' @param min \code{TRUE} or \code{FALSE} (default), provides the minimum
-#' @param max \code{TRUE} or \code{FALSE} (default), provides the maximum
-#' @param q1 \code{TRUE} or \code{FALSE} (default), provides the first
-#'   quartile
-#' @param q2 \code{TRUE} or \code{FALSE} (default), provides the second
-#'   quartile
-#' @param q3 \code{TRUE} or \code{FALSE} (default), provides the third
-#'   quartile
-#' @param beta1 \code{TRUE} or \code{FALSE} (default), provide the Pearson's
-#'   \u03B2\u2081 index
-#' @param gamma1 \code{TRUE} or \code{FALSE} (default), provide the Fisher's
-#'   \u03B3\u2081 index
-#' @param h1 \code{TRUE} or \code{FALSE} (default), provide the H1 index
-#' @param h3 \code{TRUE} or \code{FALSE} (default), provide the H3 index
-#' @param beta2 \code{TRUE} or \code{FALSE} (default), provide the Pearson's
-#'   \u03B2\u2082 index
-#' @param gamma2 \code{TRUE} or \code{FALSE} (default), provide the Fisher's
-#'   \u03B3\u2082 index
-#' @param k2 \code{TRUE} or \code{FALSE} (default), provide the K2 index
-#' @param k3 \code{TRUE} or \code{FALSE} (default), provide the K3 index
-#' @param pc \code{TRUE} or \code{FALSE} (default), provides the Percentiles
+#' @param min \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides the
+#'   minimum
+#' @param max \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides the
+#'   maximum
+#' @param q1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides the
+#'   first quartile
+#' @param q2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides the
+#'   second quartile
+#' @param q3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides the
+#'   third quartile
+#' @param beta1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the Pearson's \u03B2\u2081 index
+#' @param gamma1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the Fisher's \u03B3\u2081 index
+#' @param h1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   H1 index
+#' @param h3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   H3 index
+#' @param beta2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the Pearson's \u03B2\u2082 index
+#' @param gamma2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the Fisher's \u03B3\u2082 index
+#' @param k2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   K2 index
+#' @param k3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   K3 index
+#' @param pc \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides the
+#'   Percentiles
 #' @param pcValues a comma-separated list (default: 25,50,75) specifying the
 #'   percentiles
-#' @param cohend \code{TRUE} or \code{FALSE} (default), provides Cohen's d
-#'   effect size indicator
-#' @param rbp \code{TRUE} or \code{FALSE} (default), provides point-biserial
-#'   correlation
-#' @param probsup \code{TRUE} or \code{FALSE} (default), provides probability
-#'   of superiority effect size indicator
-#' @param etasq \code{TRUE} or \code{FALSE} (default), provides \u03B7\u00B2
-#'   effect size indicator
-#' @param omegasq \code{TRUE} or \code{FALSE} (default), provides \u03C9\u00B2
-#'   effect size indicator
-#' @param kwind \code{TRUE} or \code{FALSE} (default), provides Kruskal-Wallis
-#'   effect size indicator
-#' @param hist \code{TRUE} or \code{FALSE} (default), provides histograms
-#'   (continuous variables only)
-#' @param dens \code{TRUE} or \code{FALSE} (default), provides density plots
-#'   (continuous variables only)
-#' @param norm \code{TRUE} or \code{FALSE} (default), provides overlapped
-#'   normal curve (continuous variables only)
-#' @param box \code{TRUE} or \code{FALSE} (default), provide box plots
-#'   (continuous variables only)
-#' @param violin \code{TRUE} or \code{FALSE} (default), provide violin plots
-#'   (continuous variables only)
-#' @param dot \code{TRUE} or \code{FALSE} (default), provide dot plots
-#'   (continuous variables only)
+#' @param cohend \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   Cohen's d effect size indicator
+#' @param rbp \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   point-biserial correlation
+#' @param probsup \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides probability of superiority effect size indicator
+#' @param etasq \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   \u03B7\u00B2 effect size indicator
+#' @param omegasq \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provides \u03C9\u00B2 effect size indicator
+#' @param kwind \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   Kruskal-Wallis effect size indicator
+#' @param hist \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   histograms (continuous variables only)
+#' @param dens \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   density plots (continuous variables only)
+#' @param norm \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   overlapped normal curve (continuous variables only)
+#' @param box \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide box
+#'   plots (continuous variables only)
+#' @param violin \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   violin plots (continuous variables only)
+#' @param dot \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide dot
+#'   plots (continuous variables only)
 #' @param dotType .
-#' @param boxMean \code{TRUE} or \code{FALSE} (default), add mean to box plot
+#' @param boxMean \code{TRUE} or \code{FALSE} (default: \code{FALSE}), add
+#'   mean to box plot
 #' @param innerf a number (detects by default the number) specifying the inner
 #'   fence for detecting outliers
 #' @param outerf a number (detects by default the number) specifying the outer
 #'   fence for detecting outliers
-#' @param qq \code{TRUE} or \code{FALSE} (default), provide Q-Q plots
-#'   (continuous variables only)
+#' @param qq \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide Q-Q
+#'   plots (continuous variables only)
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$indicesnum} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr

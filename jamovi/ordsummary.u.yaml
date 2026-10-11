@@ -77,7 +77,7 @@ children:
                 name: rcv
               - type: CheckBox
                 name: irange
-                label: Inner Range
+                label: Inner range
                 style: inline
                 verticalAlignment: center
                 children:
@@ -186,8 +186,8 @@ children:
                       - type: TextBox
                         name: innerf
                         format: number
-                        enable: (dot)
+                        enable: (box || violin || dot)
                       - type: TextBox
                         name: outerf
                         format: number
-                        enable: (dot)
+                        enable: (box || violin || dot)

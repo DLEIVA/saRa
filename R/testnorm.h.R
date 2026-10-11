@@ -150,7 +150,9 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Normality Tests")
+                title="Normality Tests",
+                refs=list(
+                    "nortest"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="normtests",
@@ -273,7 +275,7 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="name[cvmtest]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Cramer-von Mises test", 
+                        `content`="Cram\u00E9r\u2013von Mises test", 
                         `visible`="(cvmtest)"),
                     list(
                         `name`="stat[cvmtest]", 
@@ -292,8 +294,8 @@ testnormResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 title="Plots",
                 items="(vars)",
                 clearWith=list(
-                    "depvar",
-                    "group"),
+                    "vars",
+                    "groupBy"),
                 template=R6::R6Class(
                     inherit = jmvcore::Group,
                     active = list(),
@@ -313,7 +315,7 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "testnorm",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = testnormResults$new(options=options),
                 data = data,
@@ -334,30 +336,30 @@ testnormBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{data}
 #' @param groupBy a vector of strings naming the variables used to segment
 #'   \code{vars}
-#' @param chisqtest \code{TRUE} or \code{FALSE} (default), perform Pearson's
-#'   X² tests
-#' @param kstest \code{TRUE} or \code{FALSE} (default), perform
+#' @param chisqtest \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   perform Pearson's X² tests
+#' @param kstest \code{TRUE} or \code{FALSE} (default: \code{TRUE}), perform
 #'   Kolmogorov-Smirnov tests
-#' @param swtest \code{TRUE} or \code{FALSE} (default), perform Shapiro-Wilk
-#'   tests
-#' @param lillietest \code{TRUE} or \code{FALSE} (default), perform Lilliefors
-#'   tests
-#' @param adtest \code{TRUE} or \code{FALSE} (default), perform
+#' @param swtest \code{TRUE} or \code{FALSE} (default: \code{TRUE}), perform
+#'   Shapiro-Wilk tests
+#' @param lillietest \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   perform Lilliefors tests
+#' @param adtest \code{TRUE} or \code{FALSE} (default: \code{FALSE}), perform
 #'   Anderson-Darling tests
-#' @param sftest \code{TRUE} or \code{FALSE} (default), perform
+#' @param sftest \code{TRUE} or \code{FALSE} (default: \code{FALSE}), perform
 #'   Shapiro-Francia tests
-#' @param cvmtest \code{TRUE} or \code{FALSE} (default), perform Cramer-von
-#'   Mises tests
-#' @param hist \code{TRUE} or \code{FALSE} (default), provides histograms
-#'   (continuous variables only)
-#' @param dens \code{TRUE} or \code{FALSE} (default), provides density plots
-#'   (continuous variables only)
-#' @param norm \code{TRUE} or \code{FALSE} (default), provides overlapped
-#'   normal curve (continuous variables only)
-#' @param qq \code{TRUE} or \code{FALSE} (default), provide Q-Q plots
-#'   (continuous variables only)
-#' @param ecdf \code{TRUE} or \code{FALSE} (default), provide ECDF plots
-#'   (continuous variables only)
+#' @param cvmtest \code{TRUE} or \code{FALSE} (default: \code{FALSE}), perform
+#'   Cramér–von Mises tests
+#' @param hist \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   histograms (continuous variables only)
+#' @param dens \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   density plots (continuous variables only)
+#' @param norm \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+#'   overlapped normal curve (continuous variables only)
+#' @param qq \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide Q-Q
+#'   plots (continuous variables only)
+#' @param ecdf \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   ECDF plots (continuous variables only)
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$normtests} \tab \tab \tab \tab \tab A table for the normality tests \cr

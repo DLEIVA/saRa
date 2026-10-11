@@ -3,6 +3,8 @@ name:  bivord
 title: Bivariate Data Analysis (Ordinal Data)
 jrs:   '1.1'
 
+refs: [Somers1962, Wilson1974]
+
 items:
     - name: freqs
       title: Contingency Tables
@@ -32,7 +34,7 @@ items:
     - name: asocind
       title: Association Indices
       description: A table of different bivariate association indicators
-      visible: ( gammaGK || tauk || dSommer || eWilson )
+      visible: ( gammaGK || tauKa || tauKb || tauKc || dSommerR || dSommerC || dSommerS || eWilson )
       type: Table
       columns:
         - name: t[gammaGK]
@@ -78,7 +80,7 @@ items:
         - name: t[dSommerR]
           title: ''
           type: text
-          content: "Sommer's d (rows)"
+          content: "Somers' d (rows)"
           visible: (dSommerR)
         
         - name: v[dSommerR]
@@ -88,7 +90,7 @@ items:
         - name: t[dSommerC]
           title: ''
           type: text
-          content: "Sommer's d (columns)"
+          content: "Somers' d (columns)"
           visible: (dSommerC)
         
         - name: v[dSommerC]
@@ -98,7 +100,7 @@ items:
         - name: t[dSommerS]
           title: ''
           type: text
-          content: "Sommer's d (symmetric)"
+          content: "Somers' d (symmetric)"
           visible: (dSommerS)
         
         - name: v[dSommerS]

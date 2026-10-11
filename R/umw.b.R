@@ -41,7 +41,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                           code="grouping_var_must_have_2_levels", a=groupVarName)
         
         if (self$options$miss == "listwise") {
-          data <- naOmit(data)
+          data <- jmvcore::naOmit(data)
           if (dim(data)[1] == 0)
             jmvcore::reject("Grouping variable '{a}' has less than 2 levels after missing values are excluded",
                             code="grouping_var_must_have_2_levels", a=groupVarName)
@@ -56,28 +56,8 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           Ha <- "two.sided"
 
         ## Additional functions                
-        .zStattest <- function(dep,group,Ha){
-          df <- data.frame(dep,group)
-          n <- as.numeric(table(df$group))
-          N <- sum(n)
-          t <- table(df$dep)
-          mu <- prod(n)/2
-          sigma <- if(any(t>1)){
-            sqrt(prod(n)/12*(N-1/(N*(N-1))*sum(t^3-t)))
-          } else{ sqrt(prod(n)*(N+1)/12)}
-          med <- tapply(df$dep,df$group,median)
-          U <- wilcox.test(df$dep~df$group)$statistic
-          statistic <- (U-mu)/sigma
-          names(statistic) <- NULL
-          p.value <- min(1-pnorm(abs(statistic)),pnorm(abs(statistic)))
-          p.value <- if(Ha=='two.sided'){(p.value)*2
-          } else if((Ha=='greater' & med[1]<med[2]) | (Ha=='less' & med[1]>med[2])){
-            1-p.value
-          } else{p.value}
-          names(p.value) <- NULL
-          list(statistic=statistic,p.value=p.value,mu=mu,sigma=sigma,n=n,t=t)
-        } 
-        
+        .zStattest <- .saraMWZ
+
         .bisrankr <- function(dep,group){
           df <- data.frame(dep,group)
           n <- as.numeric(table(df$group))
@@ -89,7 +69,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .fstat <- function(dep,group){
           df <- data.frame(dep,group)
           n <- as.numeric(table(df$group))
-          rangos <- tryNaN(rank(unlist(split(df$dep,df$group))))
+          rangos <- jmvcore::tryNaN(rank(unlist(split(df$dep,df$group))))
           R1 <- sum(rangos[1:n[1]])
           R2 <- sum(rangos[(n[1]+1):length(rangos)])
           R <- c(R1,R2)  
@@ -107,36 +87,24 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         
         # Adapted from DescTools::MedianCI func
-        .mybootMED <- function (x, conf.level = 0.95, na.rm = FALSE, R = 999) 
-        {
-          if (na.rm) x <- na.omit(x)
-          boot.med <- boot::boot(x, function(x, d) median(x[d], na.rm = na.rm), R = R)
-          r <- boot::boot.ci(boot.med, conf = conf.level, type = "basic")[[4]][4:5]
-          med <- median(x, na.rm = na.rm)
-          if (is.na(med)) { res <- rep(NA, 3) 
-          } else {
-            res <- c(median = med, r)
-          }
-          names(res) <- c("median", "lwr.ci", "upr.ci")
-          return(res)
-        }        
-        
+        .mybootMED <- .saraBootstrapMedian
+
         for (depName in depVarNames) {
           
           dataMWTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
           
           if (self$options$miss == "perAnalysis")
-            dataMWTest <- naOmit(dataMWTest)  
+            dataMWTest <- jmvcore::naOmit(dataMWTest)  
           
           groupLevels <- base::levels(dataMWTest$group)
           n <- tapply(dataMWTest$dep, dataMWTest$group, length)
           med <- tapply(dataMWTest$dep, dataMWTest$group, function(x) jmvcore::tryNaN(median(x)))
-          rangos <- jmvcore::tryNaN(rank(unlist(split(dataMWTest$dep,dataMWTest$group))))
-          R1 <- sum(rangos[1:n[1]])
-          R2 <- sum(rangos[(n[1]+1):length(rangos)])
+          rangos <- rank(dataMWTest$dep)
+          R1 <- sum(rangos[dataMWTest$group == groupLevels[1]])
+          R2 <- sum(rangos[dataMWTest$group == groupLevels[2]])
           R <- c(R1,R2)
           avgR1 <- R1/n[1]
-          avgR2 <- R2/n[1]
+          avgR2 <- R2/n[2]
           avgR <- c(avgR1,avgR2)
           
           n[is.na(n)] <- 0
@@ -144,24 +112,23 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           R[is.na(R)] <- NaN
           avgR[is.na(avgR)] <- NaN
           
-          if(self$options$ciMethod=='exact'){
-            cimed <- matrix(unlist(tapply(dataMWTest$dep,dataMWTest$group,
-                          function(x) DescTools::MedianCI(x,conf.level = confInt,method='exact'))),
-            nrow=2,ncol=3,byrow=TRUE)[,2:3]
-            cimed[is.na(cimed)] <- NaN
-          } else if(self$options$ciMethod=='boot'){
-            cimed <- matrix(unlist(tapply(dataMWTest$dep,dataMWTest$group,
-                                          function(x) .mybootMED(x,conf.level=confInt,R=self$options$numR))),
-                            nrow=2,ncol=3,byrow=TRUE)[,2:3]            
-            cimed[is.na(cimed)] <- NaN
-            
+          cimed <- matrix(NaN, nrow=2, ncol=2)
+          if (self$options$ciMedians || self$options$plots) {
+            ciResult <- try(suppressWarnings(t(vapply(split(dataMWTest$dep, dataMWTest$group), function(x) {
+              if (self$options$ciMethod == 'exact')
+                DescTools::MedianCI(x, conf.level=confInt, method='exact')[2:3]
+              else .mybootMED(x, conf.level=confInt, R=self$options$numR)[2:3]
+            }, numeric(2)))), silent=TRUE)
+            if (!jmvcore::isError(ciResult)) cimed <- ciResult
+            else cismedTable$addFootnote(rowKey=depName, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
           }
-          
-          
-          if(self$options$ciHL){
-            cihl <- .hl(dataMWTest$dep,dataMWTest$group,confInt)
-            cihl[is.na(cihl)] <- NaN
+          cihl <- rep(NaN, 3)
+          if (self$options$ciHL) {
+            hlResult <- try(suppressWarnings(.hl(dataMWTest$dep, dataMWTest$group, confInt)), silent=TRUE)
+            if (!jmvcore::isError(hlResult)) cihl <- hlResult
+            else cishlTable$addFootnote(rowKey=depName, 'hlestimate', jmvcore::extractErrorMessage(hlResult))
           }
+
           
           
           if (self$options$mwu) {
@@ -180,13 +147,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 "stat[mwu]"=NaN,
                 "p[mwu]"=''))
               
-              message <- jmvcore::extractErrorMessage(res)
-              if (message == 'grouping factor must have exactly 2 levels')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'not enough observations')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'data are essentially constant')
-                message <- .('All observations are tied')
+              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
               
               mwtestTable$addFootnote(rowKey=depName, 'stat[mwu]', message)
               
@@ -201,25 +162,19 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           if (self$options$zstat) {
             
             if (is.factor(dataMWTest$dep))
-              res <- createError(.('Variable is not numeric'))
+              res <- jmvcore::createError(.('Variable is not numeric'))
             else if (any(is.infinite(dataMWTest$dep)))
-              res <- createError(.('Variable contains infinite values'))
+              res <- jmvcore::createError(.('Variable contains infinite values'))
             else
-              res <- try(suppressWarnings(.zStattest(dep=dataMWTest$dep,group=dataMWTest$group,Ha=Ha)), silent=TRUE)
+              res <- try(suppressWarnings(.zStattest(dep=dataMWTest$dep,group=dataMWTest$group,alternative=Ha)), silent=TRUE)
             
-            if (isError(res)) {
+            if (jmvcore::isError(res)) {
               
               mwtestTable$setRow(rowKey=depName, list(
                 "stat[zstat]"=NaN,
                 "p[zstat]"=''))
               
-              message <- extractErrorMessage(res)
-              if (message == 'grouping factor must have exactly 2 levels')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'not enough observations')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'data are essentially constant')
-                message <- .('All observations are tied')
+              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
               
               mwtestTable$addFootnote(rowKey=depName, 'stat[zstat]', message)
               
@@ -238,24 +193,18 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           if (self$options$pSup) {
             if (is.factor(dataMWTest$dep))
-              res <- createError(.('Variable is not numeric'))
+              res <- jmvcore::createError(.('Variable is not numeric'))
             else if (any(is.infinite(dataMWTest$dep)))
-              res <- createError(.('Variable contains infinite values'))
+              res <- jmvcore::createError(.('Variable contains infinite values'))
             else
               res <- try(suppressWarnings(rcompanion::wilcoxonPS(dep~group,data=dataMWTest)[[1]]), silent=TRUE)
             
-            if (isError(res)) {
+            if (jmvcore::isError(res)) {
               
               mwtestTable$setRow(rowKey=depName, list(
                 "stat[pSup]"=NaN))
               
-              message <- extractErrorMessage(res)
-              if (message == 'grouping factor must have exactly 2 levels')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'not enough observations')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'data are essentially constant')
-                message <- .('All observations are tied')
+              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
               
               mwtestTable$addFootnote(rowKey=depName, 'stat[pSup]', message)
               
@@ -268,24 +217,18 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           if (self$options$rankCorr) {
             if (is.factor(dataMWTest$dep))
-              res <- createError(.('Variable is not numeric'))
+              res <- jmvcore::createError(.('Variable is not numeric'))
             else if (any(is.infinite(dataMWTest$dep)))
-              res <- createError(.('Variable contains infinite values'))
+              res <- jmvcore::createError(.('Variable contains infinite values'))
             else
               res <- try(suppressWarnings(.bisrankr(dep=dataMWTest$dep,group=dataMWTest$group)), silent=TRUE)
             
-            if (isError(res)) {
+            if (jmvcore::isError(res)) {
               
               mwtestTable$setRow(rowKey=depName, list(
                 "stat[rankCorr]"=NaN))
               
-              message <- extractErrorMessage(res)
-              if (message == 'grouping factor must have exactly 2 levels')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'not enough observations')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'data are essentially constant')
-                message <- .('All observations are tied')
+              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
               
               mwtestTable$addFootnote(rowKey=depName, 'stat[rankCorr]', message)
               
@@ -298,24 +241,18 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           if (self$options$fstat) {
             if (is.factor(dataMWTest$dep))
-              res <- createError(.('Variable is not numeric'))
+              res <- jmvcore::createError(.('Variable is not numeric'))
             else if (any(is.infinite(dataMWTest$dep)))
-              res <- createError(.('Variable contains infinite values'))
+              res <- jmvcore::createError(.('Variable contains infinite values'))
             else
               res <- try(suppressWarnings(.fstat(dep=dataMWTest$dep,group=dataMWTest$group)), silent=TRUE)
             
-            if (isError(res)) {
+            if (jmvcore::isError(res)) {
               
               mwtestTable$setRow(rowKey=depName, list(
                 "stat[fstat]"=NaN))
               
-              message <- extractErrorMessage(res)
-              if (message == 'grouping factor must have exactly 2 levels')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'not enough observations')
-                message <- .('One or both groups do not contain enough observations')
-              else if (message == 'data are essentially constant')
-                message <- .('All observations are tied')
+              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
               
               mwtestTable$addFootnote(rowKey=depName, 'stat[fstat]', message)
               
@@ -380,7 +317,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               
               cies  <- cimed
               medians <- aggregate(dataMWTest$dep, by=list(dataMWTest$group),
-                                   function(x) tryNaN(median(x)), simplify=FALSE)
+                                   function(x) jmvcore::tryNaN(median(x)), simplify=FALSE)
               
               medianPlotData <- data.frame(group=medians$Group.1)
               medianPlotData <- cbind(medianPlotData, stat=unlist(medians$x))
@@ -451,7 +388,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         plot <- ggplot2::ggplot(data=image$state, ggplot2::aes(x=group, y=stat, shape=type)) +
           ggplot2::geom_errorbar(ggplot2::aes(x=group, ymin=stat.1, ymax=stat.2, width=.1),
-                        size=.8, colour=theme$color[2], position=pd) +
+                        linewidth=.8, colour=theme$color[2], position=pd) +
           ggplot2::geom_point(ggplot2::aes(x=group, y=stat, shape=type), color=theme$color[1],
                      fill=theme$fill[1], size=3, position=pd) +
           ggplot2::labs(x=groupName, y=image$key) +

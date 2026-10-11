@@ -152,7 +152,7 @@ children:
                   - type: CheckBox
                     name: barplot
               - type: Label
-                label: Bar Type
+                label: Bar type
                 fitToGrid: true
                 children:
                   - type: RadioButton
@@ -170,7 +170,7 @@ children:
             stretchFactor: 1
             children:
               - type: Label
-                label: Y-Axis
+                label: Y variable
                 fitToGrid: true
                 children:
                   - name: ycounts
@@ -188,7 +188,7 @@ children:
                         name: yaxisPc
                         enable: (ypc)
               - type: Label
-                label: X-Axis
+                label: X variable
                 fitToGrid: true
                 children:
                   - type: RadioButton

@@ -172,7 +172,7 @@ catSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Array$new(
                 options=options,
                 name="frequencies",
-                title="Frequencies distribution",
+                title="Frequency distribution",
                 visible="(freq)",
                 items="(vars)",
                 template=jmvcore::Table$new(
@@ -204,7 +204,7 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 package = "saRa",
                 name = "catSummary",
-                version = c(0,1,2),
+                version = c(1,0,0),
                 options = options,
                 results = catSummaryResults$new(options=options),
                 data = data,
@@ -223,27 +223,34 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data .
 #' @param vars a vector of strings naming the variables of interest in
 #'   \code{data}
-#' @param freq \code{TRUE} or \code{FALSE} (default), provide frequency tables
-#'   (nominal, ordinal variables only) - name: mode
-#' @param mode \code{TRUE} or \code{FALSE} (default), provide the mode
-#' @param VR \code{TRUE} (default) or \code{FALSE}, provide the variation
-#'   ratio
-#' @param Blau \code{TRUE} (default) or \code{FALSE}, provide the Blau's Index
-#' @param Teachman \code{TRUE} (default) or \code{FALSE}, provide the
-#'   Teachman's Index
-#' @param IQV \code{TRUE} (default) or \code{FALSE}, provide the Index
-#'   Qualitative Variation
+#' @param freq \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   frequency tables (nominal, ordinal variables only)
+#' @param mode \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the mode
+#' @param VR \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   variation ratio
+#' @param Blau \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the Blau's Index
+#' @param Teachman \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+#'   provide the Teachman's Index
+#' @param IQV \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+#'   Index Qualitative Variation
 #' @param NCat an integer (detects by default the number) specifying the
 #'   number of categories
-#' @param bar \code{TRUE} or \code{FALSE} (default), provide bar plots
+#' @param bar \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide bar
+#'   plots
 #' @param f2p.bar \code{'absolute'} (default) or \code{'relative'}
 #'   frequencies, to be used when plotting barplots.
-#' @param pie \code{TRUE} or \code{FALSE} (default), provide pie charts
-#' @param pareto \code{TRUE} or \code{FALSE} (default), provide Pareto charts
-#' @param lolli \code{TRUE} or \code{FALSE} (default), provide Lollipop charts
+#' @param pie \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide pie
+#'   charts
+#' @param pareto \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Pareto charts
+#' @param lolli \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   Lollipop charts
 #' @param f2p.lolli \code{'absolute'} (default) or \code{'relative'}
 #'   frequencies, to be used when plotting lollipop plots.
-#' @param dough \code{TRUE} or \code{FALSE} (default), provide doughnut charts
+#' @param dough \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   doughnut charts
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$indices} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr

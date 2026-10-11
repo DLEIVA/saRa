@@ -89,7 +89,7 @@ children:
                 name: midrange
               - type: CheckBox
                 name: trimmean
-                label: Trimmed Mean
+                label: Trimmed mean
                 style: inline
                 verticalAlignment: center
                 children:
@@ -101,7 +101,7 @@ children:
                     enable: (trimmean)
               - type: CheckBox
                 name: winsmean
-                label: Winsorized Mean
+                label: Winsorized mean
                 style: inline
                 verticalAlignment: center
                 children:
@@ -267,8 +267,8 @@ children:
                   - type: TextBox
                     name: innerf
                     format: number
-                    enable: (dot)
+                    enable: (box || violin || dot)
                   - type: TextBox
                     name: outerf
                     format: number
-                    enable: (dot)
+                    enable: (box || violin || dot)

@@ -1,275 +1,243 @@
 ---
-name:  umw
+name: umw
 title: Mann-Whitney Test
-jrs:   '1.1'
+jrs: '1.1'
+refs: [DescTools, rcompanion]
 
 items:
-    - name: mwutest
-      title: Mann-Whitney U Test and ES Indices
-      description: a table containing the Mann-Whitney U test results
-      type: Table
-      rows: (vars)
-      visible: (mwu || zstat || pSup || rankCorr || fstat)      
-      clearWith:
-        - group
-        - hypothesis
-        - ciWidth
-        - miss
-
-      columns:
-        - name: var[mwu]
-          title: ""
-          content: ($key)
-          type: text
-          combineBelow: true
-          visible: (mwu)
-
-        - name: name[mwu]
-          title: ''
-          type: text
-          content: Mann-Whitney U
-          visible: (mwu)
-
-        - name: stat[mwu]
-          title: Statistic
-          type: number
-          visible: (mwu)
-
-        - name: p[mwu]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (mwu)
-
-        - name: var[zstat]
-          title: ""
-          content: ($key)
-          type: text
-          combineBelow: true
-          visible: (zstat)
-
-        - name: name[zstat]
-          title: ''
-          type: text
-          content: z statistic
-          visible: (zstat)
-
-        - name: stat[zstat]
-          title: Statistic
-          type: number
-          visible: (zstat)
-
-        - name: p[zstat]
-          title: p
-          type: number
-          format: zto,pvalue
-          visible: (zstat)
-
-        - name: var[pSup]
-          title: ""
-          content: ($key)
-          type: text
-          combineBelow: true
-          visible: (pSup)
-
-        - name: name[pSup]
-          title: ''
-          type: text
-          content: Probability of superiority
-          visible: (pSup)
-
-        - name: stat[pSup]
-          title: Statistic
-          visible: (pSup)
-
-        - name: var[rankCorr]
-          title: ""
-          content: ($key)
-          type: text
-          combineBelow: true
-          visible: (rankCorr)
-
-        - name: name[rankCorr]
-          title: ''
-          type: text
-          content: Rank biserial correlation
-          visible: (rankCorr)
-
-        - name: stat[rankCorr]
-          title: Statistic
-          content: .
-          visible: (rankCorr) 
-          
-        - name: var[fstat]
-          title: ""
-          content: ($key)
-          type: text
-          combineBelow: true
-          visible: (fstat)          
-          
-        - name: name[fstat]
-          title: ''
-          type: text
-          content: f statistic
-          visible: (fstat)
-
-        - name: stat[fstat]
-          title: Statistic
-          content: .
-          visible: (fstat)          
-          
-    - name: cisMed
-      title: Medians CIs
-      type: Table
-      description: a table containing confidence interval estimates for the medians
-      visible: (ciMedians)
-      rows: (vars)
-      clearWith:
-        - group
-        - miss
-
-      columns:
-        - name: dep
-          title: ""
-          content: ($key)
-          type: text
-
-        - name: group[1]
-          title: Group
-          type: text
-
-        - name: median[1]
-          title: "Median"
-          type: number
-
-        - name: cilMed[1]
-          title: Lower bound
-          type: number
-
-        - name: ciuMed[1]
-          title: Upper bound
-          type: number
-
-        - name: group[2]
-          title: Group
-          type: text
-
-        - name: median[2]
-          title: "Median"
-          type: number
-
-        - name: cilMed[2]
-          title: Lower bound
-          type: number
-
-        - name: ciuMed[2]
-          title: Upper bound
-          type: number
-          
-    - name: cisHL
-      title: Hodges-Lehmann Estimator CIs
-      type: Table
-      description: a table containing confidence interval estimates for HL estimator
-      visible: (ciHL)
-      rows: (vars)
-      clearWith:
-        - group
-        - miss
-
-      columns:
-        - name: dep
-          title: ""
-          content: ($key)
-          type: text
-          
-        - name: hlestimate
-          title: "Hodges-Lehmann estimator"
-          type: number
-
-        - name: cilHL
-          title: Lower bound
-          type: number
-
-        - name: ciuHL
-          title: Upper bound
-          type: number          
-          
-
+- name: mwutest
+  title: Mann-Whitney U Test and ES Indices
+  description: a table containing the Mann-Whitney U test results
+  type: Table
+  rows: (vars)
+  visible: (mwu || zstat || pSup || rankCorr || fstat)
+  clearWith:
+  - group
+  - hypothesis
+  - miss
+  columns:
+  - name: var[mwu]
+    title: ''
+    content: ($key)
+    type: text
+    combineBelow: true
+    visible: (mwu)
+  - name: name[mwu]
+    title: ''
+    type: text
+    content: Mann-Whitney U
+    visible: (mwu)
+  - name: stat[mwu]
+    title: Statistic
+    type: number
+    visible: (mwu)
+  - name: p[mwu]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (mwu)
+  - name: var[zstat]
+    title: ''
+    content: ($key)
+    type: text
+    combineBelow: true
+    visible: (zstat)
+  - name: name[zstat]
+    title: ''
+    type: text
+    content: z statistic
+    visible: (zstat)
+  - name: stat[zstat]
+    title: Statistic
+    type: number
+    visible: (zstat)
+  - name: p[zstat]
+    title: p
+    type: number
+    format: zto,pvalue
+    visible: (zstat)
+  - name: var[pSup]
+    title: ''
+    content: ($key)
+    type: text
+    combineBelow: true
+    visible: (pSup)
+  - name: name[pSup]
+    title: ''
+    type: text
+    content: Probability of superiority
+    visible: (pSup)
+  - name: stat[pSup]
+    title: Statistic
+    visible: (pSup)
+  - name: var[rankCorr]
+    title: ''
+    content: ($key)
+    type: text
+    combineBelow: true
+    visible: (rankCorr)
+  - name: name[rankCorr]
+    title: ''
+    type: text
+    content: Rank-biserial correlation
+    visible: (rankCorr)
+  - name: stat[rankCorr]
+    title: Statistic
+    content: .
+    visible: (rankCorr)
+  - name: var[fstat]
+    title: ''
+    content: ($key)
+    type: text
+    combineBelow: true
+    visible: (fstat)
+  - name: name[fstat]
+    title: ''
+    type: text
+    content: f statistic
+    visible: (fstat)
+  - name: stat[fstat]
+    title: Statistic
+    content: .
+    visible: (fstat)
+- name: cisMed
+  title: Medians CIs
+  type: Table
+  description: a table containing confidence interval estimates for the medians
+  visible: (ciMedians)
+  rows: (vars)
+  clearWith:
+  - group
+  - miss
+  - ciWidth
+  - ciMethod
+  - numR
+  columns:
+  - name: dep
+    title: ''
+    content: ($key)
+    type: text
+  - name: group[1]
+    title: Group
+    type: text
+  - name: median[1]
+    title: Median
+    type: number
+  - name: cilMed[1]
+    title: Lower bound
+    type: number
+  - name: ciuMed[1]
+    title: Upper bound
+    type: number
+  - name: group[2]
+    title: Group
+    type: text
+  - name: median[2]
+    title: Median
+    type: number
+  - name: cilMed[2]
+    title: Lower bound
+    type: number
+  - name: ciuMed[2]
+    title: Upper bound
+    type: number
+- name: cisHL
+  title: Hodges-Lehmann Estimator CIs
+  type: Table
+  description: a table containing confidence interval estimates for HL estimator
+  visible: (ciHL)
+  rows: (vars)
+  clearWith:
+  - group
+  - miss
+  - ciWidth
+  - ciMethod
+  - numR
+  columns:
+  - name: dep
+    title: ''
+    content: ($key)
+    type: text
+  - name: hlestimate
+    title: Hodges-Lehmann estimator
+    type: number
+  - name: cilHL
+    title: Lower bound
+    type: number
+  - name: ciuHL
+    title: Upper bound
+    type: number
+- name: desc
+  title: Groups Descriptives
+  type: Table
+  description: a table containing the group descriptives
+  visible: (desc)
+  rows: (vars)
+  clearWith:
+  - group
+  - miss
+  - ciWidth
+  - ciMethod
+  - numR
+  columns:
+  - name: dep
+    title: ''
+    content: ($key)
+    type: text
+  - name: group[1]
+    title: Group
+    type: text
+  - name: num[1]
+    title: N
+    type: integer
+  - name: median[1]
+    title: Median
+    type: number
+  - name: rankA[1]
+    title: Average rank
+    type: number
+  - name: rankS[1]
+    title: Rank sum
+    type: number
+  - name: group[2]
+    title: Group
+    type: text
+  - name: num[2]
+    title: N
+    type: integer
+  - name: median[2]
+    title: Median
+    type: number
+  - name: rankA[2]
+    title: Average rank
+    type: number
+  - name: rankS[2]
+    title: Rank sum
+    type: number
+- name: plots
+  title: Plots
+  type: Array
+  description: an array of groups of plots
+  items: (vars)
+  clearWith:
+  - group
+  - miss
+  - ciWidth
+  - ciMethod
+  - numR
+  template:
+    title: $key
+    type: Group
+    items:
     - name: desc
-      title: Groups Descriptives
-      type: Table
-      description: a table containing the group descriptives
-      visible: (desc)
-      rows: (vars)
+      type: Image
+      width: 450
+      height: 400
+      description: descriptives plot
+      visible: (plots)
+      renderFun: .desc
       clearWith:
-        - group
-        - miss
-
-      columns:
-        - name: dep
-          title: ""
-          content: ($key)
-          type: text
-
-        - name: group[1]
-          title: Group
-          type: text
-
-        - name: num[1]
-          title: "N"
-          type: integer
-
-        - name: median[1]
-          title: Median
-          type: number
-
-        - name: rankA[1]
-          title: Average rank
-          type: number
-          
-        - name: rankS[1]
-          title: Ranks sum
-          type: number   
-          
-        - name: group[2]
-          title: Group
-          type: text
-
-        - name: num[2]
-          title: "N"
-          type: integer
-
-        - name: median[2]
-          title: Median
-          type: number
-
-        - name: rankA[2]
-          title: Average rank
-          type: number
-          
-        - name: rankS[2]
-          title: Ranks sum
-          type: number          
-
-    - name: plots
-      title: Plots
-      type: Array
-      description: an array of groups of plots
-      items: (vars)
-      clearWith:
-        - group
-        - miss
-        - ciWidth
-      template:
-          title: $key
-          type: Group
-          items:
-            - name: desc
-              type: Image
-              width: 450
-              height: 400
-              description: descriptives plot
-              visible: (plots)
-              renderFun: .desc
-              clearWith: []
+      - ciWidth
+      - ciMethod
+      - numR
 ...

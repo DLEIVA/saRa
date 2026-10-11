@@ -3,6 +3,8 @@ name:  bivmix
 title: Bivariate Data Analysis (Mixed Data)
 jrs:   '1.1'
 
+refs: [WRS2, effectsize, rcompanion]
+
 items:
     - name: indicesnum
       title: Statistics
