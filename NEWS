@@ -1,4 +1,38 @@
 -------------
+VERSION 1.0.0
+-------------
+* Corrected geometric mean and geometric standard deviation, Yule's V,
+  Wilson's e and Chuprov's T.
+* Ordinal summaries now use stored numeric values; corrected inner ranges
+  and handling of ordered variables.
+* Corrected paired Hodges-Lehmann estimates and confidence intervals,
+  Wilcoxon rank-biserial correlation, Mann-Whitney average ranks and
+  tie-corrected z statistics, and one-sided normal-approximation p-values.
+* Improved confidence-interval handling, selected-pair extraction and
+  Wilcoxon rank descriptives, with three rows per pair.
+* Normality tests now run only when selected, handle failures individually,
+  and correctly populate grouped results. Added an inference caveat for
+  Kolmogorov-Smirnov tests with estimated normal parameters.
+* Corrected grouped ECDF and Q-Q plots and within-group standardisation.
+  Q-Q plotting uses internal functions without importing qqplotr or qqconf.
+* Improved discrete and continuous distribution validation and plotting,
+  including hypergeometric labels, probability endpoints and degenerate cases.
+* Improved handling of missing, empty, constant and invalid inputs;
+  corrected result visibility, invalidation, labels and dependent controls.
+* Added diagnostics to the existing Linear Regression controls:
+  - Normality: RESET, Shapiro-Wilk, Lilliefors and Anderson-Darling tests;
+    classical Breusch-Pagan, Koenker, Goldfeld-Quandt and Harrison-McCabe
+    heteroskedasticity tests.
+  - Autocorrelation: automatic-lag residual ACF plots and multi-lag
+    Durbin-Watson tests using 5,000 residual resamples and seed 123456.
+  - Residual plots: residuals versus fitted, scale-location, normal Q-Q
+    with histogram inset, and influence plots, plus an influence-index table.
+  Added saRa attribution and relevant package references to these outputs.
+* Updated dependency declarations and package/method references; reduced
+  duplicated code, deprecated plotting calls and raw data stored in plot state.
+
+
+-------------
 VERSION 0.1.2
 -------------
 *Description and 000.yaml modified.
