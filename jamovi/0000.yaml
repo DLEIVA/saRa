@@ -24,6 +24,7 @@ analyses:
     menuSubgroup: Probability
     menuTitle: Discrete Distributions
     menuSubtitle: null
+    category: analyses
   - title: Continuous Distributions
     name: contvars
     ns: saRa
@@ -31,6 +32,7 @@ analyses:
     menuSubgroup: Probability
     menuTitle: Continuous Distributions
     menuSubtitle: null
+    category: analyses
   - title: Categorical Data
     name: catSummary
     ns: saRa
@@ -38,66 +40,77 @@ analyses:
     menuSubgroup: Univariate Analysis
     menuTitle: Categorical Data
     menuSubtitle: null
+    category: analyses
   - title: Ordinal Data
     name: ordSummary
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Univariate Analysis
     menuTitle: Ordinal Data
+    category: analyses
   - title: Numerical Data
     name: numSummary
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Univariate Analysis
     menuTitle: Numerical Data
+    category: analyses
   - title: Categorical Data
     name: bivcat
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Categorical Data
+    category: analyses
   - title: Ordinal Data
     name: bivord
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Ordinal Data
+    category: analyses
   - title: Numerical Data
     name: bivnum
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Numerical Data
+    category: analyses
   - title: Mixed Data
     name: bivmix
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Bivariate Analysis
     menuTitle: Mixed Data
+    category: analyses
   - title: Mann-Whitney Test
     name: umw
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
     menuTitle: Mann-Whitney Test
+    category: analyses
   - title: Wilcoxon T Test
     name: wilcoxT
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
     menuTitle: Wilcoxon T Test
+    category: analyses
   - title: Normality Tests
     name: testnorm
     ns: saRa
     menuGroup: saRa
     menuSubgroup: Miscellanea
     menuTitle: Normality Tests
+    category: analyses
   - title: linReg
     name: linReg
     ns: saRa
     menuGroup: saRa
     menuTitle: linReg
     addonFor: jmv::linReg
+    category: analyses
 datasets:
   - name: phobia
     path: phobia.RData
