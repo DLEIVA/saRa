@@ -459,38 +459,16 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       return(! self$options[[ gsub("[()]", "", visible) ]])
     },
     .getTrim = function(){
-      Trim <- self$options$Trim
-      if (is.character(Trim))
-        Trim <- as.numeric(Trim)
-      Trim <- Trim / 100
-      Trim[Trim > .50 | Trim < 0.] <- NA
-      return(Trim)
+      .saraPercentages(self$options$Trim,0,50)
     },
     .getWin = function(){
-      Win <- self$options$Win
-      if (is.character(Win))
-        Win <- as.numeric(Win)
-      Win <- Win / 100
-      Win[Win > .50 | Win < 0.] <- NA
-      return(Win)
+      .saraPercentages(self$options$Win,0,50)
     },    
     .getPcValues = function(){
-      pcValues <- self$options$pcValues
-      if (is.character(pcValues))
-        pcValues <- as.numeric(unlist(strsplit(pcValues, ",")))
-      pcValues <- pcValues / 100
-      pcValues[pcValues < 0 | pcValues > 1] <- NA
-      pcValues <- pcValues[!is.na(pcValues)]
-      
-      return(pcValues)
+      .saraPercentages(self$options$pcValues,split=TRUE,drop=TRUE)
     },
     .getNPerc = function(){
-      NPerc <- self$options$NPerc
-      if (is.character(NPerc))
-        NPerc <- as.numeric(NPerc)
-      NPerc <- NPerc / 100
-      NPerc[NPerc < .50 | NPerc > 0.99] <- NA
-      return(NPerc)
+      .saraPercentages(self$options$NPerc,50,99)
     },
     .addQuantiles = function(){
       

@@ -43,3 +43,7 @@ Compatibility review: the Regression image-owner/resource bridge uses private ja
 See USER_VALIDATION_LOG.md and USER_VALIDATION_EVIDENCE.json. On 11 October 2026 the user supplied a successful jamovi 2.7.30 Linux Flatpak compilation/install log with no testthat failures (26 blocks), and reported modules working. Individual tracker rows retain pending verification where complete GUI/export coverage is not established. This evidence supersedes historical execution-pending statements for the current suite.
 
 Developer confirmation on 11 October 2026: HTML/PDF exports and .omv save/reopen checks passed. This supersedes earlier export/persistence pending notes; it does not establish cross-platform coverage or approval of private APIs.
+
+## Follow-up source changes — 13 October 2026
+
+See FOLLOWUP_2026-10-13.md for consolidated association helpers, the ordinal column-layout correction and additional shared routines. The current suite contains 32 blocks; a fresh build/test and GUI run is required. The previously recorded successful 26-block run applies to the preceding candidate only.

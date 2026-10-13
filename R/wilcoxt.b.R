@@ -26,30 +26,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         pairs <- self$options$get('pairs')        
         
-        ## Hypothesis options checking
-        if (self$options$hypothesisps == 'oneGreater')
-          Ha <- "greater"
-        else if (self$options$hypothesisps == 'twoGreater')
-          Ha <- "less"
-        else
-          Ha <- "two.sided"
-        
-        ## Additional functions                
-        .zStattest <- function(column1, column2, Ha)
-          .saraSignedRanks(column1, column2, Ha)
-        .bisrankr <- function(column1, column2)
-          list(statistic=.saraSignedRanks(column1, column2)$correlation)
-
-        .hl <- function(column1,column2,conflevel){
-          df <- data.frame(column1,column2)
-          test <- wilcox.test(df$column1,df$column2,paired=TRUE,conf.int=TRUE,conf.level=conflevel)
-          results <- c(test$estimate,test$conf.int)
-          names(results) <- NULL
-          results
-        }  
-        
-        # Adapted from DescTools::MedianCI func
-        .mybootMED <- .saraBootstrapMedian
+        Ha <- .saraAlternative(self$options$hypothesisps)
 
         for (i in seq_along(pairs)) {
           pair <- pairs[[i]]
@@ -75,35 +52,22 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           med1 <- jmvcore::tryNaN(median(column1))
           med2 <- jmvcore::tryNaN(median(column2))
-          nTies <- sum((column1 - column2) == 0, na.rm=TRUE) 
-          
-          diffs <- column1-column2
-          diffs <- diffs[diffs!=0]
-          rangos <- rank(abs(diffs))
-          n <- length(diffs)
-          np <- sum((column1 - column2) > 0, na.rm=TRUE)
-          nn <- sum((column1 - column2) < 0, na.rm=TRUE)
-          nt <- nTies
-          RankSp <- ifelse(sum(diffs>0)>0,sum(rangos[sign(diffs)>0]),NA) 
-          RankSn <- ifelse(sum(diffs<0)>0,sum(rangos[sign(diffs)<0]),NA) 
-          RankSt <- ''     
-          RankAp <- ifelse(!is.na(RankSp),RankSp/np,NA)
-          RankAn <- ifelse(!is.na(RankSn),RankSn/nn,NA)
-          RankAt <- ''    
-          
+          rankSummary <- .saraPairedRankSummary(column1,column2)
+          nTies <- nt <- rankSummary$tied
+          np <- rankSummary$positive; nn <- rankSummary$negative
+          RankSp <- rankSummary$sumPositive; RankSn <- rankSummary$sumNegative
+          RankAp <- rankSummary$meanPositive; RankAn <- rankSummary$meanNegative
+
           cimed <- matrix(NaN, nrow=2, ncol=2)
           if (self$options$ciMediansps || self$options$plotsps) {
-            ciResult <- try(suppressWarnings(t(vapply(pairsData, function(x) {
-              if (self$options$ciMethodps == 'exact')
-                DescTools::MedianCI(x, conf.level=confInt, method='exact')[2:3]
-              else .mybootMED(x, conf.level=confInt, R=self$options$numR)[2:3]
-            }, numeric(2)))), silent=TRUE)
+            ciResult <- try(suppressWarnings(.saraMedianIntervals(
+              pairsData,self$options$ciMethodps,confInt,self$options$numR)),silent=TRUE)
             if (!jmvcore::isError(ciResult)) cimed <- ciResult
             else cismedTable$addFootnote(rowKey=pair, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
           }
           cihl <- rep(NaN, 3)
           if (self$options$ciHLps) {
-            hlResult <- try(suppressWarnings(.hl(column1, column2, confInt)), silent=TRUE)
+            hlResult <- try(suppressWarnings(.saraHodgesLehmann(column1,column2,paired=TRUE,conf.level=confInt)), silent=TRUE)
             if (!jmvcore::isError(hlResult)) cihl <- hlResult
             else cishlTable$addFootnote(rowKey=pair, 'hlestimate', jmvcore::extractErrorMessage(hlResult))
           }
@@ -114,8 +78,8 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           else {
             wilc <- try(suppressWarnings(wilcox.test(column1, column2,
                     alternative=Ha, paired=TRUE, conf.int=FALSE)), silent=TRUE)
-            zstat <- try(.zStattest(column1,column2,Ha), silent=TRUE)
-            rankCorr <- try(.bisrankr(column1,column2), silent=TRUE)
+            zstat <- try(.saraSignedRanks(column1,column2,Ha), silent=TRUE)
+            rankCorr <- try(list(statistic=.saraSignedRanks(column1,column2)$correlation), silent=TRUE)
           }
           
           if ( ! jmvcore::isError(wilc)) {

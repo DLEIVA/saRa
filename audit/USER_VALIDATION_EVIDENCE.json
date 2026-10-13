@@ -16,5 +16,6 @@
   ],
   "R_version": "not recorded in supplied log",
   "jmvtools_version": "not recorded in supplied log",
-  "evidence_file": "audit/USER_VALIDATION_LOG.md"
+  "evidence_file": "audit/USER_VALIDATION_LOG.md",
+  "scope": "Previous candidate, before the 13 October association/refactoring follow-up. Does not validate these new changes."
 }

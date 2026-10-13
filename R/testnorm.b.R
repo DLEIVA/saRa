@@ -15,14 +15,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           if (!is.null(groupName) && groupName %in% variables)
             jmvcore::reject("Grouping variable must not also be a dependent variable",
                             code="a_is_dependent_variable")
-          tests <- list(
-            chisqtest=function(x) nortest::pearson.test(x),
-            kstest=function(x) stats::ks.test(x, "pnorm", mean=mean(x), sd=sd(x)),
-            swtest=function(x) stats::shapiro.test(x),
-            adtest=function(x) nortest::ad.test(x),
-            lillietest=function(x) nortest::lillie.test(x),
-            sftest=function(x) nortest::sf.test(x),
-            cvmtest=function(x) nortest::cvm.test(x))
+          tests <- c("chisqtest","kstest","swtest","adtest",
+                     "lillietest","sftest","cvmtest")
           table <- self$results$normtests
           # Group membership depends on observations; init may receive headers only.
           # Rebuild rows from the full dataset to avoid missing/stale group keys.
@@ -35,14 +29,10 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               key <- list(variable=variable, group=group)
               table$addRow(rowKey=key, values=list(depvar=variable, group=group))
               x <- values[!is.na(groups) & groups == group & !is.na(values)]
-              for (testName in names(tests)) {
+              for (testName in tests) {
                 if (!self$options[[testName]]) next
-                result <- tryCatch({
-                  if (length(x) < 2L) stop("Requires at least two non-missing observations")
-                  if (any(!is.finite(x))) stop("Infinite values are not supported")
-                  if (sd(x) == 0) stop("Requires a non-constant variable")
-                  suppressWarnings(tests[[testName]](x))
-                }, error=function(e) e)
+                result <- tryCatch(suppressWarnings(.saraNormalityTest(x,testName)),
+                                   error=function(e) e)
                 statColumn <- paste0("stat[", testName, "]")
                 pColumn <- paste0("p[", testName, "]")
                 if (inherits(result, "error")) {

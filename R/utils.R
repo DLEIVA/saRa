@@ -99,11 +99,44 @@
   frame
 }
 
+# All Yule indices from a valid 2 x 2 count table. Undefined indices are NaN.
 .saraYulePhi <- function(tab) {
-  if (!all(dim(tab) == 2L)) return(NaN)
+  unavailable <- list(Y=NaN, Q=NaN, V=NaN)
+  if (!is.matrix(tab) || !is.numeric(tab) || !identical(dim(tab), c(2L,2L)) ||
+      any(!is.finite(tab)) || any(tab < 0) || sum(tab) <= 0)
+    return(unavailable)
+  # Normalise first: each index is invariant to a common positive scale.
+  # This also avoids overflow in products of large counts.
+  tab <- tab/max(tab)
+  tab <- tab/sum(tab)
   a <- tab[1,1]; b <- tab[1,2]; c <- tab[2,1]; d <- tab[2,2]
-  denominator <- sqrt((a+b)*(a+c)*(b+d)*(c+d))
-  if (denominator == 0) NaN else (a*d-b*c)/denominator
+  ad <- a*d; bc <- b*c
+  divide <- function(num, den) if (den > 0) num/den else NaN
+  list(Y=divide(sqrt(ad)-sqrt(bc), sqrt(ad)+sqrt(bc)),
+       Q=divide(ad-bc, ad+bc),
+       V=divide(ad-bc, sqrt((a+b)*(a+c)*(b+d)*(c+d))))
+}
+
+# Shared validation for chi-square-based association coefficients.
+.saraValidAssociation <- function(chi, n, rows=NULL, columns=NULL) {
+  scalar <- function(x) is.numeric(x) && length(x)==1L && is.finite(x)
+  if (!scalar(chi) || chi < 0 || !scalar(n) || n <= 0) return(FALSE)
+  if (is.null(rows) && is.null(columns)) return(TRUE)
+  scalar(rows) && scalar(columns) && rows >= 2 && columns >= 2 &&
+    rows == floor(rows) && columns == floor(columns)
+}
+.saraCramerV <- function(chi, n, rows, columns) {
+  if (!.saraValidAssociation(chi,n,rows,columns)) return(NaN)
+  sqrt((chi/n)/min(rows-1,columns-1))
+}
+.saraContingency <- function(chi, n) {
+  if (!.saraValidAssociation(chi,n)) return(NaN)
+  sqrt((chi/n)/(1+chi/n))
+}
+.saraSakoda <- function(chi, n, rows, columns) {
+  if (!.saraValidAssociation(chi,n,rows,columns)) return(NaN)
+  k <- min(rows,columns)
+  sqrt(k/(k-1))*.saraContingency(chi,n)
 }
 
 .saraWilson <- function(concordant, discordant, n, tiedBoth) {
@@ -126,8 +159,8 @@
 }
 
 .saraChuprov <- function(chi, n, rows, columns) {
-  if (n <= 0 || rows < 2 || columns < 2) return(NaN)
-  sqrt(chi/(n*sqrt((rows-1)*(columns-1))))
+  if (!.saraValidAssociation(chi,n,rows,columns)) return(NaN)
+  sqrt((chi/n)/sqrt((rows-1)*(columns-1)))
 }
 
 # Internal normal Q-Q calculations, following the pointwise normal-band method
@@ -176,9 +209,116 @@
 
 .saraRankTestError <- function(message) {
   switch(message,
-    "grouping factor must have exactly 2 levels" = .("One or both groups do not contain enough observations"),
-    "not enough observations" = .("One or both groups do not contain enough observations"),
-    "data are essentially constant" = .("All observations are tied"),
-    "cannot compute confidence interval when all observations are tied" = .("All observations are tied"),
+    "grouping factor must have exactly 2 levels" = "One or both groups do not contain enough observations",
+    "not enough observations" = "One or both groups do not contain enough observations",
+    "data are essentially constant" = "All observations are tied",
+    "cannot compute confidence interval when all observations are tied" = "All observations are tied",
     message)
+}
+
+# Map both independent and paired GUI alternatives in one place.
+.saraAlternative <- function(hypothesis) {
+  switch(hypothesis, oneGreater="greater", twoGreater="less", "two.sided")
+}
+
+# Shared exact/bootstrap median-CI assembly. Samples retain their input order.
+.saraMedianIntervals <- function(samples, method, conf.level, R=999) {
+  if (!method %in% c("exact","boot")) stop("Unknown median confidence-interval method")
+  t(vapply(samples, function(x) {
+    if (method == "exact")
+      DescTools::MedianCI(x, conf.level=conf.level, method="exact")[2:3]
+    else .saraBootstrapMedian(x, conf.level=conf.level, R=R)[2:3]
+  }, numeric(2)))
+}
+
+# Same output contract for paired differences and independent group shifts.
+.saraHodgesLehmann <- function(x, y=NULL, group=NULL, paired=FALSE, conf.level=.95) {
+  if (is.null(group))
+    result <- stats::wilcox.test(x,y,paired=paired,conf.int=TRUE,conf.level=conf.level)
+  else {
+    data <- data.frame(value=x,group=group)
+    result <- stats::wilcox.test(value~group,data=data,conf.int=TRUE,conf.level=conf.level)
+  }
+  unname(c(result$estimate,result$conf.int))
+}
+
+.saraMWEffects <- function(dep, group) {
+  ranks <- .saraMWZ(dep,group)
+  denominator <- prod(ranks$n)
+  list(correlation=1-2*ranks$U/denominator,
+       f=max(ranks$U,denominator-ranks$U)/denominator)
+}
+
+.saraPairedRankSummary <- function(x,y) {
+  differences <- x-y
+  differences <- differences[!is.na(differences)]
+  positive <- sum(differences>0); negative <- sum(differences<0)
+  tied <- sum(differences==0)
+  differences <- differences[differences!=0]
+  ranks <- rank(abs(differences))
+  sumPositive <- if (positive) sum(ranks[differences>0]) else NaN
+  sumNegative <- if (negative) sum(ranks[differences<0]) else NaN
+  list(positive=positive,negative=negative,tied=tied,
+       sumPositive=sumPositive,sumNegative=sumNegative,
+       meanPositive=if(positive) sumPositive/positive else NaN,
+       meanNegative=if(negative) sumNegative/negative else NaN)
+}
+
+# Common percentage parsing for both numerical analyses. Bounds use percent units.
+.saraPercentages <- function(value, minimum=0, maximum=100, split=FALSE, drop=FALSE) {
+  if (is.character(value)) {
+    if (split) value <- unlist(strsplit(value,","))
+    value <- as.numeric(value)
+  }
+  value[value < minimum | value > maximum] <- NA_real_
+  value <- value/100
+  if (drop) value <- value[!is.na(value)]
+  value
+}
+
+# Common test dispatch for standalone variables and regression residuals.
+# Callers decide selection and convert failures into their own cell footnotes.
+.saraNormalityTest <- function(x, test) {
+  x <- x[!is.na(x)]
+  if (length(x)<2L) stop("Requires at least two non-missing observations")
+  if (any(!is.finite(x))) stop("Infinite values are not supported")
+  if (stats::sd(x)==0) stop("Requires a non-constant variable")
+  switch(test,
+    chisqtest=nortest::pearson.test(x),
+    kstest=stats::ks.test(x,"pnorm",mean=mean(x),sd=stats::sd(x)),
+    swtest=stats::shapiro.test(x),
+    adtest=nortest::ad.test(x),
+    lillietest=nortest::lillie.test(x),
+    sftest=nortest::sf.test(x),
+    cvmtest=nortest::cvm.test(x),
+    stop("Unknown normality test"))
+}
+
+# Independent-rank test dispatch with one input/error contract.
+.saraMWTest <- function(data, test, alternative="two.sided", conf.level=.95) {
+  # Shared helpers have no analysis `self`; do not call jamovi's .() here.
+  try({
+    if (is.factor(data$dep)) stop("Variable is not numeric")
+    if (any(is.infinite(data$dep))) stop("Variable contains infinite values")
+    suppressWarnings(switch(test,
+      mwu=stats::wilcox.test(dep~group,data=data,alternative=alternative,conf.level=conf.level),
+      zstat=.saraMWZ(data$dep,data$group,alternative),
+      pSup=list(statistic=rcompanion::wilcoxonPS(dep~group,data=data)[[1]]),
+      rankCorr=list(statistic=.saraMWEffects(data$dep,data$group)$correlation),
+      fstat=list(statistic=.saraMWEffects(data$dep,data$group)$f),
+      stop("Unknown Mann-Whitney output")))
+  },silent=TRUE)
+}
+
+# Shared error-to-cell rendering; return success for test-specific footnotes.
+.saraWriteRankResult <- function(table, rowKey, name, result, withP=FALSE) {
+  statistic <- paste0("stat[",name,"]")
+  probability <- paste0("p[",name,"]")
+  failed <- jmvcore::isError(result)
+  values <- setNames(list(if(failed) NaN else result$statistic),statistic)
+  if (withP) values[[probability]] <- if(failed) NaN else result$p.value
+  table$setRow(rowKey=rowKey,values)
+  if (failed) table$addFootnote(rowKey=rowKey,statistic,
+    .saraRankTestError(jmvcore::extractErrorMessage(result)))
+  !failed
 }
