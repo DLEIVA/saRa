@@ -530,3 +530,49 @@ test_that("shared rank errors do not require an analysis translation context", {
   expect_equal(saRa:::.saraRankTestError("data are essentially constant"),
     "All observations are tied")
 })
+
+
+test_that("median plot schema works for exact and named bootstrap intervals", {
+  samples <- list(A=c(1,2,4,5,7,8,10,12),B=c(2,3,4,6,7,9,11,13))
+  medians <- vapply(samples,median,numeric(1))
+  for (method in c("exact","boot")) {
+    ci <- suppressWarnings(saRa:::.saraMedianIntervals(samples,method,.95,R=199))
+    state <- saRa:::.saraMedianPlotData(names(samples),medians,ci)
+    expect_named(state,c("group","median","lower","upper","type"))
+    expect_equal(state$lower,as.numeric(ci[,1]))
+    expect_equal(state$upper,as.numeric(ci[,2]))
+    plot <- saRa:::.saraMedianPlot(state,"Median (95% CI)")
+    built <- ggplot2::ggplot_build(plot)
+    expect_equal(nrow(built$data[[1]]),2L)
+    expect_equal(nrow(built$data[[2]]),2L)
+    path <- tempfile(fileext=".pdf")
+    grDevices::pdf(path)
+    tryCatch({
+      expect_error(print(plot),NA)
+      expect_true(saRa:::.saraDrawMedianPlot(state,"Median (95% CI)"))
+    },finally=grDevices::dev.off())
+    expect_gt(file.info(path)$size,0)
+    unlink(path)
+  }
+})
+
+test_that("rank-analysis plot callbacks use the explicit median schema", {
+  state <- saRa:::.saraMedianPlotData(c("A","B"),c(2,3),
+    matrix(c(1,2,3,4),nrow=2,dimnames=list(NULL,c("lwr.ci","upr.ci"))))
+  for (cls in c("umwClass","wilcoxTClass")) {
+    # Test the actual callback with options and its namespace translation context.
+    context <- new.env(parent=asNamespace("saRa"))
+    context$self <- list(options=list(ciWidth=95,ciWidthps=95,group="Group"),
+      .translate=function(message) message)
+    method <- getFromNamespace(cls,"saRa")$private_methods$.desc
+    environment(method) <- context
+    # Translation is analysis-specific; give the fixture a literal label formatter.
+    context[["."]] <- function(message) message
+    path <- tempfile(fileext=".pdf")
+    grDevices::pdf(path)
+    tryCatch(expect_true(method(list(state=state,key="Score"),NULL,
+      list(color=c("black","blue"),fill="white"))),finally=grDevices::dev.off())
+    expect_gt(file.info(path)$size,0)
+    unlink(path)
+  }
+})
