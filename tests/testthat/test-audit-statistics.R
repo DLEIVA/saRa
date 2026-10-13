@@ -15,11 +15,21 @@ test_that("geometric summaries remain on the original scale without rounding", {
   expect_true(is.nan(r$geommean)); expect_true(is.nan(r$geomsd))
 })
 
-test_that("Yule's V reaches both association bounds", {
-  expect_equal(saRa:::.saraYulePhi(matrix(c(10,0,0,10),2)), 1)
-  expect_equal(saRa:::.saraYulePhi(matrix(c(0,10,10,0),2)), -1)
-  expect_equal(saRa:::.saraYulePhi(matrix(10,2,2)), 0)
-  expect_true(is.nan(saRa:::.saraYulePhi(matrix(c(0,0,1,1),2))))
+test_that("all Yule indices have the right values and reject invalid tables", {
+  yule <- saRa:::.saraYulePhi
+  expect_equal(unlist(yule(matrix(c(10,0,0,10),2))),c(Y=1,Q=1,V=1))
+  expect_equal(unlist(yule(matrix(c(0,10,10,0),2))),c(Y=-1,Q=-1,V=-1))
+  expect_equal(unlist(yule(matrix(10,2,2))),c(Y=0,Q=0,V=0))
+  tab <- matrix(c(12,3,5,10),2)
+  a <- tab[1,1];b <- tab[1,2];c <- tab[2,1];d <- tab[2,2]
+  expect_equal(yule(tab)$Y,(sqrt(a*d)-sqrt(b*c))/(sqrt(a*d)+sqrt(b*c)))
+  expect_equal(yule(tab)$Q,(a*d-b*c)/(a*d+b*c))
+  expect_equal(yule(tab)$V,(a*d-b*c)/sqrt(prod(rowSums(tab))*prod(colSums(tab))))
+  expect_equal(yule(tab*100),yule(tab))
+  for (bad in list(matrix(0,2,2),matrix(1,3,2),matrix(c(-1,1,2,3),2),
+                   matrix(c(NA,1,2,3),2),matrix(c(Inf,1,2,3),2)))
+    expect_true(all(is.nan(unlist(yule(bad)))))
+  expect_true(is.nan(yule(matrix(c(0,0,1,1),2))$V))
 })
 
 test_that("Wilson's e counts unordered pairs once", {
@@ -415,4 +425,108 @@ test_that("grouped normality populates rows after header-only initialization", {
   expect_equal(table$rowCount,2L)
   expect_equal(table$getCell(col="stat[swtest]",rowKey=list(variable="x",group=""))$value,
     unname(shapiro.test(context$self$data$x)$statistic))
+})
+
+
+test_that("chi-square association helpers agree with reference formulas", {
+  tab <- matrix(c(10,20,30,20,15,25),nrow=2)
+  chi <- unname(chisq.test(tab,correct=FALSE)$statistic); n <- sum(tab)
+  expect_equal(saRa:::.saraCramerV(chi,n,2,3),sqrt(chi/n))
+  expect_equal(saRa:::.saraContingency(chi,n),sqrt(chi/(n+chi)))
+  expect_equal(saRa:::.saraSakoda(chi,n,2,3),sqrt(2*chi/(n+chi)))
+  expect_equal(saRa:::.saraChuprov(chi,n,2,3),sqrt(chi/(n*sqrt(2))))
+  for (args in list(list(NaN,n,2,3),list(-1,n,2,3),list(chi,0,2,3),
+                   list(chi,n,1,3),list(chi,n,2.5,3),list(Inf,n,2,3))) {
+    for (fun in list(saRa:::.saraCramerV,saRa:::.saraSakoda,saRa:::.saraChuprov))
+      expect_true(is.nan(do.call(fun,args)))
+  }
+  expect_true(is.nan(saRa:::.saraContingency(chi,0)))
+})
+
+test_that("ordinal inner-range column metadata stays aligned at fractional coverage", {
+  cls <- getFromNamespace("ordSummaryClass","saRa")
+  for (coverage in c(50,90,99)) {
+    context <- new.env(parent=asNamespace("saRa"))
+    context$self <- list(options=list(pc=FALSE,irange=TRUE,NPerc=coverage))
+    context$private <- new.env(parent=emptyenv())
+    context$private$colArgs <- list(name=paste0("s",1:17),title=rep("Statistic",17),
+      type=rep("number",17),visible=rep("(n)",17))
+    method <- cls$private_methods$.addQuantiles;environment(method) <- context
+    method()
+    args <- context$private$colArgs
+    expect_equal(lengths(args),c(name=18L,title=18L,type=18L,visible=18L))
+    expect_equal(args$name[13],"ir")
+    expect_equal(args$title[13],paste0(coverage,"% Inner range"))
+    expect_equal(args$type[13],"number")
+    expect_equal(args$visible[13],"(irange)")
+  }
+})
+
+test_that("shared rank effects and intervals retain paired and independent results", {
+  x <- c(1,3,5,8,10,12,16,20);y <- c(2,2,4,7,9,13,15,19)
+  g <- factor(rep(c("A","B"),each=4))
+  effects <- saRa:::.saraMWEffects(x,g)
+  U <- unname(wilcox.test(x~g)$statistic)
+  expect_equal(effects$correlation,1-2*U/16)
+  expect_equal(effects$f,max(U,16-U)/16)
+  paired <- suppressWarnings(wilcox.test(x,y,paired=TRUE,conf.int=TRUE,conf.level=.9))
+  independent <- suppressWarnings(wilcox.test(x~g,conf.int=TRUE,conf.level=.9))
+  expect_equal(suppressWarnings(saRa:::.saraHodgesLehmann(x,y,paired=TRUE,conf.level=.9)),
+               unname(c(paired$estimate,paired$conf.int)))
+  expect_equal(suppressWarnings(saRa:::.saraHodgesLehmann(x,group=g,conf.level=.9)),
+               unname(c(independent$estimate,independent$conf.int)))
+  samples <- list(x=x,y=y)
+  expect_equal(saRa:::.saraMedianIntervals(samples,"exact",.9),
+    t(vapply(samples,function(z) DescTools::MedianCI(z,conf.level=.9,method="exact")[2:3],numeric(2))))
+  summary <- saRa:::.saraPairedRankSummary(c(3,2,1,NA),c(1,2,3,4))
+  expect_equal(unlist(summary[c("positive","negative","tied")]),c(positive=1,negative=1,tied=1))
+  expect_equal(summary$sumPositive,1.5);expect_equal(summary$sumNegative,1.5)
+})
+
+test_that("shared option parsing and normality dispatch preserve selection semantics", {
+  expect_equal(saRa:::.saraPercentages("10,50,110",split=TRUE,drop=TRUE),c(.1,.5))
+  expect_equal(saRa:::.saraPercentages(c(10,60),0,50),c(.1,NA_real_))
+  expect_equal(saRa:::.saraPercentages(90,50,99),.9)
+  expect_equal(saRa:::.saraAlternative("oneGreater"),"greater")
+  expect_equal(saRa:::.saraAlternative("twoGreater"),"less")
+  expect_equal(saRa:::.saraAlternative("twoSided"),"two.sided")
+  x <- c(1,2,4,5,8,9,10,14,17)
+  expect_equal(saRa:::.saraNormalityTest(x,"swtest"),shapiro.test(x))
+  expect_equal(saRa:::.saraNormalityTest(x,"lillietest"),nortest::lillie.test(x))
+  expect_error(saRa:::.saraNormalityTest(rep(1,10),"swtest"),"non-constant")
+})
+
+
+test_that("rank table helper preserves successful cells and isolates test failures", {
+  options <- jmvcore::Options$new()
+  table <- jmvcore::Table$new(options=options,name="rank",columns=list(
+    list(name="stat[mwu]",type="number"),list(name="p[mwu]",type="number")))
+  table$addRow("score")
+  d <- data.frame(dep=c(1,2,3,5,7,8),group=factor(rep(c("A","B"),each=3)))
+  result <- saRa:::.saraMWTest(d,"mwu","less")
+  reference <- wilcox.test(dep~group,d,alternative="less")
+  expect_true(saRa:::.saraWriteRankResult(table,"score","mwu",result,TRUE))
+  expect_equal(unname(table$getCell(col="stat[mwu]",rowKey="score")$value),unname(reference$statistic))
+  expect_equal(table$getCell(col="p[mwu]",rowKey="score")$value,reference$p.value)
+  d$dep[1] <- Inf
+  failed <- saRa:::.saraMWTest(d,"mwu")
+  expect_false(saRa:::.saraWriteRankResult(table,"score","mwu",failed,TRUE))
+  expect_true(is.nan(table$getCell(col="stat[mwu]",rowKey="score")$value))
+  expect_true(length(table$getCell(col="stat[mwu]",rowKey="score")$footnotes)>0)
+})
+
+
+test_that("shared rank errors do not require an analysis translation context", {
+  numeric <- data.frame(dep=c(1,2,3,4),group=factor(c("A","A","B","B")))
+  factorData <- numeric;factorData$dep <- factor(factorData$dep)
+  bad <- saRa:::.saraMWTest(factorData,"mwu")
+  expect_true(jmvcore::isError(bad))
+  expect_match(jmvcore::extractErrorMessage(bad),"Variable is not numeric")
+  numeric$group <- factor(rep("A",4))
+  bad <- saRa:::.saraMWTest(numeric,"mwu")
+  expect_true(jmvcore::isError(bad))
+  expect_equal(saRa:::.saraRankTestError(jmvcore::extractErrorMessage(bad)),
+    "One or both groups do not contain enough observations")
+  expect_equal(saRa:::.saraRankTestError("data are essentially constant"),
+    "All observations are tied")
 })

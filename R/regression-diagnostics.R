@@ -36,12 +36,8 @@
 }
 .saraRegressionNormality <- function(model) {
   x <- as.numeric(model$residuals)
-  test <- function(fun) .saraRegressionTest(function() {
-    if (length(x)<3L || any(!is.finite(x)) || stats::sd(x)==0)
-      stop("Normality tests require finite, non-constant residuals.")
-    fun(x)
-  })
-  list(sw=test(stats::shapiro.test),ks=test(nortest::lillie.test),ad=test(nortest::ad.test))
+  tests <- c(sw="swtest",ks="lillietest",ad="adtest")
+  lapply(tests,function(name) .saraRegressionTest(function() .saraNormalityTest(x,name)))
 }
 .saraRegressionDW <- function(model,reps=5000L,seed=123456L,maxLag=10L) {
   tryCatch({

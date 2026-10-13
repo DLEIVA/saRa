@@ -128,31 +128,19 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         self$results$asocind$addFootnote(rowKey=1, "v[chiSq]",
           "Association indices require at least two observed levels in each variable and complete observations")
       
-      if(dim(tabla)[1]==2 & dim(tabla)[2]==2){
-        a <- tabla[1,1]
-        b <- tabla[1,2]
-        c <- tabla[2,1]
-        d <- tabla[2,2] 
-        QY <- (a*d-b*c)/(a*d+b*c)
-        YY <- (sqrt(a*d)-sqrt(b*c))/(sqrt(a*d)+sqrt(b*c))
-        VY <- .saraYulePhi(tabla)
-      } else{
-        QY <- NA
-        YY <- NA
-        VY <- NA
-      }
-      
+      yule <- .saraYulePhi(tabla)
+
       values <- list(
         `v[chiSq]`=CHI,
         `v[phiind]`=sqrt(CHI/n),
         `v[phiSq]`=CHI/n,
-        `v[contCoef]`=sqrt(CHI/(n+CHI)),
-        `v[craV]`=sqrt(CHI/((min(dim(tabla))-1)*n)),        
+        `v[contCoef]`=.saraContingency(CHI,n),
+        `v[craV]`=.saraCramerV(CHI,n,nrow(tabla),ncol(tabla)),
         `v[chuprov]`=.saraChuprov(CHI, n, nrow(tabla), ncol(tabla)),
-        `v[sakoda]`=sqrt(min(dim(tabla))*CHI/((min(dim(tabla))-1)*(n+CHI))),
-        `v[Qyule]` = QY,
-        `v[Yyule]` = YY,
-        `v[Vyule]` = VY
+        `v[sakoda]`=.saraSakoda(CHI,n,nrow(tabla),ncol(tabla)),
+        `v[Qyule]` = yule$Q,
+        `v[Yyule]` = yule$Y,
+        `v[Vyule]` = yule$V
         )
       asocind$setRow(rowNo=othRowNo, values=values)
       

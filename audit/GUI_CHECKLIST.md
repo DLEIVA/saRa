@@ -56,3 +56,7 @@ Build/install and the 26-block test suite passed in the supplied log on jamovi 2
 ## Export/persistence confirmation — 11 October 2026
 
 The developer confirms HTML/PDF exports and .omv save/reopen checks passed. This supersedes the export/persistence pending notes above. Exact commit, R/jmvtools version details and private Regression API review remain to be recorded.
+
+## Follow-up source changes — 13 October 2026
+
+See FOLLOWUP_2026-10-13.md for consolidated association helpers, the ordinal column-layout correction and additional shared routines. The current suite contains 32 blocks; a fresh build/test and GUI run is required. The previously recorded successful 26-block run applies to the preceding candidate only.

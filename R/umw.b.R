@@ -47,47 +47,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                             code="grouping_var_must_have_2_levels", a=groupVarName)
         }
         
-        ## Hypothesis options checking
-        if (self$options$hypothesis == 'oneGreater')
-          Ha <- "greater"
-        else if (self$options$hypothesis == 'twoGreater')
-          Ha <- "less"
-        else
-          Ha <- "two.sided"
-
-        ## Additional functions                
-        .zStattest <- .saraMWZ
-
-        .bisrankr <- function(dep,group){
-          df <- data.frame(dep,group)
-          n <- as.numeric(table(df$group))
-          U <- wilcox.test(df$dep~df$group)$statistic
-          statistic <- 1 - (2 * U/prod(n))
-          list(statistic=statistic)
-        }
-        
-        .fstat <- function(dep,group){
-          df <- data.frame(dep,group)
-          n <- as.numeric(table(df$group))
-          rangos <- jmvcore::tryNaN(rank(unlist(split(df$dep,df$group))))
-          R1 <- sum(rangos[1:n[1]])
-          R2 <- sum(rangos[(n[1]+1):length(rangos)])
-          R <- c(R1,R2)  
-          U <- R-(n*(n+1)/2)
-          statistic <- max(U)/prod(n)
-          list(statistic=statistic)
-        }
-        
-        .hl <- function(dep,group,conflevel){
-          df <- data.frame(dep,group)
-          test <- wilcox.test(df$dep~df$group,conf.int=TRUE,conf.level=conflevel)
-          results <- c(test$estimate,test$conf.int)
-          names(results) <- NULL
-          results
-        }
-        
-        # Adapted from DescTools::MedianCI func
-        .mybootMED <- .saraBootstrapMedian
+        Ha <- .saraAlternative(self$options$hypothesis)
 
         for (depName in depVarNames) {
           
@@ -114,155 +74,31 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           cimed <- matrix(NaN, nrow=2, ncol=2)
           if (self$options$ciMedians || self$options$plots) {
-            ciResult <- try(suppressWarnings(t(vapply(split(dataMWTest$dep, dataMWTest$group), function(x) {
-              if (self$options$ciMethod == 'exact')
-                DescTools::MedianCI(x, conf.level=confInt, method='exact')[2:3]
-              else .mybootMED(x, conf.level=confInt, R=self$options$numR)[2:3]
-            }, numeric(2)))), silent=TRUE)
+            ciResult <- try(suppressWarnings(.saraMedianIntervals(
+              split(dataMWTest$dep,dataMWTest$group),self$options$ciMethod,
+              confInt,self$options$numR)),silent=TRUE)
             if (!jmvcore::isError(ciResult)) cimed <- ciResult
             else cismedTable$addFootnote(rowKey=depName, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
           }
           cihl <- rep(NaN, 3)
           if (self$options$ciHL) {
-            hlResult <- try(suppressWarnings(.hl(dataMWTest$dep, dataMWTest$group, confInt)), silent=TRUE)
+            hlResult <- try(suppressWarnings(.saraHodgesLehmann(dataMWTest$dep,group=dataMWTest$group,conf.level=confInt)), silent=TRUE)
             if (!jmvcore::isError(hlResult)) cihl <- hlResult
             else cishlTable$addFootnote(rowKey=depName, 'hlestimate', jmvcore::extractErrorMessage(hlResult))
           }
 
           
           
-          if (self$options$mwu) {
-            
-            if (is.factor(dataMWTest$dep))
-              res <- jmvcore::createError(.('Variable is not numeric'))
-            else if (any(is.infinite(dataMWTest$dep)))
-              res <- jmvcore::createError(.('Variable contains infinite values'))
-            else
-              res <- try(suppressWarnings(wilcox.test(dep ~ group, data=dataMWTest,
-                                alternative=Ha, conf.level=confInt)), silent=TRUE)
-            
-            if (jmvcore::isError(res)) {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[mwu]"=NaN,
-                "p[mwu]"=''))
-              
-              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
-              
-              mwtestTable$addFootnote(rowKey=depName, 'stat[mwu]', message)
-              
-            } else {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[mwu]"=res$statistic,
-                "p[mwu]"=res$p.value))
-            }
+          for (test in c("mwu","zstat","pSup","rankCorr","fstat")) {
+            if (!self$options[[test]]) next
+            result <- .saraMWTest(dataMWTest,test,Ha,confInt)
+            success <- .saraWriteRankResult(mwtestTable,depName,test,result,
+                                            withP=test %in% c("mwu","zstat"))
+            if (success && test=="zstat" && any(result$n<20) && any(result$t>1))
+              mwtestTable$addFootnote(rowKey=depName,"p[zstat]",
+                .("Less than 20 observations and ties in the groups: p-value might not be adequate"))
           }
 
-          if (self$options$zstat) {
-            
-            if (is.factor(dataMWTest$dep))
-              res <- jmvcore::createError(.('Variable is not numeric'))
-            else if (any(is.infinite(dataMWTest$dep)))
-              res <- jmvcore::createError(.('Variable contains infinite values'))
-            else
-              res <- try(suppressWarnings(.zStattest(dep=dataMWTest$dep,group=dataMWTest$group,alternative=Ha)), silent=TRUE)
-            
-            if (jmvcore::isError(res)) {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[zstat]"=NaN,
-                "p[zstat]"=''))
-              
-              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
-              
-              mwtestTable$addFootnote(rowKey=depName, 'stat[zstat]', message)
-              
-            } else {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[zstat]"=res$statistic,
-                "p[zstat]"=res$p.value))
-              
-              if(any(res$n<20) & any(res$t>1)){
-                message2 <- .('Less than 20 observations and ties in the groups: p-value might not be adequate')
-                mwtestTable$addFootnote(rowKey=depName, 'p[zstat]', message2)
-              }              
-            }
-          }
-          
-          if (self$options$pSup) {
-            if (is.factor(dataMWTest$dep))
-              res <- jmvcore::createError(.('Variable is not numeric'))
-            else if (any(is.infinite(dataMWTest$dep)))
-              res <- jmvcore::createError(.('Variable contains infinite values'))
-            else
-              res <- try(suppressWarnings(rcompanion::wilcoxonPS(dep~group,data=dataMWTest)[[1]]), silent=TRUE)
-            
-            if (jmvcore::isError(res)) {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[pSup]"=NaN))
-              
-              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
-              
-              mwtestTable$addFootnote(rowKey=depName, 'stat[pSup]', message)
-              
-            } else {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[pSup]"=res))
-            }            
-          }
-          
-          if (self$options$rankCorr) {
-            if (is.factor(dataMWTest$dep))
-              res <- jmvcore::createError(.('Variable is not numeric'))
-            else if (any(is.infinite(dataMWTest$dep)))
-              res <- jmvcore::createError(.('Variable contains infinite values'))
-            else
-              res <- try(suppressWarnings(.bisrankr(dep=dataMWTest$dep,group=dataMWTest$group)), silent=TRUE)
-            
-            if (jmvcore::isError(res)) {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[rankCorr]"=NaN))
-              
-              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
-              
-              mwtestTable$addFootnote(rowKey=depName, 'stat[rankCorr]', message)
-              
-            } else {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[rankCorr]"=res$statistic))
-            }            
-          }
-          
-          if (self$options$fstat) {
-            if (is.factor(dataMWTest$dep))
-              res <- jmvcore::createError(.('Variable is not numeric'))
-            else if (any(is.infinite(dataMWTest$dep)))
-              res <- jmvcore::createError(.('Variable contains infinite values'))
-            else
-              res <- try(suppressWarnings(.fstat(dep=dataMWTest$dep,group=dataMWTest$group)), silent=TRUE)
-            
-            if (jmvcore::isError(res)) {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[fstat]"=NaN))
-              
-              message <- .saraRankTestError(jmvcore::extractErrorMessage(res))
-              
-              mwtestTable$addFootnote(rowKey=depName, 'stat[fstat]', message)
-              
-            } else {
-              
-              mwtestTable$setRow(rowKey=depName, list(
-                "stat[fstat]"=res$statistic))
-            }            
-          }          
-          
           if (self$options$desc) {
             
             descTable$setRow(rowKey=depName, list(

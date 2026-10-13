@@ -399,8 +399,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           private$colArgs$name <- append(colArgs$name, paste0('ir'), after = 12)
           private$colArgs$title <- append(colArgs$title, paste0(NPerc, ('% Inner range')), after = 12)
-          private$colArgs$type <- append(colArgs$type, rep('number', nNPerc), after = 12)
-          private$colArgs$visible <- append(colArgs$visible, rep("(irange)", nNPerc), after = 12)
+          private$colArgs$type <- append(colArgs$type, 'number', after = 12)
+          private$colArgs$visible <- append(colArgs$visible, "(irange)", after = 12)
         }
       }
     },

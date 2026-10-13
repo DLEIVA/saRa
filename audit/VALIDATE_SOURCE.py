@@ -48,7 +48,7 @@ for p in (root/'R').glob('*.b.R'):
    if name not in packages|base:issues.append(f'Undeclared package: {p.name} {name}')
   for c in n.children:walk(c)
  walk(tree.root_node)
-status={'date':'2026-10-11','candidate_version':'1.0.0','basis_version':'0.1.2','audit_version':'0.1.1',
+status={'date':datetime.date.today().isoformat(),'candidate_version':'1.0.0','basis_version':'0.1.2','audit_version':'0.1.1',
  'R_syntax_parser':'tree-sitter-language-pack 0.9.0; grammar check, not R execution',
  'R_files_parsed':len(rfiles),'YAML_files_parsed':len(yfiles),
  'testthat_blocks_added':(root/'tests/testthat/test-audit-statistics.R').read_text().count('test_that('),
@@ -57,10 +57,9 @@ status={'date':'2026-10-11','candidate_version':'1.0.0','basis_version':'0.1.2',
  'submission_target':'jamovi library','R_CMD_check':'OPTIONAL supplementary diagnostic; NOT RUN','private_Regression_API_review':'PENDING maintainer review','jamovi_GUI_and_exports':'NOT RUN'}
 evidence_path=root/'audit/USER_VALIDATION_EVIDENCE.json'
 if evidence_path.exists():
- evidence=json.loads(evidence_path.read_text())
- status['user_runtime_evidence']=evidence
- status['R_statistical_tests']=evidence['R_statistical_tests']+' (user environment; not executed here)'
- status['jmvtools_build']=evidence['build']+'; '+evidence['module_install']
- status['jamovi_GUI_and_exports']=evidence['GUI']+'; '+evidence['exports_and_persistence']
+ status['baseline_user_runtime_evidence']=json.loads(evidence_path.read_text())
+ status['baseline_evidence_scope']='Previous 26-block candidate only; follow-up changes require a fresh run.'
+status['source_base_commit']='8f54e75988409bb033cdbfe18365c8c07a6da8af'
+status['source_followup']='association-helpers-and-shared-routines'
 (root/'audit/VALIDATION_STATUS.json').write_text(json.dumps(status,indent=2)+'\n')
 print(json.dumps(status,indent=2))
