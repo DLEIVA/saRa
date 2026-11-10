@@ -53,13 +53,19 @@ status={'date':datetime.date.today().isoformat(),'candidate_version':'1.0.0','ba
  'R_files_parsed':len(rfiles),'YAML_files_parsed':len(yfiles),
  'testthat_blocks_added':(root/'tests/testthat/test-audit-statistics.R').read_text().count('test_that('),
  'source_option_visibility_reference_dependency_issues':sorted(set(issues)),
- 'R_statistical_tests':'NOT RUN: R executable unavailable','jmvtools_build':'NOT RUN',
+ 'R_statistical_tests':'Not executed by static validator; see runtime evidence','jmvtools_build':'Not executed by static validator; see runtime evidence',
  'submission_target':'jamovi library','R_CMD_check':'OPTIONAL supplementary diagnostic; NOT RUN','private_Regression_API_review':'PENDING maintainer review','jamovi_GUI_and_exports':'NOT RUN'}
 evidence_path=root/'audit/USER_VALIDATION_EVIDENCE.json'
 if evidence_path.exists():
  status['baseline_user_runtime_evidence']=json.loads(evidence_path.read_text())
  status['baseline_evidence_scope']='Previous 26-block candidate only; follow-up changes require a fresh run.'
-status['source_base_commit']='8f54e75988409bb033cdbfe18365c8c07a6da8af'
-status['source_followup']='association-helpers-and-shared-routines'
+status['source_base_commit']='4e639ad082b78c4aa868be15d4ca61090d402b71'
+status['source_followup']='regression-nortest-lazy-resolution'
+confirmation_path=root/'audit/NORTEST_VALIDATION_2026-11-10.json'
+if confirmation_path.exists():
+ confirmation=json.loads(confirmation_path.read_text())
+ status['nortest_fix_developer_confirmation']=confirmation
+ status['jamovi_GUI_and_exports']='Developer confirms the nortest fix works; new export/persistence checks are not part of this confirmation.'
+ status['runtime_evidence_note']='Static parsing does not execute R or jamovi. Developer confirmation covers the nortest fix; baseline evidence covers earlier candidates.'
 (root/'audit/VALIDATION_STATUS.json').write_text(json.dumps(status,indent=2)+'\n')
 print(json.dumps(status,indent=2))

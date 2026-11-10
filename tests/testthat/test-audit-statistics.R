@@ -576,3 +576,41 @@ test_that("rank-analysis plot callbacks use the explicit median schema", {
     unlink(path)
   }
 })
+
+
+test_that("normality loads bundled nortest on demand after a library switch", {
+  # Fresh R process: prior tests must not hide eager/lazy namespace behaviour.
+  source <- normalizePath(test_path("..","..","R","utils.R"),mustWork=FALSE)
+  skip_if_not(file.exists(source),"Requires the source tree")
+  library <- dirname(find.package("nortest"))
+  script <- tempfile(fileext=".R")
+  on.exit(unlink(script),add=TRUE)
+  writeLines(c(
+    'args <- commandArgs(TRUE)',
+    'scope <- new.env(parent=globalenv())',
+    'base::sys.source(args[1], envir=scope)',
+    '# Stand in for the saRa package adjacent to nortest in a module R library.',
+    'scope$find.package <- function(package) {',
+    '  if (identical(package,"saRa")) file.path(args[2],"saRa")',
+    '  else base::find.package(package)',
+    '}',
+    'stopifnot(!isNamespaceLoaded("nortest"))',
+    'x <- c(1,2,3,4,6,8,9,11,12,15)',
+    'scope$.saraNormalityTest(x,"swtest")',
+    'scope$.saraNormalityTest(x,"kstest")',
+    'stopifnot(!isNamespaceLoaded("nortest"))',
+    'base::.libPaths(tempdir(), include.site=FALSE)',
+    'paths <- .libPaths(); attached <- search()',
+    'ad <- scope$.saraNormalityTest(x,"adtest")',
+    'ks <- scope$.saraNormalityTest(x,"lillietest")',
+    'stopifnot(isNamespaceLoaded("nortest"),is.finite(ad$p.value),is.finite(ks$p.value))',
+    'stopifnot(identical(paths,.libPaths()),identical(attached,search()))',
+    'stopifnot(identical(scope$.saraLoadNamespace("nortest"),getNamespace("nortest")))',
+    'cat("LAZY_NORTEST_PASS\\n")'
+  ),script)
+  executable <- file.path(R.home("bin"),if(.Platform$OS.type=="windows") "Rscript.exe" else "Rscript")
+  output <- system2(executable,args=c("--vanilla",shQuote(script),shQuote(source),shQuote(library)),
+                    stdout=TRUE,stderr=TRUE)
+  expect_null(attr(output,"status"),info=paste(output,collapse="\n"))
+  expect_true(any(grepl("LAZY_NORTEST_PASS",output)),info=paste(output,collapse="\n"))
+})

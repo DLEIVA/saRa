@@ -32,7 +32,7 @@ Target: jamovi library (hub). This is not a CRAN submission. The original audit 
 | A26 | LOW | Very long functions | PARTIAL REFACTOR — further decomposition pending. Shared numeric/Q–Q/distribution/rank/CI/error helpers reduce duplication. Further per-table decomposition of remaining long routines is pending. |
 | A27 | LOW | Deprecated ggplot2 usage | SOURCE APPLIED — R/jamovi verification pending. Active aes_string, fun.y and guides(fill=FALSE) removed; line geom widths use linewidth; density mappings use after_stat. |
 | A28 | INFO | Option descriptions contradict their defaults | SOURCE APPLIED — R/jamovi verification pending. Bool descriptions updated to their actual defaults; stray embedded mode declaration removed; grouping descriptions corrected. |
-| A29 | INFO | No unit tests | TESTS ADDED — execution pending. 26 testthat blocks added. Latest candidate execution and logs pending; earlier candidate results do not validate this candidate. |
+| A29 | INFO | No unit tests | 35 TEST BLOCKS — the nortest correction is developer-confirmed working. Prior 34-block suite success was confirmed; a new full-suite log was not supplied with this confirmation. |
 
 Additional correction: Chuprov’s T for larger contingency tables. Regression extensions now include RESET; Shapiro–Wilk, Lilliefors and Anderson–Darling; four heteroskedasticity tests; multi-lag DW (5,000 residual resamples, seed 123456); automatic-lag ACF; four residual/influence plots and an influence-index table. Latest build/install and 26-block R suite passed in the supplied user log. GUI functionality is reported working; HTML/PDF export and .omv save/reopen checks are developer-confirmed passed.
 
@@ -47,3 +47,7 @@ Developer confirmation on 11 October 2026: HTML/PDF exports and .omv save/reopen
 ## Follow-up source changes — 13 October 2026
 
 See FOLLOWUP_2026-10-13.md for consolidated association helpers, the ordinal column-layout correction and additional shared routines. The current suite contains 34 blocks; a fresh build/test and GUI run is required. The previously recorded successful 26-block run applies to the preceding candidate only.
+
+## On-demand nortest correction — 10 November 2026
+
+The developer reported the missing-nortest error in Regression on both Windows and Linux, masked when moretests preloaded nortest. saRa now resolves the bundled package on demand via loadNamespace(lib.loc=...), without eager nortest NAMESPACE imports or global .libPaths changes. The developer confirms that the correction works. See WINDOWS_NORTEST_FIX.md and NORTEST_VALIDATION_2026-11-10.json for scope and evidence. The source contains 35 test blocks; this confirmation did not supply a new full-suite log or repeat export/persistence results.

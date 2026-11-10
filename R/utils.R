@@ -276,6 +276,14 @@
   value
 }
 
+# Add-ons run with the parent's library paths. Resolve a dependency in saRa's
+# bundled library only when requested, without changing global library paths.
+.saraLoadNamespace <- function(package) {
+  if (isNamespaceLoaded(package)) return(getNamespace(package))
+  moduleLibrary <- dirname(find.package("saRa"))
+  loadNamespace(package,lib.loc=unique(c(moduleLibrary,.libPaths())))
+}
+
 # Common test dispatch for standalone variables and regression residuals.
 # Callers decide selection and convert failures into their own cell footnotes.
 .saraNormalityTest <- function(x, test) {
@@ -283,6 +291,8 @@
   if (length(x)<2L) stop("Requires at least two non-missing observations")
   if (any(!is.finite(x))) stop("Infinite values are not supported")
   if (stats::sd(x)==0) stop("Requires a non-constant variable")
+  if (test %in% c("chisqtest","adtest","lillietest","sftest","cvmtest"))
+    .saraLoadNamespace("nortest")
   switch(test,
     chisqtest=nortest::pearson.test(x),
     kstest=stats::ks.test(x,"pnorm",mean=mean(x),sd=stats::sd(x)),
