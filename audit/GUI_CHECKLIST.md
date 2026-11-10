@@ -60,3 +60,7 @@ The developer confirms HTML/PDF exports and .omv save/reopen checks passed. This
 ## Follow-up source changes — 13 October 2026
 
 See FOLLOWUP_2026-10-13.md for consolidated association helpers, the ordinal column-layout correction and additional shared routines. The current suite contains 34 blocks; a fresh build/test and GUI run is required. The previously recorded successful 26-block run applies to the preceding candidate only.
+
+## On-demand nortest correction — 10 November 2026
+
+The developer reported the missing-nortest error in Regression on both Windows and Linux, masked when moretests preloaded nortest. saRa now resolves the bundled package on demand via loadNamespace(lib.loc=...), without eager nortest NAMESPACE imports or global .libPaths changes. The developer confirms that the correction works. See WINDOWS_NORTEST_FIX.md and NORTEST_VALIDATION_2026-11-10.json for scope and evidence. The source contains 35 test blocks; this confirmation did not supply a new full-suite log or repeat export/persistence results.

@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-10",
+  "scope": "Regression add-on: on-demand resolution of bundled nortest without moretests",
+  "result": "PASS — developer confirmation",
+  "developer_statement": "Funciona perfectamente con estas modificaciones.",
+  "implementation": "R/utils.R .saraLoadNamespace; reduced NAMESPACE; nortest retained in DESCRIPTION Imports",
+  "issue_reported_on": [
+    "Windows",
+    "Linux"
+  ],
+  "fixed_platforms": "Not separately enumerated in the confirmation",
+  "testthat_blocks_in_source": 35,
+  "current_testthat_log": "Not supplied with this confirmation",
+  "scope_limit": "Confirms the reported fix works; does not assert a new complete GUI/export or cross-platform acceptance run.",
+  "source_base_commit": "4e639ad082b78c4aa868be15d4ca61090d402b71"
+}
