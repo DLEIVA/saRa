@@ -148,21 +148,9 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             
             if (nrow(dataMWTest) > 0) {
               
-              ciWidth <- self$options$ciWidth
-              tail <- qnorm(1 - (100 - ciWidth) / 200)
-              
-              cies  <- cimed
-              medians <- aggregate(dataMWTest$dep, by=list(dataMWTest$group),
-                                   function(x) jmvcore::tryNaN(median(x)), simplify=FALSE)
-              
-              medianPlotData <- data.frame(group=medians$Group.1)
-              medianPlotData <- cbind(medianPlotData, stat=unlist(medians$x))
-              medianPlotData <- cbind(medianPlotData, stat=cimed)
-              medianPlotData <- cbind(medianPlotData, type='median')
-              
-              plotData <- medianPlotData
-              
-              if (all(is.na(plotData$stat)))
+              plotData <- .saraMedianPlotData(groupLevels,med,cimed)
+
+              if (all(is.na(plotData$median)))
                 image$setState(NULL)
               else
                 image$setState(plotData)
@@ -212,36 +200,8 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
       },
       .desc=function(image, ggtheme, theme, ...) {
-        
-        if (is.null(image$state))
-          return(FALSE)
-        
-        groupName <- self$options$group
-        
-        ciw <- self$options$ciWidth
-        
-        pd <- ggplot2::position_dodge(0.2)
-        
-        plot <- ggplot2::ggplot(data=image$state, ggplot2::aes(x=group, y=stat, shape=type)) +
-          ggplot2::geom_errorbar(ggplot2::aes(x=group, ymin=stat.1, ymax=stat.2, width=.1),
-                        linewidth=.8, colour=theme$color[2], position=pd) +
-          ggplot2::geom_point(ggplot2::aes(x=group, y=stat, shape=type), color=theme$color[1],
-                     fill=theme$fill[1], size=3, position=pd) +
-          ggplot2::labs(x=groupName, y=image$key) +
-          ggplot2::scale_shape_manual(
-            name='',
-            values=c(median=22),
-            labels=c(
-              median=jmvcore::format(.('Median ({ciWidth}% CI)'), ciWidth=ciw)
-            )
-          ) +
-          ggtheme +
-          ggplot2::theme(
-            plot.title=ggplot2::element_text(margin=ggplot2::margin(b = 5.5 * 1.2)),
-            plot.margin = ggplot2::margin(5.5, 5.5, 5.5, 5.5)
-          )
-        
-        return(plot)
-      }      
-      )
+        label <- jmvcore::format(.("Median ({ciWidth}% CI)"),ciWidth=self$options$ciWidth)
+        .saraDrawMedianPlot(image$state,label,self$options$group,image$key,ggtheme,theme)
+      }
+    )
 )

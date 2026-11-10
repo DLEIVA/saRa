@@ -6,7 +6,7 @@ VERSION 1.0.0
 * Fixed ordinal inner-range column metadata for fractional coverage.
 * Shared rank-effect, rank-summary, confidence-interval, percentage parsing
   and normality-test routines reduce duplication; moved helpers to R/utils.R.
-* Expanded the test suite to 32 blocks; follow-up runtime validation pending.
+* Expanded the test suite to 34 blocks; follow-up runtime validation pending.
 * Corrected geometric mean and geometric standard deviation, Yule's V,
   Wilson's e and Chuprov's T.
 * Ordinal summaries now use stored numeric values; corrected inner ranges

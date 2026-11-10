@@ -1,3 +1,193 @@
+diff --git a/R/audit-utils.R b/R/audit-utils.R
+deleted file mode 100644
+index c76cf4b..0000000
+--- a/R/audit-utils.R
++++ /dev/null
+@@ -1,184 +0,0 @@
+-# Shared finite plotting bound; keep distribution parameters unchanged for evaluation.
+-.saraDiscreteUpper <- function(options) {
+-  reject <- function(message) jmvcore::reject(message, code="invalid_distribution_parameters")
+-  integer <- function(x) length(x) == 1L && is.finite(x) && x >= 0 && x == floor(x)
+-  probability <- function(x, positive=FALSE) length(x) == 1L && is.finite(x) &&
+-    x <= 1 && (if (positive) x > 0 else x >= 0)
+-  upper <- switch(options$distros,
+-    binom = {
+-      if (!integer(options$binomn) || !probability(options$binomp))
+-        reject("Binomial size must be a non-negative integer and probability between 0 and 1")
+-      options$binomn
+-    },
+-    poiss = {
+-      if (!is.finite(options$lambda) || options$lambda < 0)
+-        reject("Poisson rate must be non-negative")
+-      qpois(0.9999, options$lambda)
+-    },
+-    negbinom = {
+-      if (!is.finite(options$negbinomr) || options$negbinomr <= 0 ||
+-          !probability(options$negbinomp, TRUE))
+-        reject("Negative binomial size must be positive and probability greater than 0 and at most 1")
+-      qnbinom(0.9999, options$negbinomr, options$negbinomp)
+-    },
+-    geom = {
+-      if (!probability(options$geomp, TRUE))
+-        reject("Geometric probability must be greater than 0 and at most 1")
+-      qgeom(0.9999, options$geomp)
+-    },
+-    hypergeom = {
+-      m <- options$hyperm; n <- options$hypern; k <- options$hyperk
+-      if (!integer(m) || !integer(n) || !integer(k) || m+n == 0 || k > m+n)
+-        reject("Hypergeometric counts must be non-negative integers, the population positive, and draws no larger than the population")
+-      min(m, k)
+-    },
+-    reject("Unknown discrete distribution")
+-  )
+-  if (!is.finite(upper) || upper > 100000)
+-    reject("These parameters require too many plotting points; use less extreme values")
+-  as.integer(ceiling(upper))
+-}
+-
+-.saraTailP <- function(z, alternative) {
+-  switch(alternative, two.sided=2*pnorm(-abs(z)),
+-         greater=pnorm(z, lower.tail=FALSE), less=pnorm(z), NA_real_)
+-}
+-
+-.saraSignedRanks <- function(x, y, alternative="two.sided") {
+-  d <- x-y
+-  d <- d[!is.na(d)]
+-  if (any(!is.finite(d))) stop("Infinite paired differences are not supported")
+-  d <- d[d != 0]
+-  n <- length(d)
+-  if (n == 0L) return(list(statistic=NaN, p.value=NaN, correlation=NaN, W=0, n=0))
+-  ranks <- rank(abs(d))
+-  W <- sum(ranks[d > 0])
+-  ties <- table(abs(d))
+-  variance <- n*(n+1)*(2*n+1)/24 - sum(ties^3-ties)/48
+-  z <- (W-n*(n+1)/4)/sqrt(variance)
+-  list(statistic=z, p.value=.saraTailP(z, alternative),
+-       correlation=2*W/(n*(n+1)/2)-1, W=W, n=n)
+-}
+-
+-.saraMWZ <- function(dep, group, alternative="two.sided") {
+-  ok <- complete.cases(dep, group)
+-  dep <- dep[ok]; group <- droplevels(as.factor(group[ok]))
+-  if (nlevels(group) != 2L || any(!is.finite(dep)))
+-    stop("Requires two observed groups and finite values")
+-  n <- as.numeric(table(group)); N <- sum(n)
+-  ties <- table(dep)
+-  ranks <- rank(dep)
+-  U <- sum(ranks[group == levels(group)[1]]) - n[1]*(n[1]+1)/2
+-  variance <- prod(n)/12 * (N+1-sum(ties^3-ties)/(N*(N-1)))
+-  z <- if (variance > 0) (U-prod(n)/2)/sqrt(variance) else NaN
+-  list(statistic=z, p.value=.saraTailP(z, alternative), U=U, n=n, t=as.numeric(ties))
+-}
+-
+-# Fixed bootstrap seed, with caller's RNG state restored even on failure.
+-.saraBootstrapMedian <- function(x, conf.level=0.95, na.rm=FALSE, R=999) {
+-  if (na.rm) x <- na.omit(x)
+-  if (length(x) == 0L || any(!is.finite(x))) stop("Requires finite observations")
+-  if (length(unique(x)) == 1L) return(setNames(rep(x[1], 3), c("median", "lwr.ci", "upr.ci")))
+-  hadSeed <- exists(".Random.seed", envir=.GlobalEnv, inherits=FALSE)
+-  if (hadSeed) oldSeed <- get(".Random.seed", envir=.GlobalEnv)
+-  on.exit({
+-    if (hadSeed) assign(".Random.seed", oldSeed, envir=.GlobalEnv)
+-    else if (exists(".Random.seed", envir=.GlobalEnv, inherits=FALSE)) rm(".Random.seed", envir=.GlobalEnv)
+-  }, add=TRUE)
+-  set.seed(104729)
+-  result <- boot::boot(x, function(x, i) median(x[i]), R=R)
+-  ci <- boot::boot.ci(result, conf=conf.level, type="basic")[[4]][4:5]
+-  setNames(c(median(x), ci), c("median", "lwr.ci", "upr.ci"))
+-}
+-
+-.saraPlotFrame <- function(data, state) {
+-  frame <- data[unlist(state$labels, use.names=FALSE)]
+-  frame[[1]] <- jmvcore::toNumeric(frame[[1]])
+-  frame <- frame[complete.cases(frame) & is.finite(frame[[1]]), , drop=FALSE]
+-  names(frame) <- unlist(state$names, use.names=FALSE)
+-  frame
+-}
+-
+-.saraYulePhi <- function(tab) {
+-  if (!all(dim(tab) == 2L)) return(NaN)
+-  a <- tab[1,1]; b <- tab[1,2]; c <- tab[2,1]; d <- tab[2,2]
+-  denominator <- sqrt((a+b)*(a+c)*(b+d)*(c+d))
+-  if (denominator == 0) NaN else (a*d-b*c)/denominator
+-}
+-
+-.saraWilson <- function(concordant, discordant, n, tiedBoth) {
+-  denominator <- choose(n, 2)-tiedBoth
+-  if (denominator <= 0) NaN else (concordant-discordant)/denominator
+-}
+-
+-.saraECDFData <- function(value, group=NULL) {
+-  df <- data.frame(value=value, group=if (is.null(group)) "All" else as.character(group))
+-  df <- df[complete.cases(df) & is.finite(df$value), , drop=FALSE]
+-  pieces <- lapply(split(df, df$group), function(d) {
+-    if (nrow(d) < 2L || sd(d$value) == 0) return(NULL)
+-    d$z <- as.vector(scale(d$value))
+-    d <- d[order(d$z), , drop=FALSE]
+-    d$empirical <- stats::ecdf(d$z)(d$z)
+-    d$normal <- stats::pnorm(d$z)
+-    d
+-  })
+-  do.call(rbind, pieces)
+-}
+-
+-.saraChuprov <- function(chi, n, rows, columns) {
+-  if (n <= 0 || rows < 2 || columns < 2) return(NaN)
+-  sqrt(chi/(n*sqrt((rows-1)*(columns-1))))
+-}
+-
+-# Internal normal Q-Q calculations, following the pointwise normal-band method
+-# used by the embedded plotting functions in saRa 0.1.2. No qqplotr/qqconf load.
+-.saraQQData <- function(frame, conf=0.95) {
+-  if (!is.finite(conf) || conf <= 0 || conf >= 1)
+-    stop("Confidence level must be between zero and one")
+-  pieces <- lapply(split(frame, frame$group), function(d) {
+-    sample <- sort(d$z[is.finite(d$z)])
+-    n <- length(sample)
+-    if (n < 2L || stats::sd(sample) == 0) return(NULL)
+-    # Normal maximum-likelihood estimates, equivalent to the former fitdistr.
+-    mu <- mean(sample)
+-    sigma <- sqrt(mean((sample-mu)^2))
+-    probs <- stats::ppoints(n)
+-    theoretical <- stats::qnorm(probs, mean=mu, sd=sigma)
+-    xQuartiles <- stats::qnorm(c(.25,.75), mean=mu, sd=sigma)
+-    yQuartiles <- stats::quantile(sample, c(.25,.75), type=7, names=FALSE)
+-    slope <- as.numeric(diff(yQuartiles)/diff(xQuartiles))
+-    intercept <- yQuartiles[1]-slope*xQuartiles[1]
+-    fitted <- slope*theoretical+intercept
+-    se <- slope/stats::dnorm(theoretical, mean=mu, sd=sigma)*
+-      sqrt(probs*(1-probs)/n)
+-    width <- stats::qnorm((1+conf)/2)*se
+-    data.frame(group=d$group[1], theoretical=theoretical, sample=sample,
+-               fitted=fitted, lower=fitted-width, upper=fitted+width)
+-  })
+-  do.call(rbind, pieces)
+-}
+-
+-.saraQQPlot <- function(data, variable, groupBy=NULL, ggtheme=NULL) {
+-  frame <- .saraECDFData(jmvcore::toNumeric(data[[variable]]),
+-                        if (is.null(groupBy)) NULL else data[[groupBy]])
+-  if (is.null(frame) || nrow(frame) == 0L) return(FALSE)
+-  frame <- .saraQQData(frame)
+-  if (is.null(frame) || nrow(frame) == 0L) return(FALSE)
+-  plot <- ggplot2::ggplot(frame, ggplot2::aes(x=.data$theoretical)) +
+-    ggplot2::geom_ribbon(ggplot2::aes(ymin=.data$lower, ymax=.data$upper),
+-                         fill="grey70", alpha=.5) +
+-    ggplot2::geom_line(ggplot2::aes(y=.data$fitted), linewidth=.8) +
+-    ggplot2::geom_point(ggplot2::aes(y=.data$sample)) +
+-    ggplot2::xlab("Theoretical quantiles") + ggplot2::ylab("Standardised values") + ggtheme
+-  if (!is.null(groupBy)) plot <- plot + ggplot2::facet_wrap(~ group)
+-  plot
+-}
+-
+-.saraRankTestError <- function(message) {
+-  switch(message,
+-    "grouping factor must have exactly 2 levels" = .("One or both groups do not contain enough observations"),
+-    "not enough observations" = .("One or both groups do not contain enough observations"),
+-    "data are essentially constant" = .("All observations are tied"),
+-    "cannot compute confidence interval when all observations are tied" = .("All observations are tied"),
+-    message)
+-}
 diff --git a/R/bivcat.b.R b/R/bivcat.b.R
 index 340dd10..4c50983 100644
 --- a/R/bivcat.b.R
@@ -215,7 +405,7 @@ index 0d05505..98ece3a 100644
                  pColumn <- paste0("p[", testName, "]")
                  if (inherits(result, "error")) {
 diff --git a/R/umw.b.R b/R/umw.b.R
-index 1be1d61..8c4be88 100644
+index 1be1d61..af36503 100644
 --- a/R/umw.b.R
 +++ b/R/umw.b.R
 @@ -47,47 +47,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
@@ -435,20 +625,181 @@ index 1be1d61..8c4be88 100644
            if (self$options$desc) {
              
              descTable$setRow(rowKey=depName, list(
-diff --git a/R/audit-utils.R b/R/utils.R
-similarity index 53%
-rename from R/audit-utils.R
-rename to R/utils.R
-index c76cf4b..171fb71 100644
---- a/R/audit-utils.R
+@@ -312,21 +148,9 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+             
+             if (nrow(dataMWTest) > 0) {
+               
+-              ciWidth <- self$options$ciWidth
+-              tail <- qnorm(1 - (100 - ciWidth) / 200)
+-              
+-              cies  <- cimed
+-              medians <- aggregate(dataMWTest$dep, by=list(dataMWTest$group),
+-                                   function(x) jmvcore::tryNaN(median(x)), simplify=FALSE)
+-              
+-              medianPlotData <- data.frame(group=medians$Group.1)
+-              medianPlotData <- cbind(medianPlotData, stat=unlist(medians$x))
+-              medianPlotData <- cbind(medianPlotData, stat=cimed)
+-              medianPlotData <- cbind(medianPlotData, type='median')
+-              
+-              plotData <- medianPlotData
+-              
+-              if (all(is.na(plotData$stat)))
++              plotData <- .saraMedianPlotData(groupLevels,med,cimed)
++
++              if (all(is.na(plotData$median)))
+                 image$setState(NULL)
+               else
+                 image$setState(plotData)
+@@ -376,36 +200,8 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+         
+       },
+       .desc=function(image, ggtheme, theme, ...) {
+-        
+-        if (is.null(image$state))
+-          return(FALSE)
+-        
+-        groupName <- self$options$group
+-        
+-        ciw <- self$options$ciWidth
+-        
+-        pd <- ggplot2::position_dodge(0.2)
+-        
+-        plot <- ggplot2::ggplot(data=image$state, ggplot2::aes(x=group, y=stat, shape=type)) +
+-          ggplot2::geom_errorbar(ggplot2::aes(x=group, ymin=stat.1, ymax=stat.2, width=.1),
+-                        linewidth=.8, colour=theme$color[2], position=pd) +
+-          ggplot2::geom_point(ggplot2::aes(x=group, y=stat, shape=type), color=theme$color[1],
+-                     fill=theme$fill[1], size=3, position=pd) +
+-          ggplot2::labs(x=groupName, y=image$key) +
+-          ggplot2::scale_shape_manual(
+-            name='',
+-            values=c(median=22),
+-            labels=c(
+-              median=jmvcore::format(.('Median ({ciWidth}% CI)'), ciWidth=ciw)
+-            )
+-          ) +
+-          ggtheme +
+-          ggplot2::theme(
+-            plot.title=ggplot2::element_text(margin=ggplot2::margin(b = 5.5 * 1.2)),
+-            plot.margin = ggplot2::margin(5.5, 5.5, 5.5, 5.5)
+-          )
+-        
+-        return(plot)
+-      }      
+-      )
++        label <- jmvcore::format(.("Median ({ciWidth}% CI)"),ciWidth=self$options$ciWidth)
++        .saraDrawMedianPlot(image$state,label,self$options$group,image$key,ggtheme,theme)
++      }
++    )
+ )
+diff --git a/R/utils.R b/R/utils.R
+new file mode 100644
+index 0000000..9b7eff9
+--- /dev/null
 +++ b/R/utils.R
-@@ -99,11 +99,44 @@
-   frame
- }
- 
+@@ -0,0 +1,365 @@
++# Shared finite plotting bound; keep distribution parameters unchanged for evaluation.
++.saraDiscreteUpper <- function(options) {
++  reject <- function(message) jmvcore::reject(message, code="invalid_distribution_parameters")
++  integer <- function(x) length(x) == 1L && is.finite(x) && x >= 0 && x == floor(x)
++  probability <- function(x, positive=FALSE) length(x) == 1L && is.finite(x) &&
++    x <= 1 && (if (positive) x > 0 else x >= 0)
++  upper <- switch(options$distros,
++    binom = {
++      if (!integer(options$binomn) || !probability(options$binomp))
++        reject("Binomial size must be a non-negative integer and probability between 0 and 1")
++      options$binomn
++    },
++    poiss = {
++      if (!is.finite(options$lambda) || options$lambda < 0)
++        reject("Poisson rate must be non-negative")
++      qpois(0.9999, options$lambda)
++    },
++    negbinom = {
++      if (!is.finite(options$negbinomr) || options$negbinomr <= 0 ||
++          !probability(options$negbinomp, TRUE))
++        reject("Negative binomial size must be positive and probability greater than 0 and at most 1")
++      qnbinom(0.9999, options$negbinomr, options$negbinomp)
++    },
++    geom = {
++      if (!probability(options$geomp, TRUE))
++        reject("Geometric probability must be greater than 0 and at most 1")
++      qgeom(0.9999, options$geomp)
++    },
++    hypergeom = {
++      m <- options$hyperm; n <- options$hypern; k <- options$hyperk
++      if (!integer(m) || !integer(n) || !integer(k) || m+n == 0 || k > m+n)
++        reject("Hypergeometric counts must be non-negative integers, the population positive, and draws no larger than the population")
++      min(m, k)
++    },
++    reject("Unknown discrete distribution")
++  )
++  if (!is.finite(upper) || upper > 100000)
++    reject("These parameters require too many plotting points; use less extreme values")
++  as.integer(ceiling(upper))
++}
++
++.saraTailP <- function(z, alternative) {
++  switch(alternative, two.sided=2*pnorm(-abs(z)),
++         greater=pnorm(z, lower.tail=FALSE), less=pnorm(z), NA_real_)
++}
++
++.saraSignedRanks <- function(x, y, alternative="two.sided") {
++  d <- x-y
++  d <- d[!is.na(d)]
++  if (any(!is.finite(d))) stop("Infinite paired differences are not supported")
++  d <- d[d != 0]
++  n <- length(d)
++  if (n == 0L) return(list(statistic=NaN, p.value=NaN, correlation=NaN, W=0, n=0))
++  ranks <- rank(abs(d))
++  W <- sum(ranks[d > 0])
++  ties <- table(abs(d))
++  variance <- n*(n+1)*(2*n+1)/24 - sum(ties^3-ties)/48
++  z <- (W-n*(n+1)/4)/sqrt(variance)
++  list(statistic=z, p.value=.saraTailP(z, alternative),
++       correlation=2*W/(n*(n+1)/2)-1, W=W, n=n)
++}
++
++.saraMWZ <- function(dep, group, alternative="two.sided") {
++  ok <- complete.cases(dep, group)
++  dep <- dep[ok]; group <- droplevels(as.factor(group[ok]))
++  if (nlevels(group) != 2L || any(!is.finite(dep)))
++    stop("Requires two observed groups and finite values")
++  n <- as.numeric(table(group)); N <- sum(n)
++  ties <- table(dep)
++  ranks <- rank(dep)
++  U <- sum(ranks[group == levels(group)[1]]) - n[1]*(n[1]+1)/2
++  variance <- prod(n)/12 * (N+1-sum(ties^3-ties)/(N*(N-1)))
++  z <- if (variance > 0) (U-prod(n)/2)/sqrt(variance) else NaN
++  list(statistic=z, p.value=.saraTailP(z, alternative), U=U, n=n, t=as.numeric(ties))
++}
++
++# Fixed bootstrap seed, with caller's RNG state restored even on failure.
++.saraBootstrapMedian <- function(x, conf.level=0.95, na.rm=FALSE, R=999) {
++  if (na.rm) x <- na.omit(x)
++  if (length(x) == 0L || any(!is.finite(x))) stop("Requires finite observations")
++  if (length(unique(x)) == 1L) return(setNames(rep(x[1], 3), c("median", "lwr.ci", "upr.ci")))
++  hadSeed <- exists(".Random.seed", envir=.GlobalEnv, inherits=FALSE)
++  if (hadSeed) oldSeed <- get(".Random.seed", envir=.GlobalEnv)
++  on.exit({
++    if (hadSeed) assign(".Random.seed", oldSeed, envir=.GlobalEnv)
++    else if (exists(".Random.seed", envir=.GlobalEnv, inherits=FALSE)) rm(".Random.seed", envir=.GlobalEnv)
++  }, add=TRUE)
++  set.seed(104729)
++  result <- boot::boot(x, function(x, i) median(x[i]), R=R)
++  ci <- boot::boot.ci(result, conf=conf.level, type="basic")[[4]][4:5]
++  setNames(c(median(x), ci), c("median", "lwr.ci", "upr.ci"))
++}
++
++.saraPlotFrame <- function(data, state) {
++  frame <- data[unlist(state$labels, use.names=FALSE)]
++  frame[[1]] <- jmvcore::toNumeric(frame[[1]])
++  frame <- frame[complete.cases(frame) & is.finite(frame[[1]]), , drop=FALSE]
++  names(frame) <- unlist(state$names, use.names=FALSE)
++  frame
++}
++
 +# All Yule indices from a valid 2 x 2 count table. Undefined indices are NaN.
- .saraYulePhi <- function(tab) {
--  if (!all(dim(tab) == 2L)) return(NaN)
++.saraYulePhi <- function(tab) {
 +  unavailable <- list(Y=NaN, Q=NaN, V=NaN)
 +  if (!is.matrix(tab) || !is.numeric(tab) || !identical(dim(tab), c(2L,2L)) ||
 +      any(!is.finite(tab)) || any(tab < 0) || sum(tab) <= 0)
@@ -457,9 +808,7 @@ index c76cf4b..171fb71 100644
 +  # This also avoids overflow in products of large counts.
 +  tab <- tab/max(tab)
 +  tab <- tab/sum(tab)
-   a <- tab[1,1]; b <- tab[1,2]; c <- tab[2,1]; d <- tab[2,2]
--  denominator <- sqrt((a+b)*(a+c)*(b+d)*(c+d))
--  if (denominator == 0) NaN else (a*d-b*c)/denominator
++  a <- tab[1,1]; b <- tab[1,2]; c <- tab[2,1]; d <- tab[2,2]
 +  ad <- a*d; bc <- b*c
 +  divide <- function(num, den) if (den > 0) num/den else NaN
 +  list(Y=divide(sqrt(ad)-sqrt(bc), sqrt(ad)+sqrt(bc)),
@@ -487,34 +836,84 @@ index c76cf4b..171fb71 100644
 +  if (!.saraValidAssociation(chi,n,rows,columns)) return(NaN)
 +  k <- min(rows,columns)
 +  sqrt(k/(k-1))*.saraContingency(chi,n)
- }
- 
- .saraWilson <- function(concordant, discordant, n, tiedBoth) {
-@@ -126,8 +159,8 @@
- }
- 
- .saraChuprov <- function(chi, n, rows, columns) {
--  if (n <= 0 || rows < 2 || columns < 2) return(NaN)
--  sqrt(chi/(n*sqrt((rows-1)*(columns-1))))
++}
++
++.saraWilson <- function(concordant, discordant, n, tiedBoth) {
++  denominator <- choose(n, 2)-tiedBoth
++  if (denominator <= 0) NaN else (concordant-discordant)/denominator
++}
++
++.saraECDFData <- function(value, group=NULL) {
++  df <- data.frame(value=value, group=if (is.null(group)) "All" else as.character(group))
++  df <- df[complete.cases(df) & is.finite(df$value), , drop=FALSE]
++  pieces <- lapply(split(df, df$group), function(d) {
++    if (nrow(d) < 2L || sd(d$value) == 0) return(NULL)
++    d$z <- as.vector(scale(d$value))
++    d <- d[order(d$z), , drop=FALSE]
++    d$empirical <- stats::ecdf(d$z)(d$z)
++    d$normal <- stats::pnorm(d$z)
++    d
++  })
++  do.call(rbind, pieces)
++}
++
++.saraChuprov <- function(chi, n, rows, columns) {
 +  if (!.saraValidAssociation(chi,n,rows,columns)) return(NaN)
 +  sqrt((chi/n)/sqrt((rows-1)*(columns-1)))
- }
- 
- # Internal normal Q-Q calculations, following the pointwise normal-band method
-@@ -176,9 +209,116 @@
- 
- .saraRankTestError <- function(message) {
-   switch(message,
--    "grouping factor must have exactly 2 levels" = .("One or both groups do not contain enough observations"),
--    "not enough observations" = .("One or both groups do not contain enough observations"),
--    "data are essentially constant" = .("All observations are tied"),
--    "cannot compute confidence interval when all observations are tied" = .("All observations are tied"),
++}
++
++# Internal normal Q-Q calculations, following the pointwise normal-band method
++# used by the embedded plotting functions in saRa 0.1.2. No qqplotr/qqconf load.
++.saraQQData <- function(frame, conf=0.95) {
++  if (!is.finite(conf) || conf <= 0 || conf >= 1)
++    stop("Confidence level must be between zero and one")
++  pieces <- lapply(split(frame, frame$group), function(d) {
++    sample <- sort(d$z[is.finite(d$z)])
++    n <- length(sample)
++    if (n < 2L || stats::sd(sample) == 0) return(NULL)
++    # Normal maximum-likelihood estimates, equivalent to the former fitdistr.
++    mu <- mean(sample)
++    sigma <- sqrt(mean((sample-mu)^2))
++    probs <- stats::ppoints(n)
++    theoretical <- stats::qnorm(probs, mean=mu, sd=sigma)
++    xQuartiles <- stats::qnorm(c(.25,.75), mean=mu, sd=sigma)
++    yQuartiles <- stats::quantile(sample, c(.25,.75), type=7, names=FALSE)
++    slope <- as.numeric(diff(yQuartiles)/diff(xQuartiles))
++    intercept <- yQuartiles[1]-slope*xQuartiles[1]
++    fitted <- slope*theoretical+intercept
++    se <- slope/stats::dnorm(theoretical, mean=mu, sd=sigma)*
++      sqrt(probs*(1-probs)/n)
++    width <- stats::qnorm((1+conf)/2)*se
++    data.frame(group=d$group[1], theoretical=theoretical, sample=sample,
++               fitted=fitted, lower=fitted-width, upper=fitted+width)
++  })
++  do.call(rbind, pieces)
++}
++
++.saraQQPlot <- function(data, variable, groupBy=NULL, ggtheme=NULL) {
++  frame <- .saraECDFData(jmvcore::toNumeric(data[[variable]]),
++                        if (is.null(groupBy)) NULL else data[[groupBy]])
++  if (is.null(frame) || nrow(frame) == 0L) return(FALSE)
++  frame <- .saraQQData(frame)
++  if (is.null(frame) || nrow(frame) == 0L) return(FALSE)
++  plot <- ggplot2::ggplot(frame, ggplot2::aes(x=.data$theoretical)) +
++    ggplot2::geom_ribbon(ggplot2::aes(ymin=.data$lower, ymax=.data$upper),
++                         fill="grey70", alpha=.5) +
++    ggplot2::geom_line(ggplot2::aes(y=.data$fitted), linewidth=.8) +
++    ggplot2::geom_point(ggplot2::aes(y=.data$sample)) +
++    ggplot2::xlab("Theoretical quantiles") + ggplot2::ylab("Standardised values") + ggtheme
++  if (!is.null(groupBy)) plot <- plot + ggplot2::facet_wrap(~ group)
++  plot
++}
++
++.saraRankTestError <- function(message) {
++  switch(message,
 +    "grouping factor must have exactly 2 levels" = "One or both groups do not contain enough observations",
 +    "not enough observations" = "One or both groups do not contain enough observations",
 +    "data are essentially constant" = "All observations are tied",
 +    "cannot compute confidence interval when all observations are tied" = "All observations are tied",
-     message)
- }
++    message)
++}
 +
 +# Map both independent and paired GUI alternatives in one place.
 +.saraAlternative <- function(hypothesis) {
@@ -622,8 +1021,49 @@ index c76cf4b..171fb71 100644
 +    .saraRankTestError(jmvcore::extractErrorMessage(result)))
 +  !failed
 +}
++
++# Explicit plot schema: never rely on names produced by cbind() or CI methods.
++.saraMedianPlotData <- function(groups, medians, intervals) {
++  if (!is.matrix(intervals) || nrow(intervals)!=length(groups) ||
++      ncol(intervals)!=2L || length(medians)!=length(groups))
++    stop("Median plot values and confidence intervals are not aligned")
++  data.frame(group=factor(as.character(groups),levels=unique(as.character(groups))),
++    median=as.numeric(medians),lower=as.numeric(intervals[,1]),
++    upper=as.numeric(intervals[,2]),type="median")
++}
++.saraMedianPlot <- function(state, label, xLabel=NULL, yLabel=NULL,
++                            ggtheme=NULL, theme=NULL) {
++  if (is.null(state) || !any(is.finite(state$median)))
++    stop("No finite medians are available for this plot")
++  points <- state[is.finite(state$median),,drop=FALSE]
++  intervals <- points[is.finite(points$lower) & is.finite(points$upper),,drop=FALSE]
++  colour <- if(length(theme$color)) theme$color[1] else "black"
++  intervalColour <- if(length(theme$color)>1) theme$color[2] else colour
++  fill <- if(length(theme$fill)) theme$fill[1] else "white"
++  p <- ggplot2::ggplot(points,ggplot2::aes(x=.data$group,y=.data$median,shape=.data$type))+
++    ggplot2::geom_errorbar(data=intervals,
++      ggplot2::aes(ymin=.data$lower,ymax=.data$upper),width=.1,
++      linewidth=.8,colour=intervalColour)+
++    ggplot2::geom_point(colour=colour,fill=fill,size=3)+
++    ggplot2::labs(x=xLabel,y=yLabel)
++  if (!is.null(ggtheme)) p <- p+ggtheme
++  p+ggplot2::scale_shape_manual(name="",values=c(median=22),labels=c(median=label))+
++    ggplot2::theme(plot.margin=ggplot2::margin(8,12,8,8))
++}
++.saraDrawMedianPlot <- function(state,label,xLabel=NULL,yLabel=NULL,
++                                ggtheme=NULL,theme=NULL) {
++  tryCatch({
++    print(.saraMedianPlot(state,label,xLabel,yLabel,ggtheme,theme))
++    TRUE
++  },error=function(e) {
++    graphics::plot.new()
++    graphics::text(.5,.5,paste(strwrap(paste("Plot could not be drawn:",
++      conditionMessage(e)),width=55),collapse="\n"),cex=.85)
++    TRUE
++  })
++}
 diff --git a/R/wilcoxt.b.R b/R/wilcoxt.b.R
-index 8176b24..7ba29e9 100644
+index 8176b24..aa51cff 100644
 --- a/R/wilcoxt.b.R
 +++ b/R/wilcoxt.b.R
 @@ -26,30 +26,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
@@ -714,8 +1154,68 @@ index 8176b24..7ba29e9 100644
            }
            
            if ( ! jmvcore::isError(wilc)) {
+@@ -200,18 +164,9 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+             
+             if (nrow(pairsData) > 0) {
+               
+-              ciWidth <- self$options$ciWidthps
+-              tail <- qnorm(1 - (100 - ciWidth) / 200)
+-              
+-              cies  <- cimed
+-              medianPlotData <- data.frame(group=c(name1,name2),
+-                                    stat=matrix(apply(pairsData,2,median),nrow=2,ncol=1))
+-              medianPlotData <- cbind(medianPlotData, stat=cimed)
+-              medianPlotData <- cbind(medianPlotData, type='median')
+-              
+-              plotData <- medianPlotData
+-              
+-              if (all(is.na(plotData$stat)))
++              plotData <- .saraMedianPlotData(c(name1,name2),c(med1,med2),cimed)
++
++              if (all(is.na(plotData$median)))
+                 image$setState(NULL)
+               else
+                 image$setState(plotData)
+@@ -278,34 +233,8 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+         }        
+       },
+       .desc=function(image, ggtheme, theme, ...) {
+-        
+-        if (is.null(image$state))
+-          return(FALSE)
+-        
+-        ciw <- self$options$ciWidthps
+-        
+-        pd <- ggplot2::position_dodge(0.2)
+-        
+-        plot <- ggplot2::ggplot(data=image$state, ggplot2::aes(x=group, y=stat, shape=type)) +
+-          ggplot2::geom_errorbar(ggplot2::aes(x=group, ymin=stat.lwr.ci, ymax=stat.upr.ci, width=.1),
+-                        linewidth=.8, colour=theme$color[2], position=pd) +
+-          ggplot2::geom_point(ggplot2::aes(x=group, y=stat, shape=type), color=theme$color[1],
+-                     fill=theme$fill[1], size=3, position=pd) +
+-          ggplot2::labs(x=NULL, y=NULL) +
+-          ggplot2::scale_shape_manual(
+-            name='',
+-            values=c(median=22),
+-            labels=c(
+-              median=jmvcore::format(.('Median ({ciWidth}% CI)'), ciWidth=ciw)
+-            )
+-          ) +
+-          ggtheme +
+-          ggplot2::theme(
+-            plot.title=ggplot2::element_text(margin=ggplot2::margin(b = 5.5 * 1.2)),
+-            plot.margin = ggplot2::margin(5.5, 5.5, 5.5, 5.5)
+-          )
+-        
+-        return(plot)
+-      }      
++        label <- jmvcore::format(.("Median ({ciWidth}% CI)"),ciWidth=self$options$ciWidthps)
++        .saraDrawMedianPlot(image$state,label,ggtheme=ggtheme,theme=theme)
++      }
+     )
+ )
 diff --git a/tests/testthat/test-audit-statistics.R b/tests/testthat/test-audit-statistics.R
-index 432baac..78efc4b 100644
+index 432baac..4888d6f 100644
 --- a/tests/testthat/test-audit-statistics.R
 +++ b/tests/testthat/test-audit-statistics.R
 @@ -15,11 +15,21 @@ test_that("geometric summaries remain on the original scale without rounding", {
@@ -745,7 +1245,7 @@ index 432baac..78efc4b 100644
  })
  
  test_that("Wilson's e counts unordered pairs once", {
-@@ -416,3 +426,107 @@ test_that("grouped normality populates rows after header-only initialization", {
+@@ -416,3 +426,153 @@ test_that("grouped normality populates rows after header-only initialization", {
    expect_equal(table$getCell(col="stat[swtest]",rowKey=list(variable="x",group=""))$value,
      unname(shapiro.test(context$self$data$x)$statistic))
  })
@@ -852,4 +1352,50 @@ index 432baac..78efc4b 100644
 +    "One or both groups do not contain enough observations")
 +  expect_equal(saRa:::.saraRankTestError("data are essentially constant"),
 +    "All observations are tied")
++})
++
++
++test_that("median plot schema works for exact and named bootstrap intervals", {
++  samples <- list(A=c(1,2,4,5,7,8,10,12),B=c(2,3,4,6,7,9,11,13))
++  medians <- vapply(samples,median,numeric(1))
++  for (method in c("exact","boot")) {
++    ci <- suppressWarnings(saRa:::.saraMedianIntervals(samples,method,.95,R=199))
++    state <- saRa:::.saraMedianPlotData(names(samples),medians,ci)
++    expect_named(state,c("group","median","lower","upper","type"))
++    expect_equal(state$lower,as.numeric(ci[,1]))
++    expect_equal(state$upper,as.numeric(ci[,2]))
++    plot <- saRa:::.saraMedianPlot(state,"Median (95% CI)")
++    built <- ggplot2::ggplot_build(plot)
++    expect_equal(nrow(built$data[[1]]),2L)
++    expect_equal(nrow(built$data[[2]]),2L)
++    path <- tempfile(fileext=".pdf")
++    grDevices::pdf(path)
++    tryCatch({
++      expect_error(print(plot),NA)
++      expect_true(saRa:::.saraDrawMedianPlot(state,"Median (95% CI)"))
++    },finally=grDevices::dev.off())
++    expect_gt(file.info(path)$size,0)
++    unlink(path)
++  }
++})
++
++test_that("rank-analysis plot callbacks use the explicit median schema", {
++  state <- saRa:::.saraMedianPlotData(c("A","B"),c(2,3),
++    matrix(c(1,2,3,4),nrow=2,dimnames=list(NULL,c("lwr.ci","upr.ci"))))
++  for (cls in c("umwClass","wilcoxTClass")) {
++    # Test the actual callback with options and its namespace translation context.
++    context <- new.env(parent=asNamespace("saRa"))
++    context$self <- list(options=list(ciWidth=95,ciWidthps=95,group="Group"),
++      .translate=function(message) message)
++    method <- getFromNamespace(cls,"saRa")$private_methods$.desc
++    environment(method) <- context
++    # Translation is analysis-specific; give the fixture a literal label formatter.
++    context[["."]] <- function(message) message
++    path <- tempfile(fileext=".pdf")
++    grDevices::pdf(path)
++    tryCatch(expect_true(method(list(state=state,key="Score"),NULL,
++      list(color=c("black","blue"),fill="white"))),finally=grDevices::dev.off())
++    expect_gt(file.info(path)$size,0)
++    unlink(path)
++  }
 +})

@@ -6,7 +6,7 @@
   "R_syntax_parser": "tree-sitter-language-pack 0.9.0; grammar check, not R execution",
   "R_files_parsed": 33,
   "YAML_files_parsed": 39,
-  "testthat_blocks_added": 32,
+  "testthat_blocks_added": 34,
   "source_option_visibility_reference_dependency_issues": [],
   "R_statistical_tests": "NOT RUN: R executable unavailable",
   "jmvtools_build": "NOT RUN",

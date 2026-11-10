@@ -322,3 +322,44 @@
     .saraRankTestError(jmvcore::extractErrorMessage(result)))
   !failed
 }
+
+# Explicit plot schema: never rely on names produced by cbind() or CI methods.
+.saraMedianPlotData <- function(groups, medians, intervals) {
+  if (!is.matrix(intervals) || nrow(intervals)!=length(groups) ||
+      ncol(intervals)!=2L || length(medians)!=length(groups))
+    stop("Median plot values and confidence intervals are not aligned")
+  data.frame(group=factor(as.character(groups),levels=unique(as.character(groups))),
+    median=as.numeric(medians),lower=as.numeric(intervals[,1]),
+    upper=as.numeric(intervals[,2]),type="median")
+}
+.saraMedianPlot <- function(state, label, xLabel=NULL, yLabel=NULL,
+                            ggtheme=NULL, theme=NULL) {
+  if (is.null(state) || !any(is.finite(state$median)))
+    stop("No finite medians are available for this plot")
+  points <- state[is.finite(state$median),,drop=FALSE]
+  intervals <- points[is.finite(points$lower) & is.finite(points$upper),,drop=FALSE]
+  colour <- if(length(theme$color)) theme$color[1] else "black"
+  intervalColour <- if(length(theme$color)>1) theme$color[2] else colour
+  fill <- if(length(theme$fill)) theme$fill[1] else "white"
+  p <- ggplot2::ggplot(points,ggplot2::aes(x=.data$group,y=.data$median,shape=.data$type))+
+    ggplot2::geom_errorbar(data=intervals,
+      ggplot2::aes(ymin=.data$lower,ymax=.data$upper),width=.1,
+      linewidth=.8,colour=intervalColour)+
+    ggplot2::geom_point(colour=colour,fill=fill,size=3)+
+    ggplot2::labs(x=xLabel,y=yLabel)
+  if (!is.null(ggtheme)) p <- p+ggtheme
+  p+ggplot2::scale_shape_manual(name="",values=c(median=22),labels=c(median=label))+
+    ggplot2::theme(plot.margin=ggplot2::margin(8,12,8,8))
+}
+.saraDrawMedianPlot <- function(state,label,xLabel=NULL,yLabel=NULL,
+                                ggtheme=NULL,theme=NULL) {
+  tryCatch({
+    print(.saraMedianPlot(state,label,xLabel,yLabel,ggtheme,theme))
+    TRUE
+  },error=function(e) {
+    graphics::plot.new()
+    graphics::text(.5,.5,paste(strwrap(paste("Plot could not be drawn:",
+      conditionMessage(e)),width=55),collapse="\n"),cex=.85)
+    TRUE
+  })
+}
