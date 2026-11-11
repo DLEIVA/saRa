@@ -1,4 +1,19 @@
 ```
+
+## Latest runtime validation — 11 November 2026
+
+This section supersedes earlier statements that a fresh 35-block run or build was pending. Historical sections below are retained as dated evidence, not the current validation status.
+
+- Developer supplied `testthat::test_local(".")` output: **FAIL 0 | WARN 0 | SKIP 0 | PASS 274**, duration 13.1 seconds. The source contains 35 test blocks; PASS counts individual expectations, not blocks.
+- Compilation and installation completed successfully, as confirmed by the developer.
+- Developer confirms normality tests and residual plots render correctly and that the functionality works independently of moretests.
+- Example datasets open correctly, as separately confirmed by the developer.
+- Windows is inferred from the supplied paths. Exact jamovi/R/jmvtools versions and the hash of the locally tested checkout were not supplied for this run.
+- The fill-scale replacement message is informational; testthat reported zero warnings.
+- No new HTML/PDF or .omv persistence run, Linux/macOS acceptance run, or completion of every manual checklist item is asserted. Earlier evidence remains dated separately. Private Regression API review remains pending.
+
+See `RUNTIME_VALIDATION_2026-11-11.json` for the structured record.
+
 > source("audit/VALIDATE_IN_R.R")
 
 jamovi compiler

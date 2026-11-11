@@ -67,5 +67,14 @@ if confirmation_path.exists():
  status['nortest_fix_developer_confirmation']=confirmation
  status['jamovi_GUI_and_exports']='Developer confirms the nortest fix works; new export/persistence checks are not part of this confirmation.'
  status['runtime_evidence_note']='Static parsing does not execute R or jamovi. Developer confirmation covers the nortest fix; baseline evidence covers earlier candidates.'
+# Preserve the latest developer-supplied runtime evidence on subsequent static runs.
+latest_path=root/'audit/RUNTIME_VALIDATION_2026-11-11.json'
+if latest_path.exists():
+ latest=json.loads(latest_path.read_text())
+ status['latest_user_runtime_evidence']=latest
+ status['R_statistical_tests']='PASS — developer-supplied testthat output: 274 expectations; FAIL/WARN/SKIP 0'
+ status['jmvtools_build']='PASS — developer confirms compilation and installation'
+ status['jamovi_GUI_and_exports']='Normality and residual plots PASS; independent of moretests; example data opens. Exports/persistence remain historical.'
+ status['runtime_evidence_note']='Latest runtime evidence is developer-supplied. Static validation does not execute R. See dated scope limits.'
 (root/'audit/VALIDATION_STATUS.json').write_text(json.dumps(status,indent=2)+'\n')
 print(json.dumps(status,indent=2))
