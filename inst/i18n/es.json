@@ -1,0 +1,1729 @@
+{
+    "code": "es",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "0": [
+                "0"
+            ],
+            "": {
+                "domain": "messages",
+                "lang": "es",
+                "plural_forms": "nplurals=2; plural=(n != 1);"
+            },
+            "{ciWidth}% Confidence Interval": [
+                "Intervalo de confianza del {ciWidth}%"
+            ],
+            "{n} pair(s) of values were tied": [
+                "Se observaron empates en {n} pares de valores"
+            ],
+            "{title} - Model {model}": [
+                "{title} - Modelo {model}"
+            ],
+            "# categories (0: automatic detection)": [
+                "N.º de categorías (0: detección automática)"
+            ],
+            "%": [
+                "%"
+            ],
+            "% of data": [
+                "% de datos"
+            ],
+            "% of total": [
+                "% del total"
+            ],
+            "% of Total": [
+                "% del total"
+            ],
+            "% trim": [
+                "% de recorte"
+            ],
+            "% winsor": [
+                "% de winsorización"
+            ],
+            "% within column": [
+                "% por columna"
+            ],
+            "% within row": [
+                "% por fila"
+            ],
+            "%s%% Inner range": [
+                "Rango interno del %s%%"
+            ],
+            "%s%% inner range": [
+                "Rango interno del %s%%"
+            ],
+            "%s%% trimmed mean": [
+                "Media recortada al %s%%"
+            ],
+            "%s%% winsorized mean": [
+                "Media winsorizada al %s%%"
+            ],
+            "0.5": [
+                "0.5"
+            ],
+            "25,50,75": [
+                "25,50,75"
+            ],
+            "A basic course on Statistics in jamovi. Basically based on jmv package, the add-in includes a suite of (univariate and bivariate) descriptive methods  for nominal, ordinal, and numeric variables. The add-in also incorporates a module of probability distributions, continuous and discrete, to be used in a Statistics course. This package is primarily thought and developed to be useable within the jamovi statistical spreadsheet (see <https://www.jamovi.org> for more information).": [
+                "Herramientas para un curso básico de estadística en jamovi. Basado principalmente en el paquete jmv, el módulo incluye métodos descriptivos univariados y bivariados para variables nominales, ordinales y numéricas. También incorpora distribuciones de probabilidad continuas y discretas para su uso docente. Este paquete está diseñado principalmente para utilizarse en el programa estadístico jamovi (véase <https://www.jamovi.org> para más información)."
+            ],
+            "A dataset on attitudes towards immigration": [
+                "Datos sobre actitudes hacia la inmigración"
+            ],
+            "A dataset on NEO-FFI": [
+                "Datos del NEO-FFI"
+            ],
+            "A dataset on personal beliefs": [
+                "Datos sobre creencias personales"
+            ],
+            "A dataset to illustrate linear regression": [
+                "Datos para ilustrar la regresión lineal"
+            ],
+            "A dataset to illustrate polynomial regression": [
+                "Datos para ilustrar la regresión polinómica"
+            ],
+            "A dataset to illustrate simple mediation models": [
+                "Datos para ilustrar modelos de mediación simple"
+            ],
+            "A frequencies table": [
+                "Tabla de frecuencias"
+            ],
+            "a table containing confidence interval estimates for HL estimator": [
+                "Tabla de intervalos de confianza del estimador de Hodges-Lehmann"
+            ],
+            "a table containing confidence interval estimates for the medians": [
+                "Tabla de intervalos de confianza de las medianas"
+            ],
+            "a table containing the group descriptives": [
+                "Tabla de estadísticos descriptivos por grupo"
+            ],
+            "a table containing the Mann-Whitney U test results": [
+                "Tabla de resultados del contraste U de Mann-Whitney"
+            ],
+            "a table containing the Wilcoxon T test results": [
+                "Tabla de resultados del contraste T de Wilcoxon"
+            ],
+            "A table for the normality tests": [
+                "Tabla de contrastes de normalidad"
+            ],
+            "A table of different bivariate association indicators": [
+                "Tabla de índices de asociación bivariada"
+            ],
+            "A table of different effect size indicators": [
+                "Tabla de índices de tamaño del efecto"
+            ],
+            "A table of different prediction error indicators": [
+                "Tabla de índices de error de predicción"
+            ],
+            "a table of proportions": [
+                "Tabla de proporciones"
+            ],
+            "A table of the descriptive statistics": [
+                "Tabla de estadísticos descriptivos"
+            ],
+            "a table with a summary for all possible comparisons": [
+                "Tabla resumen de todas las comparaciones posibles"
+            ],
+            "A table with probabilities for selected distributions": [
+                "Tabla de probabilidades de las distribuciones seleccionadas"
+            ],
+            "A table with quantiles for selected distributions": [
+                "Tabla de cuantiles de las distribuciones seleccionadas"
+            ],
+            "All observations are tied": [
+                "Todas las observaciones están empatadas"
+            ],
+            "Alluvial plot": [
+                "Gráfico aluvial"
+            ],
+            "Alluvial Plot": [
+                "Gráfico aluvial"
+            ],
+            "Alternative hypothesis": [
+                "Hipótesis alternativa"
+            ],
+            "Alternative Hypothesis": [
+                "Hipótesis alternativa"
+            ],
+            "An array of descriptive plots": [
+                "Conjunto de gráficos descriptivos"
+            ],
+            "an array of groups of plots": [
+                "Conjunto de grupos de gráficos"
+            ],
+            "Anderson-Darling test": [
+                "Contraste de Anderson-Darling"
+            ],
+            "Approximate 95% white-noise bounds.": [
+                "Límites aproximados del 95 % para ruido blanco."
+            ],
+            "Association Indices": [
+                "Índices de asociación"
+            ],
+            "Association indices require at least two observed levels in each variable and complete observations": [
+                "Los índices de asociación requieren al menos dos niveles observados en cada variable y observaciones completas"
+            ],
+            "attitudes": [
+                "attitudes"
+            ],
+            "Autocorrelation": [
+                "Autocorrelación"
+            ],
+            "Average rank": [
+                "Rango medio"
+            ],
+            "Bar plot": [
+                "Gráfico de barras"
+            ],
+            "Bar Plot": [
+                "Gráfico de barras"
+            ],
+            "Bar Plots": [
+                "Gráficos de barras"
+            ],
+            "Bar type": [
+                "Tipo de barras"
+            ],
+            "beliefs": [
+                "beliefs"
+            ],
+            "Binomial": [
+                "Binomial"
+            ],
+            "Binomial size must be a non-negative integer and probability between 0 and 1": [
+                "El número de ensayos binomiales debe ser un entero no negativo y la probabilidad debe estar entre 0 y 1"
+            ],
+            "Bivariate Analysis": [
+                "Análisis bivariado"
+            ],
+            "Bivariate Data Analysis": [
+                "Análisis de datos bivariados"
+            ],
+            "Bivariate Data Analysis (Categorical Data)": [
+                "Análisis bivariado de datos categóricos"
+            ],
+            "Bivariate Data Analysis (Mixed Data)": [
+                "Análisis bivariado de datos mixtos"
+            ],
+            "Bivariate Data Analysis (Numerical Data)": [
+                "Análisis bivariado de datos numéricos"
+            ],
+            "Bivariate Data Analysis (Ordinal Data)": [
+                "Análisis bivariado de datos ordinales"
+            ],
+            "Blau": [
+                "Blau"
+            ],
+            "Bootstrap": [
+                "Bootstrap"
+            ],
+            "Bootstrap Durbin-Watson tests are available for unweighted OLS models only.": [
+                "Los contrastes de Durbin-Watson por bootstrap solo están disponibles para modelos de mínimos cuadrados ordinarios sin ponderación."
+            ],
+            "Box plot": [
+                "Diagrama de caja"
+            ],
+            "Box Plots": [
+                "Diagramas de caja"
+            ],
+            "Boxplots": [
+                "Diagramas de caja"
+            ],
+            "Case": [
+                "Caso"
+            ],
+            "Categorical Data": [
+                "Datos categóricos"
+            ],
+            "Cells": [
+                "Celdas"
+            ],
+            "Central": [
+                "Central"
+            ],
+            "Central Tendency": [
+                "Tendencia central"
+            ],
+            "Chuprov's index": [
+                "Índice de Chuprov"
+            ],
+            "Coefficient of variation (CV)": [
+                "Coeficiente de variación (CV)"
+            ],
+            "Cohen's d": [
+                "d de Cohen"
+            ],
+            "Cohen's d (2 levels)": [
+                "d de Cohen (2 niveles)"
+            ],
+            "Column": [
+                "Columna"
+            ],
+            "Columns": [
+                "Columnas"
+            ],
+            "compute f statistic.": [
+                "Calcular el estadístico f."
+            ],
+            "compute probability of superiority index.": [
+                "Calcular el índice de probabilidad de superioridad."
+            ],
+            "compute rank biserial correlation.": [
+                "Calcular la correlación biserial de rangos."
+            ],
+            "Concordant pairs": [
+                "Pares concordantes"
+            ],
+            "Confidence Intervals": [
+                "Intervalos de confianza"
+            ],
+            "Confidence level": [
+                "Nivel de confianza"
+            ],
+            "Confidence level must be between zero and one": [
+                "El nivel de confianza debe estar entre cero y uno"
+            ],
+            "Contingency index": [
+                "Coeficiente de contingencia"
+            ],
+            "Contingency Tables": [
+                "Tablas de contingencia"
+            ],
+            "Continuous Distributions": [
+                "Distribuciones continuas"
+            ],
+            "Cook's D": [
+                "D de Cook"
+            ],
+            "Counts": [
+                "Frecuencias absolutas"
+            ],
+            "Covariance": [
+                "Covarianza"
+            ],
+            "Cramér–von Mises test": [
+                "Contraste de Cramér–von Mises"
+            ],
+            "Cramér's V": [
+                "V de Cramér"
+            ],
+            "Cramér's V index": [
+                "Índice V de Cramér"
+            ],
+            "Cumulative %": [
+                "% acumulado"
+            ],
+            "Cumulative counts": [
+                "Frecuencias absolutas acumuladas"
+            ],
+            "Cumulative distribution function (Pr(X ≤ x))": [
+                "F. distribución (Pr(X≤x))"
+            ],
+            "Cumulative Distribution Function Plot": [
+                "Gráfico f. distribución"
+            ],
+            "Cumulative percent (%)": [
+                "Porcentaje acumulado (%)"
+            ],
+            "Cumulative probability": [
+                "Probabilidad acumulada"
+            ],
+            "Cumulative proportions": [
+                "Proporciones acumuladas"
+            ],
+            "CV": [
+                "CV"
+            ],
+            "Data": [
+                "Datos"
+            ],
+            "Densities": [
+                "Densidades"
+            ],
+            "Densities/Probabilities Table": [
+                "Tabla de densidades y probabilidades"
+            ],
+            "density": [
+                "Densidad"
+            ],
+            "Density": [
+                "Densidad"
+            ],
+            "Dependent Variables": [
+                "Variables dependientes"
+            ],
+            "Descriptive Analyses": [
+                "Análisis descriptivos"
+            ],
+            "Descriptives": [
+                "Estadísticos descriptivos"
+            ],
+            "descriptives plot": [
+                "Gráfico descriptivo"
+            ],
+            "Descriptives Plots": [
+                "Gráficos descriptivos"
+            ],
+            "Descriptives plots": [
+                "Gráficos descriptivos"
+            ],
+            "Descriptives Table": [
+                "Tabla de estadísticos descriptivos"
+            ],
+            "df (ν)": [
+                "gl (ν)"
+            ],
+            "df denominator (ν2)": [
+                "gl del denominador (ν2)"
+            ],
+            "df numerator (ν1)": [
+                "gl del numerador (ν1)"
+            ],
+            "Differences": [
+                "Diferencias"
+            ],
+            "Discordant pairs": [
+                "Pares discordantes"
+            ],
+            "Discrete Distributions": [
+                "Distribuciones discretas"
+            ],
+            "Dispersion": [
+                "Dispersión"
+            ],
+            "Distribution": [
+                "Distribución"
+            ],
+            "Distribution Information": [
+                "Información de la distribución"
+            ],
+            "Distributions": [
+                "Distribuciones"
+            ],
+            "Doughnut": [
+                "Donut"
+            ],
+            "Draws": [
+                "Extracciones"
+            ],
+            "Durbin-Watson Tests by Lag": [
+                "Contrastes de Durbin-Watson por retardo"
+            ],
+            "Durbin-Watson tests require a fitted model with finite, non-zero residuals.": [
+                "Los contrastes de Durbin-Watson requieren un modelo ajustado con residuos finitos y no todos nulos."
+            ],
+            "ECDF": [
+                "FDEA"
+            ],
+            "ECDF plot": [
+                "Gráfico FDEA"
+            ],
+            "ECDF Plots": [
+                "Gráficos FDEA"
+            ],
+            "Effect Size": [
+                "Tamaño del efecto"
+            ],
+            "Effect Size Indices": [
+                "Índices de tamaño del efecto"
+            ],
+            "Exact": [
+                "Exacto"
+            ],
+            "Exclude cases analysis by analysis": [
+                "Excluir casos según análisis"
+            ],
+            "Exclude cases listwise": [
+                "Excluir casos según lista de variables"
+            ],
+            "Expected": [
+                "Esperadas"
+            ],
+            "Expected counts": [
+                "Frecuencias esperadas"
+            ],
+            "Exponential": [
+                "Exponencial"
+            ],
+            "F distribution": [
+                "Distribución F"
+            ],
+            "f statistic": [
+                "Estadístico f"
+            ],
+            "f(x)": [
+                "f(x)"
+            ],
+            "Failures": [
+                "Fracasos"
+            ],
+            "Fisher's γ₁": [
+                "γ₁ de Fisher"
+            ],
+            "Fisher's γ₁ (skewness)": [
+                "γ₁ de Fisher (asimetría)"
+            ],
+            "Fisher's γ₂": [
+                "γ₂ de Fisher"
+            ],
+            "Fisher's γ₂ (kurtosis)": [
+                "γ₂ de Fisher (curtosis)"
+            ],
+            "Fitted values": [
+                "Valores ajustados"
+            ],
+            "Frequencies (Y-axis)": [
+                "Frecuencias (eje Y)"
+            ],
+            "Frequencies and Odds of $key": [
+                "Frecuencias y odds de $key"
+            ],
+            "Frequencies Distribution": [
+                "Distribución de frecuencias"
+            ],
+            "Frequency and odds tables": [
+                "Tablas de frecuencias y odds"
+            ],
+            "Frequency distribution": [
+                "Distribución de frecuencias"
+            ],
+            "Geometric": [
+                "Geométrica"
+            ],
+            "Geometric mean": [
+                "Media geométrica"
+            ],
+            "Geometric mean can only be computed with positive values (>0)": [
+                "La media geométrica solo puede calcularse con valores positivos (>0)"
+            ],
+            "Geometric probability must be greater than 0 and at most 1": [
+                "La probabilidad de la distribución geométrica debe ser mayor que 0 y menor o igual que 1"
+            ],
+            "Geometric standard deviation": [
+                "Desviación típica geométrica"
+            ],
+            "Geometric std. deviation can only be computed with positive values (>0)": [
+                "La desviación típica geométrica solo puede calcularse con valores positivos (>0)"
+            ],
+            "ginzberg": [
+                "ginzberg"
+            ],
+            "Goodman-Kruskal λ (A/B)": [
+                "λ de Goodman-Kruskal (A/B)"
+            ],
+            "Goodman-Kruskal λ (B/A)": [
+                "λ de Goodman-Kruskal (B/A)"
+            ],
+            "Goodman-Kruskal λ (symmetric)": [
+                "λ de Goodman-Kruskal (simétrica)"
+            ],
+            "Goodman-Kruskal τ (A/B)": [
+                "τ de Goodman-Kruskal (A/B)"
+            ],
+            "Goodman-Kruskal τ (B/A)": [
+                "τ de Goodman-Kruskal (B/A)"
+            ],
+            "Goodman-Kruskal τ (symmetric)": [
+                "τ de Goodman-Kruskal (simétrica)"
+            ],
+            "Goodman-Kruskal's γ": [
+                "γ de Goodman-Kruskal"
+            ],
+            "Group": [
+                "Grupo"
+            ],
+            "Group 1": [
+                "Grupo 1"
+            ],
+            "Group 1 < Group 2": [
+                "Grupo 1 < Grupo 2"
+            ],
+            "Group 1 ≠ Group 2": [
+                "Grupo 1 ≠ Grupo 2"
+            ],
+            "Group 1 > Group 2": [
+                "Grupo 1 > Grupo 2"
+            ],
+            "Group 2": [
+                "Grupo 2"
+            ],
+            "Group by": [
+                "Agrupar por"
+            ],
+            "Group by (optional)": [
+                "Agrupar por (opcional)"
+            ],
+            "Group median confidence intervals": [
+                "Intervalos de confianza de las medianas de los grupos"
+            ],
+            "Grouping Variable": [
+                "Variable de agrupación"
+            ],
+            "Grouping variable '{a}' has less than 2 levels after missing values are excluded": [
+                "La variable de agrupación «{a}» tiene menos de 2 niveles tras excluir los valores perdidos"
+            ],
+            "Grouping variable '{a}' must have exactly 2 levels": [
+                "La variable de agrupación «{a}» debe tener exactamente 2 niveles"
+            ],
+            "Grouping variable '{a}' must not also be a dependent variable": [
+                "La variable de agrupación «{a}» no puede ser también una variable dependiente"
+            ],
+            "Grouping variable must not also be a dependent variable": [
+                "La variable de agrupación no puede ser también una variable dependiente"
+            ],
+            "Groups Descriptives": [
+                "Estadísticos descriptivos por grupos"
+            ],
+            "H1 (skewness)": [
+                "H1 (asimetría)"
+            ],
+            "H3 (skewness)": [
+                "H3 (asimetría)"
+            ],
+            "Heatmap": [
+                "Heatmap"
+            ],
+            "Heteroskedasticity Tests": [
+                "Contrastes de heterocedasticidad"
+            ],
+            "Histogram": [
+                "Histograma"
+            ],
+            "Histograms": [
+                "Histogramas"
+            ],
+            "Hodges-Lehmann (difference in location)": [
+                "Hodges-Lehmann (diferencia de localización)"
+            ],
+            "Hodges-Lehmann (location diff.)": [
+                "Hodges-Lehmann (dif. localización)"
+            ],
+            "Hodges-Lehmann (pseudo-median)": [
+                "Hodges-Lehmann (pseudomediana)"
+            ],
+            "Hodges-Lehmann estimator": [
+                "Estimador de Hodges-Lehmann"
+            ],
+            "Hodges-Lehmann Estimator CIs": [
+                "IC del estimador de Hodges-Lehmann"
+            ],
+            "Hypergeometric": [
+                "Hipergeométrica"
+            ],
+            "Hypergeometric counts must be non-negative integers, the population positive, and draws no larger than the population": [
+                "Los recuentos hipergeométricos deben ser enteros no negativos, el tamaño de la población debe ser positivo y el número de extracciones no puede superar el tamaño de la población"
+            ],
+            "Hypothesis": [
+                "Hipótesis"
+            ],
+            "Index of qualitative variation (IQV)": [
+                "Índice de variación cualitativa (IVC)"
+            ],
+            "Indices can only be computed for 2x2 tables.": [
+                "Estos índices solo pueden calcularse para tablas 2×2."
+            ],
+            "Infinite paired differences are not supported": [
+                "No se admiten diferencias pareadas infinitas"
+            ],
+            "Infinite values are not supported": [
+                "No se admiten valores infinitos"
+            ],
+            "Influence Indices (Noteworthy Cases)": [
+                "Índices de influencia (casos destacados)"
+            ],
+            "Influence Plot": [
+                "Gráfico de influencia"
+            ],
+            "Inner fence": [
+                "Límite interior"
+            ],
+            "Inner range": [
+                "Rango interno"
+            ],
+            "Interquartile range (IQR)": [
+                "Rango intercuartílico (IQR)"
+            ],
+            "Inverse of cdf (quantiles)": [
+                "Inversa f. distribución (cuantiles)"
+            ],
+            "IQR": [
+                "IQR"
+            ],
+            "IQV": [
+                "IVC"
+            ],
+            "Jittered": [
+                "Desplazamiento aleatorio"
+            ],
+            "K2 (kurtosis)": [
+                "K2 (apuntamiento)"
+            ],
+            "K3 (kurtosis)": [
+                "K3 (apuntamiento)"
+            ],
+            "Kendall's correlation": [
+                "Correlación de Kendall"
+            ],
+            "Kendall's τ-a": [
+                "τ-a de Kendall"
+            ],
+            "Kendall's τ-b": [
+                "τ-b de Kendall"
+            ],
+            "Kendall's τ-c": [
+                "τ-c de Kendall"
+            ],
+            "Koenker (studentized Breusch-Pagan)": [
+                "Koenker (Breusch-Pagan estudentizado)"
+            ],
+            "Kolmogorov-Smirnov (Lilliefors)": [
+                "Kolmogorov-Smirnov (Lilliefors)"
+            ],
+            "Kolmogorov-Smirnov test": [
+                "Contraste de Kolmogorov-Smirnov"
+            ],
+            "Kolmogorov-Smirnov uses the Lilliefors correction for estimated mean and variance. Residual normality diagnostics.": [
+                "Kolmogorov-Smirnov utiliza la corrección de Lilliefors cuando se estiman la media y la varianza. Diagnósticos de normalidad de los residuos."
+            ],
+            "Kruskal–Wallis η²_H (k levels)": [
+                "η²_H de Kruskal–Wallis (k niveles)"
+            ],
+            "Lag": [
+                "Retardo"
+            ],
+            "Lags 1-10, capped at N-1. Two-sided p-values from residual bootstrapping with 5,000 resamples; seed = 123456. Complete-case row order; p-values are not adjusted across lags.": [
+                "Retardos de 1 a 10, limitados a N-1. Valores p bilaterales mediante bootstrap de residuos con 5.000 remuestras; semilla = 123456. Se utiliza el orden de las filas con datos completos; los valores p no se ajustan entre retardos."
+            ],
+            "Left": [
+                "Izquierda"
+            ],
+            "Left tail": [
+                "Cola izquierda"
+            ],
+            "Less than 20 observations and ties in the groups: p-value might not be adequate": [
+                "Hay menos de 20 observaciones y empates en los grupos: el valor p podría no ser adecuado"
+            ],
+            "Levels": [
+                "Niveles"
+            ],
+            "Leverage (hat value)": [
+                "Apalancamiento (valor hat)"
+            ],
+            "Lilliefors test": [
+                "Contraste de Lilliefors"
+            ],
+            "Linear": [
+                "Lineal"
+            ],
+            "linReg": [
+                "Regresión lineal"
+            ],
+            "Lollipop": [
+                "Lollipop"
+            ],
+            "Lower bound": [
+                "Límite inferior"
+            ],
+            "MAD": [
+                "MAD"
+            ],
+            "Mann-Whitney Test": [
+                "Contraste de Mann-Whitney"
+            ],
+            "Mann-Whitney U": [
+                "U de Mann-Whitney"
+            ],
+            "Mann-Whitney U Test and ES Indices": [
+                "Contraste U de Mann-Whitney e índices de tamaño del efecto"
+            ],
+            "Marginals": [
+                "Distribuciones marginales"
+            ],
+            "Max": [
+                "Máx."
+            ],
+            "Maximum": [
+                "Máximo"
+            ],
+            "Maximum (β)": [
+                "Máximo (β)"
+            ],
+            "Mean": [
+                "Media"
+            ],
+            "Mean (λ)": [
+                "Media (λ)"
+            ],
+            "Mean (μ)": [
+                "Media (μ)"
+            ],
+            "Mean deviation": [
+                "Desviación media"
+            ],
+            "Measure 1": [
+                "Medida 1"
+            ],
+            "Measure 1 - Measure 2": [
+                "Medida 1 - Medida 2"
+            ],
+            "Measure 1 < Measure 2": [
+                "Medida 1 < Medida 2"
+            ],
+            "Measure 1 ≠ Measure 2": [
+                "Medida 1 ≠ Medida 2"
+            ],
+            "Measure 1 > Measure 2": [
+                "Medida 1 > Medida 2"
+            ],
+            "Measure 2": [
+                "Medida 2"
+            ],
+            "medData": [
+                "medData"
+            ],
+            "Median": [
+                "Mediana"
+            ],
+            "Median ({ciWidth}% CI)": [
+                "Mediana (IC del {ciWidth}%)"
+            ],
+            "Median absolute deviation (MAD)": [
+                "Desviación absoluta mediana (MAD)"
+            ],
+            "Median CIs": [
+                "IC de medianas"
+            ],
+            "Median plot values and confidence intervals are not aligned": [
+                "Los valores de las medianas y sus intervalos de confianza no están alineados"
+            ],
+            "Medians CIs": [
+                "IC de las medianas"
+            ],
+            "Method": [
+                "Método"
+            ],
+            "Mid-range": [
+                "Rango medio"
+            ],
+            "Midhinge": [
+                "Promedio de cuartiles"
+            ],
+            "Min": [
+                "Mín."
+            ],
+            "Minimum": [
+                "Mínimo"
+            ],
+            "Minimum (α)": [
+                "Mínimo (α)"
+            ],
+            "Miscellanea": [
+                "Otros análisis"
+            ],
+            "Missing": [
+                "Perdidos"
+            ],
+            "Missing values": [
+                "Valores perdidos"
+            ],
+            "Missing Values": [
+                "Valores perdidos"
+            ],
+            "Mixed Data": [
+                "Datos mixtos"
+            ],
+            "Mode": [
+                "Moda"
+            ],
+            "More than one mode exists, only the first is reported": [
+                "Existe más de una moda; solo se muestra la primera"
+            ],
+            "More than two levels, effect size indicator is not reported": [
+                "Hay más de dos niveles: no se informa del índice de tamaño del efecto"
+            ],
+            "Mosaic plot": [
+                "Gráfico de mosaico"
+            ],
+            "N": [
+                "N"
+            ],
+            "Negative Binomial": [
+                "Binomial negativa"
+            ],
+            "Negative binomial": [
+                "Binomial negativa"
+            ],
+            "Negative binomial size must be positive and probability greater than 0 and at most 1": [
+                "El parámetro de tamaño de la binomial negativa debe ser positivo y la probabilidad debe ser mayor que 0 y menor o igual que 1"
+            ],
+            "Negative differences": [
+                "Diferencias negativas"
+            ],
+            "neoffi": [
+                "neoffi"
+            ],
+            "No complete observations are available for the selected variables": [
+                "No hay observaciones completas para las variables seleccionadas"
+            ],
+            "No finite medians are available for this plot": [
+                "No hay medianas finitas disponibles para este gráfico"
+            ],
+            "None": [
+                "Ninguno"
+            ],
+            "Normal": [
+                "Normal"
+            ],
+            "Normal curve": [
+                "Curva normal"
+            ],
+            "Normal Curve": [
+                "Curva normal"
+            ],
+            "Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference.": [
+                "Los parámetros de la distribución normal se estiman a partir de estos datos; este valor p no está corregido. Utilice el contraste de Lilliefors para obtener inferencia corregida."
+            ],
+            "Normal Q-Q with Residual Histogram": [
+                "Gráfico Q–Q normal con histograma de residuos"
+            ],
+            "Normality Tests": [
+                "Contrastes de normalidad"
+            ],
+            "Note. Plot obtained with the saRa module.": [
+                "Nota. Gráfico obtenido con el módulo saRa."
+            ],
+            "Null hypothesis: constant error variance. GQ: two-sided, ordered by fitted values, split at 50%, no central omission. HMC: ordered by fitted values, split at 50%; 5,000 simulations, seed 123456. BP statistic is chi-square, GQ is F; HMC is a residual sum-of-squares fraction.": [
+                "Hipótesis nula: varianza constante de los errores. GQ: bilateral, ordenado por valores ajustados, división al 50 %, sin omisión central. HMC: ordenado por valores ajustados, división al 50 %; 5.000 simulaciones, semilla 123456. El estadístico BP es ji-cuadrado y el de GQ es F; HMC es una proporción de sumas de cuadrados de los residuos."
+            ],
+            "Number of categories": [
+                "Número de categorías"
+            ],
+            "Number of draws (k)": [
+                "Número de extracciones (k)"
+            ],
+            "Number of failure states (n)": [
+                "Número de elementos de fracaso (n)"
+            ],
+            "Number of replicates in Bootstrap CI(s): %s": [
+                "Número de réplicas de los IC bootstrap: %s"
+            ],
+            "number of replications for Bootstrap CIs.": [
+                "Número de réplicas para los IC bootstrap."
+            ],
+            "Number of success states (m)": [
+                "Número de elementos de éxito (m)"
+            ],
+            "Number of successes (r)": [
+                "Número de éxitos (r)"
+            ],
+            "Number of trials": [
+                "Número de ensayos"
+            ],
+            "Number of trials (n)": [
+                "Número de ensayos (n)"
+            ],
+            "Numerical Data": [
+                "Datos numéricos"
+            ],
+            "Observed": [
+                "Observadas"
+            ],
+            "Observed counts": [
+                "Frecuencias observadas"
+            ],
+            "Odds": [
+                "Odds"
+            ],
+            "of total": [
+                "del total"
+            ],
+            "One or both groups do not contain enough observations": [
+                "Uno o ambos grupos no contienen suficientes observaciones"
+            ],
+            "One or both variables are not numeric": [
+                "Una o ambas variables no son numéricas"
+            ],
+            "One or both variables contain infinite values": [
+                "Una o ambas variables contienen valores infinitos"
+            ],
+            "One or both variables contain no observations": [
+                "Una o ambas variables no contienen observaciones"
+            ],
+            "One or both variables do not contain enough observations": [
+                "Una o ambas variables no contienen suficientes observaciones"
+            ],
+            "Ordinal Data": [
+                "Datos ordinales"
+            ],
+            "Ordinal summaries require numeric stored values.": [
+                "Los resúmenes ordinales requieren que los valores almacenados sean numéricos."
+            ],
+            "Outer fence": [
+                "Límite exterior"
+            ],
+            "p": [
+                "p"
+            ],
+            "Paired Comparisons Description": [
+                "Descripción de las comparaciones por pares"
+            ],
+            "Paired Variables": [
+                "Variables por pares"
+            ],
+            "Parameter(s)": [
+                "Parámetro(s)"
+            ],
+            "Pareto plot": [
+                "Gráfico de Pareto"
+            ],
+            "Pearson χ² test": [
+                "Contraste χ² de Pearson"
+            ],
+            "Pearson's contingency index": [
+                "Coeficiente de contingencia de Pearson"
+            ],
+            "Pearson's correlation": [
+                "Correlación de Pearson"
+            ],
+            "Pearson's r": [
+                "r de Pearson"
+            ],
+            "Pearson's R²": [
+                "R² de Pearson"
+            ],
+            "Pearson's β₁": [
+                "β₁ de Pearson"
+            ],
+            "Pearson's β₁ (skewness)": [
+                "β₁ de Pearson (asimetría)"
+            ],
+            "Pearson's β₂": [
+                "β₂ de Pearson"
+            ],
+            "Pearson's β₂ (kurtosis)": [
+                "β₂ de Pearson (apuntamiento)"
+            ],
+            "Pearson's β₂ (Kurtosis)": [
+                "β₂ de Pearson (apuntamiento)"
+            ],
+            "Percentage of data": [
+                "Porcentaje de datos"
+            ],
+            "Percentage of trimmed data": [
+                "Porcentaje de datos recortados"
+            ],
+            "Percentage of winsorized data": [
+                "Porcentaje de datos winsorizados"
+            ],
+            "Percentages": [
+                "Porcentajes"
+            ],
+            "Percentages of total": [
+                "Porcentajes del total"
+            ],
+            "Percentages within %s": [
+                "Porcentajes dentro de %s"
+            ],
+            "Percentile %s": [
+                "Percentil %s"
+            ],
+            "Percentile values": [
+                "Valores de los percentiles"
+            ],
+            "Percentiles": [
+                "Percentiles"
+            ],
+            "Percentiles must be numbers between 0 and 100": [
+                "Los percentiles deben ser números entre 0 y 100"
+            ],
+            "perform Anderson-Darling tests.": [
+                "Realizar contrastes de Anderson-Darling."
+            ],
+            "perform asymptotic Z tests.": [
+                "Realizar contrastes Z asintóticos."
+            ],
+            "perform Cramér–von Mises tests.": [
+                "Realizar contrastes de Cramér–von Mises."
+            ],
+            "perform Kolmogorov-Smirnov tests.": [
+                "Realizar contrastes de Kolmogorov-Smirnov."
+            ],
+            "perform Lilliefors tests.": [
+                "Realizar contrastes de Lilliefors."
+            ],
+            "perform Mann-Whitney's U t-tests.": [
+                "Realizar contrastes U de Mann-Whitney."
+            ],
+            "perform Pearson's χ² tests.": [
+                "Realizar contrastes χ² de Pearson."
+            ],
+            "perform Shapiro-Francia tests.": [
+                "Realizar contrastes de Shapiro-Francia."
+            ],
+            "perform Shapiro-Wilk tests.": [
+                "Realizar contrastes de Shapiro-Wilk."
+            ],
+            "perform Wilcoxon signed rank tests.": [
+                "Realizar contrastes de rangos con signo de Wilcoxon."
+            ],
+            "phobia": [
+                "phobia"
+            ],
+            "Pie chart": [
+                "Gráfico de sectores"
+            ],
+            "Plot could not be drawn: {message}": [
+                "No se pudo generar el gráfico: {message}"
+            ],
+            "Plot data unavailable. Reselect Residual plots to refresh.": [
+                "Los datos del gráfico no están disponibles. Vuelva a seleccionar los gráficos de residuos para actualizarlos."
+            ],
+            "Plots": [
+                "Gráficos"
+            ],
+            "Point-biserial Correlation": [
+                "Correlación biserial puntual"
+            ],
+            "Point-biserial correlation (2 levels)": [
+                "Correlación biserial puntual (2 niveles)"
+            ],
+            "Poisson": [
+                "Poisson"
+            ],
+            "Poisson rate must be non-negative": [
+                "La tasa de Poisson debe ser no negativa"
+            ],
+            "polynomialReg": [
+                "polynomialReg"
+            ],
+            "Position": [
+                "Posición"
+            ],
+            "Positive differences": [
+                "Diferencias positivas"
+            ],
+            "Pr(X = x)": [
+                "Pr(X = x)"
+            ],
+            "Pr(X > x)": [
+                "Pr(X > x)"
+            ],
+            "Pr(X ≤ x)": [
+                "Pr(X ≤ x)"
+            ],
+            "Pr(x1 ≤ X ≤ x2)": [
+                "Pr(x1 ≤ X ≤ x2)"
+            ],
+            "Prediction Error Indices": [
+                "Índices de error de predicción"
+            ],
+            "Prob": [
+                "Prob."
+            ],
+            "Probabilities Table": [
+                "Tabla de probabilidades"
+            ],
+            "Probability": [
+                "Probabilidad"
+            ],
+            "Probability (p)": [
+                "Probabilidad (p)"
+            ],
+            "Probability density function (f(x))": [
+                "F. densidad (f(x))"
+            ],
+            "Probability Density Function Plot": [
+                "Gráfico f. densidad"
+            ],
+            "Probability Interval Plot": [
+                "Gráfico de probabilidad de un intervalo"
+            ],
+            "Probability mass function (Pr(X = x))": [
+                "F. masa probabilidad (Pr(X=x))"
+            ],
+            "Probability Mass Function Plot": [
+                "Gráfico f. masa probabilidad"
+            ],
+            "Probability of superiority": [
+                "Probabilidad de superioridad"
+            ],
+            "Probability of superiority (2 levels)": [
+                "Probabilidad de superioridad (2 niveles)"
+            ],
+            "Proportions": [
+                "Proporciones"
+            ],
+            "provide confidence intervals for the Hodges-Lehmann estimator.": [
+                "Mostrar intervalos de confianza del estimador de Hodges-Lehmann."
+            ],
+            "provide confidence intervals for the medians.": [
+                "Mostrar intervalos de confianza de las medianas."
+            ],
+            "provide descriptives for each group of measurements.": [
+                "Mostrar estadísticos descriptivos para cada grupo de medidas."
+            ],
+            "provide descriptives for each group.": [
+                "Mostrar estadísticos descriptivos para cada grupo."
+            ],
+            "provide descriptives plots.": [
+                "Mostrar gráficos descriptivos."
+            ],
+            "Q-Q": [
+                "Q-Q"
+            ],
+            "Q-Q plot": [
+                "Gráfico Q-Q"
+            ],
+            "Q-Q Plots": [
+                "Gráficos Q-Q"
+            ],
+            "QD": [
+                "DC"
+            ],
+            "Quantile (ICDF) Plot": [
+                "Gráfico de cuantiles"
+            ],
+            "Quantile value": [
+                "Valor del cuantil"
+            ],
+            "Quantile values": [
+                "Valores de los cuantiles"
+            ],
+            "Quantile values must be between 0 and 1 (%s).": [
+                "Los valores de los cuantiles deben estar entre 0 y 1 (%s)."
+            ],
+            "Quantile values must be real numbers between 0 and 1 (%s).": [
+                "Los valores de los cuantiles deben ser números reales entre 0 y 1 (%s)."
+            ],
+            "Quantiles Table": [
+                "Tabla de cuantiles"
+            ],
+            "Quartile 1 (Q1)": [
+                "Cuartil 1 (Q1)"
+            ],
+            "Quartile 2 (Q2)": [
+                "Cuartil 2 (Q2)"
+            ],
+            "Quartile 3 (Q3)": [
+                "Cuartil 3 (Q3)"
+            ],
+            "Quartile coefficient of dispersion": [
+                "Coeficiente de dispersión cuartílica"
+            ],
+            "Quartile deviation (QD)": [
+                "Desviación cuartílica (DC)"
+            ],
+            "Quartile dispersion": [
+                "Dispersión cuartílica"
+            ],
+            "Random variable value": [
+                "Valor de la variable aleatoria"
+            ],
+            "Random variable value must be a positive number (%s).": [
+                "El valor de la variable aleatoria debe ser positivo (%s)."
+            ],
+            "Random variable value must be between %s and %s (%s).": [
+                "El valor de la variable aleatoria debe estar entre %s y %s (%s)."
+            ],
+            "Random variable values": [
+                "Valores de la variable aleatoria"
+            ],
+            "Random variable values must be a real number (%s).": [
+                "Los valores de la variable aleatoria deben ser números reales (%s)."
+            ],
+            "Random variable values must be a real number between 0 and 1(%s).": [
+                "Los valores de la variable aleatoria deben ser números reales entre 0 y 1 (%s)."
+            ],
+            "Random variable values must be between %s and %s (%s).": [
+                "Los valores de la variable aleatoria deben estar entre %s y %s (%s)."
+            ],
+            "Random variable values must be positive (%s).": [
+                "Los valores de la variable aleatoria deben ser positivos (%s)."
+            ],
+            "Random variable values must be positive integers (%s).": [
+                "Los valores de la variable aleatoria deben ser enteros positivos (%s)."
+            ],
+            "Range": [
+                "Rango"
+            ],
+            "Rank sum": [
+                "Suma de rangos"
+            ],
+            "Rank-biserial correlation": [
+                "Correlación biserial de rangos"
+            ],
+            "Rate (λ)": [
+                "Tasa (λ)"
+            ],
+            "Regression line / curve": [
+                "Recta o curva de regresión"
+            ],
+            "Replicates": [
+                "Réplicas"
+            ],
+            "Requires a non-constant variable": [
+                "Se requiere una variable no constante"
+            ],
+            "Requires at least two non-missing observations": [
+                "Se requieren al menos dos observaciones no perdidas"
+            ],
+            "Requires finite observations": [
+                "Se requieren observaciones finitas"
+            ],
+            "Requires two observed groups and finite values": [
+                "Se requieren dos grupos observados y valores finitos"
+            ],
+            "Residual ACF": [
+                "FAC de los residuos"
+            ],
+            "Residual ACF requires at least two finite, non-constant residuals.": [
+                "La FAC de los residuos requiere al menos dos residuos finitos y no constantes."
+            ],
+            "Residuals": [
+                "Residuos"
+            ],
+            "Residuals vs Fitted": [
+                "Residuos frente a valores ajustados"
+            ],
+            "Right": [
+                "Derecha"
+            ],
+            "Right tail": [
+                "Cola derecha"
+            ],
+            "Row": [
+                "Fila"
+            ],
+            "Row order; {lags} automatic lags.": [
+                "Orden de las filas; {lags} retardos seleccionados automáticamente."
+            ],
+            "Rows": [
+                "Filas"
+            ],
+            "Sakoda's index": [
+                "Índice de Sakoda"
+            ],
+            "Same noteworthy rule as car::influencePlot(): union of the two largest absolute studentized residuals, leverage values and Cook's distances. Case labels identify original fitted rows; selection is diagnostic, not an exclusion rule.": [
+                "Criterio de car::influencePlot(): casos con los dos mayores valores de |residuo estudentizado|, apalancamiento o distancia de Cook. Las etiquetas indican las filas originales del ajuste. Selección diagnóstica, sin exclusión de casos."
+            ],
+            "Sample Size": [
+                "Tamaño muestral"
+            ],
+            "saRa": [
+                "saRa"
+            ],
+            "Scale-Location": [
+                "Escala-localización"
+            ],
+            "Scale, rate and degrees of freedom must be positive": [
+                "La escala, la tasa y los grados de libertad deben ser positivos"
+            ],
+            "Scatterplot": [
+                "Diagrama de dispersión"
+            ],
+            "Select a Group by variable": [
+                "Seleccione una variable de agrupación"
+            ],
+            "Select ordinal variables with ordered levels": [
+                "Seleccione variables ordinales con niveles ordenados"
+            ],
+            "Shape": [
+                "Forma"
+            ],
+            "Shapiro-Francia test": [
+                "Contraste de Shapiro-Francia"
+            ],
+            "Shapiro-Wilk test": [
+                "Contraste de Shapiro-Wilk"
+            ],
+            "Side by side": [
+                "En paralelo"
+            ],
+            "Simulated data": [
+                "Datos simulados"
+            ],
+            "Smooth": [
+                "Suavizado"
+            ],
+            "Somers' d (columns)": [
+                "d de Somers (columnas)"
+            ],
+            "Somers' d (rows)": [
+                "d de Somers (filas)"
+            ],
+            "Somers' d (symmetric)": [
+                "d de Somers (simétrica)"
+            ],
+            "Spearman's correlation": [
+                "Correlación de Spearman"
+            ],
+            "Spearman's r": [
+                "r de Spearman"
+            ],
+            "Spearman's R²": [
+                "R² de Spearman"
+            ],
+            "Specification Test": [
+                "Contraste de especificación"
+            ],
+            "Sqrt(|standardized residual|)": [
+                "√(|residuo tipificado|)"
+            ],
+            "Squared Kendall’s τ": [
+                "τ de Kendall al cuadrado"
+            ],
+            "Stacked": [
+                "Apilado"
+            ],
+            "Standard deviation": [
+                "Desviación típica"
+            ],
+            "Standard error": [
+                "Error estándar"
+            ],
+            "Standardised values": [
+                "Valores tipificados"
+            ],
+            "Standardized residual quantiles": [
+                "Cuantiles de los residuos tipificados"
+            ],
+            "Statistic": [
+                "Estadístico"
+            ],
+            "Statistical Analyses with R Add-in for Jamovi": [
+                "Análisis estadísticos con R para jamovi"
+            ],
+            "Statistics": [
+                "Estadísticos"
+            ],
+            "Statistics and Tests": [
+                "Estadísticos y contrastes"
+            ],
+            "Std. Deviation (σ)": [
+                "Desviación típica (σ)"
+            ],
+            "Std. deviation (σ)": [
+                "Desviación típica (σ)"
+            ],
+            "Studentized residuals": [
+                "Residuos estudentizados"
+            ],
+            "Successes": [
+                "Éxitos"
+            ],
+            "Survival function (Pr(X > x))": [
+                "F. supervivencia (Pr(X>x))"
+            ],
+            "Survival Function Plot": [
+                "Gráfico f. supervivencia"
+            ],
+            "t distribution": [
+                "Distribución t"
+            ],
+            "Table obtained with the saRa module.": [
+                "Tabla obtenida con el módulo saRa."
+            ],
+            "Table obtained with the saRa module. Tests squared and cubed fitted values for functional-form misspecification.": [
+                "Tabla obtenida con el módulo saRa. Contrasta la especificación de la forma funcional mediante los valores ajustados elevados al cuadrado y al cubo."
+            ],
+            "Tail of the distribution": [
+                "Cola de la distribución"
+            ],
+            "Teachman": [
+                "Teachman"
+            ],
+            "Test": [
+                "Contraste"
+            ],
+            "Tests": [
+                "Contrastes"
+            ],
+            "The 'group by' variable '{var}' contains no data.": [
+                "La variable de agrupación «{var}» no contiene datos."
+            ],
+            "The 'group by' variable is required.": [
+                "Se requiere una variable de agrupación."
+            ],
+            "the alternative hypothesis.": [
+                "La hipótesis alternativa."
+            ],
+            "the confidence interval width.": [
+                "La amplitud del intervalo de confianza."
+            ],
+            "the dependent variables -- a separate MW test is performed for each dependent variable specified.": [
+                "Variables dependientes: se realiza un contraste de Mann-Whitney para cada variable dependiente seleccionada."
+            ],
+            "the missing value exclusion method. `Analysis by analysis` excludes missing values from each analysis. `Listwise` excludes a row from all analyses if one of its values is missing.": [
+                "Método de exclusión de valores perdidos. «Excluir casos según análisis» utiliza los casos completos para las variables de cada análisis. «Excluir casos según lista de variables» excluye una fila de todos los análisis si tiene algún valor perdido en las variables seleccionadas."
+            ],
+            "the pairs of measurements -- a separate Wilcoxon signed-rank test is performed for each pair of measurements.": [
+                "Pares de medidas: se realiza un contraste de Wilcoxon para cada par."
+            ],
+            "the variable specifying the groups; must have 2 levels.": [
+                "La variable que identifica los grupos; debe tener 2 niveles."
+            ],
+            "Theil's index (A/B)": [
+                "Índice de Theil (A/B)"
+            ],
+            "Theil's index (B/A)": [
+                "Índice de Theil (B/A)"
+            ],
+            "Theil's index (symmetric)": [
+                "Índice de Theil (simétrico)"
+            ],
+            "Theil's U (columns)": [
+                "U de Theil (columnas)"
+            ],
+            "Theil's U (rows)": [
+                "U de Theil (filas)"
+            ],
+            "Theil's U (symmetric)": [
+                "U de Theil (simétrica)"
+            ],
+            "Theoretical normal quantiles": [
+                "Cuantiles normales teóricos"
+            ],
+            "Theoretical quantiles": [
+                "Cuantiles teóricos"
+            ],
+            "These parameters require too many plotting points; use less extreme values": [
+                "Estos parámetros requieren demasiados puntos para el gráfico; utilice valores menos extremos"
+            ],
+            "This diagnostic is available for unweighted OLS models only.": [
+                "Este diagnóstico solo está disponible para modelos de mínimos cuadrados ordinarios sin ponderación."
+            ],
+            "Tied pairs": [
+                "Pares empatados"
+            ],
+            "Ties in %s": [
+                "Empates en %s"
+            ],
+            "Ties in %s and %s": [
+                "Empates en %s y %s"
+            ],
+            "Total": [
+                "Total"
+            ],
+            "Trimean": [
+                "Trimedia"
+            ],
+            "Trimmed mean": [
+                "Media recortada"
+            ],
+            "Unable to split by a continuous variable": [
+                "No se puede agrupar por una variable continua"
+            ],
+            "Unavailable": [
+                "No disponible"
+            ],
+            "Uniform": [
+                "Uniforme"
+            ],
+            "Uniform minimum must be smaller than maximum": [
+                "El mínimo de la distribución uniforme debe ser menor que el máximo"
+            ],
+            "Univariate Analysis": [
+                "Análisis univariado"
+            ],
+            "Univariate Data Analysis (Categorical Data)": [
+                "Análisis univariado de datos categóricos"
+            ],
+            "Univariate Data Analysis (Numerical Data)": [
+                "Análisis univariado de datos numéricos"
+            ],
+            "Univariate Data Analysis (Ordinal Data)": [
+                "Análisis univariado de datos ordinales"
+            ],
+            "Unknown discrete distribution": [
+                "Distribución discreta desconocida"
+            ],
+            "Unknown Mann-Whitney output": [
+                "Resultado de Mann-Whitney desconocido"
+            ],
+            "Unknown median confidence-interval method": [
+                "Método desconocido para el intervalo de confianza de la mediana"
+            ],
+            "Unknown normality test": [
+                "Contraste de normalidad desconocido"
+            ],
+            "Unknown regression plot type": [
+                "Tipo de gráfico de regresión desconocido"
+            ],
+            "Upper bound": [
+                "Límite superior"
+            ],
+            "Value": [
+                "Valor"
+            ],
+            "Values": [
+                "Valores"
+            ],
+            "Values and Functions": [
+                "Valores y funciones"
+            ],
+            "Variable": [
+                "Variable"
+            ],
+            "Variable contains infinite values": [
+                "La variable contiene valores infinitos"
+            ],
+            "Variable is not numeric": [
+                "La variable no es numérica"
+            ],
+            "Variables": [
+                "Variables"
+            ],
+            "Variables Descriptives": [
+                "Estadísticos descriptivos de las variables"
+            ],
+            "Variables Medians CIs": [
+                "IC de las medianas de las variables"
+            ],
+            "Variance": [
+                "Varianza"
+            ],
+            "Variation ratio": [
+                "Razón de variación"
+            ],
+            "Violin": [
+                "Violín"
+            ],
+            "Wilcoxon signed rank test": [
+                "Contraste de rangos con signo de Wilcoxon"
+            ],
+            "Wilcoxon signed-rank": [
+                "Rangos con signo de Wilcoxon"
+            ],
+            "Wilcoxon T": [
+                "T de Wilcoxon"
+            ],
+            "Wilcoxon T Test": [
+                "Contraste T de Wilcoxon"
+            ],
+            "Wilcoxon T Test and ES Indices": [
+                "Contraste T de Wilcoxon e índices de tamaño del efecto"
+            ],
+            "Wilson's e": [
+                "e de Wilson"
+            ],
+            "Winsorized mean": [
+                "Media winsorizada"
+            ],
+            "within column": [
+                "por columna"
+            ],
+            "within rows": [
+                "por fila"
+            ],
+            "x": [
+                "x"
+            ],
+            "X variable": [
+                "Variable X"
+            ],
+            "X-axis": [
+                "Eje X"
+            ],
+            "X1 must be a positive number (%s).": [
+                "X1 debe ser un número positivo (%s)."
+            ],
+            "X1 must be between %s and %s (%s).": [
+                "X1 debe estar entre %s y %s (%s)."
+            ],
+            "x1 value": [
+                "Valor de x1"
+            ],
+            "X2 must be a positive number (%s).": [
+                "X2 debe ser un número positivo (%s)."
+            ],
+            "X2 must be between %s and %s (%s).": [
+                "X2 debe estar entre %s y %s (%s)."
+            ],
+            "x2 value": [
+                "Valor de x2"
+            ],
+            "Y variable": [
+                "Variable Y"
+            ],
+            "Y-axis": [
+                "Eje Y"
+            ],
+            "Yule's Q index": [
+                "Índice Q de Yule"
+            ],
+            "Yule's Q index (2x2 tables)": [
+                "Índice Q de Yule (tablas 2×2)"
+            ],
+            "Yule's V index": [
+                "Índice V de Yule"
+            ],
+            "Yule's V index (2x2 tables)": [
+                "Índice V de Yule (tablas 2×2)"
+            ],
+            "Yule's Y index": [
+                "Índice Y de Yule"
+            ],
+            "Yule's Y index (2x2 tables)": [
+                "Índice Y de Yule (tablas 2×2)"
+            ],
+            "Z statistic": [
+                "Estadístico Z"
+            ],
+            "z statistic": [
+                "Estadístico z"
+            ],
+            "η² (k levels)": [
+                "η² (k niveles)"
+            ],
+            "η²_H (Kruskal–Wallis)": [
+                "η²_H (Kruskal–Wallis)"
+            ],
+            "λ (columns)": [
+                "λ (columnas)"
+            ],
+            "λ (rows)": [
+                "λ (filas)"
+            ],
+            "λ (symmetric)": [
+                "λ (simétrica)"
+            ],
+            "τ (columns)": [
+                "τ (columnas)"
+            ],
+            "τ (rows)": [
+                "τ (filas)"
+            ],
+            "τ (symmetric)": [
+                "τ (simétrica)"
+            ],
+            "φ": [
+                "φ"
+            ],
+            "φ index": [
+                "Índice φ"
+            ],
+            "φ²": [
+                "φ²"
+            ],
+            "φ² index": [
+                "Índice φ²"
+            ],
+            "χ²": [
+                "χ²"
+            ],
+            "χ² distribution": [
+                "Distribución χ²"
+            ],
+            "χ² index": [
+                "Índice χ²"
+            ],
+            "ω² (k levels)": [
+                "ω² (k niveles)"
+            ],
+            "plotfrequency\u0004Counts": [
+                "Fr. absolutas"
+            ]
+        }
+    }
+}
