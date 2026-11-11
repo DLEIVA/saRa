@@ -27,17 +27,17 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (cdistros %in% c("expon", "expdist")) parameterNames <- "rate"
         for (parameter in parameterNames)
           if (!is.finite(self$options[[parameter]]) || self$options[[parameter]] <= 0)
-            jmvcore::reject("Scale, rate and degrees of freedom must be positive", code="invalid_distribution_parameters")
+            jmvcore::reject(.("Scale, rate and degrees of freedom must be positive"), code="invalid_distribution_parameters")
         if (cdistros %in% c("unif", "uniform") &&
             (!is.finite(self$options$unifmin) || !is.finite(self$options$unifmax) ||
              self$options$unifmin >= self$options$unifmax))
-          jmvcore::reject("Uniform minimum must be smaller than maximum", code="invalid_distribution_parameters")
+          jmvcore::reject(.("Uniform minimum must be smaller than maximum"), code="invalid_distribution_parameters")
         ContInfoTab <- self$results$ContInfoTab
         Contprobstab <- self$results$Contprobstab
         Contquantstab <- self$results$Contquantstab
         
         if (cdistros=='norm'){
-          cdistroslabel <- 'Normal'
+          cdistroslabel <- .('Normal')
           param1 <- paste('μ:',self$options$mu)
           param2 <- paste('σ:',self$options$sigma)  
           paramlabel <- paste(param1,param2,sep='; ')
@@ -55,11 +55,11 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           param2 <- paste('\u03BD\u2082:',self$options$f2nu)          
           paramlabel <- paste(param1,param2,sep='; ')
         } else if (cdistros=='exp'){
-          cdistroslabel <- 'Exponential'
+          cdistroslabel <- .('Exponential')
           param1 <- paste('\u03bb:',self$options$rate)
           paramlabel <- param1            
         } else if (cdistros=='unif'){
-          cdistroslabel <- 'Uniform'
+          cdistroslabel <- .('Uniform')
           param1 <- paste('\u03b1:',self$options$unifmin)
           param2 <- paste('\u03b2:',self$options$unifmax)
           paramlabel <- paste(param1,param2,sep='; ')            
@@ -235,9 +235,9 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         } else if(cdistros=='exp'){dexp(k,self$options$rate)
         } else if(cdistros=='unif'){dunif(k,self$options$unifmin,self$options$unifmax)}
         
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
+        cdistroslabel <- if (cdistros=='norm'){paste0(.("Normal"),": ")} else if(cdistros=='tdist'){
           't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
+            'F: '} else if(cdistros=='exp'){paste0(.("Exponential"),": ")} else if(cdistros=='unif'){paste0(.("Uniform"),": ")}
         
         p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
           ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
@@ -288,9 +288,9 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         } else if(cdistros=='exp'){pexp(k,self$options$rate)
         } else if(cdistros=='unif'){punif(k,self$options$unifmin,self$options$unifmax)}
       
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
+        cdistroslabel <- if (cdistros=='norm'){paste0(.("Normal"),": ")} else if(cdistros=='tdist'){
           't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
+            'F: '} else if(cdistros=='exp'){paste0(.("Exponential"),": ")} else if(cdistros=='unif'){paste0(.("Uniform"),": ")}
         
         p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
           ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
@@ -349,9 +349,9 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         } else if(cdistros=='exp'){pexp(k,self$options$rate,lower.tail=FALSE)
         } else if(cdistros=='unif'){punif(k,self$options$unifmin,self$options$unifmax,lower.tail=FALSE)}
         
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
+        cdistroslabel <- if (cdistros=='norm'){paste0(.("Normal"),": ")} else if(cdistros=='tdist'){
           't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
+            'F: '} else if(cdistros=='exp'){paste0(.("Exponential"),": ")} else if(cdistros=='unif'){paste0(.("Uniform"),": ")}
         
         
         p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
@@ -402,9 +402,9 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
             data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
         
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
+        cdistroslabel <- if (cdistros=='norm'){paste0(.("Normal"),": ")} else if(cdistros=='tdist'){
           't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
+            'F: '} else if(cdistros=='exp'){paste0(.("Exponential"),": ")} else if(cdistros=='unif'){paste0(.("Uniform"),": ")}
         
         k1 <- private$.getcontX1value() 
         k2 <- private$.getcontX2value()
@@ -472,9 +472,9 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
             data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
         
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
+        cdistroslabel <- if (cdistros=='norm'){paste0(.("Normal"),": ")} else if(cdistros=='tdist'){
           't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
+            'F: '} else if(cdistros=='exp'){paste0(.("Exponential"),": ")} else if(cdistros=='unif'){paste0(.("Uniform"),": ")}
         
         q <- private$.getcontpqvalue()
         
@@ -587,18 +587,15 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
         if(any(is.na(as.numeric(probValues)))){
-          jmvcore::reject(paste0('Random variable values must be a real number (',
-                                 paste0(unlist(strsplit(self$options$contvaluesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$contvaluesfunc, ","))))],collapse=','),').'))          
+          jmvcore::reject(sprintf(.("Random variable values must be a real number (%s).") ,paste0(unlist(strsplit(self$options$contvaluesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$contvaluesfunc, ","))))],collapse=',')))
         }
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(any(probValues < 0)) jmvcore::reject(paste0('Random variable values must be positive (',
-                                                  paste0(probValues[probValues < 0],collapse=','),').')) 
+          if(any(probValues < 0)) jmvcore::reject(sprintf(.("Random variable values must be positive (%s).") ,paste0(probValues[probValues < 0],collapse=',')))
         }
         if(cdistros=='unif'){
           probValues[probValues < self$options$unifmin | probValues > self$options$unifmax]   
           if(any(probValues < self$options$unifmin | probValues > self$options$unifmax)){
-            jmvcore::reject(paste0('Random variable values must be between ',self$options$unifmin,' and ',self$options$unifmax,' (',
-                            paste0(probValues[probValues < self$options$unifmin | probValues > self$options$unifmax],collapse=','),').'))
+            jmvcore::reject(sprintf(.("Random variable values must be between %s and %s (%s).") ,self$options$unifmin,self$options$unifmax,paste0(probValues[probValues < self$options$unifmin | probValues > self$options$unifmax],collapse=',')))
           }
         }
         probValues <- sort(unique(probValues[!is.na(probValues)]))
@@ -609,12 +606,10 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(quantValues) && is.character(quantValues))
           quantValues <- as.numeric(unlist(strsplit(quantValues, ",")))
         if(any(is.na(as.numeric(quantValues)))){
-          jmvcore::reject(paste0('Random variable values must be a real number between 0 and 1(',
-                                 paste0(unlist(strsplit(self$options$contqvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$contqvalues, ","))))],collapse=','),').'))          
+          jmvcore::reject(sprintf(.("Random variable values must be a real number between 0 and 1(%s).") ,paste0(unlist(strsplit(self$options$contqvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$contqvalues, ","))))],collapse=',')))
         }
         if(any(quantValues<0 | quantValues>1)){
-          jmvcore::reject(paste0('Quantile values must be between 0 and 1 (',
-                                 paste0(quantValues[quantValues<0 | quantValues>1],collapse=','),').'))
+          jmvcore::reject(sprintf(.("Quantile values must be between 0 and 1 (%s).") ,paste0(quantValues[quantValues<0 | quantValues>1],collapse=',')))
         }
         quantValues <- sort(unique(quantValues[!is.na(quantValues)]))
         return(quantValues)
@@ -625,12 +620,11 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(ppval) && is.character(ppval))
           ppval <- as.numeric(unlist(strsplit(ppval, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(ppval<0) jmvcore::reject(paste0('Random variable value must be a positive number (',ppval,').')) 
+          if(ppval<0) jmvcore::reject(sprintf(.("Random variable value must be a positive number (%s).") ,ppval))
         }
         if(cdistros=='unif'){
           if(ppval < self$options$unifmin | ppval > self$options$unifmax)  
-            jmvcore::reject(paste0('Random variable value must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
-                                   ppval,').'))           
+            jmvcore::reject(sprintf(.("Random variable value must be between %s and %s (%s).") ,self$options$unifmin,self$options$unifmin,ppval))
         }
         ppval <- unique(ppval[!is.na(ppval)])
         return(ppval)
@@ -641,12 +635,11 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(X1val) && is.character(X1val))
           X1val <- as.numeric(unlist(strsplit(X1val, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(X1val<0) jmvcore::reject(paste0('X1 must be a positive number (',X1val,').'))
+          if(X1val<0) jmvcore::reject(sprintf(.("X1 must be a positive number (%s).") ,X1val))
         }
         if(cdistros=='unif'){
           if(X1val < self$options$unifmin | X1val > self$options$unifmax)  
-            jmvcore::reject(paste0('X1 must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
-                                   X1val,').'))
+            jmvcore::reject(sprintf(.("X1 must be between %s and %s (%s).") ,self$options$unifmin,self$options$unifmin,X1val))
         }
         X1val <- unique(X1val[!is.na(X1val)])[1]
         return(X1val)
@@ -657,12 +650,11 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(X2val) && is.character(X2val))
           X2val <- as.numeric(unlist(strsplit(X2val, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(X2val<0) jmvcore::reject(paste0('X2 must be a positive number (',X2val,').'))
+          if(X2val<0) jmvcore::reject(sprintf(.("X2 must be a positive number (%s).") ,X2val))
         }
         if(cdistros=='unif'){
           if(X2val < self$options$unifmin | X2val > self$options$unifmax)
-          jmvcore::reject(paste0('X2 must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
-          X2val,').'))
+          jmvcore::reject(sprintf(.("X2 must be between %s and %s (%s).") ,self$options$unifmin,self$options$unifmin,X2val))
         }
         X2val <- unique(X2val[!is.na(X2val)])[1]
         return(X2val)

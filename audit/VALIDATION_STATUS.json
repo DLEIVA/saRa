@@ -1,91 +1,133 @@
 {
   "date": "2026-11-11",
-  "candidate_version": "1.0.0",
-  "basis_version": "0.1.2",
-  "audit_version": "0.1.1",
-  "R_syntax_parser": "tree-sitter-language-pack 0.9.0; grammar check, not R execution",
-  "R_files_parsed": 33,
-  "YAML_files_parsed": 39,
-  "testthat_blocks_added": 35,
-  "source_option_visibility_reference_dependency_issues": [],
-  "R_statistical_tests": "PASS — developer-supplied testthat output: 274 expectations; FAIL/WARN/SKIP 0",
-  "jmvtools_build": "PASS — developer confirms compilation and installation",
+  "candidate_version": "1.1.0",
   "submission_target": "jamovi library",
-  "R_CMD_check": "OPTIONAL supplementary diagnostic; NOT RUN",
-  "private_Regression_API_review": "PENDING maintainer review",
-  "jamovi_GUI_and_exports": "Normality and residual plots PASS; independent of moretests; example data opens. Exports/persistence remain historical.",
-  "baseline_user_runtime_evidence": {
-    "reported_date": "2026-10-11",
-    "candidate_version": "1.0.0",
-    "jamovi_version": "2.7.30",
-    "platform": "Linux Flatpak",
-    "testthat_blocks": 26,
-    "build": "PASS: compiler and package installation completed; saRa_1.0.0.jmo written",
-    "module_install": "PASS: Module installed successfully",
-    "R_statistical_tests": "PASS: testthat completed without failures in supplied log",
-    "GUI": "PASS: developer reports modules working; coverage is developer-confirmed, not independently observed here",
-    "exports_and_persistence": "PASS: developer confirms HTML/PDF exports and .omv save/reopen checks on 11 October 2026",
-    "warnings": [
-      "jmvtools unavailable in embedded dependency repository; build nevertheless completed",
-      "fill scale replacement message",
-      "Flatpak DBus/GTK messages and engine ConnectionLostException during installation"
-    ],
-    "R_version": "not recorded in supplied log",
-    "jmvtools_version": "not recorded in supplied log",
-    "evidence_file": "audit/USER_VALIDATION_LOG.md",
-    "scope": "Previous candidate, before the 13 October association/refactoring follow-up. Does not validate these new changes."
-  },
-  "baseline_evidence_scope": "Previous 26-block candidate only; follow-up changes require a fresh run.",
-  "source_base_commit": "4e639ad082b78c4aa868be15d4ca61090d402b71",
-  "source_followup": "regression-nortest-lazy-resolution",
-  "nortest_fix_developer_confirmation": {
-    "date": "2026-11-10",
-    "scope": "Regression add-on: on-demand resolution of bundled nortest without moretests",
-    "result": "PASS — developer confirmation",
-    "developer_statement": "Funciona perfectamente con estas modificaciones.",
-    "implementation": "R/utils.R .saraLoadNamespace; reduced NAMESPACE; nortest retained in DESCRIPTION Imports",
-    "issue_reported_on": [
-      "Windows",
-      "Linux"
-    ],
-    "fixed_platforms": "Not separately enumerated in the confirmation",
-    "testthat_blocks_in_source": 35,
-    "current_testthat_log": "Not supplied with this confirmation",
-    "scope_limit": "Confirms the reported fix works; does not assert a new complete GUI/export or cross-platform acceptance run.",
-    "source_base_commit": "4e639ad082b78c4aa868be15d4ca61090d402b71"
-  },
-  "runtime_evidence_note": "Latest runtime evidence is developer-supplied. Static validation does not execute R. See dated scope limits.",
+  "R_statistical_tests": "PASS — 345 expectations; FAIL/WARN/SKIP 0; 44 blocks",
+  "jmvtools_build": "PASS — developer confirmation",
+  "jamovi_GUI_and_exports": "PASS — GUI, HTML/PDF, sqrt label, .omv save/reopen and English switching confirmed",
   "latest_user_runtime_evidence": {
     "reported_date": "2026-11-11",
-    "candidate_version": "1.0.0",
-    "source_reference_commit": "dafeb60a6004c07090406d5edf80212d3ffe7a49",
-    "source_reference_note": "GitHub main inspected when preparing this record; the exact locally tested checkout hash was not supplied.",
-    "platform": "Windows, inferred from the supplied C:/Users/DLEIVA installation paths",
-    "R_library_series": "4.5, from supplied library and binary download paths; exact R version not supplied",
-    "jamovi_version": "Not supplied for this run",
-    "jmvtools_version": "Not supplied",
+    "candidate_version": "1.1.0",
     "test_command": "testthat::test_local(\".\")",
-    "testthat_blocks_in_source": 35,
+    "test_blocks": 44,
     "test_results": {
       "FAIL": 0,
       "WARN": 0,
       "SKIP": 0,
-      "PASS": 274,
-      "duration_seconds": 13.1
+      "PASS": 345,
+      "duration_seconds": 8.0
     },
-    "test_evidence": "Console output pasted by developer in conversation",
-    "build": "PASS — developer confirms compilation completed",
-    "module_install": "PASS — developer confirms installation completed",
-    "GUI": {
-      "normality_tests": "PASS — developer confirmation",
-      "residual_plots": "PASS — developer confirmation",
-      "independence_from_moretests": "PASS — developer explicitly confirms no dependency on moretests",
-      "example_datasets": "PASS — developer confirms examples open correctly"
+    "contexts": {
+      "audit-statistics": 274,
+      "gui-followup": 40,
+      "i18n-preparation": 31
     },
-    "developer_statement": "Compilado, instalado y comprobado que los contrastes de normalidad y los gráficos de residuos se generan perfectamente y no hay dependencia del paquete moretests.",
-    "informational_messages": [
-      "Scale for fill is already present. Adding another scale for fill, which will replace the existing scale."
-    ],
-    "scope_limit": "Latest runtime evidence is developer-supplied, not independently executed here. Does not assert a fresh Linux/macOS run, every checklist item, or new HTML/PDF/.omv checks. Earlier export/persistence evidence remains historical. Private Regression API review remains pending."
+    "build_install": "PASS — developer confirmed installed candidate works after latest correction",
+    "GUI": "PASS — developer confirms all reported translation, layout and plot issues corrected",
+    "HTML_export": "PASS — developer confirmation",
+    "PDF_export": "PASS — developer confirmation",
+    "sqrt_plot_label": "PASS — root of absolute residual displays correctly in HTML/PDF; GUI previously confirmed",
+    "omv_persistence": "PASS — saved and reopened successfully",
+    "English_language_switch": "PASS — developer confirms continued correct operation",
+    "Spanish_catalog_review": "569 original entries approved in 19 review blocks; later GUI abbreviations explicitly requested; current catalog contains 572 entries",
+    "evidence_source": "Developer-supplied console output and explicit confirmations in conversation",
+    "platform": "Windows (session context); no new separate Linux/macOS validation asserted",
+    "jamovi_version": "Not recorded for this run",
+    "R_version": "Not recorded for this run",
+    "jmvtools_version": "Not recorded for this run",
+    "tested_checkout_commit": "Not supplied; source changes are pending the developer Git commit",
+    "scope_limit": "Validation on the developer setup. Does not establish all-platform compatibility or jamovi Library acceptance. Private Regression API review remains pending."
+  },
+  "private_Regression_API_review": "PENDING maintainer review",
+  "historical_1_0_0_validation_status": {
+    "date": "2026-11-11",
+    "candidate_version": "1.0.0",
+    "basis_version": "0.1.2",
+    "audit_version": "0.1.1",
+    "R_syntax_parser": "tree-sitter-language-pack 0.9.0; grammar check, not R execution",
+    "R_files_parsed": 33,
+    "YAML_files_parsed": 39,
+    "testthat_blocks_added": 35,
+    "source_option_visibility_reference_dependency_issues": [],
+    "R_statistical_tests": "PASS — developer-supplied testthat output: 274 expectations; FAIL/WARN/SKIP 0",
+    "jmvtools_build": "PASS — developer confirms compilation and installation",
+    "submission_target": "jamovi library",
+    "R_CMD_check": "OPTIONAL supplementary diagnostic; NOT RUN",
+    "private_Regression_API_review": "PENDING maintainer review",
+    "jamovi_GUI_and_exports": "Normality and residual plots PASS; independent of moretests; example data opens. Exports/persistence remain historical.",
+    "baseline_user_runtime_evidence": {
+      "reported_date": "2026-10-11",
+      "candidate_version": "1.0.0",
+      "jamovi_version": "2.7.30",
+      "platform": "Linux Flatpak",
+      "testthat_blocks": 26,
+      "build": "PASS: compiler and package installation completed; saRa_1.0.0.jmo written",
+      "module_install": "PASS: Module installed successfully",
+      "R_statistical_tests": "PASS: testthat completed without failures in supplied log",
+      "GUI": "PASS: developer reports modules working; coverage is developer-confirmed, not independently observed here",
+      "exports_and_persistence": "PASS: developer confirms HTML/PDF exports and .omv save/reopen checks on 11 October 2026",
+      "warnings": [
+        "jmvtools unavailable in embedded dependency repository; build nevertheless completed",
+        "fill scale replacement message",
+        "Flatpak DBus/GTK messages and engine ConnectionLostException during installation"
+      ],
+      "R_version": "not recorded in supplied log",
+      "jmvtools_version": "not recorded in supplied log",
+      "evidence_file": "audit/USER_VALIDATION_LOG.md",
+      "scope": "Previous candidate, before the 13 October association/refactoring follow-up. Does not validate these new changes."
+    },
+    "baseline_evidence_scope": "Previous 26-block candidate only; follow-up changes require a fresh run.",
+    "source_base_commit": "4e639ad082b78c4aa868be15d4ca61090d402b71",
+    "source_followup": "regression-nortest-lazy-resolution",
+    "nortest_fix_developer_confirmation": {
+      "date": "2026-11-10",
+      "scope": "Regression add-on: on-demand resolution of bundled nortest without moretests",
+      "result": "PASS — developer confirmation",
+      "developer_statement": "Funciona perfectamente con estas modificaciones.",
+      "implementation": "R/utils.R .saraLoadNamespace; reduced NAMESPACE; nortest retained in DESCRIPTION Imports",
+      "issue_reported_on": [
+        "Windows",
+        "Linux"
+      ],
+      "fixed_platforms": "Not separately enumerated in the confirmation",
+      "testthat_blocks_in_source": 35,
+      "current_testthat_log": "Not supplied with this confirmation",
+      "scope_limit": "Confirms the reported fix works; does not assert a new complete GUI/export or cross-platform acceptance run.",
+      "source_base_commit": "4e639ad082b78c4aa868be15d4ca61090d402b71"
+    },
+    "runtime_evidence_note": "Latest runtime evidence is developer-supplied. Static validation does not execute R. See dated scope limits.",
+    "latest_user_runtime_evidence": {
+      "reported_date": "2026-11-11",
+      "candidate_version": "1.0.0",
+      "source_reference_commit": "dafeb60a6004c07090406d5edf80212d3ffe7a49",
+      "source_reference_note": "GitHub main inspected when preparing this record; the exact locally tested checkout hash was not supplied.",
+      "platform": "Windows, inferred from the supplied C:/Users/DLEIVA installation paths",
+      "R_library_series": "4.5, from supplied library and binary download paths; exact R version not supplied",
+      "jamovi_version": "Not supplied for this run",
+      "jmvtools_version": "Not supplied",
+      "test_command": "testthat::test_local(\".\")",
+      "testthat_blocks_in_source": 35,
+      "test_results": {
+        "FAIL": 0,
+        "WARN": 0,
+        "SKIP": 0,
+        "PASS": 274,
+        "duration_seconds": 13.1
+      },
+      "test_evidence": "Console output pasted by developer in conversation",
+      "build": "PASS — developer confirms compilation completed",
+      "module_install": "PASS — developer confirms installation completed",
+      "GUI": {
+        "normality_tests": "PASS — developer confirmation",
+        "residual_plots": "PASS — developer confirmation",
+        "independence_from_moretests": "PASS — developer explicitly confirms no dependency on moretests",
+        "example_datasets": "PASS — developer confirms examples open correctly"
+      },
+      "developer_statement": "Compilado, instalado y comprobado que los contrastes de normalidad y los gráficos de residuos se generan perfectamente y no hay dependencia del paquete moretests.",
+      "informational_messages": [
+        "Scale for fill is already present. Adding another scale for fill, which will replace the existing scale."
+      ],
+      "scope_limit": "Latest runtime evidence is developer-supplied, not independently executed here. Does not assert a fresh Linux/macOS run, every checklist item, or new HTML/PDF/.omv checks. Earlier export/persistence evidence remains historical. Private Regression API review remains pending."
+    }
   }
 }

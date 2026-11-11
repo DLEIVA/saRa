@@ -86,8 +86,8 @@
     private$.owner <- owner
     super$initialize(...)
   }))
-.saraRegressionPlot <- function(state,kind,ggtheme=NULL) {
-  note <- "Note. Plot obtained with the saRa module."
+.saraRegressionPlot <- function(state,kind,ggtheme=NULL,self=NULL) {
+  note <- .saraMessage("Note. Plot obtained with the saRa module.",self)
   finish <- function(p) {
     p <- p+ggplot2::theme_minimal(base_size=12)
     if (!is.null(ggtheme)) p <- p+ggtheme
@@ -95,16 +95,18 @@
                     plot.margin=ggplot2::margin(12,24,12,12))
   }
   if (!is.null(state$error)) return(finish(ggplot2::ggplot()+
-    ggplot2::annotate("text",x=0,y=0,label=state$error)+ggplot2::labs(caption=note)))
+    ggplot2::annotate("text",x=0,y=0,label=.saraMessage(state$error,self))+ggplot2::labs(caption=note)))
   if (kind=="acf") {
     d <- data.frame(lag=state$lag,acf=state$acf)
     bound <- stats::qnorm(.975)/sqrt(state$n)
-    caption <- paste0(note,"\nRow order; ",max(state$lag)," automatic lags.\nApproximate 95% white-noise bounds.")
+    caption <- paste(note,
+      jmvcore::format(.saraMessage("Row order; {lags} automatic lags.",self),lags=max(state$lag)),
+      .saraMessage("Approximate 95% white-noise bounds.",self),sep="\n")
     return(finish(ggplot2::ggplot(d,ggplot2::aes(x=lag,y=acf))+
       ggplot2::geom_segment(ggplot2::aes(xend=lag,yend=0),linewidth=.4)+
       ggplot2::geom_hline(yintercept=0,colour="grey40")+
       ggplot2::geom_hline(yintercept=c(-bound,bound),linetype="dashed",colour="#3366AA")+
-      ggplot2::labs(x="Lag",y="Autocorrelation",caption=caption)+
+      ggplot2::labs(x=.saraMessage("Lag",self),y=.saraMessage("Autocorrelation",self),caption=caption)+
       ggplot2::scale_x_continuous(breaks=pretty(state$lag))))
   }
   d <- state$data
@@ -116,7 +118,7 @@
       ggplot2::geom_point(shape=21,fill="white")+
       ggplot2::geom_smooth(method="loess",formula=y~x,se=FALSE,colour="#C44E52")+
       ggrepel::geom_text_repel(data=labels,ggplot2::aes(label=case),seed=123456,max.time=.5,max.iter=5000)+
-      ggplot2::labs(x="Fitted values",y="Residuals",caption=note)
+      ggplot2::labs(x=.saraMessage("Fitted values",self),y=.saraMessage("Residuals",self),caption=note)
   } else if (kind=="scale") {
     d$spread <- sqrt(abs(d$standardized))
     labels <- d[head(order(d$spread,decreasing=TRUE,na.last=NA),3),,drop=FALSE]
@@ -124,13 +126,13 @@
       ggplot2::geom_point(shape=21,fill="white")+
       ggplot2::geom_smooth(method="loess",formula=y~x,se=FALSE,colour="#C44E52")+
       ggrepel::geom_text_repel(data=labels,ggplot2::aes(label=case),seed=123456,max.time=.5,max.iter=5000)+
-      ggplot2::labs(x="Fitted values",y="Sqrt(|standardized residual|)",caption=note)
+      ggplot2::labs(x=.saraMessage("Fitted values",self),y=.saraMessage("Sqrt(|standardized residual|)",self),caption=note)
   } else if (kind=="qq") {
     d <- d[is.finite(d$standardized),,drop=FALSE]
     p <- finish(ggplot2::ggplot(d,ggplot2::aes(sample=standardized))+
       ggplot2::stat_qq(shape=21,fill="white")+
       ggplot2::stat_qq_line(colour="#C44E52",linetype="dashed")+
-      ggplot2::labs(x="Theoretical normal quantiles",y="Standardized residual quantiles",caption=note))
+      ggplot2::labs(x=.saraMessage("Theoretical normal quantiles",self),y=.saraMessage("Standardized residual quantiles",self),caption=note))
     histogram <- ggplot2::ggplot(d,ggplot2::aes(x=standardized))+
       ggplot2::geom_histogram(bins=15,fill="lightblue",colour="grey30")+
       ggplot2::theme_minimal(base_size=8)+ggplot2::labs(x=NULL,y=NULL)
@@ -141,31 +143,31 @@
       ggplot2::geom_hline(yintercept=c(-2,0,2),linetype="dashed",colour="grey50")+
       ggplot2::geom_vline(xintercept=c(2,3)*state$rank/state$n,linetype="dashed",colour="grey50")+
       ggplot2::geom_point(ggplot2::aes(size=cook,fill=cook),shape=21,alpha=.7)+
-      ggplot2::scale_size_area(max_size=15,name="Cook's D")+
+      ggplot2::scale_size_area(max_size=15,name=.saraMessage("Cook's D",self))+
       ggrepel::geom_text_repel(data=labels,ggplot2::aes(label=case),seed=123456,max.time=.5,max.iter=5000)+
-      ggplot2::labs(x="Leverage (hat value)",y="Studentized residuals",caption=note)
+      ggplot2::labs(x=.saraMessage("Leverage (hat value)",self),y=.saraMessage("Studentized residuals",self),caption=note)
   } else stop("Unknown regression plot type")
   p <- finish(p)
   # jamovi's global theme includes discrete palette scales. Cook's D is numeric,
   # so its continuous fill scale must be applied after the supplied theme.
   if (kind=="influence") p <- p+ggplot2::scale_fill_gradient(
-    low="white",high="#3366AA",name="Cook's D")
+    low="white",high="#3366AA",name=.saraMessage("Cook's D",self))
   p
 }
 
 # Draw inside the callback: jamovi otherwise prints the returned ggplot outside
 # its render try block, which can leave the image without a resource path.
-.saraDrawRegressionPlot <- function(state,ggtheme=NULL) {
+.saraDrawRegressionPlot <- function(state,ggtheme=NULL,self=NULL) {
   tryCatch({
     if (is.null(state)) stop("Plot data unavailable. Reselect Residual plots to refresh.")
-    plot <- .saraRegressionPlot(state$values,state$kind,ggtheme)
+    plot <- .saraRegressionPlot(state$values,state$kind,ggtheme,self=self)
     print(plot)
     TRUE
   },error=function(e) {
-    message <- paste(strwrap(paste("Plot could not be drawn:",conditionMessage(e)),width=65),collapse="\n")
+    message <- paste(strwrap(jmvcore::format(.saraMessage("Plot could not be drawn: {message}",self),message=.saraMessage(conditionMessage(e),self)),width=65),collapse="\n")
     graphics::plot.new()
     graphics::text(.5,.55,message,cex=.85)
-    graphics::text(.5,.15,"Note. Plot obtained with the saRa module.",cex=.8)
+    graphics::text(.5,.15,.saraMessage("Note. Plot obtained with the saRa module.",self),cex=.8)
     TRUE
   })
 }

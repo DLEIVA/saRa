@@ -63,13 +63,13 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             ciResult <- try(suppressWarnings(.saraMedianIntervals(
               pairsData,self$options$ciMethodps,confInt,self$options$numR)),silent=TRUE)
             if (!jmvcore::isError(ciResult)) cimed <- ciResult
-            else cismedTable$addFootnote(rowKey=pair, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
+            else cismedTable$addFootnote(rowKey=pair, 'cilMed[1]', .saraMessage(jmvcore::extractErrorMessage(ciResult),self))
           }
           cihl <- rep(NaN, 3)
           if (self$options$ciHLps) {
             hlResult <- try(suppressWarnings(.saraHodgesLehmann(column1,column2,paired=TRUE,conf.level=confInt)), silent=TRUE)
             if (!jmvcore::isError(hlResult)) cihl <- hlResult
-            else cishlTable$addFootnote(rowKey=pair, 'hlestimate', jmvcore::extractErrorMessage(hlResult))
+            else cishlTable$addFootnote(rowKey=pair, 'hlestimate', .saraMessage(jmvcore::extractErrorMessage(hlResult),self))
           }
 
           if (is.factor(column1) || is.factor(column2)) {
@@ -148,7 +148,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }          
           
           if (self$options$descps) {
-            categories <- c("Positive differences", "Negative differences", "Tied pairs")
+            categories <- c(.("Positive differences"), .("Negative differences"), .("Tied pairs"))
             counts <- c(np, nn, nt)
             averages <- c(RankAp, RankAn, NaN)
             sums <- c(RankSp, RankSn, NaN)
@@ -205,7 +205,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> \u2260 0", .("Measure 1 - Measure 2")))
         
         if(self$options$ciMediansps & self$options$ciMethodps=='boot')
-          cisMed$setNote("numR", jmvcore::format(paste0("Number of replicates in Bootstrap CI(s): ",reps)))
+          cisMed$setNote("numR", jmvcore::format(sprintf(.("Number of replicates in Bootstrap CI(s): %s") ,reps)))
         
         pairs <- self$options$pairs
         descTable <- self$results$descps
@@ -234,7 +234,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       },
       .desc=function(image, ggtheme, theme, ...) {
         label <- jmvcore::format(.("Median ({ciWidth}% CI)"),ciWidth=self$options$ciWidthps)
-        .saraDrawMedianPlot(image$state,label,ggtheme=ggtheme,theme=theme)
+        .saraDrawMedianPlot(image$state,label,ggtheme=ggtheme,theme=theme,self=self)
       }
     )
 )

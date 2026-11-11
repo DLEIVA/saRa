@@ -106,6 +106,7 @@ test_that("ordinal values and requested inner ranges use stored values", {
   opts <- setNames(as.list(rep(FALSE,23)), c("median","mode","trimean","avquartile",
      "midrange","range","iqr","qd","mad","rcv","min","max","q1","q2","q3",
      "pc","irange","h1","h3","k2","k3","n","missing"))
+  opts$translate <- function(text,n=1) text
   opts$median <- TRUE; opts$min <- TRUE; opts$max <- TRUE; opts$range <- TRUE
   opts$iqr <- TRUE; opts$irange <- TRUE; opts$NPerc <- 90
   environment(method) <- list2env(list(self=list(options=opts)),parent=asNamespace("saRa"))
@@ -202,7 +203,9 @@ test_that("regression add-on leaves incomplete and disabled analyses alone", {
     makeActiveBinding("models",function(value) stop("Incomplete models were requested"),parent)
     methods <- cls$private_methods
     context <- new.env(parent=asNamespace("saRa"))
-    context$self <- list(parent=parent)
+    # Real jmvcore::.() uses self$options$translate; keep English in this fixture.
+  context$self <- list(parent=parent,
+    options=list(translate=function(text,n=1) text))
     context$private <- new.env(parent=emptyenv())
     for (name in c(".getModelTerms",".isReady",".enabled",".table")) {
       method <- methods[[name]]
@@ -232,7 +235,9 @@ test_that("regression tables explicitly create their rows before filling", {
     public=list(dep="y",norm=TRUE,durbin=FALSE,resPlots=FALSE,blocks=list("x")))$new()
   cls <- getFromNamespace("linRegClass","saRa")
   context <- new.env(parent=asNamespace("saRa"))
-  context$self <- list(parent=parent)
+  # Real jmvcore::.() uses self$options$translate; keep English in this fixture.
+  context$self <- list(parent=parent,
+    options=list(translate=function(text,n=1) text))
   context$private <- new.env(parent=emptyenv())
   for (name in c(".getModelTerms",".isReady",".enabled",".table")) {
     method <- cls$private_methods[[name]]
@@ -396,7 +401,8 @@ test_that("internal Q-Q calculations preserve 0.1.2 pointwise bands", {
 
 test_that("grouped normality populates rows after header-only initialization", {
   opts <- list(vars=c("x","y"),groupBy="g",chisqtest=FALSE,kstest=FALSE,
-    swtest=TRUE,adtest=FALSE,lillietest=FALSE,sftest=FALSE,cvmtest=FALSE)
+    swtest=TRUE,adtest=FALSE,lillietest=FALSE,sftest=FALSE,cvmtest=FALSE,
+    translate=function(text,n=1) text)
   table <- jmvcore::Table$new(options=jmvcore::Options$new(),name="normality",
     columns=list(list(name="depvar",type="text"),list(name="group",type="text"),
       list(name="stat[swtest]",type="number"),list(name="p[swtest]",type="number")))
@@ -447,7 +453,8 @@ test_that("ordinal inner-range column metadata stays aligned at fractional cover
   cls <- getFromNamespace("ordSummaryClass","saRa")
   for (coverage in c(50,90,99)) {
     context <- new.env(parent=asNamespace("saRa"))
-    context$self <- list(options=list(pc=FALSE,irange=TRUE,NPerc=coverage))
+    context$self <- list(options=list(pc=FALSE,irange=TRUE,NPerc=coverage,
+      translate=function(text,n=1) text))
     context$private <- new.env(parent=emptyenv())
     context$private$colArgs <- list(name=paste0("s",1:17),title=rep("Statistic",17),
       type=rep("number",17),visible=rep("(n)",17))

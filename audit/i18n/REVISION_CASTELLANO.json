@@ -1,0 +1,3092 @@
+{
+  "catalog": "jamovi/i18n/es.po",
+  "blocks": [
+    {
+      "range": [
+        1,
+        30
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto",
+      "entries": [
+        {
+          "number": 1,
+          "msgid": "{ciWidth}% Confidence Interval",
+          "msgstr": "Intervalo de confianza del {ciWidth}%"
+        },
+        {
+          "number": 2,
+          "msgid": "{n} pair(s) of values were tied",
+          "msgstr": "Se observaron empates en {n} pares de valores"
+        },
+        {
+          "number": 3,
+          "msgid": "{title} - Model {model}",
+          "msgstr": "{title} - Modelo {model}"
+        },
+        {
+          "number": 4,
+          "msgid": "# categories (0: automatic detection)",
+          "msgstr": "N.º de categorías (0: detección automática)"
+        },
+        {
+          "number": 5,
+          "msgid": "%",
+          "msgstr": "%"
+        },
+        {
+          "number": 6,
+          "msgid": "% of data",
+          "msgstr": "% de datos"
+        },
+        {
+          "number": 7,
+          "msgid": "% of total",
+          "msgstr": "% del total"
+        },
+        {
+          "number": 8,
+          "msgid": "% of Total",
+          "msgstr": "% del total"
+        },
+        {
+          "number": 9,
+          "msgid": "% trim",
+          "msgstr": "% de recorte"
+        },
+        {
+          "number": 10,
+          "msgid": "% winsor",
+          "msgstr": "% de winsorización"
+        },
+        {
+          "number": 11,
+          "msgid": "% within column",
+          "msgstr": "% por columna"
+        },
+        {
+          "number": 12,
+          "msgid": "% within row",
+          "msgstr": "% por fila"
+        },
+        {
+          "number": 13,
+          "msgid": "%s%% Inner range",
+          "msgstr": "Rango interno del %s%%"
+        },
+        {
+          "number": 14,
+          "msgid": "%s%% inner range",
+          "msgstr": "Rango interno del %s%%"
+        },
+        {
+          "number": 15,
+          "msgid": "%s%% trimmed mean",
+          "msgstr": "Media recortada al %s%%"
+        },
+        {
+          "number": 16,
+          "msgid": "%s%% winsorized mean",
+          "msgstr": "Media winsorizada al %s%%"
+        },
+        {
+          "number": 17,
+          "msgid": "0",
+          "msgstr": "0"
+        },
+        {
+          "number": 18,
+          "msgid": "0.5",
+          "msgstr": "0.5"
+        },
+        {
+          "number": 19,
+          "msgid": "25,50,75",
+          "msgstr": "25,50,75"
+        },
+        {
+          "number": 20,
+          "msgid": "A basic course on Statistics in jamovi. Basically based on jmv package, the add-in includes a suite of (univariate and bivariate) descriptive methods  for nominal, ordinal, and numeric variables. The add-in also incorporates a module of probability distributions, continuous and discrete, to be used in a Statistics course. This package is primarily thought and developed to be useable within the jamovi statistical spreadsheet (see <https://www.jamovi.org> for more information).",
+          "msgstr": "Herramientas para un curso básico de estadística en jamovi. Basado principalmente en el paquete jmv, el módulo incluye métodos descriptivos univariados y bivariados para variables nominales, ordinales y numéricas. También incorpora distribuciones de probabilidad continuas y discretas para su uso docente. Este paquete está diseñado principalmente para utilizarse en el programa estadístico jamovi (véase <https://www.jamovi.org> para más información)."
+        },
+        {
+          "number": 21,
+          "msgid": "A dataset on attitudes towards immigration",
+          "msgstr": "Datos sobre actitudes hacia la inmigración"
+        },
+        {
+          "number": 22,
+          "msgid": "A dataset on NEO-FFI",
+          "msgstr": "Datos del NEO-FFI"
+        },
+        {
+          "number": 23,
+          "msgid": "A dataset on personal beliefs",
+          "msgstr": "Datos sobre creencias personales"
+        },
+        {
+          "number": 24,
+          "msgid": "A dataset to illustrate linear regression",
+          "msgstr": "Datos para ilustrar la regresión lineal"
+        },
+        {
+          "number": 25,
+          "msgid": "A dataset to illustrate polynomial regression",
+          "msgstr": "Datos para ilustrar la regresión polinómica"
+        },
+        {
+          "number": 26,
+          "msgid": "A dataset to illustrate simple mediation models",
+          "msgstr": "Datos para ilustrar modelos de mediación simple"
+        },
+        {
+          "number": 27,
+          "msgid": "A frequencies table",
+          "msgstr": "Tabla de frecuencias"
+        },
+        {
+          "number": 28,
+          "msgid": "a table containing confidence interval estimates for HL estimator",
+          "msgstr": "Tabla de intervalos de confianza del estimador de Hodges-Lehmann"
+        },
+        {
+          "number": 29,
+          "msgid": "a table containing confidence interval estimates for the medians",
+          "msgstr": "Tabla de intervalos de confianza de las medianas"
+        },
+        {
+          "number": 30,
+          "msgid": "a table containing the group descriptives",
+          "msgstr": "Tabla de estadísticos descriptivos por grupo"
+        }
+      ]
+    },
+    {
+      "range": [
+        31,
+        60
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto",
+      "entries": [
+        {
+          "number": 31,
+          "msgid": "a table containing the Mann-Whitney U test results",
+          "msgstr": "Tabla de resultados del contraste U de Mann-Whitney"
+        },
+        {
+          "number": 32,
+          "msgid": "a table containing the Wilcoxon T test results",
+          "msgstr": "Tabla de resultados del contraste T de Wilcoxon"
+        },
+        {
+          "number": 33,
+          "msgid": "A table for the normality tests",
+          "msgstr": "Tabla de contrastes de normalidad"
+        },
+        {
+          "number": 34,
+          "msgid": "A table of different bivariate association indicators",
+          "msgstr": "Tabla de índices de asociación bivariada"
+        },
+        {
+          "number": 35,
+          "msgid": "A table of different effect size indicators",
+          "msgstr": "Tabla de índices de tamaño del efecto"
+        },
+        {
+          "number": 36,
+          "msgid": "A table of different prediction error indicators",
+          "msgstr": "Tabla de índices de error de predicción"
+        },
+        {
+          "number": 37,
+          "msgid": "a table of proportions",
+          "msgstr": "Tabla de proporciones"
+        },
+        {
+          "number": 38,
+          "msgid": "A table of the descriptive statistics",
+          "msgstr": "Tabla de estadísticos descriptivos"
+        },
+        {
+          "number": 39,
+          "msgid": "a table with a summary for all possible comparisons",
+          "msgstr": "Tabla resumen de todas las comparaciones posibles"
+        },
+        {
+          "number": 40,
+          "msgid": "A table with probabilities for selected distributions",
+          "msgstr": "Tabla de probabilidades de las distribuciones seleccionadas"
+        },
+        {
+          "number": 41,
+          "msgid": "A table with quantiles for selected distributions",
+          "msgstr": "Tabla de cuantiles de las distribuciones seleccionadas"
+        },
+        {
+          "number": 42,
+          "msgid": "All observations are tied",
+          "msgstr": "Todas las observaciones están empatadas"
+        },
+        {
+          "number": 43,
+          "msgid": "Alluvial plot",
+          "msgstr": "Gráfico aluvial"
+        },
+        {
+          "number": 44,
+          "msgid": "Alluvial Plot",
+          "msgstr": "Gráfico aluvial"
+        },
+        {
+          "number": 45,
+          "msgid": "Alternative hypothesis",
+          "msgstr": "Hipótesis alternativa"
+        },
+        {
+          "number": 46,
+          "msgid": "Alternative Hypothesis",
+          "msgstr": "Hipótesis alternativa"
+        },
+        {
+          "number": 47,
+          "msgid": "An array of descriptive plots",
+          "msgstr": "Conjunto de gráficos descriptivos"
+        },
+        {
+          "number": 48,
+          "msgid": "an array of groups of plots",
+          "msgstr": "Conjunto de grupos de gráficos"
+        },
+        {
+          "number": 49,
+          "msgid": "Anderson-Darling test",
+          "msgstr": "Contraste de Anderson-Darling"
+        },
+        {
+          "number": 50,
+          "msgid": "Approximate 95% white-noise bounds.",
+          "msgstr": "Límites aproximados del 95 % para ruido blanco."
+        },
+        {
+          "number": 51,
+          "msgid": "Association Indices",
+          "msgstr": "Índices de asociación"
+        },
+        {
+          "number": 52,
+          "msgid": "Association indices require at least two observed levels in each variable and complete observations",
+          "msgstr": "Los índices de asociación requieren al menos dos niveles observados en cada variable y observaciones completas"
+        },
+        {
+          "number": 53,
+          "msgid": "attitudes",
+          "msgstr": "attitudes"
+        },
+        {
+          "number": 54,
+          "msgid": "Autocorrelation",
+          "msgstr": "Autocorrelación"
+        },
+        {
+          "number": 55,
+          "msgid": "Average rank",
+          "msgstr": "Rango medio"
+        },
+        {
+          "number": 56,
+          "msgid": "Bar plot",
+          "msgstr": "Gráfico de barras"
+        },
+        {
+          "number": 57,
+          "msgid": "Bar Plot",
+          "msgstr": "Gráfico de barras"
+        },
+        {
+          "number": 58,
+          "msgid": "Bar Plots",
+          "msgstr": "Gráficos de barras"
+        },
+        {
+          "number": 59,
+          "msgid": "Bar type",
+          "msgstr": "Tipo de barras"
+        },
+        {
+          "number": 60,
+          "msgid": "beliefs",
+          "msgstr": "beliefs"
+        }
+      ]
+    },
+    {
+      "range": [
+        61,
+        90
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto",
+      "entries": [
+        {
+          "number": 61,
+          "msgid": "Binomial",
+          "msgstr": "Binomial"
+        },
+        {
+          "number": 62,
+          "msgid": "Binomial size must be a non-negative integer and probability between 0 and 1",
+          "msgstr": "El número de ensayos binomiales debe ser un entero no negativo y la probabilidad debe estar entre 0 y 1"
+        },
+        {
+          "number": 63,
+          "msgid": "Bivariate Analysis",
+          "msgstr": "Análisis bivariado"
+        },
+        {
+          "number": 64,
+          "msgid": "Bivariate Data Analysis",
+          "msgstr": "Análisis de datos bivariados"
+        },
+        {
+          "number": 65,
+          "msgid": "Bivariate Data Analysis (Categorical Data)",
+          "msgstr": "Análisis bivariado de datos categóricos"
+        },
+        {
+          "number": 66,
+          "msgid": "Bivariate Data Analysis (Mixed Data)",
+          "msgstr": "Análisis bivariado de datos mixtos"
+        },
+        {
+          "number": 67,
+          "msgid": "Bivariate Data Analysis (Numerical Data)",
+          "msgstr": "Análisis bivariado de datos numéricos"
+        },
+        {
+          "number": 68,
+          "msgid": "Bivariate Data Analysis (Ordinal Data)",
+          "msgstr": "Análisis bivariado de datos ordinales"
+        },
+        {
+          "number": 69,
+          "msgid": "Blau",
+          "msgstr": "Blau"
+        },
+        {
+          "number": 70,
+          "msgid": "Bootstrap",
+          "msgstr": "Bootstrap"
+        },
+        {
+          "number": 71,
+          "msgid": "Bootstrap Durbin-Watson tests are available for unweighted OLS models only.",
+          "msgstr": "Los contrastes de Durbin-Watson por bootstrap solo están disponibles para modelos de mínimos cuadrados ordinarios sin ponderación."
+        },
+        {
+          "number": 72,
+          "msgid": "Box plot",
+          "msgstr": "Diagrama de caja"
+        },
+        {
+          "number": 73,
+          "msgid": "Box Plots",
+          "msgstr": "Diagramas de caja"
+        },
+        {
+          "number": 74,
+          "msgid": "Boxplots",
+          "msgstr": "Diagramas de caja"
+        },
+        {
+          "number": 75,
+          "msgid": "Case",
+          "msgstr": "Caso"
+        },
+        {
+          "number": 76,
+          "msgid": "Categorical Data",
+          "msgstr": "Datos categóricos"
+        },
+        {
+          "number": 77,
+          "msgid": "Cells",
+          "msgstr": "Celdas"
+        },
+        {
+          "number": 78,
+          "msgid": "Central",
+          "msgstr": "Central"
+        },
+        {
+          "number": 79,
+          "msgid": "Central Tendency",
+          "msgstr": "Tendencia central"
+        },
+        {
+          "number": 80,
+          "msgid": "Chuprov's index",
+          "msgstr": "Índice de Chuprov"
+        },
+        {
+          "number": 81,
+          "msgid": "Coefficient of variation (CV)",
+          "msgstr": "Coeficiente de variación (CV)"
+        },
+        {
+          "number": 82,
+          "msgid": "Cohen's d",
+          "msgstr": "d de Cohen"
+        },
+        {
+          "number": 83,
+          "msgid": "Cohen's d (2 levels)",
+          "msgstr": "d de Cohen (2 niveles)"
+        },
+        {
+          "number": 84,
+          "msgid": "Column",
+          "msgstr": "Columna"
+        },
+        {
+          "number": 85,
+          "msgid": "Columns",
+          "msgstr": "Columnas"
+        },
+        {
+          "number": 86,
+          "msgid": "compute f statistic.",
+          "msgstr": "Calcular el estadístico f."
+        },
+        {
+          "number": 87,
+          "msgid": "compute probability of superiority index.",
+          "msgstr": "Calcular el índice de probabilidad de superioridad."
+        },
+        {
+          "number": 88,
+          "msgid": "compute rank biserial correlation.",
+          "msgstr": "Calcular la correlación biserial de rangos."
+        },
+        {
+          "number": 89,
+          "msgid": "Concordant pairs",
+          "msgstr": "Pares concordantes"
+        },
+        {
+          "number": 90,
+          "msgid": "Confidence Intervals",
+          "msgstr": "Intervalos de confianza"
+        }
+      ]
+    },
+    {
+      "range": [
+        91,
+        120
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto",
+      "entries": [
+        {
+          "number": 91,
+          "msgid": "Confidence level",
+          "msgstr": "Nivel de confianza"
+        },
+        {
+          "number": 92,
+          "msgid": "Confidence level must be between zero and one",
+          "msgstr": "El nivel de confianza debe estar entre cero y uno"
+        },
+        {
+          "number": 93,
+          "msgid": "Contingency index",
+          "msgstr": "Coeficiente de contingencia"
+        },
+        {
+          "number": 94,
+          "msgid": "Contingency Tables",
+          "msgstr": "Tablas de contingencia"
+        },
+        {
+          "number": 95,
+          "msgid": "Continuous Distributions",
+          "msgstr": "Distribuciones continuas"
+        },
+        {
+          "number": 96,
+          "msgid": "Cook's D",
+          "msgstr": "D de Cook"
+        },
+        {
+          "number": 97,
+          "msgid": "Counts",
+          "msgstr": "Frecuencias absolutas"
+        },
+        {
+          "number": 98,
+          "msgid": "Covariance",
+          "msgstr": "Covarianza"
+        },
+        {
+          "number": 99,
+          "msgid": "Cramér–von Mises test",
+          "msgstr": "Contraste de Cramér–von Mises"
+        },
+        {
+          "number": 100,
+          "msgid": "Cramér's V",
+          "msgstr": "V de Cramér"
+        },
+        {
+          "number": 101,
+          "msgid": "Cramér's V index",
+          "msgstr": "Índice V de Cramér"
+        },
+        {
+          "number": 102,
+          "msgid": "Cumulative %",
+          "msgstr": "% acumulado"
+        },
+        {
+          "number": 103,
+          "msgid": "Cumulative counts",
+          "msgstr": "Frecuencias absolutas acumuladas"
+        },
+        {
+          "number": 104,
+          "msgid": "Cumulative distribution function (Pr(X ≤ x))",
+          "msgstr": "Función de distribución acumulada (Pr(X ≤ x))"
+        },
+        {
+          "number": 105,
+          "msgid": "Cumulative Distribution Function Plot",
+          "msgstr": "Gráfico de la función de distribución acumulada"
+        },
+        {
+          "number": 106,
+          "msgid": "Cumulative percent (%)",
+          "msgstr": "Porcentaje acumulado (%)"
+        },
+        {
+          "number": 107,
+          "msgid": "Cumulative probability",
+          "msgstr": "Probabilidad acumulada"
+        },
+        {
+          "number": 108,
+          "msgid": "Cumulative proportions",
+          "msgstr": "Proporciones acumuladas"
+        },
+        {
+          "number": 109,
+          "msgid": "CV",
+          "msgstr": "CV"
+        },
+        {
+          "number": 110,
+          "msgid": "Data",
+          "msgstr": "Datos"
+        },
+        {
+          "number": 111,
+          "msgid": "Densities",
+          "msgstr": "Densidades"
+        },
+        {
+          "number": 112,
+          "msgid": "Densities/Probabilities Table",
+          "msgstr": "Tabla de densidades y probabilidades"
+        },
+        {
+          "number": 113,
+          "msgid": "density",
+          "msgstr": "Densidad"
+        },
+        {
+          "number": 114,
+          "msgid": "Density",
+          "msgstr": "Densidad"
+        },
+        {
+          "number": 115,
+          "msgid": "Dependent Variables",
+          "msgstr": "Variables dependientes"
+        },
+        {
+          "number": 116,
+          "msgid": "Descriptive Analyses",
+          "msgstr": "Análisis descriptivos"
+        },
+        {
+          "number": 117,
+          "msgid": "Descriptives",
+          "msgstr": "Estadísticos descriptivos"
+        },
+        {
+          "number": 118,
+          "msgid": "descriptives plot",
+          "msgstr": "Gráfico descriptivo"
+        },
+        {
+          "number": 119,
+          "msgid": "Descriptives Plots",
+          "msgstr": "Gráficos descriptivos"
+        },
+        {
+          "number": 120,
+          "msgid": "Descriptives plots",
+          "msgstr": "Gráficos descriptivos"
+        }
+      ]
+    },
+    {
+      "range": [
+        121,
+        150
+      ],
+      "status": "approved_with_corrections",
+      "corrections": {
+        "132": "Donut",
+        "137": "Gráfico FDEA",
+        "138": "Gráficos FDEA",
+        "142": "Excluir casos según análisis",
+        "143": "Excluir casos según lista de variables"
+      },
+      "entries": [
+        {
+          "number": 121,
+          "msgid": "Descriptives Table",
+          "msgstr": "Tabla de estadísticos descriptivos"
+        },
+        {
+          "number": 122,
+          "msgid": "df (ν)",
+          "msgstr": "gl (ν)"
+        },
+        {
+          "number": 123,
+          "msgid": "df denominator (ν2)",
+          "msgstr": "gl del denominador (ν2)"
+        },
+        {
+          "number": 124,
+          "msgid": "df numerator (ν1)",
+          "msgstr": "gl del numerador (ν1)"
+        },
+        {
+          "number": 125,
+          "msgid": "Differences",
+          "msgstr": "Diferencias"
+        },
+        {
+          "number": 126,
+          "msgid": "Discordant pairs",
+          "msgstr": "Pares discordantes"
+        },
+        {
+          "number": 127,
+          "msgid": "Discrete Distributions",
+          "msgstr": "Distribuciones discretas"
+        },
+        {
+          "number": 128,
+          "msgid": "Dispersion",
+          "msgstr": "Dispersión"
+        },
+        {
+          "number": 129,
+          "msgid": "Distribution",
+          "msgstr": "Distribución"
+        },
+        {
+          "number": 130,
+          "msgid": "Distribution Information",
+          "msgstr": "Información de la distribución"
+        },
+        {
+          "number": 131,
+          "msgid": "Distributions",
+          "msgstr": "Distribuciones"
+        },
+        {
+          "number": 132,
+          "msgid": "Doughnut",
+          "msgstr": "Donut"
+        },
+        {
+          "number": 133,
+          "msgid": "Draws",
+          "msgstr": "Extracciones"
+        },
+        {
+          "number": 134,
+          "msgid": "Durbin-Watson Tests by Lag",
+          "msgstr": "Contrastes de Durbin-Watson por retardo"
+        },
+        {
+          "number": 135,
+          "msgid": "Durbin-Watson tests require a fitted model with finite, non-zero residuals.",
+          "msgstr": "Los contrastes de Durbin-Watson requieren un modelo ajustado con residuos finitos y no todos nulos."
+        },
+        {
+          "number": 136,
+          "msgid": "ECDF",
+          "msgstr": "FDEA"
+        },
+        {
+          "number": 137,
+          "msgid": "ECDF plot",
+          "msgstr": "Gráfico FDEA"
+        },
+        {
+          "number": 138,
+          "msgid": "ECDF Plots",
+          "msgstr": "Gráficos FDEA"
+        },
+        {
+          "number": 139,
+          "msgid": "Effect Size",
+          "msgstr": "Tamaño del efecto"
+        },
+        {
+          "number": 140,
+          "msgid": "Effect Size Indices",
+          "msgstr": "Índices de tamaño del efecto"
+        },
+        {
+          "number": 141,
+          "msgid": "Exact",
+          "msgstr": "Exacto"
+        },
+        {
+          "number": 142,
+          "msgid": "Exclude cases analysis by analysis",
+          "msgstr": "Excluir casos según análisis"
+        },
+        {
+          "number": 143,
+          "msgid": "Exclude cases listwise",
+          "msgstr": "Excluir casos según lista de variables"
+        },
+        {
+          "number": 144,
+          "msgid": "Expected",
+          "msgstr": "Esperadas"
+        },
+        {
+          "number": 145,
+          "msgid": "Expected counts",
+          "msgstr": "Frecuencias esperadas"
+        },
+        {
+          "number": 146,
+          "msgid": "Exponential",
+          "msgstr": "Exponencial"
+        },
+        {
+          "number": 147,
+          "msgid": "F distribution",
+          "msgstr": "Distribución F"
+        },
+        {
+          "number": 148,
+          "msgid": "f statistic",
+          "msgstr": "Estadístico f"
+        },
+        {
+          "number": 149,
+          "msgid": "f(x)",
+          "msgstr": "f(x)"
+        },
+        {
+          "number": 150,
+          "msgid": "Failures",
+          "msgstr": "Fracasos"
+        }
+      ]
+    },
+    {
+      "range": [
+        151,
+        180
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto",
+      "entries": [
+        {
+          "number": 151,
+          "msgid": "Fisher's γ₁",
+          "msgstr": "γ₁ de Fisher"
+        },
+        {
+          "number": 152,
+          "msgid": "Fisher's γ₁ (skewness)",
+          "msgstr": "γ₁ de Fisher (asimetría)"
+        },
+        {
+          "number": 153,
+          "msgid": "Fisher's γ₂",
+          "msgstr": "γ₂ de Fisher"
+        },
+        {
+          "number": 154,
+          "msgid": "Fisher's γ₂ (kurtosis)",
+          "msgstr": "γ₂ de Fisher (curtosis)"
+        },
+        {
+          "number": 155,
+          "msgid": "Fitted values",
+          "msgstr": "Valores ajustados"
+        },
+        {
+          "number": 156,
+          "msgid": "Frequencies (Y-axis)",
+          "msgstr": "Frecuencias (eje Y)"
+        },
+        {
+          "number": 157,
+          "msgid": "Frequencies and Odds of $key",
+          "msgstr": "Frecuencias y odds de $key"
+        },
+        {
+          "number": 158,
+          "msgid": "Frequencies Distribution",
+          "msgstr": "Distribución de frecuencias"
+        },
+        {
+          "number": 159,
+          "msgid": "Frequency and odds tables",
+          "msgstr": "Tablas de frecuencias y odds"
+        },
+        {
+          "number": 160,
+          "msgid": "Frequency distribution",
+          "msgstr": "Distribución de frecuencias"
+        },
+        {
+          "number": 161,
+          "msgid": "Geometric",
+          "msgstr": "Geométrica"
+        },
+        {
+          "number": 162,
+          "msgid": "Geometric mean",
+          "msgstr": "Media geométrica"
+        },
+        {
+          "number": 163,
+          "msgid": "Geometric mean can only be computed with positive values (>0)",
+          "msgstr": "La media geométrica solo puede calcularse con valores positivos (>0)"
+        },
+        {
+          "number": 164,
+          "msgid": "Geometric probability must be greater than 0 and at most 1",
+          "msgstr": "La probabilidad de la distribución geométrica debe ser mayor que 0 y menor o igual que 1"
+        },
+        {
+          "number": 165,
+          "msgid": "Geometric standard deviation",
+          "msgstr": "Desviación típica geométrica"
+        },
+        {
+          "number": 166,
+          "msgid": "Geometric std. deviation can only be computed with positive values (>0)",
+          "msgstr": "La desviación típica geométrica solo puede calcularse con valores positivos (>0)"
+        },
+        {
+          "number": 167,
+          "msgid": "ginzberg",
+          "msgstr": "ginzberg"
+        },
+        {
+          "number": 168,
+          "msgid": "Goodman-Kruskal λ (A/B)",
+          "msgstr": "λ de Goodman-Kruskal (A/B)"
+        },
+        {
+          "number": 169,
+          "msgid": "Goodman-Kruskal λ (B/A)",
+          "msgstr": "λ de Goodman-Kruskal (B/A)"
+        },
+        {
+          "number": 170,
+          "msgid": "Goodman-Kruskal λ (symmetric)",
+          "msgstr": "λ de Goodman-Kruskal (simétrica)"
+        },
+        {
+          "number": 171,
+          "msgid": "Goodman-Kruskal τ (A/B)",
+          "msgstr": "τ de Goodman-Kruskal (A/B)"
+        },
+        {
+          "number": 172,
+          "msgid": "Goodman-Kruskal τ (B/A)",
+          "msgstr": "τ de Goodman-Kruskal (B/A)"
+        },
+        {
+          "number": 173,
+          "msgid": "Goodman-Kruskal τ (symmetric)",
+          "msgstr": "τ de Goodman-Kruskal (simétrica)"
+        },
+        {
+          "number": 174,
+          "msgid": "Goodman-Kruskal's γ",
+          "msgstr": "γ de Goodman-Kruskal"
+        },
+        {
+          "number": 175,
+          "msgid": "Group",
+          "msgstr": "Grupo"
+        },
+        {
+          "number": 176,
+          "msgid": "Group 1",
+          "msgstr": "Grupo 1"
+        },
+        {
+          "number": 177,
+          "msgid": "Group 1 < Group 2",
+          "msgstr": "Grupo 1 < Grupo 2"
+        },
+        {
+          "number": 178,
+          "msgid": "Group 1 ≠ Group 2",
+          "msgstr": "Grupo 1 ≠ Grupo 2"
+        },
+        {
+          "number": 179,
+          "msgid": "Group 1 > Group 2",
+          "msgstr": "Grupo 1 > Grupo 2"
+        },
+        {
+          "number": 180,
+          "msgid": "Group 2",
+          "msgstr": "Grupo 2"
+        }
+      ]
+    },
+    {
+      "range": [
+        181,
+        210
+      ],
+      "status": "approved_with_corrections",
+      "corrections": {
+        "192": "Heatmap"
+      },
+      "entries": [
+        {
+          "number": 181,
+          "msgid": "Group by",
+          "msgstr": "Agrupar por"
+        },
+        {
+          "number": 182,
+          "msgid": "Group by (optional)",
+          "msgstr": "Agrupar por (opcional)"
+        },
+        {
+          "number": 183,
+          "msgid": "Group median confidence intervals",
+          "msgstr": "Intervalos de confianza de las medianas de los grupos"
+        },
+        {
+          "number": 184,
+          "msgid": "Grouping Variable",
+          "msgstr": "Variable de agrupación"
+        },
+        {
+          "number": 185,
+          "msgid": "Grouping variable '{a}' has less than 2 levels after missing values are excluded",
+          "msgstr": "La variable de agrupación «{a}» tiene menos de 2 niveles tras excluir los valores perdidos"
+        },
+        {
+          "number": 186,
+          "msgid": "Grouping variable '{a}' must have exactly 2 levels",
+          "msgstr": "La variable de agrupación «{a}» debe tener exactamente 2 niveles"
+        },
+        {
+          "number": 187,
+          "msgid": "Grouping variable '{a}' must not also be a dependent variable",
+          "msgstr": "La variable de agrupación «{a}» no puede ser también una variable dependiente"
+        },
+        {
+          "number": 188,
+          "msgid": "Grouping variable must not also be a dependent variable",
+          "msgstr": "La variable de agrupación no puede ser también una variable dependiente"
+        },
+        {
+          "number": 189,
+          "msgid": "Groups Descriptives",
+          "msgstr": "Estadísticos descriptivos por grupos"
+        },
+        {
+          "number": 190,
+          "msgid": "H1 (skewness)",
+          "msgstr": "H1 (asimetría)"
+        },
+        {
+          "number": 191,
+          "msgid": "H3 (skewness)",
+          "msgstr": "H3 (asimetría)"
+        },
+        {
+          "number": 192,
+          "msgid": "Heatmap",
+          "msgstr": "Heatmap"
+        },
+        {
+          "number": 193,
+          "msgid": "Heteroskedasticity Tests",
+          "msgstr": "Contrastes de heterocedasticidad"
+        },
+        {
+          "number": 194,
+          "msgid": "Histogram",
+          "msgstr": "Histograma"
+        },
+        {
+          "number": 195,
+          "msgid": "Histograms",
+          "msgstr": "Histogramas"
+        },
+        {
+          "number": 196,
+          "msgid": "Hodges-Lehmann (difference in location)",
+          "msgstr": "Hodges-Lehmann (diferencia de localización)"
+        },
+        {
+          "number": 197,
+          "msgid": "Hodges-Lehmann (pseudo-median)",
+          "msgstr": "Hodges-Lehmann (pseudomediana)"
+        },
+        {
+          "number": 198,
+          "msgid": "Hodges-Lehmann estimator",
+          "msgstr": "Estimador de Hodges-Lehmann"
+        },
+        {
+          "number": 199,
+          "msgid": "Hodges-Lehmann Estimator CIs",
+          "msgstr": "IC del estimador de Hodges-Lehmann"
+        },
+        {
+          "number": 200,
+          "msgid": "Hypergeometric",
+          "msgstr": "Hipergeométrica"
+        },
+        {
+          "number": 201,
+          "msgid": "Hypergeometric counts must be non-negative integers, the population positive, and draws no larger than the population",
+          "msgstr": "Los recuentos hipergeométricos deben ser enteros no negativos, el tamaño de la población debe ser positivo y el número de extracciones no puede superar el tamaño de la población"
+        },
+        {
+          "number": 202,
+          "msgid": "Hypothesis",
+          "msgstr": "Hipótesis"
+        },
+        {
+          "number": 203,
+          "msgid": "Index of qualitative variation (IQV)",
+          "msgstr": "Índice de variación cualitativa (IVC)"
+        },
+        {
+          "number": 204,
+          "msgid": "Indices can only be computed for 2x2 tables.",
+          "msgstr": "Estos índices solo pueden calcularse para tablas 2×2."
+        },
+        {
+          "number": 205,
+          "msgid": "Infinite paired differences are not supported",
+          "msgstr": "No se admiten diferencias pareadas infinitas"
+        },
+        {
+          "number": 206,
+          "msgid": "Infinite values are not supported",
+          "msgstr": "No se admiten valores infinitos"
+        },
+        {
+          "number": 207,
+          "msgid": "Influence Indices (Noteworthy Cases)",
+          "msgstr": "Índices de influencia (casos destacados)"
+        },
+        {
+          "number": 208,
+          "msgid": "Influence Plot",
+          "msgstr": "Gráfico de influencia"
+        },
+        {
+          "number": 209,
+          "msgid": "Inner fence",
+          "msgstr": "Límite interior"
+        },
+        {
+          "number": 210,
+          "msgid": "Inner range",
+          "msgstr": "Rango interno"
+        }
+      ]
+    },
+    {
+      "range": [
+        211,
+        240
+      ],
+      "status": "approved_with_corrections",
+      "corrections": {
+        "211": "Rango intercuartílico (IQR)",
+        "213": "IQR",
+        "215": "Desplazamiento aleatorio",
+        "216": "K2 (apuntamiento)",
+        "217": "K3 (apuntamiento)",
+        "237": "Lollipop",
+        "239": "MAD"
+      },
+      "interpretation_note": "Developer wrote 221 and 213 for IQR; interpreted as 211 and 213. Entry 221 (Kendall tau-c) left unchanged; interpretation stated to developer.",
+      "entries": [
+        {
+          "number": 211,
+          "msgid": "Interquartile range (IQR)",
+          "msgstr": "Rango intercuartílico (IQR)"
+        },
+        {
+          "number": 212,
+          "msgid": "Inverse of cdf (quantiles)",
+          "msgstr": "Inversa de la función de distribución (cuantiles)"
+        },
+        {
+          "number": 213,
+          "msgid": "IQR",
+          "msgstr": "IQR"
+        },
+        {
+          "number": 214,
+          "msgid": "IQV",
+          "msgstr": "IVC"
+        },
+        {
+          "number": 215,
+          "msgid": "Jittered",
+          "msgstr": "Desplazamiento aleatorio"
+        },
+        {
+          "number": 216,
+          "msgid": "K2 (kurtosis)",
+          "msgstr": "K2 (apuntamiento)"
+        },
+        {
+          "number": 217,
+          "msgid": "K3 (kurtosis)",
+          "msgstr": "K3 (apuntamiento)"
+        },
+        {
+          "number": 218,
+          "msgid": "Kendall's correlation",
+          "msgstr": "Correlación de Kendall"
+        },
+        {
+          "number": 219,
+          "msgid": "Kendall's τ-a",
+          "msgstr": "τ-a de Kendall"
+        },
+        {
+          "number": 220,
+          "msgid": "Kendall's τ-b",
+          "msgstr": "τ-b de Kendall"
+        },
+        {
+          "number": 221,
+          "msgid": "Kendall's τ-c",
+          "msgstr": "τ-c de Kendall"
+        },
+        {
+          "number": 222,
+          "msgid": "Koenker (studentized Breusch-Pagan)",
+          "msgstr": "Koenker (Breusch-Pagan estudentizado)"
+        },
+        {
+          "number": 223,
+          "msgid": "Kolmogorov-Smirnov (Lilliefors)",
+          "msgstr": "Kolmogorov-Smirnov (Lilliefors)"
+        },
+        {
+          "number": 224,
+          "msgid": "Kolmogorov-Smirnov test",
+          "msgstr": "Contraste de Kolmogorov-Smirnov"
+        },
+        {
+          "number": 225,
+          "msgid": "Kolmogorov-Smirnov uses the Lilliefors correction for estimated mean and variance. Residual normality diagnostics.",
+          "msgstr": "Kolmogorov-Smirnov utiliza la corrección de Lilliefors cuando se estiman la media y la varianza. Diagnósticos de normalidad de los residuos."
+        },
+        {
+          "number": 226,
+          "msgid": "Kruskal–Wallis η²_H (k levels)",
+          "msgstr": "η²_H de Kruskal–Wallis (k niveles)"
+        },
+        {
+          "number": 227,
+          "msgid": "Lag",
+          "msgstr": "Retardo"
+        },
+        {
+          "number": 228,
+          "msgid": "Lags 1-10, capped at N-1. Two-sided p-values from residual bootstrapping with 5,000 resamples; seed = 123456. Complete-case row order; p-values are not adjusted across lags.",
+          "msgstr": "Retardos de 1 a 10, limitados a N-1. Valores p bilaterales mediante bootstrap de residuos con 5.000 remuestras; semilla = 123456. Se utiliza el orden de las filas con datos completos; los valores p no se ajustan entre retardos."
+        },
+        {
+          "number": 229,
+          "msgid": "Left",
+          "msgstr": "Izquierda"
+        },
+        {
+          "number": 230,
+          "msgid": "Left tail",
+          "msgstr": "Cola izquierda"
+        },
+        {
+          "number": 231,
+          "msgid": "Less than 20 observations and ties in the groups: p-value might not be adequate",
+          "msgstr": "Hay menos de 20 observaciones y empates en los grupos: el valor p podría no ser adecuado"
+        },
+        {
+          "number": 232,
+          "msgid": "Levels",
+          "msgstr": "Niveles"
+        },
+        {
+          "number": 233,
+          "msgid": "Leverage (hat value)",
+          "msgstr": "Apalancamiento (valor hat)"
+        },
+        {
+          "number": 234,
+          "msgid": "Lilliefors test",
+          "msgstr": "Contraste de Lilliefors"
+        },
+        {
+          "number": 235,
+          "msgid": "Linear",
+          "msgstr": "Lineal"
+        },
+        {
+          "number": 236,
+          "msgid": "linReg",
+          "msgstr": "Regresión lineal"
+        },
+        {
+          "number": 237,
+          "msgid": "Lollipop",
+          "msgstr": "Lollipop"
+        },
+        {
+          "number": 238,
+          "msgid": "Lower bound",
+          "msgstr": "Límite inferior"
+        },
+        {
+          "number": 239,
+          "msgid": "MAD",
+          "msgstr": "MAD"
+        },
+        {
+          "number": 240,
+          "msgid": "Mann-Whitney Test",
+          "msgstr": "Contraste de Mann-Whitney"
+        }
+      ]
+    },
+    {
+      "range": [
+        241,
+        270
+      ],
+      "status": "approved_with_corrections",
+      "corrections": {
+        "264": "Rango medio",
+        "265": "Promedio de cuartiles"
+      },
+      "entries": [
+        {
+          "number": 241,
+          "msgid": "Mann-Whitney U",
+          "msgstr": "U de Mann-Whitney"
+        },
+        {
+          "number": 242,
+          "msgid": "Mann-Whitney U Test and ES Indices",
+          "msgstr": "Contraste U de Mann-Whitney e índices de tamaño del efecto"
+        },
+        {
+          "number": 243,
+          "msgid": "Marginals",
+          "msgstr": "Distribuciones marginales"
+        },
+        {
+          "number": 244,
+          "msgid": "Max",
+          "msgstr": "Máx."
+        },
+        {
+          "number": 245,
+          "msgid": "Maximum",
+          "msgstr": "Máximo"
+        },
+        {
+          "number": 246,
+          "msgid": "Maximum (β)",
+          "msgstr": "Máximo (β)"
+        },
+        {
+          "number": 247,
+          "msgid": "Mean",
+          "msgstr": "Media"
+        },
+        {
+          "number": 248,
+          "msgid": "Mean (λ)",
+          "msgstr": "Media (λ)"
+        },
+        {
+          "number": 249,
+          "msgid": "Mean (μ)",
+          "msgstr": "Media (μ)"
+        },
+        {
+          "number": 250,
+          "msgid": "Mean deviation",
+          "msgstr": "Desviación media"
+        },
+        {
+          "number": 251,
+          "msgid": "Measure 1",
+          "msgstr": "Medida 1"
+        },
+        {
+          "number": 252,
+          "msgid": "Measure 1 - Measure 2",
+          "msgstr": "Medida 1 - Medida 2"
+        },
+        {
+          "number": 253,
+          "msgid": "Measure 1 < Measure 2",
+          "msgstr": "Medida 1 < Medida 2"
+        },
+        {
+          "number": 254,
+          "msgid": "Measure 1 ≠ Measure 2",
+          "msgstr": "Medida 1 ≠ Medida 2"
+        },
+        {
+          "number": 255,
+          "msgid": "Measure 1 > Measure 2",
+          "msgstr": "Medida 1 > Medida 2"
+        },
+        {
+          "number": 256,
+          "msgid": "Measure 2",
+          "msgstr": "Medida 2"
+        },
+        {
+          "number": 257,
+          "msgid": "medData",
+          "msgstr": "medData"
+        },
+        {
+          "number": 258,
+          "msgid": "Median",
+          "msgstr": "Mediana"
+        },
+        {
+          "number": 259,
+          "msgid": "Median ({ciWidth}% CI)",
+          "msgstr": "Mediana (IC del {ciWidth}%)"
+        },
+        {
+          "number": 260,
+          "msgid": "Median absolute deviation (MAD)",
+          "msgstr": "Desviación absoluta mediana (MAD)"
+        },
+        {
+          "number": 261,
+          "msgid": "Median plot values and confidence intervals are not aligned",
+          "msgstr": "Los valores de las medianas y sus intervalos de confianza no están alineados"
+        },
+        {
+          "number": 262,
+          "msgid": "Medians CIs",
+          "msgstr": "IC de las medianas"
+        },
+        {
+          "number": 263,
+          "msgid": "Method",
+          "msgstr": "Método"
+        },
+        {
+          "number": 264,
+          "msgid": "Mid-range",
+          "msgstr": "Rango medio"
+        },
+        {
+          "number": 265,
+          "msgid": "Midhinge",
+          "msgstr": "Promedio de cuartiles"
+        },
+        {
+          "number": 266,
+          "msgid": "Min",
+          "msgstr": "Mín."
+        },
+        {
+          "number": 267,
+          "msgid": "Minimum",
+          "msgstr": "Mínimo"
+        },
+        {
+          "number": 268,
+          "msgid": "Minimum (α)",
+          "msgstr": "Mínimo (α)"
+        },
+        {
+          "number": 269,
+          "msgid": "Miscellanea",
+          "msgstr": "Otros análisis"
+        },
+        {
+          "number": 270,
+          "msgid": "Missing",
+          "msgstr": "Perdidos"
+        }
+      ]
+    },
+    {
+      "range": [
+        271,
+        300
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto.",
+      "entries": [
+        {
+          "number": 271,
+          "msgid": "Missing values",
+          "msgstr": "Valores perdidos"
+        },
+        {
+          "number": 272,
+          "msgid": "Missing Values",
+          "msgstr": "Valores perdidos"
+        },
+        {
+          "number": 273,
+          "msgid": "Mixed Data",
+          "msgstr": "Datos mixtos"
+        },
+        {
+          "number": 274,
+          "msgid": "Mode",
+          "msgstr": "Moda"
+        },
+        {
+          "number": 275,
+          "msgid": "More than one mode exists, only the first is reported",
+          "msgstr": "Existe más de una moda; solo se muestra la primera"
+        },
+        {
+          "number": 276,
+          "msgid": "More than two levels, effect size indicator is not reported",
+          "msgstr": "Hay más de dos niveles: no se informa del índice de tamaño del efecto"
+        },
+        {
+          "number": 277,
+          "msgid": "Mosaic plot",
+          "msgstr": "Gráfico de mosaico"
+        },
+        {
+          "number": 278,
+          "msgid": "N",
+          "msgstr": "N"
+        },
+        {
+          "number": 279,
+          "msgid": "Negative Binomial",
+          "msgstr": "Binomial negativa"
+        },
+        {
+          "number": 280,
+          "msgid": "Negative binomial",
+          "msgstr": "Binomial negativa"
+        },
+        {
+          "number": 281,
+          "msgid": "Negative binomial size must be positive and probability greater than 0 and at most 1",
+          "msgstr": "El parámetro de tamaño de la binomial negativa debe ser positivo y la probabilidad debe ser mayor que 0 y menor o igual que 1"
+        },
+        {
+          "number": 282,
+          "msgid": "Negative differences",
+          "msgstr": "Diferencias negativas"
+        },
+        {
+          "number": 283,
+          "msgid": "neoffi",
+          "msgstr": "neoffi"
+        },
+        {
+          "number": 284,
+          "msgid": "No complete observations are available for the selected variables",
+          "msgstr": "No hay observaciones completas para las variables seleccionadas"
+        },
+        {
+          "number": 285,
+          "msgid": "No finite medians are available for this plot",
+          "msgstr": "No hay medianas finitas disponibles para este gráfico"
+        },
+        {
+          "number": 286,
+          "msgid": "None",
+          "msgstr": "Ninguno"
+        },
+        {
+          "number": 287,
+          "msgid": "Normal",
+          "msgstr": "Normal"
+        },
+        {
+          "number": 288,
+          "msgid": "Normal curve",
+          "msgstr": "Curva normal"
+        },
+        {
+          "number": 289,
+          "msgid": "Normal Curve",
+          "msgstr": "Curva normal"
+        },
+        {
+          "number": 290,
+          "msgid": "Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference.",
+          "msgstr": "Los parámetros de la distribución normal se estiman a partir de estos datos; este valor p no está corregido. Utilice el contraste de Lilliefors para obtener inferencia corregida."
+        },
+        {
+          "number": 291,
+          "msgid": "Normal Q-Q with Residual Histogram",
+          "msgstr": "Gráfico Q–Q normal con histograma de residuos"
+        },
+        {
+          "number": 292,
+          "msgid": "Normality Tests",
+          "msgstr": "Contrastes de normalidad"
+        },
+        {
+          "number": 293,
+          "msgid": "Note. Plot obtained with the saRa module.",
+          "msgstr": "Nota. Gráfico obtenido con el módulo saRa."
+        },
+        {
+          "number": 294,
+          "msgid": "Null hypothesis: constant error variance. GQ: two-sided, ordered by fitted values, split at 50%, no central omission. HMC: ordered by fitted values, split at 50%; 5,000 simulations, seed 123456. BP statistic is chi-square, GQ is F; HMC is a residual sum-of-squares fraction.",
+          "msgstr": "Hipótesis nula: varianza constante de los errores. GQ: bilateral, ordenado por valores ajustados, división al 50 %, sin omisión central. HMC: ordenado por valores ajustados, división al 50 %; 5.000 simulaciones, semilla 123456. El estadístico BP es ji-cuadrado y el de GQ es F; HMC es una proporción de sumas de cuadrados de los residuos."
+        },
+        {
+          "number": 295,
+          "msgid": "Number of categories",
+          "msgstr": "Número de categorías"
+        },
+        {
+          "number": 296,
+          "msgid": "Number of draws (k)",
+          "msgstr": "Número de extracciones (k)"
+        },
+        {
+          "number": 297,
+          "msgid": "Number of failure states (n)",
+          "msgstr": "Número de elementos de fracaso (n)"
+        },
+        {
+          "number": 298,
+          "msgid": "Number of replicates in Bootstrap CI(s): %s",
+          "msgstr": "Número de réplicas de los IC bootstrap: %s"
+        },
+        {
+          "number": 299,
+          "msgid": "number of replications for Bootstrap CIs.",
+          "msgstr": "Número de réplicas para los IC bootstrap."
+        },
+        {
+          "number": 300,
+          "msgid": "Number of success states (m)",
+          "msgstr": "Número de elementos de éxito (m)"
+        }
+      ]
+    },
+    {
+      "range": [
+        301,
+        330
+      ],
+      "status": "approved_with_corrections",
+      "corrections": {
+        "318": "Descripción de las comparaciones por pares",
+        "319": "Variables por pares"
+      },
+      "entries": [
+        {
+          "number": 301,
+          "msgid": "Number of successes (r)",
+          "msgstr": "Número de éxitos (r)"
+        },
+        {
+          "number": 302,
+          "msgid": "Number of trials",
+          "msgstr": "Número de ensayos"
+        },
+        {
+          "number": 303,
+          "msgid": "Number of trials (n)",
+          "msgstr": "Número de ensayos (n)"
+        },
+        {
+          "number": 304,
+          "msgid": "Numerical Data",
+          "msgstr": "Datos numéricos"
+        },
+        {
+          "number": 305,
+          "msgid": "Observed",
+          "msgstr": "Observadas"
+        },
+        {
+          "number": 306,
+          "msgid": "Observed counts",
+          "msgstr": "Frecuencias observadas"
+        },
+        {
+          "number": 307,
+          "msgid": "Odds",
+          "msgstr": "Odds"
+        },
+        {
+          "number": 308,
+          "msgid": "of total",
+          "msgstr": "del total"
+        },
+        {
+          "number": 309,
+          "msgid": "One or both groups do not contain enough observations",
+          "msgstr": "Uno o ambos grupos no contienen suficientes observaciones"
+        },
+        {
+          "number": 310,
+          "msgid": "One or both variables are not numeric",
+          "msgstr": "Una o ambas variables no son numéricas"
+        },
+        {
+          "number": 311,
+          "msgid": "One or both variables contain infinite values",
+          "msgstr": "Una o ambas variables contienen valores infinitos"
+        },
+        {
+          "number": 312,
+          "msgid": "One or both variables contain no observations",
+          "msgstr": "Una o ambas variables no contienen observaciones"
+        },
+        {
+          "number": 313,
+          "msgid": "One or both variables do not contain enough observations",
+          "msgstr": "Una o ambas variables no contienen suficientes observaciones"
+        },
+        {
+          "number": 314,
+          "msgid": "Ordinal Data",
+          "msgstr": "Datos ordinales"
+        },
+        {
+          "number": 315,
+          "msgid": "Ordinal summaries require numeric stored values.",
+          "msgstr": "Los resúmenes ordinales requieren que los valores almacenados sean numéricos."
+        },
+        {
+          "number": 316,
+          "msgid": "Outer fence",
+          "msgstr": "Límite exterior"
+        },
+        {
+          "number": 317,
+          "msgid": "p",
+          "msgstr": "p"
+        },
+        {
+          "number": 318,
+          "msgid": "Paired Comparisons Description",
+          "msgstr": "Descripción de las comparaciones por pares"
+        },
+        {
+          "number": 319,
+          "msgid": "Paired Variables",
+          "msgstr": "Variables por pares"
+        },
+        {
+          "number": 320,
+          "msgid": "Parameter(s)",
+          "msgstr": "Parámetro(s)"
+        },
+        {
+          "number": 321,
+          "msgid": "Pareto plot",
+          "msgstr": "Gráfico de Pareto"
+        },
+        {
+          "number": 322,
+          "msgid": "Pearson χ² test",
+          "msgstr": "Contraste χ² de Pearson"
+        },
+        {
+          "number": 323,
+          "msgid": "Pearson's contingency index",
+          "msgstr": "Coeficiente de contingencia de Pearson"
+        },
+        {
+          "number": 324,
+          "msgid": "Pearson's correlation",
+          "msgstr": "Correlación de Pearson"
+        },
+        {
+          "number": 325,
+          "msgid": "Pearson's r",
+          "msgstr": "r de Pearson"
+        },
+        {
+          "number": 326,
+          "msgid": "Pearson's R²",
+          "msgstr": "R² de Pearson"
+        },
+        {
+          "number": 327,
+          "msgid": "Pearson's β₁",
+          "msgstr": "β₁ de Pearson"
+        },
+        {
+          "number": 328,
+          "msgid": "Pearson's β₁ (skewness)",
+          "msgstr": "β₁ de Pearson (asimetría)"
+        },
+        {
+          "number": 329,
+          "msgid": "Pearson's β₂",
+          "msgstr": "β₂ de Pearson"
+        },
+        {
+          "number": 330,
+          "msgid": "Pearson's β₂ (kurtosis)",
+          "msgstr": "β₂ de Pearson (apuntamiento)"
+        }
+      ]
+    },
+    {
+      "range": [
+        331,
+        360
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto",
+      "entries": [
+        {
+          "number": 331,
+          "msgid": "Pearson's β₂ (Kurtosis)",
+          "msgstr": "β₂ de Pearson (apuntamiento)"
+        },
+        {
+          "number": 332,
+          "msgid": "Percentage of data",
+          "msgstr": "Porcentaje de datos"
+        },
+        {
+          "number": 333,
+          "msgid": "Percentage of trimmed data",
+          "msgstr": "Porcentaje de datos recortados"
+        },
+        {
+          "number": 334,
+          "msgid": "Percentage of winsorized data",
+          "msgstr": "Porcentaje de datos winsorizados"
+        },
+        {
+          "number": 335,
+          "msgid": "Percentages",
+          "msgstr": "Porcentajes"
+        },
+        {
+          "number": 336,
+          "msgid": "Percentages of total",
+          "msgstr": "Porcentajes del total"
+        },
+        {
+          "number": 337,
+          "msgid": "Percentages within %s",
+          "msgstr": "Porcentajes dentro de %s"
+        },
+        {
+          "number": 338,
+          "msgid": "Percentile %s",
+          "msgstr": "Percentil %s"
+        },
+        {
+          "number": 339,
+          "msgid": "Percentile values",
+          "msgstr": "Valores de los percentiles"
+        },
+        {
+          "number": 340,
+          "msgid": "Percentiles",
+          "msgstr": "Percentiles"
+        },
+        {
+          "number": 341,
+          "msgid": "Percentiles must be numbers between 0 and 100",
+          "msgstr": "Los percentiles deben ser números entre 0 y 100"
+        },
+        {
+          "number": 342,
+          "msgid": "perform Anderson-Darling tests.",
+          "msgstr": "Realizar contrastes de Anderson-Darling."
+        },
+        {
+          "number": 343,
+          "msgid": "perform asymptotic Z tests.",
+          "msgstr": "Realizar contrastes Z asintóticos."
+        },
+        {
+          "number": 344,
+          "msgid": "perform Cramér–von Mises tests.",
+          "msgstr": "Realizar contrastes de Cramér–von Mises."
+        },
+        {
+          "number": 345,
+          "msgid": "perform Kolmogorov-Smirnov tests.",
+          "msgstr": "Realizar contrastes de Kolmogorov-Smirnov."
+        },
+        {
+          "number": 346,
+          "msgid": "perform Lilliefors tests.",
+          "msgstr": "Realizar contrastes de Lilliefors."
+        },
+        {
+          "number": 347,
+          "msgid": "perform Mann-Whitney's U t-tests.",
+          "msgstr": "Realizar contrastes U de Mann-Whitney."
+        },
+        {
+          "number": 348,
+          "msgid": "perform Pearson's χ² tests.",
+          "msgstr": "Realizar contrastes χ² de Pearson."
+        },
+        {
+          "number": 349,
+          "msgid": "perform Shapiro-Francia tests.",
+          "msgstr": "Realizar contrastes de Shapiro-Francia."
+        },
+        {
+          "number": 350,
+          "msgid": "perform Shapiro-Wilk tests.",
+          "msgstr": "Realizar contrastes de Shapiro-Wilk."
+        },
+        {
+          "number": 351,
+          "msgid": "perform Wilcoxon signed rank tests.",
+          "msgstr": "Realizar contrastes de rangos con signo de Wilcoxon."
+        },
+        {
+          "number": 352,
+          "msgid": "phobia",
+          "msgstr": "phobia"
+        },
+        {
+          "number": 353,
+          "msgid": "Pie chart",
+          "msgstr": "Gráfico de sectores"
+        },
+        {
+          "number": 354,
+          "msgid": "Plot could not be drawn: {message}",
+          "msgstr": "No se pudo generar el gráfico: {message}"
+        },
+        {
+          "number": 355,
+          "msgid": "Plot data unavailable. Reselect Residual plots to refresh.",
+          "msgstr": "Los datos del gráfico no están disponibles. Vuelva a seleccionar los gráficos de residuos para actualizarlos."
+        },
+        {
+          "number": 356,
+          "msgid": "Plots",
+          "msgstr": "Gráficos"
+        },
+        {
+          "number": 357,
+          "msgid": "Point-biserial Correlation",
+          "msgstr": "Correlación biserial puntual"
+        },
+        {
+          "number": 358,
+          "msgid": "Point-biserial correlation (2 levels)",
+          "msgstr": "Correlación biserial puntual (2 niveles)"
+        },
+        {
+          "number": 359,
+          "msgid": "Poisson",
+          "msgstr": "Poisson"
+        },
+        {
+          "number": 360,
+          "msgid": "Poisson rate must be non-negative",
+          "msgstr": "La tasa de Poisson debe ser no negativa"
+        }
+      ]
+    },
+    {
+      "range": [
+        361,
+        390
+      ],
+      "status": "approved_with_corrections",
+      "corrections": {
+        "390": "Gráfico de cuantiles"
+      },
+      "entries": [
+        {
+          "number": 361,
+          "msgid": "polynomialReg",
+          "msgstr": "polynomialReg"
+        },
+        {
+          "number": 362,
+          "msgid": "Position",
+          "msgstr": "Posición"
+        },
+        {
+          "number": 363,
+          "msgid": "Positive differences",
+          "msgstr": "Diferencias positivas"
+        },
+        {
+          "number": 364,
+          "msgid": "Pr(X = x)",
+          "msgstr": "Pr(X = x)"
+        },
+        {
+          "number": 365,
+          "msgid": "Pr(X > x)",
+          "msgstr": "Pr(X > x)"
+        },
+        {
+          "number": 366,
+          "msgid": "Pr(X ≤ x)",
+          "msgstr": "Pr(X ≤ x)"
+        },
+        {
+          "number": 367,
+          "msgid": "Pr(x1 ≤ X ≤ x2)",
+          "msgstr": "Pr(x1 ≤ X ≤ x2)"
+        },
+        {
+          "number": 368,
+          "msgid": "Prediction Error Indices",
+          "msgstr": "Índices de error de predicción"
+        },
+        {
+          "number": 369,
+          "msgid": "Prob",
+          "msgstr": "Prob."
+        },
+        {
+          "number": 370,
+          "msgid": "Probabilities Table",
+          "msgstr": "Tabla de probabilidades"
+        },
+        {
+          "number": 371,
+          "msgid": "Probability",
+          "msgstr": "Probabilidad"
+        },
+        {
+          "number": 372,
+          "msgid": "Probability (p)",
+          "msgstr": "Probabilidad (p)"
+        },
+        {
+          "number": 373,
+          "msgid": "Probability density function (f(x))",
+          "msgstr": "Función de densidad de probabilidad (f(x))"
+        },
+        {
+          "number": 374,
+          "msgid": "Probability Density Function Plot",
+          "msgstr": "Gráfico de la función de densidad de probabilidad"
+        },
+        {
+          "number": 375,
+          "msgid": "Probability Interval Plot",
+          "msgstr": "Gráfico de probabilidad de un intervalo"
+        },
+        {
+          "number": 376,
+          "msgid": "Probability mass function (Pr(X = x))",
+          "msgstr": "Función de masa de probabilidad (Pr(X = x))"
+        },
+        {
+          "number": 377,
+          "msgid": "Probability Mass Function Plot",
+          "msgstr": "Gráfico de la función de masa de probabilidad"
+        },
+        {
+          "number": 378,
+          "msgid": "Probability of superiority",
+          "msgstr": "Probabilidad de superioridad"
+        },
+        {
+          "number": 379,
+          "msgid": "Probability of superiority (2 levels)",
+          "msgstr": "Probabilidad de superioridad (2 niveles)"
+        },
+        {
+          "number": 380,
+          "msgid": "Proportions",
+          "msgstr": "Proporciones"
+        },
+        {
+          "number": 381,
+          "msgid": "provide confidence intervals for the Hodges-Lehmann estimator.",
+          "msgstr": "Mostrar intervalos de confianza del estimador de Hodges-Lehmann."
+        },
+        {
+          "number": 382,
+          "msgid": "provide confidence intervals for the medians.",
+          "msgstr": "Mostrar intervalos de confianza de las medianas."
+        },
+        {
+          "number": 383,
+          "msgid": "provide descriptives for each group of measurements.",
+          "msgstr": "Mostrar estadísticos descriptivos para cada grupo de medidas."
+        },
+        {
+          "number": 384,
+          "msgid": "provide descriptives for each group.",
+          "msgstr": "Mostrar estadísticos descriptivos para cada grupo."
+        },
+        {
+          "number": 385,
+          "msgid": "provide descriptives plots.",
+          "msgstr": "Mostrar gráficos descriptivos."
+        },
+        {
+          "number": 386,
+          "msgid": "Q-Q",
+          "msgstr": "Q-Q"
+        },
+        {
+          "number": 387,
+          "msgid": "Q-Q plot",
+          "msgstr": "Gráfico Q-Q"
+        },
+        {
+          "number": 388,
+          "msgid": "Q-Q Plots",
+          "msgstr": "Gráficos Q-Q"
+        },
+        {
+          "number": 389,
+          "msgid": "QD",
+          "msgstr": "DC"
+        },
+        {
+          "number": 390,
+          "msgid": "Quantile (ICDF) Plot",
+          "msgstr": "Gráfico de cuantiles"
+        }
+      ]
+    },
+    {
+      "range": [
+        391,
+        420
+      ],
+      "status": "approved",
+      "developer_statement": "Tdoo correcto",
+      "entries": [
+        {
+          "number": 391,
+          "msgid": "Quantile value",
+          "msgstr": "Valor del cuantil"
+        },
+        {
+          "number": 392,
+          "msgid": "Quantile values",
+          "msgstr": "Valores de los cuantiles"
+        },
+        {
+          "number": 393,
+          "msgid": "Quantile values must be between 0 and 1 (%s).",
+          "msgstr": "Los valores de los cuantiles deben estar entre 0 y 1 (%s)."
+        },
+        {
+          "number": 394,
+          "msgid": "Quantile values must be real numbers between 0 and 1 (%s).",
+          "msgstr": "Los valores de los cuantiles deben ser números reales entre 0 y 1 (%s)."
+        },
+        {
+          "number": 395,
+          "msgid": "Quantiles Table",
+          "msgstr": "Tabla de cuantiles"
+        },
+        {
+          "number": 396,
+          "msgid": "Quartile 1 (Q1)",
+          "msgstr": "Cuartil 1 (Q1)"
+        },
+        {
+          "number": 397,
+          "msgid": "Quartile 2 (Q2)",
+          "msgstr": "Cuartil 2 (Q2)"
+        },
+        {
+          "number": 398,
+          "msgid": "Quartile 3 (Q3)",
+          "msgstr": "Cuartil 3 (Q3)"
+        },
+        {
+          "number": 399,
+          "msgid": "Quartile coefficient of dispersion",
+          "msgstr": "Coeficiente de dispersión cuartílica"
+        },
+        {
+          "number": 400,
+          "msgid": "Quartile deviation (QD)",
+          "msgstr": "Desviación cuartílica (DC)"
+        },
+        {
+          "number": 401,
+          "msgid": "Quartile dispersion",
+          "msgstr": "Dispersión cuartílica"
+        },
+        {
+          "number": 402,
+          "msgid": "Random variable value",
+          "msgstr": "Valor de la variable aleatoria"
+        },
+        {
+          "number": 403,
+          "msgid": "Random variable value must be a positive number (%s).",
+          "msgstr": "El valor de la variable aleatoria debe ser positivo (%s)."
+        },
+        {
+          "number": 404,
+          "msgid": "Random variable value must be between %s and %s (%s).",
+          "msgstr": "El valor de la variable aleatoria debe estar entre %s y %s (%s)."
+        },
+        {
+          "number": 405,
+          "msgid": "Random variable values",
+          "msgstr": "Valores de la variable aleatoria"
+        },
+        {
+          "number": 406,
+          "msgid": "Random variable values must be a real number (%s).",
+          "msgstr": "Los valores de la variable aleatoria deben ser números reales (%s)."
+        },
+        {
+          "number": 407,
+          "msgid": "Random variable values must be a real number between 0 and 1(%s).",
+          "msgstr": "Los valores de la variable aleatoria deben ser números reales entre 0 y 1 (%s)."
+        },
+        {
+          "number": 408,
+          "msgid": "Random variable values must be between %s and %s (%s).",
+          "msgstr": "Los valores de la variable aleatoria deben estar entre %s y %s (%s)."
+        },
+        {
+          "number": 409,
+          "msgid": "Random variable values must be positive (%s).",
+          "msgstr": "Los valores de la variable aleatoria deben ser positivos (%s)."
+        },
+        {
+          "number": 410,
+          "msgid": "Random variable values must be positive integers (%s).",
+          "msgstr": "Los valores de la variable aleatoria deben ser enteros positivos (%s)."
+        },
+        {
+          "number": 411,
+          "msgid": "Range",
+          "msgstr": "Rango"
+        },
+        {
+          "number": 412,
+          "msgid": "Rank sum",
+          "msgstr": "Suma de rangos"
+        },
+        {
+          "number": 413,
+          "msgid": "Rank-biserial correlation",
+          "msgstr": "Correlación biserial de rangos"
+        },
+        {
+          "number": 414,
+          "msgid": "Rate (λ)",
+          "msgstr": "Tasa (λ)"
+        },
+        {
+          "number": 415,
+          "msgid": "Regression line / curve",
+          "msgstr": "Recta o curva de regresión"
+        },
+        {
+          "number": 416,
+          "msgid": "Replicates",
+          "msgstr": "Réplicas"
+        },
+        {
+          "number": 417,
+          "msgid": "Requires a non-constant variable",
+          "msgstr": "Se requiere una variable no constante"
+        },
+        {
+          "number": 418,
+          "msgid": "Requires at least two non-missing observations",
+          "msgstr": "Se requieren al menos dos observaciones no perdidas"
+        },
+        {
+          "number": 419,
+          "msgid": "Requires finite observations",
+          "msgstr": "Se requieren observaciones finitas"
+        },
+        {
+          "number": 420,
+          "msgid": "Requires two observed groups and finite values",
+          "msgstr": "Se requieren dos grupos observados y valores finitos"
+        }
+      ]
+    },
+    {
+      "range": [
+        421,
+        450
+      ],
+      "status": "approved_with_corrections",
+      "corrections": {
+        "431": "Criterio de car::influencePlot(): casos con los dos mayores valores de |residuo estudentizado|, apalancamiento o distancia de Cook. Las etiquetas indican las filas originales del ajuste. Selección diagnóstica, sin exclusión de casos."
+      },
+      "entries": [
+        {
+          "number": 421,
+          "msgid": "Residual ACF",
+          "msgstr": "FAC de los residuos"
+        },
+        {
+          "number": 422,
+          "msgid": "Residual ACF requires at least two finite, non-constant residuals.",
+          "msgstr": "La FAC de los residuos requiere al menos dos residuos finitos y no constantes."
+        },
+        {
+          "number": 423,
+          "msgid": "Residuals",
+          "msgstr": "Residuos"
+        },
+        {
+          "number": 424,
+          "msgid": "Residuals vs Fitted",
+          "msgstr": "Residuos frente a valores ajustados"
+        },
+        {
+          "number": 425,
+          "msgid": "Right",
+          "msgstr": "Derecha"
+        },
+        {
+          "number": 426,
+          "msgid": "Right tail",
+          "msgstr": "Cola derecha"
+        },
+        {
+          "number": 427,
+          "msgid": "Row",
+          "msgstr": "Fila"
+        },
+        {
+          "number": 428,
+          "msgid": "Row order; {lags} automatic lags.",
+          "msgstr": "Orden de las filas; {lags} retardos seleccionados automáticamente."
+        },
+        {
+          "number": 429,
+          "msgid": "Rows",
+          "msgstr": "Filas"
+        },
+        {
+          "number": 430,
+          "msgid": "Sakoda's index",
+          "msgstr": "Índice de Sakoda"
+        },
+        {
+          "number": 431,
+          "msgid": "Same noteworthy rule as car::influencePlot(): union of the two largest absolute studentized residuals, leverage values and Cook's distances. Case labels identify original fitted rows; selection is diagnostic, not an exclusion rule.",
+          "msgstr": "Criterio de car::influencePlot(): casos con los dos mayores valores de |residuo estudentizado|, apalancamiento o distancia de Cook. Las etiquetas indican las filas originales del ajuste. Selección diagnóstica, sin exclusión de casos."
+        },
+        {
+          "number": 432,
+          "msgid": "Sample Size",
+          "msgstr": "Tamaño muestral"
+        },
+        {
+          "number": 433,
+          "msgid": "saRa",
+          "msgstr": "saRa"
+        },
+        {
+          "number": 434,
+          "msgid": "Scale-Location",
+          "msgstr": "Escala-localización"
+        },
+        {
+          "number": 435,
+          "msgid": "Scale, rate and degrees of freedom must be positive",
+          "msgstr": "La escala, la tasa y los grados de libertad deben ser positivos"
+        },
+        {
+          "number": 436,
+          "msgid": "Scatterplot",
+          "msgstr": "Diagrama de dispersión"
+        },
+        {
+          "number": 437,
+          "msgid": "Select a Group by variable",
+          "msgstr": "Seleccione una variable de agrupación"
+        },
+        {
+          "number": 438,
+          "msgid": "Select ordinal variables with ordered levels",
+          "msgstr": "Seleccione variables ordinales con niveles ordenados"
+        },
+        {
+          "number": 439,
+          "msgid": "Shape",
+          "msgstr": "Forma"
+        },
+        {
+          "number": 440,
+          "msgid": "Shapiro-Francia test",
+          "msgstr": "Contraste de Shapiro-Francia"
+        },
+        {
+          "number": 441,
+          "msgid": "Shapiro-Wilk test",
+          "msgstr": "Contraste de Shapiro-Wilk"
+        },
+        {
+          "number": 442,
+          "msgid": "Side by side",
+          "msgstr": "En paralelo"
+        },
+        {
+          "number": 443,
+          "msgid": "Simulated data",
+          "msgstr": "Datos simulados"
+        },
+        {
+          "number": 444,
+          "msgid": "Smooth",
+          "msgstr": "Suavizado"
+        },
+        {
+          "number": 445,
+          "msgid": "Somers' d (columns)",
+          "msgstr": "d de Somers (columnas)"
+        },
+        {
+          "number": 446,
+          "msgid": "Somers' d (rows)",
+          "msgstr": "d de Somers (filas)"
+        },
+        {
+          "number": 447,
+          "msgid": "Somers' d (symmetric)",
+          "msgstr": "d de Somers (simétrica)"
+        },
+        {
+          "number": 448,
+          "msgid": "Spearman's correlation",
+          "msgstr": "Correlación de Spearman"
+        },
+        {
+          "number": 449,
+          "msgid": "Spearman's r",
+          "msgstr": "r de Spearman"
+        },
+        {
+          "number": 450,
+          "msgid": "Spearman's R²",
+          "msgstr": "R² de Spearman"
+        }
+      ]
+    },
+    {
+      "range": [
+        451,
+        480
+      ],
+      "status": "approved",
+      "visual_checks_pending": [
+        {
+          "entry": 452,
+          "text": "√(|residuo tipificado|)",
+          "surfaces": [
+            "jamovi screen",
+            "HTML export",
+            "PDF export"
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "number": 451,
+          "msgid": "Specification Test",
+          "msgstr": "Contraste de especificación"
+        },
+        {
+          "number": 452,
+          "msgid": "Sqrt(|standardized residual|)",
+          "msgstr": "√(|residuo tipificado|)"
+        },
+        {
+          "number": 453,
+          "msgid": "Squared Kendall’s τ",
+          "msgstr": "τ de Kendall al cuadrado"
+        },
+        {
+          "number": 454,
+          "msgid": "Stacked",
+          "msgstr": "Apilado"
+        },
+        {
+          "number": 455,
+          "msgid": "Standard deviation",
+          "msgstr": "Desviación típica"
+        },
+        {
+          "number": 456,
+          "msgid": "Standard error",
+          "msgstr": "Error estándar"
+        },
+        {
+          "number": 457,
+          "msgid": "Standardised values",
+          "msgstr": "Valores tipificados"
+        },
+        {
+          "number": 458,
+          "msgid": "Standardized residual quantiles",
+          "msgstr": "Cuantiles de los residuos tipificados"
+        },
+        {
+          "number": 459,
+          "msgid": "Statistic",
+          "msgstr": "Estadístico"
+        },
+        {
+          "number": 460,
+          "msgid": "Statistical Analyses with R Add-in for Jamovi",
+          "msgstr": "Análisis estadísticos con R para jamovi"
+        },
+        {
+          "number": 461,
+          "msgid": "Statistics",
+          "msgstr": "Estadísticos"
+        },
+        {
+          "number": 462,
+          "msgid": "Statistics and Tests",
+          "msgstr": "Estadísticos y contrastes"
+        },
+        {
+          "number": 463,
+          "msgid": "Std. Deviation (σ)",
+          "msgstr": "Desviación típica (σ)"
+        },
+        {
+          "number": 464,
+          "msgid": "Std. deviation (σ)",
+          "msgstr": "Desviación típica (σ)"
+        },
+        {
+          "number": 465,
+          "msgid": "Studentized residuals",
+          "msgstr": "Residuos estudentizados"
+        },
+        {
+          "number": 466,
+          "msgid": "Successes",
+          "msgstr": "Éxitos"
+        },
+        {
+          "number": 467,
+          "msgid": "Survival function (Pr(X > x))",
+          "msgstr": "Función de supervivencia (Pr(X > x))"
+        },
+        {
+          "number": 468,
+          "msgid": "Survival Function Plot",
+          "msgstr": "Gráfico de la función de supervivencia"
+        },
+        {
+          "number": 469,
+          "msgid": "t distribution",
+          "msgstr": "Distribución t"
+        },
+        {
+          "number": 470,
+          "msgid": "Table obtained with the saRa module.",
+          "msgstr": "Tabla obtenida con el módulo saRa."
+        },
+        {
+          "number": 471,
+          "msgid": "Table obtained with the saRa module. Tests squared and cubed fitted values for functional-form misspecification.",
+          "msgstr": "Tabla obtenida con el módulo saRa. Contrasta la especificación de la forma funcional mediante los valores ajustados elevados al cuadrado y al cubo."
+        },
+        {
+          "number": 472,
+          "msgid": "Tail of the distribution",
+          "msgstr": "Cola de la distribución"
+        },
+        {
+          "number": 473,
+          "msgid": "Teachman",
+          "msgstr": "Teachman"
+        },
+        {
+          "number": 474,
+          "msgid": "Test",
+          "msgstr": "Contraste"
+        },
+        {
+          "number": 475,
+          "msgid": "Tests",
+          "msgstr": "Contrastes"
+        },
+        {
+          "number": 476,
+          "msgid": "The 'group by' variable '{var}' contains no data.",
+          "msgstr": "La variable de agrupación «{var}» no contiene datos."
+        },
+        {
+          "number": 477,
+          "msgid": "The 'group by' variable is required.",
+          "msgstr": "Se requiere una variable de agrupación."
+        },
+        {
+          "number": 478,
+          "msgid": "the alternative hypothesis.",
+          "msgstr": "La hipótesis alternativa."
+        },
+        {
+          "number": 479,
+          "msgid": "the confidence interval width.",
+          "msgstr": "La amplitud del intervalo de confianza."
+        },
+        {
+          "number": 480,
+          "msgid": "the dependent variables -- a separate MW test is performed for each dependent variable specified.",
+          "msgstr": "Variables dependientes: se realiza un contraste de Mann-Whitney para cada variable dependiente seleccionada."
+        }
+      ]
+    },
+    {
+      "range": [
+        481,
+        510
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto, corregiremos el typo en la versión inglesa",
+      "entries": [
+        {
+          "number": 481,
+          "msgid": "the missing value exclusion method. `Analysis by analysis` excludes missing values from each analysis. `Listwise` excludes a row from all analyses if one of its values is missing.",
+          "msgstr": "Método de exclusión de valores perdidos. «Excluir casos según análisis» utiliza los casos completos para las variables de cada análisis. «Excluir casos según lista de variables» excluye una fila de todos los análisis si tiene algún valor perdido en las variables seleccionadas."
+        },
+        {
+          "number": 482,
+          "msgid": "the pairs of measurements -- a separate Wilcoxon signed-rank test is performed for each pair of measurements.",
+          "msgstr": "Pares de medidas: se realiza un contraste de Wilcoxon para cada par."
+        },
+        {
+          "number": 483,
+          "msgid": "the variable specifying the groups; must have 2 levels.",
+          "msgstr": "La variable que identifica los grupos; debe tener 2 niveles."
+        },
+        {
+          "number": 484,
+          "msgid": "Theil's index (A/B)",
+          "msgstr": "Índice de Theil (A/B)"
+        },
+        {
+          "number": 485,
+          "msgid": "Theil's index (B/A)",
+          "msgstr": "Índice de Theil (B/A)"
+        },
+        {
+          "number": 486,
+          "msgid": "Theil's index (symmetric)",
+          "msgstr": "Índice de Theil (simétrico)"
+        },
+        {
+          "number": 487,
+          "msgid": "Theil's U (columns)",
+          "msgstr": "U de Theil (columnas)"
+        },
+        {
+          "number": 488,
+          "msgid": "Theil's U (rows)",
+          "msgstr": "U de Theil (filas)"
+        },
+        {
+          "number": 489,
+          "msgid": "Theil's U (symmetric)",
+          "msgstr": "U de Theil (simétrica)"
+        },
+        {
+          "number": 490,
+          "msgid": "Theoretical normal quantiles",
+          "msgstr": "Cuantiles normales teóricos"
+        },
+        {
+          "number": 491,
+          "msgid": "Theoretical quantiles",
+          "msgstr": "Cuantiles teóricos"
+        },
+        {
+          "number": 492,
+          "msgid": "These parameters require too many plotting points; use less extreme values",
+          "msgstr": "Estos parámetros requieren demasiados puntos para el gráfico; utilice valores menos extremos"
+        },
+        {
+          "number": 493,
+          "msgid": "This diagnostic is available for unweighted OLS models only.",
+          "msgstr": "Este diagnóstico solo está disponible para modelos de mínimos cuadrados ordinarios sin ponderación."
+        },
+        {
+          "number": 494,
+          "msgid": "Tied pairs",
+          "msgstr": "Pares empatados"
+        },
+        {
+          "number": 495,
+          "msgid": "Ties in %s",
+          "msgstr": "Empates en %s"
+        },
+        {
+          "number": 496,
+          "msgid": "Ties in %s and %s",
+          "msgstr": "Empates en %s y %s"
+        },
+        {
+          "number": 497,
+          "msgid": "Total",
+          "msgstr": "Total"
+        },
+        {
+          "number": 498,
+          "msgid": "Trimean",
+          "msgstr": "Trimedia"
+        },
+        {
+          "number": 499,
+          "msgid": "Trimmed mean",
+          "msgstr": "Media recortada"
+        },
+        {
+          "number": 500,
+          "msgid": "Unable to split by a continuous variable",
+          "msgstr": "No se puede agrupar por una variable continua"
+        },
+        {
+          "number": 501,
+          "msgid": "Unavailable",
+          "msgstr": "No disponible"
+        },
+        {
+          "number": 502,
+          "msgid": "Uniform",
+          "msgstr": "Uniforme"
+        },
+        {
+          "number": 503,
+          "msgid": "Uniform minimum must be smaller than maximum",
+          "msgstr": "El mínimo de la distribución uniforme debe ser menor que el máximo"
+        },
+        {
+          "number": 504,
+          "msgid": "Univariate Analysis",
+          "msgstr": "Análisis univariado"
+        },
+        {
+          "number": 505,
+          "msgid": "Univariate Data Analysis (Categorical Data)",
+          "msgstr": "Análisis univariado de datos categóricos"
+        },
+        {
+          "number": 506,
+          "msgid": "Univariate Data Analysis (Numerical Data)",
+          "msgstr": "Análisis univariado de datos numéricos"
+        },
+        {
+          "number": 507,
+          "msgid": "Univariate Data Analysis (Ordinal Data)",
+          "msgstr": "Análisis univariado de datos ordinales"
+        },
+        {
+          "number": 508,
+          "msgid": "Unknown discrete distribution",
+          "msgstr": "Distribución discreta desconocida"
+        },
+        {
+          "number": 509,
+          "msgid": "Unknown Mann-Whitney output",
+          "msgstr": "Resultado de Mann-Whitney desconocido"
+        },
+        {
+          "number": 510,
+          "msgid": "Unknown median confidence-interval method",
+          "msgstr": "Método desconocido para el intervalo de confianza de la mediana"
+        }
+      ],
+      "source_corrections_applied": [
+        {
+          "entry": 482,
+          "file": "jamovi/wilcoxt.a.yaml",
+          "old": "the pairs of measurements -- a separate t-test is performed for each pair of measurements.",
+          "proposed": "the pairs of measurements -- a separate Wilcoxon signed-rank test is performed for each pair of measurements."
+        }
+      ]
+    },
+    {
+      "range": [
+        511,
+        540
+      ],
+      "status": "approved",
+      "developer_statement": "Todo correcto",
+      "entries": [
+        {
+          "number": 511,
+          "msgid": "Unknown normality test",
+          "msgstr": "Contraste de normalidad desconocido"
+        },
+        {
+          "number": 512,
+          "msgid": "Unknown regression plot type",
+          "msgstr": "Tipo de gráfico de regresión desconocido"
+        },
+        {
+          "number": 513,
+          "msgid": "Upper bound",
+          "msgstr": "Límite superior"
+        },
+        {
+          "number": 514,
+          "msgid": "Value",
+          "msgstr": "Valor"
+        },
+        {
+          "number": 515,
+          "msgid": "Values",
+          "msgstr": "Valores"
+        },
+        {
+          "number": 516,
+          "msgid": "Values and Functions",
+          "msgstr": "Valores y funciones"
+        },
+        {
+          "number": 517,
+          "msgid": "Variable",
+          "msgstr": "Variable"
+        },
+        {
+          "number": 518,
+          "msgid": "Variable contains infinite values",
+          "msgstr": "La variable contiene valores infinitos"
+        },
+        {
+          "number": 519,
+          "msgid": "Variable is not numeric",
+          "msgstr": "La variable no es numérica"
+        },
+        {
+          "number": 520,
+          "msgid": "Variables",
+          "msgstr": "Variables"
+        },
+        {
+          "number": 521,
+          "msgid": "Variables Descriptives",
+          "msgstr": "Estadísticos descriptivos de las variables"
+        },
+        {
+          "number": 522,
+          "msgid": "Variables Medians CIs",
+          "msgstr": "IC de las medianas de las variables"
+        },
+        {
+          "number": 523,
+          "msgid": "Variance",
+          "msgstr": "Varianza"
+        },
+        {
+          "number": 524,
+          "msgid": "Variation ratio",
+          "msgstr": "Razón de variación"
+        },
+        {
+          "number": 525,
+          "msgid": "Violin",
+          "msgstr": "Violín"
+        },
+        {
+          "number": 526,
+          "msgid": "Wilcoxon signed rank test",
+          "msgstr": "Contraste de rangos con signo de Wilcoxon"
+        },
+        {
+          "number": 527,
+          "msgid": "Wilcoxon signed-rank",
+          "msgstr": "Rangos con signo de Wilcoxon"
+        },
+        {
+          "number": 528,
+          "msgid": "Wilcoxon T",
+          "msgstr": "T de Wilcoxon"
+        },
+        {
+          "number": 529,
+          "msgid": "Wilcoxon T Test",
+          "msgstr": "Contraste T de Wilcoxon"
+        },
+        {
+          "number": 530,
+          "msgid": "Wilcoxon T Test and ES Indices",
+          "msgstr": "Contraste T de Wilcoxon e índices de tamaño del efecto"
+        },
+        {
+          "number": 531,
+          "msgid": "Wilson's e",
+          "msgstr": "e de Wilson"
+        },
+        {
+          "number": 532,
+          "msgid": "Winsorized mean",
+          "msgstr": "Media winsorizada"
+        },
+        {
+          "number": 533,
+          "msgid": "within column",
+          "msgstr": "por columna"
+        },
+        {
+          "number": 534,
+          "msgid": "within rows",
+          "msgstr": "por fila"
+        },
+        {
+          "number": 535,
+          "msgid": "x",
+          "msgstr": "x"
+        },
+        {
+          "number": 536,
+          "msgid": "X variable",
+          "msgstr": "Variable X"
+        },
+        {
+          "number": 537,
+          "msgid": "X-axis",
+          "msgstr": "Eje X"
+        },
+        {
+          "number": 538,
+          "msgid": "X1 must be a positive number (%s).",
+          "msgstr": "X1 debe ser un número positivo (%s)."
+        },
+        {
+          "number": 539,
+          "msgid": "X1 must be between %s and %s (%s).",
+          "msgstr": "X1 debe estar entre %s y %s (%s)."
+        },
+        {
+          "number": 540,
+          "msgid": "x1 value",
+          "msgstr": "Valor de x1"
+        }
+      ]
+    },
+    {
+      "range": [
+        541,
+        569
+      ],
+      "status": "approved_with_correction",
+      "correction": {
+        "entry": 569,
+        "original": "ω³ (k levels)",
+        "corrected_original": "ω² (k levels)",
+        "corrected_translation": "ω² (k niveles)",
+        "evidence": "R/bivmix.b.R computes effectsize::omega_squared(...,partial=FALSE); table header already uses omega squared."
+      },
+      "entries": [
+        {
+          "number": 541,
+          "msgid": "X2 must be a positive number (%s).",
+          "msgstr": "X2 debe ser un número positivo (%s)."
+        },
+        {
+          "number": 542,
+          "msgid": "X2 must be between %s and %s (%s).",
+          "msgstr": "X2 debe estar entre %s y %s (%s)."
+        },
+        {
+          "number": 543,
+          "msgid": "x2 value",
+          "msgstr": "Valor de x2"
+        },
+        {
+          "number": 544,
+          "msgid": "Y variable",
+          "msgstr": "Variable Y"
+        },
+        {
+          "number": 545,
+          "msgid": "Y-axis",
+          "msgstr": "Eje Y"
+        },
+        {
+          "number": 546,
+          "msgid": "Yule's Q index",
+          "msgstr": "Índice Q de Yule"
+        },
+        {
+          "number": 547,
+          "msgid": "Yule's Q index (2x2 tables)",
+          "msgstr": "Índice Q de Yule (tablas 2×2)"
+        },
+        {
+          "number": 548,
+          "msgid": "Yule's V index",
+          "msgstr": "Índice V de Yule"
+        },
+        {
+          "number": 549,
+          "msgid": "Yule's V index (2x2 tables)",
+          "msgstr": "Índice V de Yule (tablas 2×2)"
+        },
+        {
+          "number": 550,
+          "msgid": "Yule's Y index",
+          "msgstr": "Índice Y de Yule"
+        },
+        {
+          "number": 551,
+          "msgid": "Yule's Y index (2x2 tables)",
+          "msgstr": "Índice Y de Yule (tablas 2×2)"
+        },
+        {
+          "number": 552,
+          "msgid": "Z statistic",
+          "msgstr": "Estadístico Z"
+        },
+        {
+          "number": 553,
+          "msgid": "z statistic",
+          "msgstr": "Estadístico z"
+        },
+        {
+          "number": 554,
+          "msgid": "η² (k levels)",
+          "msgstr": "η² (k niveles)"
+        },
+        {
+          "number": 555,
+          "msgid": "η²_H (Kruskal–Wallis)",
+          "msgstr": "η²_H (Kruskal–Wallis)"
+        },
+        {
+          "number": 556,
+          "msgid": "λ (columns)",
+          "msgstr": "λ (columnas)"
+        },
+        {
+          "number": 557,
+          "msgid": "λ (rows)",
+          "msgstr": "λ (filas)"
+        },
+        {
+          "number": 558,
+          "msgid": "λ (symmetric)",
+          "msgstr": "λ (simétrica)"
+        },
+        {
+          "number": 559,
+          "msgid": "τ (columns)",
+          "msgstr": "τ (columnas)"
+        },
+        {
+          "number": 560,
+          "msgid": "τ (rows)",
+          "msgstr": "τ (filas)"
+        },
+        {
+          "number": 561,
+          "msgid": "τ (symmetric)",
+          "msgstr": "τ (simétrica)"
+        },
+        {
+          "number": 562,
+          "msgid": "φ",
+          "msgstr": "φ"
+        },
+        {
+          "number": 563,
+          "msgid": "φ index",
+          "msgstr": "Índice φ"
+        },
+        {
+          "number": 564,
+          "msgid": "φ²",
+          "msgstr": "φ²"
+        },
+        {
+          "number": 565,
+          "msgid": "φ² index",
+          "msgstr": "Índice φ²"
+        },
+        {
+          "number": 566,
+          "msgid": "χ²",
+          "msgstr": "χ²"
+        },
+        {
+          "number": 567,
+          "msgid": "χ² distribution",
+          "msgstr": "Distribución χ²"
+        },
+        {
+          "number": 568,
+          "msgid": "χ² index",
+          "msgstr": "Índice χ²"
+        },
+        {
+          "number": 569,
+          "msgid": "ω² (k levels)",
+          "msgstr": "ω² (k niveles)"
+        }
+      ]
+    }
+  ],
+  "GUI_followup": "See GUI_FOLLOWUP_2026-11-11.json for developer-requested label abbreviations that supersede the earlier entries in the relevant controls."
+}

@@ -27,7 +27,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data <- self$data
       
       if (!any(complete.cases(data[c(rowVarName, colVarName)])))
-        jmvcore::reject("No complete observations are available for the selected variables", code="no_complete_observations")
+        jmvcore::reject(.("No complete observations are available for the selected variables"), code="no_complete_observations")
 
       freqs <- self$results$freqs
       
@@ -126,7 +126,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       CHI <- if (valid) suppressWarnings(chisq.test(tabla,correct=FALSE)$statistic) else NaN
       if (!valid)
         self$results$asocind$addFootnote(rowKey=1, "v[chiSq]",
-          "Association indices require at least two observed levels in each variable and complete observations")
+          .("Association indices require at least two observed levels in each variable and complete observations"))
       
       yule <- .saraYulePhi(tabla)
 
@@ -146,17 +146,17 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       if ( self$options$Qyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
         asocind$addFootnote(rowNo=1,'v[Qyule]',
-                            "Indices can only be computed for 2x2 tables.")
+                            .("Indices can only be computed for 2x2 tables."))
       }
       
       if ( self$options$Yyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
         asocind$addFootnote(rowNo=1,'v[Yyule]',
-                            "Indices can only be computed for 2x2 tables.")
+                            .("Indices can only be computed for 2x2 tables."))
       }
       
       if ( self$options$Vyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
         asocind$addFootnote(rowNo=1,'v[Vyule]',
-                            "Indices can only be computed for 2x2 tables.")
+                            .("Indices can only be computed for 2x2 tables."))
       }
       
       lambda.a.b <- (sum(apply(tabla,2,max)/sum(tabla)) - max(rowSums(tabla))/
@@ -202,7 +202,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data <- self$data
       
       subNames  <- c('[count]', '[expected]', '[pcRow]', '[pcCol]', '[pcTot]')
-      subTitles <- c(('Observed'), ('Expected'), ('% within row'), ('% within column'), ('% of total'))
+      subTitles <- c((.('Observed')), (.('Expected')), (.('% within row')), (.('% within column')), (.('% of total')))
       visible   <- c('(obs)', '(exp)', '(pcRow)', '(pcCol)', '(pcTot)')
       types     <- c('integer', 'number', 'number', 'number', 'number')
       formats   <- c('', '', 'pc', 'pc', 'pc')      
@@ -320,20 +320,20 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$obs ){
         freqs$addColumn(
           name='.total[count]',
-          title=('Total'),
+          title=(.('Total')),
           type='integer')}
       
       if (self$options$exp) {
         freqs$addColumn(
           name='.total[exp]',
-          title=('Total'),
+          title=(.('Total')),
           type='number')
       }
       
       if (self$options$pcRow) {
         freqs$addColumn(
           name='.total[pcRow]',
-          title=('Total'),
+          title=(.('Total')),
           type='number',
           format='pc')
       }
@@ -341,7 +341,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$pcCol) {
         freqs$addColumn(
           name='.total[pcCol]',
-          title=('Total'),
+          title=(.('Total')),
           type='number',
           format='pc')
       }
@@ -349,7 +349,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$pcTot) {
         freqs$addColumn(
           name='.total[pcTot]',
-          title=('Total'),
+          title=(.('Total')),
           type='number',
           format='pc')
       }
@@ -369,7 +369,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         for (name in colnames(rows)) {
           value <- as.character(rows[i, name])
           if (value == '.total')
-            value <- ('Total')
+            value <- .('Total')
           values[[name]] <- value
         }
         
@@ -426,7 +426,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       image$setSize(width * 1.5, height*1.5)
     },    
-    .barPlot = function(image, ggtheme, theme, ...) {
+    .barPlotObject = function(image, ggtheme, theme, ...) {
       
       if (! self$options$barplot)
         return()
@@ -499,12 +499,13 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     size = 4)}
       
         if (self$options$yaxisPc == "total_pc") {
-          p <- p + ggplot2::labs(y = "Percentages of total")
+          p <- p + ggplot2::labs(y = .("Percentages of total"))
         } else {
-          p <- p + ggplot2::labs(y = paste0("Percentages within ", pctVarName))
+          p <- p + ggplot2::labs(y = sprintf(.("Percentages within %s") ,pctVarName))
         }
       }
       
+      if (self$options$yaxis == "ycounts") p <- p + ggplot2::labs(y=.("Counts"))
       p <- p + ggtheme
       
       return(p)
@@ -537,6 +538,9 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                        split_vertical=FALSE)
     },        
     
+    .barPlot = function(image,ggtheme=NULL,theme=NULL,...) {
+      .saraDrawBivariatePlot(function() private$.barPlotObject(image,ggtheme=ggtheme,theme=theme,...),self=self)
+    },
     #### Helper functions ----
     
     .grid=function(data, incRows=FALSE) {

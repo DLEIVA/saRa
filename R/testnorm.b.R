@@ -13,7 +13,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           groupName <- self$options$groupBy
           variables <- self$options$vars
           if (!is.null(groupName) && groupName %in% variables)
-            jmvcore::reject("Grouping variable must not also be a dependent variable",
+            jmvcore::reject(.("Grouping variable must not also be a dependent variable"),
                             code="a_is_dependent_variable")
           tests <- c("chisqtest","kstest","swtest","adtest",
                      "lillietest","sftest","cvmtest")
@@ -37,13 +37,13 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 pColumn <- paste0("p[", testName, "]")
                 if (inherits(result, "error")) {
                   table$setRow(rowKey=key, setNames(list(NaN, NaN), c(statColumn, pColumn)))
-                  table$addFootnote(rowKey=key, statColumn, conditionMessage(result))
+                  table$addFootnote(rowKey=key, statColumn, .saraMessage(conditionMessage(result),self))
                 } else {
                   table$setRow(rowKey=key, setNames(list(unname(result$statistic), result$p.value), c(statColumn, pColumn)))
                 }
                 if (testName == "kstest")
                   table$addFootnote(rowKey=key, pColumn,
-                    "Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference.")
+                    .("Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference."))
               }
             }
           }
@@ -216,7 +216,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }
           
           plot <- ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[names$x]])) +
-            ggplot2::labs(x=labels$x, y='density') +
+            ggplot2::labs(x=labels$x, y=.('density')) +
             ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
             {if(self$options$hist) ggplot2::geom_histogram(
               ggplot2::aes(y=ggplot2::after_stat(density)),
@@ -239,7 +239,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
     .qq = function(image, ggtheme, theme, ...) {
       if (is.null(image$state)) return(FALSE)
-      .saraQQPlot(self$data, image$state, self$options$groupBy, ggtheme)
+      .saraQQPlot(self$data, image$state, self$options$groupBy, ggtheme,self=self)
     },
         .ecdf = function(image, ggtheme, theme, ...) {
           if (is.null(image$state))
@@ -256,8 +256,8 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             ggplot2::geom_line(ggplot2::aes(y=normal), colour="#7b9ee6") +
             ggplot2::geom_step(ggplot2::aes(y=empirical)) +
             ggplot2::geom_point(ggplot2::aes(y=empirical)) +
-            ggplot2::xlab("Standardised values") +
-            ggplot2::ylab("Cumulative probability") + ggtheme
+            ggplot2::xlab(.("Standardised values")) +
+            ggplot2::ylab(.("Cumulative probability")) + ggtheme
           if (!is.null(groupBy)) plot <- plot + ggplot2::facet_wrap(~ group)
 
           return(plot)

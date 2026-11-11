@@ -1,5 +1,16 @@
 ```
 
+## Latest validation — saRa 1.1.0, 11 November 2026
+
+The developer supplied a complete testthat run: **FAIL 0 | WARN 0 | SKIP 0 | PASS 345**, duration 8.0 seconds, across 44 test blocks (274 audit-statistics, 40 gui-followup and 31 i18n-preparation expectations).
+
+The developer confirms corrected GUI/plots, readable HTML/PDF exports including the square-root residual label, successful .omv save/reopen and correct operation when switching to English. Build/installation and GUI operation were confirmed during the same validation sequence.
+
+This supersedes earlier pending-runtime notes for the 1.1.0 translation candidate. Historical sections retain the state at the date recorded. The exact locally tested commit and app/R/jmvtools versions were not supplied for this run. Separate Linux/macOS compatibility and maintainer review of private Regression APIs are not asserted.
+
+Structured evidence: `audit/i18n/VALIDACION_FINAL_1.1.0.json`.
+
+
 ## Latest runtime validation — 11 November 2026
 
 This section supersedes earlier statements that a fresh 35-block run or build was pending. Historical sections below are retained as dated evidence, not the current validation status.

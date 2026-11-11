@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-11",
+  "candidate_version": "1.1.0",
+  "issue": "Ordinal heatmap and alluvial: selected names with spaces are repaired during as.data.frame.table conversion.",
+  "developer_test_result_before_fix": {
+    "FAIL": 2,
+    "WARN": 0,
+    "SKIP": 0,
+    "PASS": 343,
+    "duration_seconds": 7.8
+  },
+  "correction": "Restore the two original selected variable names and Freq immediately after conversion in both plot builders. Preserve frequency values, test expectations and callbacks.",
+  "test_blocks": 44,
+  "static_syntax": "PASS",
+  "R_runtime_after_fix": "NOT RUN here; developer execution pending",
+  "superseding_runtime_evidence": "audit/i18n/VALIDACION_FINAL_1.1.0.json"
+}

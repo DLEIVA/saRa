@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-11",
+  "candidate_version": "1.1.0",
+  "scope": "11 developer-reported GUI issues",
+  "previous_candidate_runtime": {
+    "FAIL": 0,
+    "WARN": 0,
+    "SKIP": 0,
+    "PASS": 305,
+    "seconds": 7.0,
+    "blocks": 40
+  },
+  "issues": [
+    {
+      "id": 1,
+      "issue": "DW table title and note remain English",
+      "change": "Resolve all Regression presentation strings with explicit saRa Options and parent language."
+    },
+    {
+      "id": 2,
+      "issue": "Residual ACF remains English",
+      "change": "Pass the saRa translation context to the image renderer; translate title, axes and captions at draw time."
+    },
+    {
+      "id": 3,
+      "issue": "Diagnostic test tables remain English",
+      "change": "Route dynamic titles, headers, test labels and notes to the saRa catalog."
+    },
+    {
+      "id": 4,
+      "issue": "Residual/influence plots and table remain English",
+      "change": "Use the same explicit context for residual/influence output and error messages."
+    },
+    {
+      "id": 5,
+      "issue": "Categorical frequency selector too long",
+      "change": "Counts [plotfrequency] translates as Fr. absolutas; full Counts translation in results remains unchanged."
+    },
+    {
+      "id": 6,
+      "issue": "Ordinal frequency selector overlaps controls",
+      "change": "Same context-specific Fr. absolutas abbreviation."
+    },
+    {
+      "id": 7,
+      "issue": "Categorical bar plot does not render",
+      "change": "Replace undefined freqtype with self$options$yaxis; draw inside the render callback."
+    },
+    {
+      "id": 8,
+      "issue": "Ordinal plots do not render",
+      "change": "Fix barplot option reference, draw all three callbacks inside their render handling, add visible fallback diagnostics and drawing tests."
+    },
+    {
+      "id": 9,
+      "issue": "Mann-Whitney CI labels clipped",
+      "change": "GUI-only labels IC de medianas and Hodges-Lehmann (dif. localización); confidence percentage remains in the existing field above."
+    },
+    {
+      "id": 10,
+      "issue": "Discrete distribution labels too long",
+      "change": "F. masa probabilidad (Pr(X=x)), F. distribución (Pr(X≤x)), F. supervivencia (Pr(X>x)), Inversa f. distribución (cuantiles); shortened graph titles."
+    },
+    {
+      "id": 11,
+      "issue": "Continuous distribution labels too long",
+      "change": "F. densidad (f(x)), F. distribución (Pr(X≤x)), F. supervivencia (Pr(X>x)), Inversa f. distribución (cuantiles); density notation remains f(x)."
+    }
+  ],
+  "current_test_blocks": 44,
+  "current_static_validation": "PASS — R grammar, catalog placeholders and official catalog update preservation",
+  "current_runtime_validation": "NOT RUN here; developer must execute testthat and rebuild",
+  "current_catalog_entries": 572,
+  "translation_context": "New saRa-bound jmvcore Options reads only .lang from parent Options via public protobuf methods. Does not change parent library paths or attach dependencies.",
+  "limits": "GUI layout, English/Spanish switching, all three ordinal plots and translation of inserted Regression output must be checked in jamovi. Plot fallbacks expose errors rather than proving every plot succeeds.",
+  "superseding_runtime_evidence": "audit/i18n/VALIDACION_FINAL_1.1.0.json"
+}

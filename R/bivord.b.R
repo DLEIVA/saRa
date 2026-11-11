@@ -28,13 +28,13 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         return() 
       } else{
         if (!is.ordered(data[[rowVarName]]))
-          jmvcore::reject("Select ordinal variables with ordered levels", code="requires_ordinal_variables")
+          jmvcore::reject(.("Select ordinal variables with ordered levels"), code="requires_ordinal_variables")
         if (!is.ordered(data[[colVarName]]))
-          jmvcore::reject("Select ordinal variables with ordered levels", code="requires_ordinal_variables")
+          jmvcore::reject(.("Select ordinal variables with ordered levels"), code="requires_ordinal_variables")
       }
       
       if (!any(complete.cases(data[c(rowVarName, colVarName)])))
-        jmvcore::reject("No complete observations are available for the selected variables", code="no_complete_observations")
+        jmvcore::reject(.("No complete observations are available for the selected variables"), code="no_complete_observations")
 
       freqs <- self$results$freqs
       
@@ -129,8 +129,8 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       E.XY <- (sum(tabla^2)-n)/2
       
       res <- c(C,D,E.X,E.Y,E.XY)
-      resnames <- c('Concordant pairs','Discordant pairs',paste0('Ties in ',rowVarName),
-                         paste0('Ties in ',colVarName),paste0('Ties in ',rowVarName,' and ',colVarName))
+      resnames <- c(.('Concordant pairs'),.('Discordant pairs'),sprintf(.("Ties in %s") ,rowVarName),
+                         sprintf(.("Ties in %s") ,colVarName),sprintf(.("Ties in %s and %s") ,rowVarName,colVarName))
       
       for(k in 1:length(res)){
         values <- list('names' = resnames[k], 'values' = res[k])
@@ -167,7 +167,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data <- self$data
       
       subNames  <- c('[count]', '[pcRow]', '[pcCol]', '[pcTot]')
-      subTitles <- c(('Observed'), ('% within row'), ('% within column'), ('% of total'))
+      subTitles <- c((.('Observed')), (.('% within row')), (.('% within column')), (.('% of total')))
       visible   <- c('(obs)', '(pcRow)', '(pcCol)', '(pcTot)')
       types     <- c('integer', 'number', 'number', 'number')
       formats   <- c('', 'pc', 'pc', 'pc')      
@@ -284,13 +284,13 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$obs ){
         freqs$addColumn(
           name='.total[count]',
-          title=('Total'),
+          title=(.('Total')),
           type='integer')}
       
       if (self$options$pcRow) {
         freqs$addColumn(
           name='.total[pcRow]',
-          title=('Total'),
+          title=(.('Total')),
           type='number',
           format='pc')
       }
@@ -298,7 +298,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$pcCol) {
         freqs$addColumn(
           name='.total[pcCol]',
-          title=('Total'),
+          title=(.('Total')),
           type='number',
           format='pc')
       }
@@ -306,7 +306,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$pcTot) {
         freqs$addColumn(
           name='.total[pcTot]',
-          title=('Total'),
+          title=(.('Total')),
           type='number',
           format='pc')
       }
@@ -326,7 +326,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         for (name in colnames(rows)) {
           value <- as.character(rows[i, name])
           if (value == '.total')
-            value <- ('Total')
+            value <- .('Total')
           values[[name]] <- value
         }
         
@@ -387,7 +387,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       image$setSize(width * 2, height)
     },    
-    .barPlot = function(image, ggtheme, theme, ...) {
+    .barPlotObject = function(image, ggtheme, theme, ...) {
       
       if (! self$options$barplot)
         return()
@@ -460,17 +460,18 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                         size = 4)}
         
         if (self$options$yaxisPc == "total_pc") {
-          p <- p + ggplot2::labs(y = "Percentages of total")
+          p <- p + ggplot2::labs(y = .("Percentages of total"))
         } else {
-          p <- p + ggplot2::labs(y = paste0("Percentages within ", pctVarName))
+          p <- p + ggplot2::labs(y = sprintf(.("Percentages within %s") ,pctVarName))
         }
       }
       
+      if (self$options$yaxis == "ycounts") p <- p + ggplot2::labs(y=.("Counts"))
       p <- p + ggtheme
       
       return(p)
     },  
-    .heatmap = function(image, ...) {
+    .heatmapObject = function(image, ...) {
       
       if (! self$options$heatmap)
         return()
@@ -494,16 +495,18 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       }
       
       tabla <- as.data.frame(table(data[[xVarName]], data[[zVarName]], dnn=c(xVarName, zVarName)))
+      # as.data.frame.table may repair non-syntactic names; restore the selected names.
+      names(tabla) <- c(xVarName,zVarName,"Freq")
       p <- ggplot2::ggplot(tabla,ggplot2::aes(x=.data[[xVarName]], y=.data[[zVarName]])) +
         ggplot2::geom_tile(ggplot2::aes(fill = Freq), colour ="black") +
-        ggplot2::scale_fill_gradient(low='white',high='steelblue') + ggplot2::theme_bw() +
+        ggplot2::scale_fill_gradient(low='white',high='steelblue',name=.("Counts")) + ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
               axis.text.y=ggplot2::element_text(size=13),
               axis.title.x = ggplot2::element_text(size=14),
               axis.title.y = ggplot2::element_text(size=14))
       return(p)
     },
-    .alluvial =  function(image, ...) {
+    .alluvialObject = function(image, ...) {
       if (! self$options$alluvial)
         return()
       
@@ -526,10 +529,12 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       }
       
       tabla <- as.data.frame(table(data[[xVarName]], data[[zVarName]], dnn=c(xVarName, zVarName)))
+      # as.data.frame.table may repair non-syntactic names; restore the selected names.
+      names(tabla) <- c(xVarName,zVarName,"Freq")
       p <- ggplot2::ggplot(data = tabla,
                            ggplot2::aes(axis1=.data[[xVarName]], axis2=.data[[zVarName]], y=.data[["Freq"]])) +
         ggplot2::scale_x_discrete(limits = c(xVarName, zVarName), expand = c(.2, .05)) +
-        ggplot2::scale_fill_gradient(low = "white", high = "steelblue") +
+        ggplot2::scale_fill_gradient(low = "white", high = "steelblue",name=.("Counts")) +
         ggalluvial::geom_alluvium(ggplot2::aes(fill = Freq)) +
         ggalluvial::geom_stratum() +
         ggplot2::geom_text(stat = ggalluvial::StatStratum, ggplot2::aes(label = ggplot2::after_stat(stratum))) +
@@ -539,6 +544,15 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               axis.title.x = ggplot2::element_text(size=14),
               axis.title.y = ggplot2::element_text(size=14))
       return(p)
+    },
+    .barPlot = function(image,ggtheme=NULL,theme=NULL,...) {
+      .saraDrawBivariatePlot(function() private$.barPlotObject(image,ggtheme=ggtheme,theme=theme,...),self=self)
+    },
+    .heatmap = function(image,ggtheme=NULL,theme=NULL,...) {
+      .saraDrawBivariatePlot(function() private$.heatmapObject(image,ggtheme=ggtheme,theme=theme,...),self=self)
+    },
+    .alluvial = function(image,ggtheme=NULL,theme=NULL,...) {
+      .saraDrawBivariatePlot(function() private$.alluvialObject(image,ggtheme=ggtheme,theme=theme,...),self=self)
     },
     #### Helper functions ----
     

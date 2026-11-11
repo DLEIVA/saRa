@@ -1,0 +1,2856 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-07-26 12:08:06+01000\n"
+"PO-Revision-Date: 2021-07-29 16:59:59+01000\n"
+"Language: c\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: R/umw.b.R
+#: R/wilcoxt.b.R
+msgid "{ciWidth}% Confidence Interval"
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "{n} pair(s) of values were tied"
+msgstr ""
+
+#: R/i18n.R
+msgid "{title} - Model {model}"
+msgstr ""
+
+#: catSummary/ui[2][0]/IQV/NCat.suffix
+msgid "# categories (0: automatic detection)"
+msgstr ""
+
+#: umw/ui[1][1][0]/ciWidth.suffix
+#: wilcoxT/ui[1][1][0]/ciWidthps.suffix
+msgid "%"
+msgstr ""
+
+#: bivmix/ui[1][3][0]/irange/NPerc.suffix
+#: numSummary/ui[1][2][0]/irange/NPerc.suffix
+#: ordSummary/ui[1][2][0]/irange/NPerc.suffix
+msgid "% of data"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+msgid "% of total"
+msgstr ""
+
+#: R/catsummary.b.R
+msgid "% of Total"
+msgstr ""
+
+#: bivmix/ui[1][2][0]/trimmean/Trim.suffix
+#: numSummary/ui[1][1][0]/trimmean/Trim.suffix
+msgid "% trim"
+msgstr ""
+
+#: bivmix/ui[1][2][0]/winsmean/Win.suffix
+#: numSummary/ui[1][1][0]/winsmean/Win.suffix
+msgid "% winsor"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+msgid "% within column"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+msgid "% within row"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/ordsummary.b.R
+msgid "%s%% Inner range"
+msgstr ""
+
+#: R/numsummary.b.R
+msgid "%s%% inner range"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "%s%% trimmed mean"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "%s%% winsorized mean"
+msgstr ""
+
+#: contvars/options/contvaluesfunc.default
+#: discvars/options/valuesfunc.default
+msgid "0"
+msgstr ""
+
+#: contvars/options/contqvalues.default
+#: discvars/options/qvalues.default
+msgid "0.5"
+msgstr ""
+
+#: bivmix/options/pcValues.default
+#: numSummary/options/pcValues.default
+#: ordSummary/options/pcValues.default
+msgid "25,50,75"
+msgstr ""
+
+#: package.description
+msgid "A basic course on Statistics in jamovi. Basically based on jmv package, the add-in includes a suite of (univariate and bivariate) descriptive methods  for nominal, ordinal, and numeric variables. The add-in also incorporates a module of probability distributions, continuous and discrete, to be used in a Statistics course. This package is primarily thought and developed to be useable within the jamovi statistical spreadsheet (see <https://www.jamovi.org> for more information)."
+msgstr ""
+
+#: package/datasets/attitudes.description
+msgid "A dataset on attitudes towards immigration"
+msgstr ""
+
+#: package/datasets/neoffi.description
+msgid "A dataset on NEO-FFI"
+msgstr ""
+
+#: package/datasets/beliefs.description
+msgid "A dataset on personal beliefs"
+msgstr ""
+
+#: package/datasets/ginzberg.description
+msgid "A dataset to illustrate linear regression"
+msgstr ""
+
+#: package/datasets/polynomialReg.description
+msgid "A dataset to illustrate polynomial regression"
+msgstr ""
+
+#: package/datasets/medData.description
+msgid "A dataset to illustrate simple mediation models"
+msgstr ""
+
+#: bivcat/results/freqs.description
+msgid "A frequencies table"
+msgstr ""
+
+#: umw/results/cisHL.description
+#: wilcoxT/results/cisHLps.description
+msgid "a table containing confidence interval estimates for HL estimator"
+msgstr ""
+
+#: umw/results/cisMed.description
+#: wilcoxT/results/cisMedps.description
+msgid "a table containing confidence interval estimates for the medians"
+msgstr ""
+
+#: umw/results/desc.description
+#: wilcoxT/results/descps.description
+msgid "a table containing the group descriptives"
+msgstr ""
+
+#: umw/results/mwutest.description
+msgid "a table containing the Mann-Whitney U test results"
+msgstr ""
+
+#: wilcoxT/results/wilcoxttest.description
+msgid "a table containing the Wilcoxon T test results"
+msgstr ""
+
+#: testnorm/results/normtests.description
+msgid "A table for the normality tests"
+msgstr ""
+
+#: bivcat/results/asocind.description
+#: bivnum/results/asocind.description
+#: bivord/results/asocind.description
+msgid "A table of different bivariate association indicators"
+msgstr ""
+
+#: bivmix/results/esindices.description
+msgid "A table of different effect size indicators"
+msgstr ""
+
+#: bivcat/results/errorind.description
+msgid "A table of different prediction error indicators"
+msgstr ""
+
+#: bivord/results/freqs.description
+msgid "a table of proportions"
+msgstr ""
+
+#: bivmix/results/indicesnum.description
+#: catSummary/results/indices.description
+#: numSummary/results/indicesnum.description
+#: ordSummary/results/indicesord.description
+msgid "A table of the descriptive statistics"
+msgstr ""
+
+#: bivord/results/desc.description
+msgid "a table with a summary for all possible comparisons"
+msgstr ""
+
+#: contvars/results/Contprobstab.description
+#: discvars/results/probstab.description
+msgid "A table with probabilities for selected distributions"
+msgstr ""
+
+#: contvars/results/Contquantstab.description
+#: discvars/results/quantstab.description
+msgid "A table with quantiles for selected distributions"
+msgstr ""
+
+#: R/i18n.R
+#: R/wilcoxt.b.R
+msgid "All observations are tied"
+msgstr ""
+
+#: bivord/options/alluvial.title
+msgid "Alluvial plot"
+msgstr ""
+
+#: bivord/results/alluvial.title
+msgid "Alluvial Plot"
+msgstr ""
+
+#: umw/options/hypothesis.title
+#: wilcoxT/options/hypothesisps.title
+msgid "Alternative hypothesis"
+msgstr ""
+
+#: umw/ui[1][0][1].label
+msgid "Alternative Hypothesis"
+msgstr ""
+
+#: bivmix/results/plots.description
+#: catSummary/results/plots.description
+#: numSummary/results/plots.description
+#: ordSummary/results/plots.description
+#: testnorm/results/plots.description
+msgid "An array of descriptive plots"
+msgstr ""
+
+#: umw/results/plots.description
+#: wilcoxT/results/plotsps.description
+msgid "an array of groups of plots"
+msgstr ""
+
+#: testnorm/options/adtest.title
+#: testnorm/results/normtests.columns.content
+msgid "Anderson-Darling test"
+msgstr ""
+
+#: R/i18n.R
+msgid "Approximate 95% white-noise bounds."
+msgstr ""
+
+#: bivcat/ui[2][0][0][0].label
+#: bivcat/results/asocind.title
+#: bivnum/results/asocind.title
+#: bivord/results/asocind.title
+msgid "Association Indices"
+msgstr ""
+
+#: R/bivcat.b.R
+msgid "Association indices require at least two observed levels in each variable and complete observations"
+msgstr ""
+
+#: package/datasets/attitudes.name
+msgid "attitudes"
+msgstr ""
+
+#: R/i18n.R
+msgid "Autocorrelation"
+msgstr ""
+
+#: umw/results/desc.columns.title
+#: wilcoxT/results/descps.columns.title
+msgid "Average rank"
+msgstr ""
+
+#: bivcat/options/barplot.title
+#: bivcat/results/barplot.title
+#: bivord/options/barplot.title
+#: catSummary/options/bar.title
+#: ordSummary/options/bar.title
+msgid "Bar plot"
+msgstr ""
+
+#: bivord/results/barplot.title
+msgid "Bar Plot"
+msgstr ""
+
+#: ordSummary/ui[2][0][0][0].label
+msgid "Bar Plots"
+msgstr ""
+
+#: bivcat/options/bartype.title
+#: bivcat/ui[3][0][0][1].label
+#: bivord/options/bartype.title
+#: bivord/ui[3][0][0][1].label
+msgid "Bar type"
+msgstr ""
+
+#: package/datasets/beliefs.name
+msgid "beliefs"
+msgstr ""
+
+#: R/discvars.b.R
+#: discvars/options/distros/binom.title
+msgid "Binomial"
+msgstr ""
+
+#: R/i18n.R
+msgid "Binomial size must be a non-negative integer and probability between 0 and 1"
+msgstr ""
+
+#: package/analyses/bivcat.menuSubgroup
+#: package/analyses/bivord.menuSubgroup
+#: package/analyses/bivnum.menuSubgroup
+#: package/analyses/bivmix.menuSubgroup
+msgid "Bivariate Analysis"
+msgstr ""
+
+#: bivcat/ui.title
+msgid "Bivariate Data Analysis"
+msgstr ""
+
+#: bivcat/results.title
+msgid "Bivariate Data Analysis (Categorical Data)"
+msgstr ""
+
+#: bivmix/results.title
+msgid "Bivariate Data Analysis (Mixed Data)"
+msgstr ""
+
+#: bivnum/results.title
+msgid "Bivariate Data Analysis (Numerical Data)"
+msgstr ""
+
+#: bivord/results.title
+msgid "Bivariate Data Analysis (Ordinal Data)"
+msgstr ""
+
+#: R/catsummary.b.R
+#: catSummary/options/Blau.title
+msgid "Blau"
+msgstr ""
+
+#: umw/options/ciMethod/boot.title
+#: wilcoxT/options/ciMethodps/boot.title
+msgid "Bootstrap"
+msgstr ""
+
+#: R/i18n.R
+msgid "Bootstrap Durbin-Watson tests are available for unweighted OLS models only."
+msgstr ""
+
+#: bivmix/options/box.title
+#: numSummary/options/box.title
+#: ordSummary/options/box.title
+msgid "Box plot"
+msgstr ""
+
+#: bivmix/ui[2][0][1].label
+#: numSummary/ui[2][0][1].label
+#: ordSummary/ui[2][0][1][0].label
+msgid "Box Plots"
+msgstr ""
+
+#: bivnum/options/marg/box.title
+msgid "Boxplots"
+msgstr ""
+
+#: R/i18n.R
+msgid "Case"
+msgstr ""
+
+#: package/analyses/catSummary.title
+#: package/analyses/catSummary.menuTitle
+#: package/analyses/bivcat.title
+#: package/analyses/bivcat.menuTitle
+#: bivcat/options.title
+#: catSummary/options.title
+#: catSummary/ui.title
+msgid "Categorical Data"
+msgstr ""
+
+#: bivcat/ui[1].label
+#: bivord/ui[1].label
+msgid "Cells"
+msgstr ""
+
+#: contvars/options/conttail/central.title
+#: discvars/options/tail/central.title
+msgid "Central"
+msgstr ""
+
+#: bivmix/ui[1][2][0].label
+#: numSummary/ui[1][1][0].label
+#: ordSummary/ui[1][1][0].label
+msgid "Central Tendency"
+msgstr ""
+
+#: bivcat/options/chuprov.title
+#: bivcat/results/asocind.columns.content
+msgid "Chuprov's index"
+msgstr ""
+
+#: bivmix/options/cv.title
+#: numSummary/options/cv.title
+msgid "Coefficient of variation (CV)"
+msgstr ""
+
+#: R/bivmix.b.R
+msgid "Cohen's d"
+msgstr ""
+
+#: bivmix/options/cohend.title
+msgid "Cohen's d (2 levels)"
+msgstr ""
+
+#: bivcat/options/pcCol.title
+#: bivord/options/pcCol.title
+msgid "Column"
+msgstr ""
+
+#: bivcat/options/cols.title
+#: bivcat/options/xaxis/xcols.title
+#: bivcat/ui[0][1].label
+#: bivord/options/cols.title
+#: bivord/options/xaxis/xcols.title
+#: bivord/ui[0][1].label
+msgid "Columns"
+msgstr ""
+
+#: umw/options/fstat.description.ui
+msgid "compute f statistic."
+msgstr ""
+
+#: umw/options/pSup.description.ui
+msgid "compute probability of superiority index."
+msgstr ""
+
+#: umw/options/rankCorr.description.ui
+#: wilcoxT/options/rankCorrps.description.ui
+msgid "compute rank biserial correlation."
+msgstr ""
+
+#: R/bivord.b.R
+msgid "Concordant pairs"
+msgstr ""
+
+#: umw/ui[1][1][0].label
+#: wilcoxT/ui[1][1][0].label
+msgid "Confidence Intervals"
+msgstr ""
+
+#: umw/options/ciWidth.title
+#: wilcoxT/options/ciWidthps.title
+msgid "Confidence level"
+msgstr ""
+
+#: R/i18n.R
+msgid "Confidence level must be between zero and one"
+msgstr ""
+
+#: bivcat/results/asocind.columns.content
+msgid "Contingency index"
+msgstr ""
+
+#: bivcat/results/freqs.title
+#: bivord/results/freqs.title
+msgid "Contingency Tables"
+msgstr ""
+
+#: package/analyses/contvars.title
+#: package/analyses/contvars.menuTitle
+#: contvars/options.title
+#: contvars/ui.title
+#: contvars/results.title
+msgid "Continuous Distributions"
+msgstr ""
+
+#: R/i18n.R
+msgid "Cook's D"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+#: R/catsummary.b.R
+#: R/ordsummary.b.R
+#: bivcat/options/yaxis/ycounts.title
+#: bivcat/ui[1][0][0][0].label
+#: bivord/options/yaxis/ycounts.title
+#: bivord/ui[1][0][0][0].label
+msgid "Counts"
+msgstr ""
+
+#: bivnum/options/covar.title
+#: bivnum/results/asocind.columns.content
+msgid "Covariance"
+msgstr ""
+
+#: testnorm/options/cvmtest.title
+#: testnorm/results/normtests.columns.content
+msgid "Cramér–von Mises test"
+msgstr ""
+
+#: bivcat/results/asocind.columns.content
+msgid "Cramér's V"
+msgstr ""
+
+#: bivcat/options/craV.title
+msgid "Cramér's V index"
+msgstr ""
+
+#: R/catsummary.b.R
+msgid "Cumulative %"
+msgstr ""
+
+#: R/catsummary.b.R
+msgid "Cumulative counts"
+msgstr ""
+
+#: contvars/options/contcdf.title
+#: contvars/options/contpcdf.title
+#: discvars/options/cdf.title
+#: discvars/options/pcdf.title
+msgid "Cumulative distribution function (Pr(X ≤ x))"
+msgstr ""
+
+#: contvars/results/contcdfplot.title
+#: discvars/results/cdfplot.title
+msgid "Cumulative Distribution Function Plot"
+msgstr ""
+
+#: R/catsummary.b.R
+msgid "Cumulative percent (%)"
+msgstr ""
+
+#: R/testnorm.b.R
+msgid "Cumulative probability"
+msgstr ""
+
+#: R/catsummary.b.R
+msgid "Cumulative proportions"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "CV"
+msgstr ""
+
+#: bivmix/options/dot.title
+#: numSummary/options/dot.title
+#: ordSummary/options/dot.title
+msgid "Data"
+msgstr ""
+
+#: bivnum/options/marg/dens.title
+msgid "Densities"
+msgstr ""
+
+#: contvars/results/Contprobstab.title
+msgid "Densities/Probabilities Table"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/testnorm.b.R
+msgid "density"
+msgstr ""
+
+#: bivmix/options/dens.title
+#: numSummary/options/dens.title
+#: testnorm/options/dens.title
+msgid "Density"
+msgstr ""
+
+#: umw/options/vars.title
+msgid "Dependent Variables"
+msgstr ""
+
+#: umw/ui[1][1][1].label
+#: wilcoxT/ui[1][1][1].label
+msgid "Descriptive Analyses"
+msgstr ""
+
+#: catSummary/results/indices.title
+#: umw/ui[1][1][1]/desc.label
+#: wilcoxT/ui[1][1][1]/descps.label
+msgid "Descriptives"
+msgstr ""
+
+#: umw/results/plots.template/desc.description
+#: wilcoxT/results/plotsps.template/descps.description
+msgid "descriptives plot"
+msgstr ""
+
+#: umw/options/plots.title
+#: wilcoxT/options/plotsps.title
+msgid "Descriptives Plots"
+msgstr ""
+
+#: umw/ui[1][1][1]/plots.label
+#: wilcoxT/ui[1][1][1]/plotsps.label
+msgid "Descriptives plots"
+msgstr ""
+
+#: umw/options/desc.title
+#: wilcoxT/options/descps.title
+msgid "Descriptives Table"
+msgstr ""
+
+#: contvars/options/tnu.title
+#: contvars/options/chinu.title
+#: contvars/ui[0][1][0][0]/tdist/tnu.label
+#: contvars/ui[0][1][0][0]/chisqdist/chinu.label
+msgid "df (ν)"
+msgstr ""
+
+#: contvars/options/f2nu.title
+#: contvars/ui[0][1][1][0]/fdist/f2nu.label
+msgid "df denominator (ν2)"
+msgstr ""
+
+#: contvars/options/f1nu.title
+#: contvars/ui[0][1][1][0]/fdist/f1nu.label
+msgid "df numerator (ν1)"
+msgstr ""
+
+#: wilcoxT/results/descps.columns.title
+msgid "Differences"
+msgstr ""
+
+#: R/bivord.b.R
+msgid "Discordant pairs"
+msgstr ""
+
+#: package/analyses/discvars.title
+#: package/analyses/discvars.menuTitle
+#: discvars/options.title
+#: discvars/ui.title
+#: discvars/results.title
+msgid "Discrete Distributions"
+msgstr ""
+
+#: bivmix/ui[1][3][0].label
+#: numSummary/ui[1][2][0].label
+#: ordSummary/ui[1][2][0].label
+msgid "Dispersion"
+msgstr ""
+
+#: contvars/results/ContInfoTab.columns.title
+#: discvars/results/InfoTab.columns.title
+msgid "Distribution"
+msgstr ""
+
+#: contvars/results/ContInfoTab.title
+#: discvars/results/InfoTab.title
+msgid "Distribution Information"
+msgstr ""
+
+#: contvars/options/cdistros.title
+#: contvars/ui[0][0].label
+#: discvars/options/distros.title
+#: discvars/ui[0][0].label
+msgid "Distributions"
+msgstr ""
+
+#: catSummary/options/dough.title
+msgid "Doughnut"
+msgstr ""
+
+#: discvars/options/hyperk.title
+msgid "Draws"
+msgstr ""
+
+#: R/i18n.R
+msgid "Durbin-Watson Tests by Lag"
+msgstr ""
+
+#: R/i18n.R
+msgid "Durbin-Watson tests require a fitted model with finite, non-zero residuals."
+msgstr ""
+
+#: testnorm/ui[2][1][1]/ecdf.label
+msgid "ECDF"
+msgstr ""
+
+#: testnorm/options/ecdf.title
+msgid "ECDF plot"
+msgstr ""
+
+#: testnorm/ui[2][1][1].label
+msgid "ECDF Plots"
+msgstr ""
+
+#: bivmix/ui[1][1][0].label
+msgid "Effect Size"
+msgstr ""
+
+#: bivmix/results/esindices.title
+msgid "Effect Size Indices"
+msgstr ""
+
+#: umw/options/ciMethod/exact.title
+#: wilcoxT/options/ciMethodps/exact.title
+msgid "Exact"
+msgstr ""
+
+#: umw/ui[1][0][2]/miss_perAnalysis.label
+#: wilcoxT/ui[1][0][2]/miss_perAnalysis.label
+msgid "Exclude cases analysis by analysis"
+msgstr ""
+
+#: umw/ui[1][0][2]/miss_listwise.label
+#: wilcoxT/ui[1][0][2]/miss_listwise.label
+msgid "Exclude cases listwise"
+msgstr ""
+
+#: R/bivcat.b.R
+msgid "Expected"
+msgstr ""
+
+#: bivcat/options/exp.title
+msgid "Expected counts"
+msgstr ""
+
+#: R/contvars.b.R
+#: contvars/options/cdistros/exp.title
+msgid "Exponential"
+msgstr ""
+
+#: contvars/options/cdistros/fdist.title
+msgid "F distribution"
+msgstr ""
+
+#: umw/options/fstat.title
+#: umw/results/mwutest.columns.content
+msgid "f statistic"
+msgstr ""
+
+#: contvars/results/Contprobstab.columns.title
+msgid "f(x)"
+msgstr ""
+
+#: discvars/options/hypern.title
+msgid "Failures"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "Fisher's γ₁"
+msgstr ""
+
+#: bivmix/options/gamma1.title
+#: numSummary/options/gamma1.title
+msgid "Fisher's γ₁ (skewness)"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "Fisher's γ₂"
+msgstr ""
+
+#: bivmix/options/gamma2.title
+#: numSummary/options/gamma2.title
+msgid "Fisher's γ₂ (kurtosis)"
+msgstr ""
+
+#: R/i18n.R
+msgid "Fitted values"
+msgstr ""
+
+#: catSummary/options/f2p.bar.title
+#: catSummary/options/f2p.lolli.title
+#: catSummary/ui[3][0]/lolli/f2p.lolli.label
+#: catSummary/ui[3][1]/bar/f2p.bar.label
+#: ordSummary/options/f2p.bar.title
+#: ordSummary/ui[2][0][0][0]/bar/f2p.bar.label
+msgid "Frequencies (Y-axis)"
+msgstr ""
+
+#: catSummary/results/frequencies.template.title
+msgid "Frequencies and Odds of $key"
+msgstr ""
+
+#: catSummary/results/frequencies.description
+msgid "Frequencies Distribution"
+msgstr ""
+
+#: catSummary/options/freq.title
+msgid "Frequency and odds tables"
+msgstr ""
+
+#: catSummary/results/frequencies.title
+msgid "Frequency distribution"
+msgstr ""
+
+#: R/discvars.b.R
+#: discvars/options/distros/geom.title
+msgid "Geometric"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: bivmix/options/geommean.title
+#: numSummary/options/geommean.title
+msgid "Geometric mean"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "Geometric mean can only be computed with positive values (>0)"
+msgstr ""
+
+#: R/i18n.R
+msgid "Geometric probability must be greater than 0 and at most 1"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: bivmix/options/geomsd.title
+#: numSummary/options/geomsd.title
+msgid "Geometric standard deviation"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "Geometric std. deviation can only be computed with positive values (>0)"
+msgstr ""
+
+#: package/datasets/ginzberg.name
+msgid "ginzberg"
+msgstr ""
+
+#: bivcat/options/lambdaGKab.title
+msgid "Goodman-Kruskal λ (A/B)"
+msgstr ""
+
+#: bivcat/options/lambdaGKba.title
+msgid "Goodman-Kruskal λ (B/A)"
+msgstr ""
+
+#: bivcat/options/lambdaGKsym.title
+msgid "Goodman-Kruskal λ (symmetric)"
+msgstr ""
+
+#: bivcat/options/tauGKab.title
+msgid "Goodman-Kruskal τ (A/B)"
+msgstr ""
+
+#: bivcat/options/tauGKba.title
+msgid "Goodman-Kruskal τ (B/A)"
+msgstr ""
+
+#: bivcat/options/tauGKsym.title
+msgid "Goodman-Kruskal τ (symmetric)"
+msgstr ""
+
+#: bivord/options/gammaGK.title
+#: bivord/results/asocind.columns.content
+msgid "Goodman-Kruskal's γ"
+msgstr ""
+
+#: testnorm/results/normtests.columns.title
+#: umw/results/cisMed.columns.title
+#: umw/results/desc.columns.title
+msgid "Group"
+msgstr ""
+
+#: R/umw.b.R
+msgid "Group 1"
+msgstr ""
+
+#: umw/options/hypothesis/twoGreater.title
+#: umw/ui[1][0][1]/hypothesis_twoGreater.label
+msgid "Group 1 < Group 2"
+msgstr ""
+
+#: umw/options/hypothesis/different.title
+#: umw/ui[1][0][1]/hypothesis_different.label
+msgid "Group 1 ≠ Group 2"
+msgstr ""
+
+#: umw/options/hypothesis/oneGreater.title
+#: umw/ui[1][0][1]/hypothesis_oneGreater.label
+msgid "Group 1 > Group 2"
+msgstr ""
+
+#: R/umw.b.R
+msgid "Group 2"
+msgstr ""
+
+#: bivmix/options/groupBy.title
+msgid "Group by"
+msgstr ""
+
+#: testnorm/options/groupBy.title
+msgid "Group by (optional)"
+msgstr ""
+
+#: umw/options/ciMedians.title
+msgid "Group median confidence intervals"
+msgstr ""
+
+#: umw/options/group.title
+msgid "Grouping Variable"
+msgstr ""
+
+#: R/umw.b.R
+msgid "Grouping variable '{a}' has less than 2 levels after missing values are excluded"
+msgstr ""
+
+#: R/umw.b.R
+msgid "Grouping variable '{a}' must have exactly 2 levels"
+msgstr ""
+
+#: R/umw.b.R
+msgid "Grouping variable '{a}' must not also be a dependent variable"
+msgstr ""
+
+#: R/testnorm.b.R
+msgid "Grouping variable must not also be a dependent variable"
+msgstr ""
+
+#: umw/results/desc.title
+msgid "Groups Descriptives"
+msgstr ""
+
+#: bivmix/options/h1.title
+#: numSummary/options/h1.title
+#: ordSummary/options/h1.title
+msgid "H1 (skewness)"
+msgstr ""
+
+#: bivmix/options/h3.title
+#: numSummary/options/h3.title
+#: ordSummary/options/h3.title
+msgid "H3 (skewness)"
+msgstr ""
+
+#: bivord/options/heatmap.title
+#: bivord/results/heatmap.title
+msgid "Heatmap"
+msgstr ""
+
+#: R/i18n.R
+msgid "Heteroskedasticity Tests"
+msgstr ""
+
+#: bivmix/options/hist.title
+#: numSummary/options/hist.title
+#: testnorm/options/hist.title
+msgid "Histogram"
+msgstr ""
+
+#: bivmix/ui[2][0][0][0].label
+#: bivnum/options/marg/hist.title
+#: numSummary/ui[2][0][0][0].label
+#: testnorm/ui[2][0][0].label
+msgid "Histograms"
+msgstr ""
+
+#: umw/options/ciHL.title
+msgid "Hodges-Lehmann (difference in location)"
+msgstr ""
+
+#: umw/ui[1][1][0]/ciHL.label
+msgid "Hodges-Lehmann (location diff.)"
+msgstr ""
+
+#: wilcoxT/options/ciHLps.title
+msgid "Hodges-Lehmann (pseudo-median)"
+msgstr ""
+
+#: umw/results/cisHL.columns.title
+#: wilcoxT/results/cisHLps.columns.title
+msgid "Hodges-Lehmann estimator"
+msgstr ""
+
+#: umw/results/cisHL.title
+#: wilcoxT/results/cisHLps.title
+msgid "Hodges-Lehmann Estimator CIs"
+msgstr ""
+
+#: R/discvars.b.R
+#: discvars/options/distros/hypergeom.title
+msgid "Hypergeometric"
+msgstr ""
+
+#: R/i18n.R
+msgid "Hypergeometric counts must be non-negative integers, the population positive, and draws no larger than the population"
+msgstr ""
+
+#: wilcoxT/ui[1][0][1].label
+msgid "Hypothesis"
+msgstr ""
+
+#: catSummary/ui[2][0]/IQV.label
+msgid "Index of qualitative variation (IQV)"
+msgstr ""
+
+#: R/bivcat.b.R
+msgid "Indices can only be computed for 2x2 tables."
+msgstr ""
+
+#: R/i18n.R
+msgid "Infinite paired differences are not supported"
+msgstr ""
+
+#: R/i18n.R
+msgid "Infinite values are not supported"
+msgstr ""
+
+#: R/i18n.R
+msgid "Influence Indices (Noteworthy Cases)"
+msgstr ""
+
+#: R/i18n.R
+msgid "Influence Plot"
+msgstr ""
+
+#: bivmix/options/innerf.title
+#: numSummary/options/innerf.title
+#: ordSummary/options/innerf.title
+msgid "Inner fence"
+msgstr ""
+
+#: bivmix/options/irange.title
+#: bivmix/ui[1][3][0]/irange.label
+#: numSummary/options/irange.title
+#: numSummary/ui[1][2][0]/irange.label
+#: ordSummary/options/irange.title
+#: ordSummary/ui[1][2][0]/irange.label
+msgid "Inner range"
+msgstr ""
+
+#: bivmix/options/iqr.title
+#: numSummary/options/iqr.title
+#: ordSummary/options/iqr.title
+msgid "Interquartile range (IQR)"
+msgstr ""
+
+#: contvars/options/conticdf.title
+#: contvars/options/contpicdf.title
+#: discvars/options/icdf.title
+#: discvars/options/picdf.title
+msgid "Inverse of cdf (quantiles)"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+msgid "IQR"
+msgstr ""
+
+#: R/catsummary.b.R
+#: catSummary/options/IQV.title
+msgid "IQV"
+msgstr ""
+
+#: bivmix/options/dotType/jitter.title
+#: numSummary/options/dotType/jitter.title
+#: ordSummary/options/dotType/jitter.title
+msgid "Jittered"
+msgstr ""
+
+#: bivmix/options/k2.title
+#: numSummary/options/k2.title
+#: ordSummary/options/k2.title
+msgid "K2 (kurtosis)"
+msgstr ""
+
+#: bivmix/options/k3.title
+#: numSummary/options/k3.title
+#: ordSummary/options/k3.title
+msgid "K3 (kurtosis)"
+msgstr ""
+
+#: bivnum/options/tauK.title
+msgid "Kendall's correlation"
+msgstr ""
+
+#: bivord/options/tauKa.title
+#: bivord/results/asocind.columns.content
+msgid "Kendall's τ-a"
+msgstr ""
+
+#: bivnum/results/asocind.columns.content
+#: bivord/options/tauKb.title
+#: bivord/results/asocind.columns.content
+msgid "Kendall's τ-b"
+msgstr ""
+
+#: bivord/options/tauKc.title
+#: bivord/results/asocind.columns.content
+msgid "Kendall's τ-c"
+msgstr ""
+
+#: R/i18n.R
+msgid "Koenker (studentized Breusch-Pagan)"
+msgstr ""
+
+#: R/i18n.R
+msgid "Kolmogorov-Smirnov (Lilliefors)"
+msgstr ""
+
+#: testnorm/options/kstest.title
+#: testnorm/results/normtests.columns.content
+msgid "Kolmogorov-Smirnov test"
+msgstr ""
+
+#: R/i18n.R
+msgid "Kolmogorov-Smirnov uses the Lilliefors correction for estimated mean and variance. Residual normality diagnostics."
+msgstr ""
+
+#: bivmix/options/kwind.title
+msgid "Kruskal–Wallis η²_H (k levels)"
+msgstr ""
+
+#: R/i18n.R
+msgid "Lag"
+msgstr ""
+
+#: R/i18n.R
+msgid "Lags 1-10, capped at N-1. Two-sided p-values from residual bootstrapping with 5,000 resamples; seed = 123456. Complete-case row order; p-values are not adjusted across lags."
+msgstr ""
+
+#: contvars/options/conttail/left.title
+#: discvars/options/tail/left.title
+msgid "Left"
+msgstr ""
+
+#: contvars/results/Contquantstab.columns.title
+#: discvars/results/quantstab.columns.title
+msgid "Left tail"
+msgstr ""
+
+#: R/umw.b.R
+msgid "Less than 20 observations and ties in the groups: p-value might not be adequate"
+msgstr ""
+
+#: R/catsummary.b.R
+msgid "Levels"
+msgstr ""
+
+#: R/i18n.R
+msgid "Leverage (hat value)"
+msgstr ""
+
+#: testnorm/options/lillietest.title
+#: testnorm/results/normtests.columns.content
+msgid "Lilliefors test"
+msgstr ""
+
+#: bivnum/options/line/linear.title
+msgid "Linear"
+msgstr ""
+
+#: package/analyses/linReg.title
+#: package/analyses/linReg.menuTitle
+#: linReg/options.title
+msgid "linReg"
+msgstr ""
+
+#: catSummary/options/lolli.title
+msgid "Lollipop"
+msgstr ""
+
+#: umw/results/cisMed.columns.title
+#: umw/results/cisHL.columns.title
+#: wilcoxT/results/cisMedps.columns.title
+#: wilcoxT/results/cisHLps.columns.title
+msgid "Lower bound"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+msgid "MAD"
+msgstr ""
+
+#: package/analyses/umw.title
+#: package/analyses/umw.menuTitle
+#: umw/options.title
+#: umw/ui.title
+#: umw/results.title
+msgid "Mann-Whitney Test"
+msgstr ""
+
+#: umw/options/mwu.title
+#: umw/results/mwutest.columns.content
+msgid "Mann-Whitney U"
+msgstr ""
+
+#: umw/results/mwutest.title
+msgid "Mann-Whitney U Test and ES Indices"
+msgstr ""
+
+#: bivnum/options/marg.title
+#: bivnum/ui[2][0][0][2].label
+msgid "Marginals"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+msgid "Max"
+msgstr ""
+
+#: bivmix/options/max.title
+#: numSummary/options/max.title
+#: ordSummary/options/max.title
+msgid "Maximum"
+msgstr ""
+
+#: contvars/options/unifmax.title
+#: contvars/ui[0][1][1][0]/unif/unifmax.label
+msgid "Maximum (β)"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: bivmix/options/mean.title
+#: bivmix/options/boxMean.title
+#: numSummary/options/mean.title
+#: numSummary/options/boxMean.title
+msgid "Mean"
+msgstr ""
+
+#: discvars/options/lambda.title
+#: discvars/ui[0][1][0][0]/poiss/lambda.label
+msgid "Mean (λ)"
+msgstr ""
+
+#: contvars/options/mu.title
+#: contvars/ui[0][1][0][0]/norm/mu.label
+msgid "Mean (μ)"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: bivmix/options/meandev.title
+#: numSummary/options/meandev.title
+msgid "Mean deviation"
+msgstr ""
+
+#: wilcoxT/results/descps.columns.title
+msgid "Measure 1"
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "Measure 1 - Measure 2"
+msgstr ""
+
+#: wilcoxT/ui[1][0][1]/hypothesis_twoGreater.label
+msgid "Measure 1 < Measure 2"
+msgstr ""
+
+#: wilcoxT/ui[1][0][1]/hypothesis_different.label
+msgid "Measure 1 ≠ Measure 2"
+msgstr ""
+
+#: wilcoxT/ui[1][0][1]/hypothesis_oneGreater.label
+msgid "Measure 1 > Measure 2"
+msgstr ""
+
+#: wilcoxT/results/descps.columns.title
+msgid "Measure 2"
+msgstr ""
+
+#: package/datasets/medData.name
+msgid "medData"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+#: bivmix/options/median.title
+#: numSummary/options/median.title
+#: ordSummary/options/median.title
+#: umw/results/cisMed.columns.title
+#: umw/results/desc.columns.title
+#: wilcoxT/results/cisMedps.columns.title
+msgid "Median"
+msgstr ""
+
+#: R/umw.b.R
+#: R/wilcoxt.b.R
+msgid "Median ({ciWidth}% CI)"
+msgstr ""
+
+#: bivmix/options/mad.title
+#: numSummary/options/mad.title
+#: ordSummary/options/mad.title
+msgid "Median absolute deviation (MAD)"
+msgstr ""
+
+#: umw/ui[1][1][0]/ciMedians.label
+msgid "Median CIs"
+msgstr ""
+
+#: R/i18n.R
+msgid "Median plot values and confidence intervals are not aligned"
+msgstr ""
+
+#: umw/results/cisMed.title
+#: wilcoxT/options/ciMediansps.title
+msgid "Medians CIs"
+msgstr ""
+
+#: umw/options/ciMethod.title
+#: wilcoxT/options/ciMethodps.title
+msgid "Method"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+#: bivmix/options/midrange.title
+#: numSummary/options/midrange.title
+#: ordSummary/options/midrange.title
+msgid "Mid-range"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+#: bivmix/options/avquartile.title
+#: numSummary/options/avquartile.title
+#: ordSummary/options/avquartile.title
+msgid "Midhinge"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+msgid "Min"
+msgstr ""
+
+#: bivmix/options/min.title
+#: numSummary/options/min.title
+#: ordSummary/options/min.title
+msgid "Minimum"
+msgstr ""
+
+#: contvars/options/unifmin.title
+#: contvars/ui[0][1][1][0]/unif/unifmin.label
+msgid "Minimum (α)"
+msgstr ""
+
+#: package/analyses/umw.menuSubgroup
+#: package/analyses/wilcoxT.menuSubgroup
+#: package/analyses/testnorm.menuSubgroup
+msgid "Miscellanea"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+#: bivmix/options/missing.title
+#: numSummary/options/missing.title
+#: ordSummary/options/missing.title
+msgid "Missing"
+msgstr ""
+
+#: umw/options/miss.title
+#: wilcoxT/options/missps.title
+msgid "Missing values"
+msgstr ""
+
+#: umw/ui[1][0][2].label
+#: wilcoxT/ui[1][0][2].label
+msgid "Missing Values"
+msgstr ""
+
+#: package/analyses/bivmix.title
+#: package/analyses/bivmix.menuTitle
+#: bivmix/options.title
+#: bivmix/ui.title
+msgid "Mixed Data"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/catsummary.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+#: bivmix/options/mode.title
+#: catSummary/options/mode.title
+#: numSummary/options/mode.title
+#: ordSummary/options/mode.title
+msgid "Mode"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/catsummary.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+msgid "More than one mode exists, only the first is reported"
+msgstr ""
+
+#: R/bivmix.b.R
+msgid "More than two levels, effect size indicator is not reported"
+msgstr ""
+
+#: bivcat/options/mosaicplot.title
+#: bivcat/results/mosaicplot.title
+msgid "Mosaic plot"
+msgstr ""
+
+#: bivmix/options/n.title
+#: numSummary/options/n.title
+#: ordSummary/options/n.title
+#: umw/results/desc.columns.title
+#: wilcoxT/results/descps.columns.title
+msgid "N"
+msgstr ""
+
+#: R/discvars.b.R
+msgid "Negative Binomial"
+msgstr ""
+
+#: discvars/options/distros/negbinom.title
+msgid "Negative binomial"
+msgstr ""
+
+#: R/i18n.R
+msgid "Negative binomial size must be positive and probability greater than 0 and at most 1"
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "Negative differences"
+msgstr ""
+
+#: package/datasets/neoffi.name
+msgid "neoffi"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+msgid "No complete observations are available for the selected variables"
+msgstr ""
+
+#: R/i18n.R
+msgid "No finite medians are available for this plot"
+msgstr ""
+
+#: bivnum/options/marg/none.title
+#: bivnum/options/line/none.title
+msgid "None"
+msgstr ""
+
+#: R/contvars.b.R
+#: contvars/options/cdistros/norm.title
+msgid "Normal"
+msgstr ""
+
+#: bivmix/options/norm.title
+#: numSummary/options/norm.title
+msgid "Normal curve"
+msgstr ""
+
+#: testnorm/options/norm.title
+msgid "Normal Curve"
+msgstr ""
+
+#: R/testnorm.b.R
+msgid "Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference."
+msgstr ""
+
+#: R/i18n.R
+msgid "Normal Q-Q with Residual Histogram"
+msgstr ""
+
+#: R/i18n.R
+#: package/analyses/testnorm.title
+#: package/analyses/testnorm.menuTitle
+#: testnorm/options.title
+#: testnorm/ui.title
+#: testnorm/results.title
+msgid "Normality Tests"
+msgstr ""
+
+#: R/i18n.R
+msgid "Note. Plot obtained with the saRa module."
+msgstr ""
+
+#: R/i18n.R
+msgid "Null hypothesis: constant error variance. GQ: two-sided, ordered by fitted values, split at 50%, no central omission. HMC: ordered by fitted values, split at 50%; 5,000 simulations, seed 123456. BP statistic is chi-square, GQ is F; HMC is a residual sum-of-squares fraction."
+msgstr ""
+
+#: catSummary/options/NCat.title
+msgid "Number of categories"
+msgstr ""
+
+#: discvars/ui[0][1][1][0]/hypergeom/hyperk.label
+msgid "Number of draws (k)"
+msgstr ""
+
+#: discvars/ui[0][1][1][0]/hypergeom/hypern.label
+msgid "Number of failure states (n)"
+msgstr ""
+
+#: R/umw.b.R
+#: R/wilcoxt.b.R
+msgid "Number of replicates in Bootstrap CI(s): %s"
+msgstr ""
+
+#: umw/options/numR.description.ui
+#: wilcoxT/options/numR.description.ui
+msgid "number of replications for Bootstrap CIs."
+msgstr ""
+
+#: discvars/ui[0][1][1][0]/hypergeom/hyperm.label
+msgid "Number of success states (m)"
+msgstr ""
+
+#: discvars/ui[0][1][0][0]/negbinom/negbinomr.label
+msgid "Number of successes (r)"
+msgstr ""
+
+#: discvars/options/binomn.title
+msgid "Number of trials"
+msgstr ""
+
+#: discvars/ui[0][1][0][0]/binom/binomn.label
+msgid "Number of trials (n)"
+msgstr ""
+
+#: package/analyses/numSummary.title
+#: package/analyses/numSummary.menuTitle
+#: package/analyses/bivnum.title
+#: package/analyses/bivnum.menuTitle
+#: bivnum/options.title
+#: bivnum/ui.title
+#: numSummary/options.title
+#: numSummary/ui.title
+msgid "Numerical Data"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+msgid "Observed"
+msgstr ""
+
+#: bivcat/options/obs.title
+#: bivord/options/obs.title
+msgid "Observed counts"
+msgstr ""
+
+#: R/catsummary.b.R
+msgid "Odds"
+msgstr ""
+
+#: bivcat/options/yaxisPc/total_pc.title
+#: bivord/options/yaxisPc/total_pc.title
+msgid "of total"
+msgstr ""
+
+#: R/i18n.R
+msgid "One or both groups do not contain enough observations"
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "One or both variables are not numeric"
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "One or both variables contain infinite values"
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "One or both variables contain no observations"
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "One or both variables do not contain enough observations"
+msgstr ""
+
+#: package/analyses/ordSummary.title
+#: package/analyses/ordSummary.menuTitle
+#: package/analyses/bivord.title
+#: package/analyses/bivord.menuTitle
+#: bivord/options.title
+#: bivord/ui.title
+#: ordSummary/options.title
+#: ordSummary/ui.title
+msgid "Ordinal Data"
+msgstr ""
+
+#: R/ordsummary.b.R
+msgid "Ordinal summaries require numeric stored values."
+msgstr ""
+
+#: bivmix/options/outerf.title
+#: numSummary/options/outerf.title
+#: ordSummary/options/outerf.title
+msgid "Outer fence"
+msgstr ""
+
+#: testnorm/results/normtests.columns.title
+#: umw/results/mwutest.columns.title
+#: wilcoxT/results/wilcoxttest.columns.title
+msgid "p"
+msgstr ""
+
+#: bivord/results/desc.title
+msgid "Paired Comparisons Description"
+msgstr ""
+
+#: wilcoxT/options/pairs.title
+msgid "Paired Variables"
+msgstr ""
+
+#: contvars/results/ContInfoTab.columns.title
+#: discvars/results/InfoTab.columns.title
+msgid "Parameter(s)"
+msgstr ""
+
+#: catSummary/options/pareto.title
+msgid "Pareto plot"
+msgstr ""
+
+#: testnorm/options/chisqtest.title
+#: testnorm/results/normtests.columns.content
+msgid "Pearson χ² test"
+msgstr ""
+
+#: bivcat/options/contCoef.title
+msgid "Pearson's contingency index"
+msgstr ""
+
+#: bivnum/options/pearsonR.title
+msgid "Pearson's correlation"
+msgstr ""
+
+#: bivnum/results/asocind.columns.content
+msgid "Pearson's r"
+msgstr ""
+
+#: bivnum/options/pearsonR2.title
+#: bivnum/results/asocind.columns.content
+msgid "Pearson's R²"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "Pearson's β₁"
+msgstr ""
+
+#: bivmix/options/beta1.title
+#: numSummary/options/beta1.title
+msgid "Pearson's β₁ (skewness)"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+msgid "Pearson's β₂"
+msgstr ""
+
+#: bivmix/options/beta2.title
+msgid "Pearson's β₂ (kurtosis)"
+msgstr ""
+
+#: numSummary/options/beta2.title
+msgid "Pearson's β₂ (Kurtosis)"
+msgstr ""
+
+#: bivmix/options/NPerc.title
+#: numSummary/options/NPerc.title
+#: ordSummary/options/NPerc.title
+msgid "Percentage of data"
+msgstr ""
+
+#: bivmix/options/Trim.title
+#: numSummary/options/Trim.title
+msgid "Percentage of trimmed data"
+msgstr ""
+
+#: bivmix/options/Win.title
+#: numSummary/options/Win.title
+msgid "Percentage of winsorized data"
+msgstr ""
+
+#: R/catsummary.b.R
+#: R/ordsummary.b.R
+#: bivcat/options/yaxis/ypc.title
+#: bivcat/ui[1][0][1][0].label
+#: bivord/options/yaxis/ypc.title
+#: bivord/ui[1][0][1][0].label
+#: catSummary/options/f2p.bar/relativefreq.title
+#: catSummary/options/f2p.lolli/relativefreq.title
+#: ordSummary/options/f2p.bar/relativefreq.title
+msgid "Percentages"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+msgid "Percentages of total"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+msgid "Percentages within %s"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+msgid "Percentile %s"
+msgstr ""
+
+#: bivmix/options/pcValues.title
+#: numSummary/options/pcValues.title
+#: ordSummary/options/pcValues.title
+msgid "Percentile values"
+msgstr ""
+
+#: bivmix/options/pc.title
+#: numSummary/options/pc.title
+#: ordSummary/options/pc.title
+msgid "Percentiles"
+msgstr ""
+
+#: R/ordsummary.b.R
+msgid "Percentiles must be numbers between 0 and 100"
+msgstr ""
+
+#: testnorm/options/adtest.description.ui
+msgid "perform Anderson-Darling tests."
+msgstr ""
+
+#: umw/options/zstat.description.ui
+#: wilcoxT/options/zstatps.description.ui
+msgid "perform asymptotic Z tests."
+msgstr ""
+
+#: testnorm/options/cvmtest.description.ui
+msgid "perform Cramér–von Mises tests."
+msgstr ""
+
+#: testnorm/options/kstest.description.ui
+msgid "perform Kolmogorov-Smirnov tests."
+msgstr ""
+
+#: testnorm/options/lillietest.description.ui
+msgid "perform Lilliefors tests."
+msgstr ""
+
+#: umw/options/mwu.description.ui
+msgid "perform Mann-Whitney's U t-tests."
+msgstr ""
+
+#: testnorm/options/chisqtest.description.ui
+msgid "perform Pearson's χ² tests."
+msgstr ""
+
+#: testnorm/options/sftest.description.ui
+msgid "perform Shapiro-Francia tests."
+msgstr ""
+
+#: testnorm/options/swtest.description.ui
+msgid "perform Shapiro-Wilk tests."
+msgstr ""
+
+#: wilcoxT/options/wilcoxon.description.ui
+msgid "perform Wilcoxon signed rank tests."
+msgstr ""
+
+#: package/datasets/phobia.name
+msgid "phobia"
+msgstr ""
+
+#: catSummary/options/pie.title
+msgid "Pie chart"
+msgstr ""
+
+#: R/i18n.R
+msgid "Plot could not be drawn: {message}"
+msgstr ""
+
+#: R/i18n.R
+msgid "Plot data unavailable. Reselect Residual plots to refresh."
+msgstr ""
+
+#: catSummary/options/f2p.bar/absolutefreq.title
+#: catSummary/options/f2p.lolli/absolutefreq.title
+#: ordSummary/options/f2p.bar/absolutefreq.title
+msgctxt "plotfrequency"
+msgid "Counts"
+msgstr ""
+
+#: bivcat/ui[3].label
+#: bivcat/ui[3][0][0][0].label
+#: bivmix/ui[2].label
+#: bivmix/results/plots.title
+#: bivnum/ui[2].label
+#: bivnum/ui[2][0][0][0].label
+#: bivord/ui[3].label
+#: bivord/ui[3][0][0][0].label
+#: catSummary/ui[3].label
+#: catSummary/results/plots.title
+#: contvars/ui[2].label
+#: discvars/ui[2].label
+#: numSummary/ui[2].label
+#: numSummary/results/plots.title
+#: ordSummary/ui[2].label
+#: ordSummary/results/plots.title
+#: testnorm/ui[2].label
+#: testnorm/results/plots.title
+#: umw/results/plots.title
+#: wilcoxT/results/plotsps.title
+#: wilcoxT/results/plotsps.template.title
+msgid "Plots"
+msgstr ""
+
+#: R/bivmix.b.R
+msgid "Point-biserial Correlation"
+msgstr ""
+
+#: bivmix/options/rbp.title
+msgid "Point-biserial correlation (2 levels)"
+msgstr ""
+
+#: R/discvars.b.R
+#: discvars/options/distros/poiss.title
+msgid "Poisson"
+msgstr ""
+
+#: R/i18n.R
+msgid "Poisson rate must be non-negative"
+msgstr ""
+
+#: package/datasets/polynomialReg.name
+msgid "polynomialReg"
+msgstr ""
+
+#: bivmix/ui[1][4][0].label
+#: numSummary/ui[1][3][0].label
+#: ordSummary/ui[1][3][0].label
+msgid "Position"
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "Positive differences"
+msgstr ""
+
+#: discvars/results/probstab.columns.title
+msgid "Pr(X = x)"
+msgstr ""
+
+#: contvars/results/Contprobstab.columns.title
+#: discvars/results/probstab.columns.title
+msgid "Pr(X > x)"
+msgstr ""
+
+#: contvars/results/Contprobstab.columns.title
+#: discvars/results/probstab.columns.title
+msgid "Pr(X ≤ x)"
+msgstr ""
+
+#: contvars/options/contpinterv.title
+#: discvars/options/pinterv.title
+msgid "Pr(x1 ≤ X ≤ x2)"
+msgstr ""
+
+#: bivcat/ui[2][1][0].label
+#: bivcat/results/errorind.title
+msgid "Prediction Error Indices"
+msgstr ""
+
+#: contvars/results/Contquantstab.columns.title
+#: discvars/results/quantstab.columns.title
+msgid "Prob"
+msgstr ""
+
+#: discvars/results/probstab.title
+msgid "Probabilities Table"
+msgstr ""
+
+#: package/analyses/discvars.menuSubgroup
+#: package/analyses/contvars.menuSubgroup
+#: discvars/options/binomp.title
+#: discvars/options/negbinomp.title
+#: discvars/options/geomp.title
+msgid "Probability"
+msgstr ""
+
+#: discvars/ui[0][1][0][0]/binom/binomp.label
+#: discvars/ui[0][1][0][0]/negbinom/negbinomp.label
+#: discvars/ui[0][1][1][0]/geom/geomp.label
+msgid "Probability (p)"
+msgstr ""
+
+#: contvars/options/contpdf.title
+#: contvars/options/contppdf.title
+msgid "Probability density function (f(x))"
+msgstr ""
+
+#: contvars/results/contpdfplot.title
+msgid "Probability Density Function Plot"
+msgstr ""
+
+#: contvars/results/contintervplot.title
+#: discvars/results/intervplot.title
+msgid "Probability Interval Plot"
+msgstr ""
+
+#: discvars/options/pmf.title
+#: discvars/options/ppmf.title
+msgid "Probability mass function (Pr(X = x))"
+msgstr ""
+
+#: discvars/results/pmfplot.title
+msgid "Probability Mass Function Plot"
+msgstr ""
+
+#: R/bivmix.b.R
+#: umw/options/pSup.title
+#: umw/results/mwutest.columns.content
+msgid "Probability of superiority"
+msgstr ""
+
+#: bivmix/options/probsup.title
+msgid "Probability of superiority (2 levels)"
+msgstr ""
+
+#: R/catsummary.b.R
+msgid "Proportions"
+msgstr ""
+
+#: umw/options/ciHL.description.ui
+#: wilcoxT/options/ciHLps.description.ui
+msgid "provide confidence intervals for the Hodges-Lehmann estimator."
+msgstr ""
+
+#: umw/options/ciMedians.description.ui
+#: wilcoxT/options/ciMediansps.description.ui
+msgid "provide confidence intervals for the medians."
+msgstr ""
+
+#: wilcoxT/options/plotsps.description.ui
+msgid "provide descriptives for each group of measurements."
+msgstr ""
+
+#: umw/options/desc.description.ui
+msgid "provide descriptives for each group."
+msgstr ""
+
+#: umw/options/plots.description.ui
+msgid "provide descriptives plots."
+msgstr ""
+
+#: bivmix/ui[2][0][0][1]/qq.label
+#: numSummary/ui[2][0][0][1]/qq.label
+#: testnorm/ui[2][1][0]/qq.label
+msgid "Q-Q"
+msgstr ""
+
+#: bivmix/options/qq.title
+#: numSummary/options/qq.title
+#: testnorm/options/qq.title
+msgid "Q-Q plot"
+msgstr ""
+
+#: bivmix/ui[2][0][0][1].label
+#: numSummary/ui[2][0][0][1].label
+#: testnorm/ui[2][1][0].label
+msgid "Q-Q Plots"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+msgid "QD"
+msgstr ""
+
+#: contvars/results/conticdfplot.title
+#: discvars/results/icdfplot.title
+msgid "Quantile (ICDF) Plot"
+msgstr ""
+
+#: contvars/options/contpqvalue.title
+#: discvars/options/pqvalue.title
+msgid "Quantile value"
+msgstr ""
+
+#: contvars/options/contqvalues.title
+#: discvars/options/qvalues.title
+msgid "Quantile values"
+msgstr ""
+
+#: R/contvars.b.R
+msgid "Quantile values must be between 0 and 1 (%s)."
+msgstr ""
+
+#: R/discvars.b.R
+msgid "Quantile values must be real numbers between 0 and 1 (%s)."
+msgstr ""
+
+#: contvars/results/Contquantstab.title
+#: discvars/results/quantstab.title
+msgid "Quantiles Table"
+msgstr ""
+
+#: bivmix/options/q1.title
+#: numSummary/options/q1.title
+#: ordSummary/options/q1.title
+msgid "Quartile 1 (Q1)"
+msgstr ""
+
+#: bivmix/options/q2.title
+#: numSummary/options/q2.title
+#: ordSummary/options/q2.title
+msgid "Quartile 2 (Q2)"
+msgstr ""
+
+#: bivmix/options/q3.title
+#: numSummary/options/q3.title
+#: ordSummary/options/q3.title
+msgid "Quartile 3 (Q3)"
+msgstr ""
+
+#: bivmix/options/rcv.title
+#: numSummary/options/rcv.title
+#: ordSummary/options/rcv.title
+msgid "Quartile coefficient of dispersion"
+msgstr ""
+
+#: bivmix/options/qd.title
+#: numSummary/options/qd.title
+#: ordSummary/options/qd.title
+msgid "Quartile deviation (QD)"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+msgid "Quartile dispersion"
+msgstr ""
+
+#: contvars/options/contppvalue.title
+#: discvars/options/ppvalue.title
+msgid "Random variable value"
+msgstr ""
+
+#: R/contvars.b.R
+msgid "Random variable value must be a positive number (%s)."
+msgstr ""
+
+#: R/contvars.b.R
+msgid "Random variable value must be between %s and %s (%s)."
+msgstr ""
+
+#: contvars/options/contvaluesfunc.title
+#: discvars/options/valuesfunc.title
+msgid "Random variable values"
+msgstr ""
+
+#: R/contvars.b.R
+msgid "Random variable values must be a real number (%s)."
+msgstr ""
+
+#: R/contvars.b.R
+#: R/discvars.b.R
+msgid "Random variable values must be a real number between 0 and 1(%s)."
+msgstr ""
+
+#: R/contvars.b.R
+msgid "Random variable values must be between %s and %s (%s)."
+msgstr ""
+
+#: R/contvars.b.R
+msgid "Random variable values must be positive (%s)."
+msgstr ""
+
+#: R/discvars.b.R
+msgid "Random variable values must be positive integers (%s)."
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+#: bivmix/options/range.title
+#: numSummary/options/range.title
+#: ordSummary/options/range.title
+msgid "Range"
+msgstr ""
+
+#: umw/results/desc.columns.title
+#: wilcoxT/results/descps.columns.title
+msgid "Rank sum"
+msgstr ""
+
+#: umw/options/rankCorr.title
+#: umw/results/mwutest.columns.content
+#: wilcoxT/options/rankCorrps.title
+#: wilcoxT/results/wilcoxttest.columns.content
+msgid "Rank-biserial correlation"
+msgstr ""
+
+#: contvars/options/rate.title
+#: contvars/ui[0][1][1][0]/exp/rate.label
+msgid "Rate (λ)"
+msgstr ""
+
+#: bivnum/options/line.title
+#: bivnum/ui[2][0][0][1].label
+msgid "Regression line / curve"
+msgstr ""
+
+#: umw/options/numR.title
+#: wilcoxT/options/numR.title
+msgid "Replicates"
+msgstr ""
+
+#: R/i18n.R
+msgid "Requires a non-constant variable"
+msgstr ""
+
+#: R/i18n.R
+msgid "Requires at least two non-missing observations"
+msgstr ""
+
+#: R/i18n.R
+msgid "Requires finite observations"
+msgstr ""
+
+#: R/i18n.R
+msgid "Requires two observed groups and finite values"
+msgstr ""
+
+#: R/i18n.R
+msgid "Residual ACF"
+msgstr ""
+
+#: R/i18n.R
+msgid "Residual ACF requires at least two finite, non-constant residuals."
+msgstr ""
+
+#: R/i18n.R
+msgid "Residuals"
+msgstr ""
+
+#: R/i18n.R
+msgid "Residuals vs Fitted"
+msgstr ""
+
+#: contvars/options/conttail/right.title
+#: discvars/options/tail/right.title
+msgid "Right"
+msgstr ""
+
+#: contvars/results/Contquantstab.columns.title
+#: discvars/results/quantstab.columns.title
+msgid "Right tail"
+msgstr ""
+
+#: bivcat/options/pcRow.title
+#: bivord/options/pcRow.title
+msgid "Row"
+msgstr ""
+
+#: R/i18n.R
+msgid "Row order; {lags} automatic lags."
+msgstr ""
+
+#: bivcat/options/rows.title
+#: bivcat/options/xaxis/xrows.title
+#: bivcat/ui[0][0].label
+#: bivord/options/rows.title
+#: bivord/options/xaxis/xrows.title
+#: bivord/ui[0][0].label
+msgid "Rows"
+msgstr ""
+
+#: bivcat/options/sakoda.title
+#: bivcat/results/asocind.columns.content
+msgid "Sakoda's index"
+msgstr ""
+
+#: R/i18n.R
+msgid "Same noteworthy rule as car::influencePlot(): union of the two largest absolute studentized residuals, leverage values and Cook's distances. Case labels identify original fitted rows; selection is diagnostic, not an exclusion rule."
+msgstr ""
+
+#: bivmix/ui[1][0][0].label
+#: numSummary/ui[1][0][0].label
+#: ordSummary/ui[1][0][0].label
+msgid "Sample Size"
+msgstr ""
+
+#: package/analyses/discvars.menuGroup
+#: package/analyses/contvars.menuGroup
+#: package/analyses/catSummary.menuGroup
+#: package/analyses/ordSummary.menuGroup
+#: package/analyses/numSummary.menuGroup
+#: package/analyses/bivcat.menuGroup
+#: package/analyses/bivord.menuGroup
+#: package/analyses/bivnum.menuGroup
+#: package/analyses/bivmix.menuGroup
+#: package/analyses/umw.menuGroup
+#: package/analyses/wilcoxT.menuGroup
+#: package/analyses/testnorm.menuGroup
+#: package/analyses/linReg.menuGroup
+#: bivcat/options.menuGroup
+#: bivmix/options.menuGroup
+#: bivnum/options.menuGroup
+#: bivord/options.menuGroup
+#: catSummary/options.menuGroup
+#: contvars/options.menuGroup
+#: discvars/options.menuGroup
+#: linReg/options.menuGroup
+#: numSummary/options.menuGroup
+#: ordSummary/options.menuGroup
+#: testnorm/options.menuGroup
+#: umw/options.menuGroup
+#: wilcoxT/options.menuGroup
+msgid "saRa"
+msgstr ""
+
+#: R/i18n.R
+msgid "Scale-Location"
+msgstr ""
+
+#: R/contvars.b.R
+msgid "Scale, rate and degrees of freedom must be positive"
+msgstr ""
+
+#: bivnum/options/scat.title
+#: bivnum/results/scat.title
+msgid "Scatterplot"
+msgstr ""
+
+#: R/bivmix.b.R
+msgid "Select a Group by variable"
+msgstr ""
+
+#: R/bivord.b.R
+msgid "Select ordinal variables with ordered levels"
+msgstr ""
+
+#: bivmix/ui[1][5][0].label
+#: numSummary/ui[1][4][0].label
+#: ordSummary/ui[1][4][0].label
+msgid "Shape"
+msgstr ""
+
+#: testnorm/options/sftest.title
+#: testnorm/results/normtests.columns.content
+msgid "Shapiro-Francia test"
+msgstr ""
+
+#: testnorm/options/swtest.title
+#: testnorm/results/normtests.columns.content
+msgid "Shapiro-Wilk test"
+msgstr ""
+
+#: bivcat/options/bartype/dodge.title
+#: bivord/options/bartype/dodge.title
+msgid "Side by side"
+msgstr ""
+
+#: package/datasets/phobia.description
+msgid "Simulated data"
+msgstr ""
+
+#: bivnum/options/line/smooth.title
+msgid "Smooth"
+msgstr ""
+
+#: bivord/options/dSommerC.title
+#: bivord/results/asocind.columns.content
+msgid "Somers' d (columns)"
+msgstr ""
+
+#: bivord/options/dSommerR.title
+#: bivord/results/asocind.columns.content
+msgid "Somers' d (rows)"
+msgstr ""
+
+#: bivord/options/dSommerS.title
+#: bivord/results/asocind.columns.content
+msgid "Somers' d (symmetric)"
+msgstr ""
+
+#: bivnum/options/spearmanR.title
+msgid "Spearman's correlation"
+msgstr ""
+
+#: bivnum/results/asocind.columns.content
+msgid "Spearman's r"
+msgstr ""
+
+#: bivnum/options/spearmanR2.title
+#: bivnum/results/asocind.columns.content
+msgid "Spearman's R²"
+msgstr ""
+
+#: R/i18n.R
+msgid "Specification Test"
+msgstr ""
+
+#: R/i18n.R
+msgid "Sqrt(|standardized residual|)"
+msgstr ""
+
+#: bivnum/options/kendallR2.title
+#: bivnum/results/asocind.columns.content
+msgid "Squared Kendall’s τ"
+msgstr ""
+
+#: bivcat/options/bartype/stack.title
+#: bivmix/options/dotType/stack.title
+#: bivord/options/bartype/stack.title
+#: numSummary/options/dotType/stack.title
+#: ordSummary/options/dotType/stack.title
+msgid "Stacked"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: bivmix/options/stddev.title
+#: numSummary/options/stddev.title
+msgid "Standard deviation"
+msgstr ""
+
+#: bivnum/options/se.title
+msgid "Standard error"
+msgstr ""
+
+#: R/i18n.R
+#: R/testnorm.b.R
+msgid "Standardised values"
+msgstr ""
+
+#: R/i18n.R
+msgid "Standardized residual quantiles"
+msgstr ""
+
+#: R/i18n.R
+#: testnorm/results/normtests.columns.title
+#: umw/results/mwutest.columns.title
+#: wilcoxT/results/wilcoxttest.columns.title
+msgid "Statistic"
+msgstr ""
+
+#: package.title
+msgid "Statistical Analyses with R Add-in for Jamovi"
+msgstr ""
+
+#: bivcat/ui[2].label
+#: bivmix/ui[1].label
+#: bivmix/results/indicesnum.title
+#: bivnum/ui[1].label
+#: bivord/ui[2].label
+#: catSummary/ui[2].label
+#: numSummary/ui[1].label
+#: numSummary/results/indicesnum.title
+#: ordSummary/ui[1].label
+#: ordSummary/results/indicesord.title
+msgid "Statistics"
+msgstr ""
+
+#: testnorm/ui[1].label
+#: umw/ui[1][0][0].label
+msgid "Statistics and Tests"
+msgstr ""
+
+#: contvars/options/sigma.title
+msgid "Std. Deviation (σ)"
+msgstr ""
+
+#: contvars/ui[0][1][0][0]/norm/sigma.label
+msgid "Std. deviation (σ)"
+msgstr ""
+
+#: R/i18n.R
+msgid "Studentized residuals"
+msgstr ""
+
+#: discvars/options/negbinomr.title
+#: discvars/options/hyperm.title
+msgid "Successes"
+msgstr ""
+
+#: contvars/options/contsurv.title
+#: contvars/options/contpsurv.title
+#: discvars/options/surv.title
+#: discvars/options/psurv.title
+msgid "Survival function (Pr(X > x))"
+msgstr ""
+
+#: contvars/results/contsurvplot.title
+#: discvars/results/survplot.title
+msgid "Survival Function Plot"
+msgstr ""
+
+#: contvars/options/cdistros/tdist.title
+msgid "t distribution"
+msgstr ""
+
+#: R/i18n.R
+msgid "Table obtained with the saRa module."
+msgstr ""
+
+#: R/i18n.R
+msgid "Table obtained with the saRa module. Tests squared and cubed fitted values for functional-form misspecification."
+msgstr ""
+
+#: contvars/options/conttail.title
+#: discvars/options/tail.title
+msgid "Tail of the distribution"
+msgstr ""
+
+#: R/catsummary.b.R
+#: catSummary/options/Teachman.title
+msgid "Teachman"
+msgstr ""
+
+#: R/i18n.R
+msgid "Test"
+msgstr ""
+
+#: testnorm/results/normtests.title
+#: wilcoxT/ui[1][0][0].label
+msgid "Tests"
+msgstr ""
+
+#: R/bivmix.b.R
+msgid "The 'group by' variable '{var}' contains no data."
+msgstr ""
+
+#: R/bivmix.b.R
+msgid "The 'group by' variable is required."
+msgstr ""
+
+#: umw/options/hypothesis.description.ui
+#: wilcoxT/options/hypothesisps.description.ui
+msgid "the alternative hypothesis."
+msgstr ""
+
+#: umw/options/ciWidth.description.ui
+#: wilcoxT/options/ciWidthps.description.ui
+msgid "the confidence interval width."
+msgstr ""
+
+#: umw/options/vars.description.ui
+msgid "the dependent variables -- a separate MW test is performed for each dependent variable specified."
+msgstr ""
+
+#: umw/options/miss.description.ui
+#: wilcoxT/options/missps.description.ui
+msgid "the missing value exclusion method. `Analysis by analysis` excludes missing values from each analysis. `Listwise` excludes a row from all analyses if one of its values is missing."
+msgstr ""
+
+#: wilcoxT/options/pairs.description.ui
+msgid "the pairs of measurements -- a separate Wilcoxon signed-rank test is performed for each pair of measurements."
+msgstr ""
+
+#: umw/options/group.description.ui
+msgid "the variable specifying the groups; must have 2 levels."
+msgstr ""
+
+#: bivcat/options/theilab.title
+msgid "Theil's index (A/B)"
+msgstr ""
+
+#: bivcat/options/theilba.title
+msgid "Theil's index (B/A)"
+msgstr ""
+
+#: bivcat/options/theilsym.title
+msgid "Theil's index (symmetric)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "Theil's U (columns)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "Theil's U (rows)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "Theil's U (symmetric)"
+msgstr ""
+
+#: R/i18n.R
+msgid "Theoretical normal quantiles"
+msgstr ""
+
+#: R/i18n.R
+msgid "Theoretical quantiles"
+msgstr ""
+
+#: R/i18n.R
+msgid "These parameters require too many plotting points; use less extreme values"
+msgstr ""
+
+#: R/i18n.R
+msgid "This diagnostic is available for unweighted OLS models only."
+msgstr ""
+
+#: R/wilcoxt.b.R
+msgid "Tied pairs"
+msgstr ""
+
+#: R/bivord.b.R
+msgid "Ties in %s"
+msgstr ""
+
+#: R/bivord.b.R
+msgid "Ties in %s and %s"
+msgstr ""
+
+#: R/bivcat.b.R
+#: R/bivord.b.R
+#: bivcat/options/pcTot.title
+#: bivord/options/pcTot.title
+msgid "Total"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: R/ordsummary.b.R
+#: bivmix/options/trimean.title
+#: numSummary/options/trimean.title
+#: ordSummary/options/trimean.title
+msgid "Trimean"
+msgstr ""
+
+#: bivmix/options/trimmean.title
+#: bivmix/ui[1][2][0]/trimmean.label
+#: numSummary/options/trimmean.title
+#: numSummary/ui[1][1][0]/trimmean.label
+msgid "Trimmed mean"
+msgstr ""
+
+#: R/bivmix.b.R
+msgid "Unable to split by a continuous variable"
+msgstr ""
+
+#: R/i18n.R
+msgid "Unavailable"
+msgstr ""
+
+#: R/contvars.b.R
+#: contvars/options/cdistros/unif.title
+msgid "Uniform"
+msgstr ""
+
+#: R/contvars.b.R
+msgid "Uniform minimum must be smaller than maximum"
+msgstr ""
+
+#: package/analyses/catSummary.menuSubgroup
+#: package/analyses/ordSummary.menuSubgroup
+#: package/analyses/numSummary.menuSubgroup
+msgid "Univariate Analysis"
+msgstr ""
+
+#: catSummary/results.title
+msgid "Univariate Data Analysis (Categorical Data)"
+msgstr ""
+
+#: numSummary/results.title
+msgid "Univariate Data Analysis (Numerical Data)"
+msgstr ""
+
+#: ordSummary/results.title
+msgid "Univariate Data Analysis (Ordinal Data)"
+msgstr ""
+
+#: R/i18n.R
+msgid "Unknown discrete distribution"
+msgstr ""
+
+#: R/i18n.R
+msgid "Unknown Mann-Whitney output"
+msgstr ""
+
+#: R/i18n.R
+msgid "Unknown median confidence-interval method"
+msgstr ""
+
+#: R/i18n.R
+msgid "Unknown normality test"
+msgstr ""
+
+#: R/i18n.R
+msgid "Unknown regression plot type"
+msgstr ""
+
+#: umw/results/cisMed.columns.title
+#: umw/results/cisHL.columns.title
+#: wilcoxT/results/cisMedps.columns.title
+#: wilcoxT/results/cisHLps.columns.title
+msgid "Upper bound"
+msgstr ""
+
+#: bivcat/results/asocind.columns.title
+#: bivcat/results/errorind.columns.title
+#: bivnum/results/asocind.columns.title
+#: bivord/results/asocind.columns.title
+msgid "Value"
+msgstr ""
+
+#: bivord/results/desc.columns.title
+msgid "Values"
+msgstr ""
+
+#: contvars/ui[1].label
+#: discvars/ui[1].label
+msgid "Values and Functions"
+msgstr ""
+
+#: testnorm/results/normtests.columns.title
+#: wilcoxT/results/cisMedps.columns.title
+msgid "Variable"
+msgstr ""
+
+#: R/i18n.R
+msgid "Variable contains infinite values"
+msgstr ""
+
+#: R/i18n.R
+msgid "Variable is not numeric"
+msgstr ""
+
+#: bivmix/options/vars.title
+#: bivmix/ui[0][0].label
+#: catSummary/options/vars.title
+#: catSummary/ui[0][0].label
+#: numSummary/options/vars.title
+#: numSummary/ui[0][0].label
+#: ordSummary/options/vars.title
+#: ordSummary/ui[0][0].label
+#: testnorm/options/vars.title
+#: testnorm/ui[0][0].label
+msgid "Variables"
+msgstr ""
+
+#: wilcoxT/results/descps.title
+msgid "Variables Descriptives"
+msgstr ""
+
+#: wilcoxT/results/cisMedps.title
+msgid "Variables Medians CIs"
+msgstr ""
+
+#: R/bivmix.b.R
+#: R/numsummary.b.R
+#: bivmix/options/variance.title
+#: numSummary/options/variance.title
+msgid "Variance"
+msgstr ""
+
+#: R/catsummary.b.R
+#: catSummary/options/VR.title
+msgid "Variation ratio"
+msgstr ""
+
+#: bivmix/options/violin.title
+#: numSummary/options/violin.title
+#: ordSummary/options/violin.title
+msgid "Violin"
+msgstr ""
+
+#: wilcoxT/options/wilcoxon.title
+msgid "Wilcoxon signed rank test"
+msgstr ""
+
+#: wilcoxT/ui[1][0][0]/wilcoxon.label
+msgid "Wilcoxon signed-rank"
+msgstr ""
+
+#: wilcoxT/results/wilcoxttest.columns.content
+msgid "Wilcoxon T"
+msgstr ""
+
+#: package/analyses/wilcoxT.title
+#: package/analyses/wilcoxT.menuTitle
+#: wilcoxT/options.title
+#: wilcoxT/ui.title
+#: wilcoxT/results.title
+msgid "Wilcoxon T Test"
+msgstr ""
+
+#: wilcoxT/results/wilcoxttest.title
+msgid "Wilcoxon T Test and ES Indices"
+msgstr ""
+
+#: bivord/options/eWilson.title
+#: bivord/results/asocind.columns.content
+msgid "Wilson's e"
+msgstr ""
+
+#: bivmix/options/winsmean.title
+#: bivmix/ui[1][2][0]/winsmean.label
+#: numSummary/options/winsmean.title
+#: numSummary/ui[1][1][0]/winsmean.label
+msgid "Winsorized mean"
+msgstr ""
+
+#: bivcat/options/yaxisPc/column_pc.title
+#: bivord/options/yaxisPc/column_pc.title
+msgid "within column"
+msgstr ""
+
+#: bivcat/options/yaxisPc/row_pc.title
+#: bivord/options/yaxisPc/row_pc.title
+msgid "within rows"
+msgstr ""
+
+#: contvars/results/Contprobstab.columns.title
+#: discvars/results/probstab.columns.title
+msgid "x"
+msgstr ""
+
+#: bivcat/ui[3][0][1][1].label
+#: bivnum/options/xvar.title
+#: bivnum/ui[0][0].label
+#: bivord/ui[3][0][1][1].label
+msgid "X variable"
+msgstr ""
+
+#: bivcat/options/xaxis.title
+#: bivord/options/xaxis.title
+msgid "X-axis"
+msgstr ""
+
+#: R/contvars.b.R
+msgid "X1 must be a positive number (%s)."
+msgstr ""
+
+#: R/contvars.b.R
+msgid "X1 must be between %s and %s (%s)."
+msgstr ""
+
+#: contvars/options/contx1value.title
+#: discvars/options/x1value.title
+msgid "x1 value"
+msgstr ""
+
+#: R/contvars.b.R
+msgid "X2 must be a positive number (%s)."
+msgstr ""
+
+#: R/contvars.b.R
+msgid "X2 must be between %s and %s (%s)."
+msgstr ""
+
+#: contvars/options/contx2value.title
+#: discvars/options/x2value.title
+msgid "x2 value"
+msgstr ""
+
+#: bivcat/ui[3][0][1][0].label
+#: bivnum/options/yvar.title
+#: bivnum/ui[0][1].label
+#: bivord/ui[3][0][1][0].label
+msgid "Y variable"
+msgstr ""
+
+#: bivcat/options/yaxis.title
+#: bivord/options/yaxis.title
+msgid "Y-axis"
+msgstr ""
+
+#: bivcat/results/asocind.columns.content
+msgid "Yule's Q index"
+msgstr ""
+
+#: bivcat/options/Qyule.title
+msgid "Yule's Q index (2x2 tables)"
+msgstr ""
+
+#: bivcat/results/asocind.columns.content
+msgid "Yule's V index"
+msgstr ""
+
+#: bivcat/options/Vyule.title
+msgid "Yule's V index (2x2 tables)"
+msgstr ""
+
+#: bivcat/results/asocind.columns.content
+msgid "Yule's Y index"
+msgstr ""
+
+#: bivcat/options/Yyule.title
+msgid "Yule's Y index (2x2 tables)"
+msgstr ""
+
+#: umw/options/zstat.title
+#: wilcoxT/options/zstatps.title
+msgid "Z statistic"
+msgstr ""
+
+#: umw/results/mwutest.columns.content
+#: wilcoxT/results/wilcoxttest.columns.content
+msgid "z statistic"
+msgstr ""
+
+#: bivmix/options/etasq.title
+msgid "η² (k levels)"
+msgstr ""
+
+#: R/bivmix.b.R
+msgid "η²_H (Kruskal–Wallis)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "λ (columns)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "λ (rows)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "λ (symmetric)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "τ (columns)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "τ (rows)"
+msgstr ""
+
+#: bivcat/results/errorind.columns.content
+msgid "τ (symmetric)"
+msgstr ""
+
+#: bivcat/results/asocind.columns.content
+msgid "φ"
+msgstr ""
+
+#: bivcat/options/phiind.title
+msgid "φ index"
+msgstr ""
+
+#: bivcat/results/asocind.columns.content
+msgid "φ²"
+msgstr ""
+
+#: bivcat/options/phiSq.title
+msgid "φ² index"
+msgstr ""
+
+#: bivcat/results/asocind.columns.content
+msgid "χ²"
+msgstr ""
+
+#: contvars/options/cdistros/chisqdist.title
+msgid "χ² distribution"
+msgstr ""
+
+#: bivcat/options/chiSq.title
+msgid "χ² index"
+msgstr ""
+
+#: bivmix/options/omegasq.title
+msgid "ω² (k levels)"
+msgstr ""

@@ -103,6 +103,7 @@ children:
                 enable: (ciMedians || ciHL || plots)
               - type: CheckBox
                 name: ciMedians
+                label: Median CIs
                 children:
                   - type: RadioButton
                     name: exact
@@ -120,7 +121,8 @@ children:
                         format: number
                         enable: (boot)
               - type: CheckBox
-                name: ciHL                    
+                name: ciHL
+                label: Hodges-Lehmann (location diff.)
           - type: Label
             label: Descriptive Analyses
             children:

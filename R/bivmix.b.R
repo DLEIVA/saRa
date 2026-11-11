@@ -22,19 +22,19 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "h1","h3","beta2","gamma2","k2","k3"
         ),
         title = c(
-          "N", "Missing","Mean", "Median", "Mode", "Geometric mean", "Trimean",
-          "Midhinge", "Mid-range", 
-          paste0(ifelse(!is.na(private$.getTrim()*100),
-                        private$.getTrim()*100,''),'% trimmed mean'),
-          paste0(ifelse(!is.na(private$.getWin()*100),
-                        private$.getWin()*100,''),'% winsorized mean'),
-          "Variance","Standard deviation", "Geometric standard deviation",
-          "Mean deviation","CV", "Range", "IQR", "QD", "MAD", 
-          "Quartile dispersion", paste0(ifelse(!is.na(private$.getNPerc()*100),
-                               private$.getNPerc()*100,''),'% Inner range'),
-          "Min", "Max", "Q1", "Q2", "Q3", "Pearson's \u03B2\u2081",
-          "Fisher's \u03B3\u2081","H1","H3","Pearson's \u03B2\u2082",
-          "Fisher's \u03B3\u2082","K2","K3"
+          "N", .("Missing"),.("Mean"), .("Median"), .("Mode"), .("Geometric mean"), .("Trimean"),
+          .("Midhinge"), .("Mid-range"),
+          sprintf(.("%s%% trimmed mean") ,ifelse(!is.na(private$.getTrim()*100),
+                        private$.getTrim()*100,'')),
+          sprintf(.("%s%% winsorized mean") ,ifelse(!is.na(private$.getWin()*100),
+                        private$.getWin()*100,'')),
+          .("Variance"),.("Standard deviation"), .("Geometric standard deviation"),
+          .("Mean deviation"),.("CV"), .("Range"), .("IQR"), .("QD"), .("MAD"),
+          .("Quartile dispersion"), sprintf(.("%s%% Inner range") ,ifelse(!is.na(private$.getNPerc()*100),
+                               private$.getNPerc()*100,'')),
+          .("Min"), .("Max"), "Q1", "Q2", "Q3", .("Pearson's \u03B2\u2081"),
+          .("Fisher's \u03B3\u2081"),"H1","H3",.("Pearson's \u03B2\u2082"),
+          .("Fisher's \u03B3\u2082"),"K2","K3"
         ),
         superTitle = rep("",35),
         type = c("integer","integer",rep("number",33)),
@@ -52,8 +52,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "cohend", "rbp", "probsup","etasq","omegasq","kwind"
         ),
         title = c(
-          "Cohen's d","Point-biserial Correlation","Probability of superiority",
-          "\u03B7\u00B2","\u03C9\u00B2","η²_H (Kruskal–Wallis)"
+          .("Cohen's d"),.("Point-biserial Correlation"),.("Probability of superiority"),
+          "\u03B7\u00B2","\u03C9\u00B2",.("η²_H (Kruskal–Wallis)")
         ),
         superTitle = rep("",6),
         type = c(rep("number",6)),
@@ -74,7 +74,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     },    
     .run = function(){
       if (length(self$options$vars) > 0 && is.null(self$options$groupBy))
-        jmvcore::reject("Select a Group by variable", code="missing_group_variable")
+        jmvcore::reject(.("Select a Group by variable"), code="missing_group_variable")
       if ( (length(self$options$vars) > 0) & (!is.null(self$options$groupBy)) )  {
         results <- private$.compute()
         private$.populateIndicesTableNum(results)
@@ -423,7 +423,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         
         plot <- ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[names$x]])) +
-          ggplot2::labs(x=labels$x, y='density') +
+          ggplot2::labs(x=labels$x, y=.('density')) +
           ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
           {if(self$options$hist) ggplot2::geom_histogram(
             ggplot2::aes(y=ggplot2::after_stat(density)),
@@ -573,7 +573,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     },
     .qq = function(image, ggtheme, theme, ...) {
       if (is.null(image$state)) return(FALSE)
-      .saraQQPlot(self$data, image$state, self$options$groupBy, ggtheme)
+      .saraQQPlot(self$data, image$state, self$options$groupBy, ggtheme,self=self)
     },
     #### Clear tables ----
     .clearIndicesTableNum = function(vChanges) {
@@ -681,7 +681,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes[[i]],
-          ('More than one mode exists, only the first is reported')
+          (.('More than one mode exists, only the first is reported'))
         )
       }
       
@@ -689,7 +689,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes2[[i]],
-          ('Geometric mean can only be computed with positive values (>0)')
+          (.('Geometric mean can only be computed with positive values (>0)'))
         )
       }
       
@@ -697,7 +697,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes3[[i]],
-          ('Geometric std. deviation can only be computed with positive values (>0)')
+          (.('Geometric std. deviation can only be computed with positive values (>0)'))
         )
       }
     },
@@ -742,7 +742,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes[[i]],
-          ("More than two levels, effect size indicator is not reported")
+          (.("More than two levels, effect size indicator is not reported"))
         )
       }
     },    
@@ -831,7 +831,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('perc', 1:npcValues), after = 27)
-          private$colArgs$title <- append(colArgs$title, paste0("Percentile ", round(pcValues * 100, 2)), after = 27)
+          private$colArgs$title <- append(colArgs$title, sprintf(.("Percentile %s") ,round(pcValues * 100, 2)), after = 27)
           private$colArgs$type <- append(colArgs$type, rep('number', npcValues), after = 27)
           private$colArgs$visible <- append(colArgs$visible, rep("(pc)", npcValues), after = 27)
         }

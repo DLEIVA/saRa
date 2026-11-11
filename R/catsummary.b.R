@@ -15,7 +15,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             "mode","VR","Blau","Teachman","IQV"
           ),
           title = c(
-            "Mode","Variation ratio","Blau","Teachman","IQV"
+            .("Mode"),.("Variation ratio"),.("Blau"),.("Teachman"),.("IQV")
           ),
           superTitle = c(
             "","","","",""
@@ -75,28 +75,28 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             
               table$addColumn(
-                name='levels', title='Levels', type='text'
+                name='levels', title=.('Levels'), type='text'
               )
               table$addColumn(
-                name='counts', title='Counts', type='integer'
+                name='counts', title=.('Counts'), type='integer'
               )
               table$addColumn(
-                name='cumcounts', title='Cumulative counts', type='integer'
+                name='cumcounts', title=.('Cumulative counts'), type='integer'
               )
               table$addColumn(
-                name='prop', title='Proportions', type='number'
+                name='prop', title=.('Proportions'), type='number'
               )
               table$addColumn(
-                name='cumprop', title='Cumulative proportions', type='number'
+                name='cumprop', title=.('Cumulative proportions'), type='number'
               )              
               table$addColumn(
-                name='pc', title='% of Total', type='number', format='pc'
+                name='pc', title=.('% of Total'), type='number', format='pc'
               )
               table$addColumn(
-                name='cumpc', title='Cumulative %', type='number', format='pc'
+                name='cumpc', title=.('Cumulative %'), type='number', format='pc'
               )
               table$addColumn(
-                name='odds', title='Odds', type='number', format='number'
+                name='odds', title=.('Odds'), type='number', format='number'
               )
               
               for (k in seq_along(levels)) {
@@ -325,7 +325,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$addFootnote(
             rowNo=1,
             footnotes[[i]],
-            ('More than one mode exists, only the first is reported')
+            (.('More than one mode exists, only the first is reported'))
           )
         }
       },
@@ -563,8 +563,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             legend.position="none",
           ) +
           ggplot2::xlab("") +
-          ggplot2::ylab(if(freqtype=='absolutefreq') 'Counts' else
-            'Percentages')
+          ggplot2::ylab(if(freqtype=='absolutefreq') .('Counts') else
+            .('Percentages'))
         
         
           plot <- plot + ggtheme + plotSpecificTheme
@@ -593,9 +593,9 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           ggplot2::geom_path(ggplot2::aes(y=.data[[names$cumulative]], group=1),lty=2,col='grey',
                     size=0.7) +
           ggplot2::scale_y_continuous(sec.axis=ggplot2::sec_axis(~.*scaleRight, 
-                                               name = "Cumulative percent (%)",
+                                               name = .("Cumulative percent (%)"),
                                                breaks=seq(0,100,20))) +
-          ggplot2::ylab('Counts') + ggplot2::xlab('')
+          ggplot2::ylab(.('Counts')) + ggplot2::xlab('')
           
         plot <- plot + ggtheme + plotSpecificTheme
         return(plot)
@@ -623,8 +623,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             fill=fill,
             color=color
           ) +
-          ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') 'Counts' else
-            'Percentages')
+          ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') .('Counts') else
+            .('Percentages'))
         
         plot <- plot + ggtheme + plotSpecificTheme
         return(plot)

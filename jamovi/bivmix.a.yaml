@@ -385,7 +385,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provides \u03B7\u00B2 effect size indicator
             
     - name: omegasq
-      title: "\u03C9\u00B3 (k levels)"
+      title: "\u03C9\u00B2 (k levels)"
       type: Bool
       default: false
       description:

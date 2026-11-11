@@ -28,7 +28,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         confInt <- self$options$ciWidth / 100
 
         if (any(depVarNames == groupVarName))
-          jmvcore::reject("Grouping variable '{a}' must not also be a dependent variable",
+          jmvcore::reject(.("Grouping variable '{a}' must not also be a dependent variable"),
                           code="a_is_dependent_variable", a=groupVarName)
         
         # exclude rows with missings in the grouping variable
@@ -37,13 +37,13 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         groupLevels <- base::levels(data[[groupVarName]])
         
         if (length(groupLevels) != 2)
-          jmvcore::reject("Grouping variable '{a}' must have exactly 2 levels",
+          jmvcore::reject(.("Grouping variable '{a}' must have exactly 2 levels"),
                           code="grouping_var_must_have_2_levels", a=groupVarName)
         
         if (self$options$miss == "listwise") {
           data <- jmvcore::naOmit(data)
           if (dim(data)[1] == 0)
-            jmvcore::reject("Grouping variable '{a}' has less than 2 levels after missing values are excluded",
+            jmvcore::reject(.("Grouping variable '{a}' has less than 2 levels after missing values are excluded"),
                             code="grouping_var_must_have_2_levels", a=groupVarName)
         }
         
@@ -78,13 +78,13 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               split(dataMWTest$dep,dataMWTest$group),self$options$ciMethod,
               confInt,self$options$numR)),silent=TRUE)
             if (!jmvcore::isError(ciResult)) cimed <- ciResult
-            else cismedTable$addFootnote(rowKey=depName, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
+            else cismedTable$addFootnote(rowKey=depName, 'cilMed[1]', .saraMessage(jmvcore::extractErrorMessage(ciResult),self))
           }
           cihl <- rep(NaN, 3)
           if (self$options$ciHL) {
             hlResult <- try(suppressWarnings(.saraHodgesLehmann(dataMWTest$dep,group=dataMWTest$group,conf.level=confInt)), silent=TRUE)
             if (!jmvcore::isError(hlResult)) cihl <- hlResult
-            else cishlTable$addFootnote(rowKey=depName, 'hlestimate', jmvcore::extractErrorMessage(hlResult))
+            else cishlTable$addFootnote(rowKey=depName, 'hlestimate', .saraMessage(jmvcore::extractErrorMessage(hlResult),self))
           }
 
           
@@ -93,7 +93,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!self$options[[test]]) next
             result <- .saraMWTest(dataMWTest,test,Ha,confInt)
             success <- .saraWriteRankResult(mwtestTable,depName,test,result,
-                                            withP=test %in% c("mwu","zstat"))
+                                            withP=test %in% c("mwu","zstat"),self=self)
             if (success && test=="zstat" && any(result$n<20) && any(result$t>1))
               mwtestTable$addFootnote(rowKey=depName,"p[zstat]",
                 .("Less than 20 observations and ties in the groups: p-value might not be adequate"))
@@ -172,7 +172,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if ( ! is.null(groupName))
           groups <- base::levels(self$data[[groupName]])
         if (length(groups) != 2)
-          groups <- c('Group 1', 'Group 2')
+          groups <- c(.('Group 1'), .('Group 2'))
         
         table <- self$results$mwutest
         cisMed <- self$results$cisMed
@@ -196,12 +196,12 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> \u2260 \u03BE\u2009<sub>{}</sub>", groups[1], groups[2]))
          
         if(self$options$ciMedians & self$options$ciMethod=='boot')
-          cisMed$setNote("numR", jmvcore::format(paste0("Number of replicates in Bootstrap CI(s): ",reps)))
+          cisMed$setNote("numR", jmvcore::format(sprintf(.("Number of replicates in Bootstrap CI(s): %s") ,reps)))
         
       },
       .desc=function(image, ggtheme, theme, ...) {
         label <- jmvcore::format(.("Median ({ciWidth}% CI)"),ciWidth=self$options$ciWidth)
-        .saraDrawMedianPlot(image$state,label,self$options$group,image$key,ggtheme,theme)
+        .saraDrawMedianPlot(image$state,label,self$options$group,image$key,ggtheme,theme,self=self)
       }
     )
 )

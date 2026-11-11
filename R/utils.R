@@ -1,6 +1,6 @@
 # Shared finite plotting bound; keep distribution parameters unchanged for evaluation.
-.saraDiscreteUpper <- function(options) {
-  reject <- function(message) jmvcore::reject(message, code="invalid_distribution_parameters")
+.saraDiscreteUpper <- function(options,self=NULL) {
+  reject <- function(message) jmvcore::reject(.saraMessage(message,self), code="invalid_distribution_parameters")
   integer <- function(x) length(x) == 1L && is.finite(x) && x >= 0 && x == floor(x)
   probability <- function(x, positive=FALSE) length(x) == 1L && is.finite(x) &&
     x <= 1 && (if (positive) x > 0 else x >= 0)
@@ -191,7 +191,7 @@
   do.call(rbind, pieces)
 }
 
-.saraQQPlot <- function(data, variable, groupBy=NULL, ggtheme=NULL) {
+.saraQQPlot <- function(data, variable, groupBy=NULL, ggtheme=NULL,self=NULL) {
   frame <- .saraECDFData(jmvcore::toNumeric(data[[variable]]),
                         if (is.null(groupBy)) NULL else data[[groupBy]])
   if (is.null(frame) || nrow(frame) == 0L) return(FALSE)
@@ -202,18 +202,19 @@
                          fill="grey70", alpha=.5) +
     ggplot2::geom_line(ggplot2::aes(y=.data$fitted), linewidth=.8) +
     ggplot2::geom_point(ggplot2::aes(y=.data$sample)) +
-    ggplot2::xlab("Theoretical quantiles") + ggplot2::ylab("Standardised values") + ggtheme
+    ggplot2::xlab(.saraMessage("Theoretical quantiles",self)) + ggplot2::ylab(.saraMessage("Standardised values",self)) + ggtheme
   if (!is.null(groupBy)) plot <- plot + ggplot2::facet_wrap(~ group)
   plot
 }
 
-.saraRankTestError <- function(message) {
-  switch(message,
+.saraRankTestError <- function(message,self=NULL) {
+  text <- switch(message,
     "grouping factor must have exactly 2 levels" = "One or both groups do not contain enough observations",
     "not enough observations" = "One or both groups do not contain enough observations",
     "data are essentially constant" = "All observations are tied",
     "cannot compute confidence interval when all observations are tied" = "All observations are tied",
     message)
+  .saraMessage(text,self)
 }
 
 # Map both independent and paired GUI alternatives in one place.
@@ -321,7 +322,7 @@
 }
 
 # Shared error-to-cell rendering; return success for test-specific footnotes.
-.saraWriteRankResult <- function(table, rowKey, name, result, withP=FALSE) {
+.saraWriteRankResult <- function(table, rowKey, name, result, withP=FALSE,self=NULL) {
   statistic <- paste0("stat[",name,"]")
   probability <- paste0("p[",name,"]")
   failed <- jmvcore::isError(result)
@@ -329,7 +330,7 @@
   if (withP) values[[probability]] <- if(failed) NaN else result$p.value
   table$setRow(rowKey=rowKey,values)
   if (failed) table$addFootnote(rowKey=rowKey,statistic,
-    .saraRankTestError(jmvcore::extractErrorMessage(result)))
+    .saraRankTestError(jmvcore::extractErrorMessage(result),self=self))
   !failed
 }
 
@@ -362,14 +363,31 @@
     ggplot2::theme(plot.margin=ggplot2::margin(8,12,8,8))
 }
 .saraDrawMedianPlot <- function(state,label,xLabel=NULL,yLabel=NULL,
-                                ggtheme=NULL,theme=NULL) {
+                                ggtheme=NULL,theme=NULL,self=NULL) {
   tryCatch({
     print(.saraMedianPlot(state,label,xLabel,yLabel,ggtheme,theme))
     TRUE
   },error=function(e) {
     graphics::plot.new()
-    graphics::text(.5,.5,paste(strwrap(paste("Plot could not be drawn:",
-      conditionMessage(e)),width=55),collapse="\n"),cex=.85)
+    graphics::text(.5,.5,paste(strwrap(jmvcore::format(.saraMessage("Plot could not be drawn: {message}",self),
+      message=.saraMessage(conditionMessage(e),self)),width=55),collapse="\n"),cex=.85)
+    TRUE
+  })
+}
+
+# Print inside the callback. On failure, produce a visible diagnostic instead of
+# leaving jamovi waiting for a plot resource that was never created.
+.saraDrawBivariatePlot <- function(build,self=NULL) {
+  tryCatch({
+    plot <- build()
+    if (is.null(plot)) return(FALSE)
+    print(plot)
+    TRUE
+  },error=function(e) {
+    message <- jmvcore::format(.saraMessage("Plot could not be drawn: {message}",self),
+      message=.saraMessage(conditionMessage(e),self))
+    graphics::plot.new()
+    graphics::text(.5,.5,paste(strwrap(message,width=65),collapse="\n"),cex=.85)
     TRUE
   })
 }

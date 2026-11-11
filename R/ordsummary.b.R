@@ -16,8 +16,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "range", "iqr", "qd", "mad", "rcv", "min", "max", "q1", "q2", "q3", "h1","h3","k2","k3"
         ),
         title = c(
-          "N", "Missing", "Median", "Mode", "Trimean", "Midhinge", "Mid-range",
-          "Range", "IQR", "QD", "MAD", "Quartile dispersion", "Min", "Max", "Q1", "Q2", "Q3", "H1","H3","K2","K3"
+          "N", .("Missing"), .("Median"), .("Mode"), .("Trimean"), .("Midhinge"), .("Mid-range"),
+          .("Range"), .("IQR"), .("QD"), .("MAD"), .("Quartile dispersion"), .("Min"), .("Max"), "Q1", "Q2", "Q3", "H1","H3","K2","K3"
         ),
         superTitle = rep("",21),
         type = c("integer","integer","number","text",rep("number",17)),
@@ -178,7 +178,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes[[i]],
-          ('More than one mode exists, only the first is reported')
+          (.('More than one mode exists, only the first is reported'))
         )
       }
     },
@@ -265,8 +265,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           fill=fill,
           color=color
         ) +
-        ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') 'Counts' else
-          'Percentages')
+        ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') .('Counts') else
+          .('Percentages'))
       
       plot <- plot + ggtheme + plotSpecificTheme
       return(plot)
@@ -370,7 +370,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (is.character(pcValues))
         pcValues <- as.numeric(unlist(strsplit(pcValues, ",")))
       if (any(!is.finite(pcValues)) || any(pcValues < 0 | pcValues > 100))
-        jmvcore::reject("Percentiles must be numbers between 0 and 100", code="invalid_percentiles")
+        jmvcore::reject(.("Percentiles must be numbers between 0 and 100"), code="invalid_percentiles")
       pcValues <- pcValues / 100
       pcValues <- pcValues[!is.na(pcValues)]
       
@@ -385,7 +385,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('perc', 1:npcValues), after = 17)
-          private$colArgs$title <- append(colArgs$title, paste0("Percentile ", round(pcValues * 100, 2)), after = 17)
+          private$colArgs$title <- append(colArgs$title, sprintf(.("Percentile %s") ,round(pcValues * 100, 2)), after = 17)
           private$colArgs$type <- append(colArgs$type, rep('number', npcValues), after = 17)
           private$colArgs$visible <- append(colArgs$visible, rep("(pc)", npcValues), after = 17)
         }
@@ -398,7 +398,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('ir'), after = 12)
-          private$colArgs$title <- append(colArgs$title, paste0(NPerc, ('% Inner range')), after = 12)
+          private$colArgs$title <- append(colArgs$title, sprintf(.("%s%% Inner range"),NPerc), after = 12)
           private$colArgs$type <- append(colArgs$type, 'number', after = 12)
           private$colArgs$visible <- append(colArgs$visible, "(irange)", after = 12)
         }
@@ -429,7 +429,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (is.factor(converted)) {
         converted <- suppressWarnings(as.numeric(as.character(converted)))
         if (any(is.na(converted) & !is.na(column)))
-          stop("Ordinal summaries require numeric stored values.")
+          stop(.("Ordinal summaries require numeric stored values."))
       }
       column <- converted
       stats <- list()

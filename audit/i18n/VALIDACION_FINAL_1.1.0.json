@@ -1,0 +1,33 @@
+{
+  "reported_date": "2026-11-11",
+  "candidate_version": "1.1.0",
+  "test_command": "testthat::test_local(\".\")",
+  "test_blocks": 44,
+  "test_results": {
+    "FAIL": 0,
+    "WARN": 0,
+    "SKIP": 0,
+    "PASS": 345,
+    "duration_seconds": 8.0
+  },
+  "contexts": {
+    "audit-statistics": 274,
+    "gui-followup": 40,
+    "i18n-preparation": 31
+  },
+  "build_install": "PASS — developer confirmed installed candidate works after latest correction",
+  "GUI": "PASS — developer confirms all reported translation, layout and plot issues corrected",
+  "HTML_export": "PASS — developer confirmation",
+  "PDF_export": "PASS — developer confirmation",
+  "sqrt_plot_label": "PASS — root of absolute residual displays correctly in HTML/PDF; GUI previously confirmed",
+  "omv_persistence": "PASS — saved and reopened successfully",
+  "English_language_switch": "PASS — developer confirms continued correct operation",
+  "Spanish_catalog_review": "569 original entries approved in 19 review blocks; later GUI abbreviations explicitly requested; current catalog contains 572 entries",
+  "evidence_source": "Developer-supplied console output and explicit confirmations in conversation",
+  "platform": "Windows (session context); no new separate Linux/macOS validation asserted",
+  "jamovi_version": "Not recorded for this run",
+  "R_version": "Not recorded for this run",
+  "jmvtools_version": "Not recorded for this run",
+  "tested_checkout_commit": "Not supplied; source changes are pending the developer Git commit",
+  "scope_limit": "Validation on the developer setup. Does not establish all-platform compatibility or jamovi Library acceptance. Private Regression API review remains pending."
+}
