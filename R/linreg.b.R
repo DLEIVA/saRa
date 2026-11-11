@@ -13,8 +13,8 @@ linRegClass <- if (requireNamespace('jmvcore',quietly=TRUE)) R6::R6Class(
       if (is.null(columns)) columns <- list(
         list(name="test",title=.saraAddonMessage("Test",self),type="text"),
         list(name="stat",title=.saraAddonMessage("Statistic",self),type="number"),
-        list(name="df1",title="df1",type="integer"),
-        list(name="df2",title="df2",type="integer"),
+        list(name="df1",title=.saraAddonMessage("df1",self),type="integer"),
+        list(name="df2",title=.saraAddonMessage("df2",self),type="integer"),
         list(name="p",title="p",type="number",format="zto,pvalue"))
       t <- jmvcore::Table$new(options=self$parent$options,name=name,title=title,
         rows=length(labels),columns=columns,refs=refs,visible=paste0("(",option,")"),
@@ -58,8 +58,8 @@ linRegClass <- if (requireNamespace('jmvcore',quietly=TRUE)) R6::R6Class(
             .saraAddonMessage("Kolmogorov-Smirnov uses the Lilliefors correction for estimated mean and variance. Residual normality diagnostics.",self),
             columns=list(list(name="test",title=.saraAddonMessage("Test",self),type="text"),
               list(name="stat",title=.saraAddonMessage("Statistic",self),type="number"),
-              list(name="df1",title="df1",type="integer",visible=FALSE),
-              list(name="df2",title="df2",type="integer",visible=FALSE),
+              list(name="df1",title=.saraAddonMessage("df1",self),type="integer",visible=FALSE),
+              list(name="df2",title=.saraAddonMessage("df2",self),type="integer",visible=FALSE),
               list(name="p",title="p",type="number",format="zto,pvalue"))))
           a$add(private$.table("saraBP",.saraAddonMessage("Heteroskedasticity Tests",self),c("Breusch-Pagan",
             .saraAddonMessage("Koenker (studentized Breusch-Pagan)",self),"Goldfeld-Quandt","Harrison-McCabe"),"norm",

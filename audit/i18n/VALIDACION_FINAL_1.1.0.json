@@ -1,33 +1,45 @@
 {
   "reported_date": "2026-11-11",
   "candidate_version": "1.1.0",
+  "branch": "feature/catalan-1.1.0",
+  "languages": [
+    "en",
+    "es",
+    "ca"
+  ],
   "test_command": "testthat::test_local(\".\")",
-  "test_blocks": 44,
+  "test_blocks": 48,
   "test_results": {
     "FAIL": 0,
     "WARN": 0,
     "SKIP": 0,
-    "PASS": 345,
-    "duration_seconds": 8.0
+    "PASS": 372,
+    "duration_seconds": 15.7
   },
   "contexts": {
     "audit-statistics": 274,
+    "catalan-i18n": 27,
     "gui-followup": 40,
     "i18n-preparation": 31
   },
-  "build_install": "PASS — developer confirmed installed candidate works after latest correction",
-  "GUI": "PASS — developer confirms all reported translation, layout and plot issues corrected",
+  "build_install": "Developer confirms operation of installed candidate; exact build log and tool versions not supplied",
+  "GUI": "PASS — developer confirmed Catalan interface, tables, notes and plots",
   "HTML_export": "PASS — developer confirmation",
   "PDF_export": "PASS — developer confirmation",
-  "sqrt_plot_label": "PASS — root of absolute residual displays correctly in HTML/PDF; GUI previously confirmed",
-  "omv_persistence": "PASS — saved and reopened successfully",
-  "English_language_switch": "PASS — developer confirms continued correct operation",
-  "Spanish_catalog_review": "569 original entries approved in 19 review blocks; later GUI abbreviations explicitly requested; current catalog contains 572 entries",
-  "evidence_source": "Developer-supplied console output and explicit confirmations in conversation",
-  "platform": "Windows (session context); no new separate Linux/macOS validation asserted",
+  "sqrt_plot_label": "PASS — symbols display correctly, including square-root residual label",
+  "omv_persistence": "PASS — developer explicitly confirmed save/reopen on the Catalan branch",
+  "Spanish_language_switch": "PASS — developer confirmation",
+  "English_language_switch": "PASS — developer confirmation",
+  "catalogs": {
+    "ca": "572 entries reviewed and approved; df1/df2 added as gll1/gll2; current catalog: 574 entries",
+    "es": "Spanish preserved; df1/df2 added as gl1/gl2; current catalog: 574 entries"
+  },
+  "test_setup": "Candidate ca.json loaded temporarily into jmvcore catalog cache for source tests; real Options/Translator retained; previous cache restored. Installed resource routing also checked through developer GUI confirmation.",
+  "platform": "Windows, from session context; no new separate Linux/macOS validation asserted",
   "jamovi_version": "Not recorded for this run",
   "R_version": "Not recorded for this run",
   "jmvtools_version": "Not recorded for this run",
-  "tested_checkout_commit": "Not supplied; source changes are pending the developer Git commit",
-  "scope_limit": "Validation on the developer setup. Does not establish all-platform compatibility or jamovi Library acceptance. Private Regression API review remains pending."
+  "tested_checkout_commit": "Not supplied; final source changes pending developer commit",
+  "evidence_source": "Developer-supplied test output and explicit GUI/export/language/.omv confirmations in conversation",
+  "scope_limit": "Developer validation on this setup. No claim of all-platform compatibility or jamovi Library acceptance. Maintainer review of private Regression APIs remains pending. main stays at 1.0.0 while under review."
 }

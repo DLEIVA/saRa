@@ -6,6 +6,8 @@
   if (is.null(self) || is.null(message) || length(message)!=1L || is.na(message))
     return(message)
   switch(message,
+    "df1" = .("df1"),
+    "df2" = .("df2"),
     "All observations are tied" = .("All observations are tied"),
     "Autocorrelation" = .("Autocorrelation"),
     "Binomial size must be a non-negative integer and probability between 0 and 1" = .("Binomial size must be a non-negative integer and probability between 0 and 1"),

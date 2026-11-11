@@ -2854,3 +2854,11 @@ msgstr "Índice χ²"
 #: bivmix/options/omegasq.title
 msgid "ω² (k levels)"
 msgstr "ω² (k niveles)"
+
+#: R/i18n.R
+msgid "df1"
+msgstr "gl1"
+
+#: R/i18n.R
+msgid "df2"
+msgstr "gl2"

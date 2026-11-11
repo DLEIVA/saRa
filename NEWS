@@ -1,16 +1,16 @@
--------------
-VERSION 1.1.0
--------------
+saRa 1.1.0
 
-* Add a Spanish translation catalog for GUI controls, results, diagnostics and plots.
+* Add Spanish and Catalan translation catalogs for GUI controls, results, diagnostics and plots.
 * Mark remaining dynamic labels and validation messages for translation; retain internal keys and user variable names.
 * Pass explicit saRa translation context to shared plotting and message helpers.
 * Add translation checks while retaining the existing statistical test suite.
 * Fix bivariate bar rendering and add in-callback drawing for ordinal plots.
 * Resolve Regression add-on translations from saRa using the parent analysis language.
 * Shorten Spanish GUI labels for frequency, confidence intervals and distribution controls.
-* Validation: 44 test blocks, 345 expectations passed without failures, warnings or skips.
-* Developer confirmed Spanish/English operation, HTML/PDF exports and .omv save/reopen.
+* Translate df1/df2 headers as gll1/gll2 in Catalan and gl1/gl2 in Spanish.
+* Validation: 48 test blocks, 372 expectations passed without failures, warnings or skips.
+* Developer confirmed Catalan GUI, tables, notes, plots and symbols, HTML/PDF exports,
+  .omv save/reopen and continued Spanish/English operation.
 
 -------------
 VERSION 1.0.0

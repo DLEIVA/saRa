@@ -1,0 +1,1735 @@
+{
+    "code": "ca",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "0": [
+                "0"
+            ],
+            "": {
+                "domain": "messages",
+                "lang": "ca",
+                "plural_forms": "nplurals=2; plural=(n != 1);"
+            },
+            "{ciWidth}% Confidence Interval": [
+                "Interval de confiança del {ciWidth}%"
+            ],
+            "{n} pair(s) of values were tied": [
+                "S’han observat empats en {n} parells de valors"
+            ],
+            "{title} - Model {model}": [
+                "{title} - Model {model}"
+            ],
+            "# categories (0: automatic detection)": [
+                "Nre. de categories (0: detecció automàtica)"
+            ],
+            "%": [
+                "%"
+            ],
+            "% of data": [
+                "% de dades"
+            ],
+            "% of total": [
+                "% del total"
+            ],
+            "% of Total": [
+                "% del total"
+            ],
+            "% trim": [
+                "% de retall"
+            ],
+            "% winsor": [
+                "% de winsorització"
+            ],
+            "% within column": [
+                "% per columna"
+            ],
+            "% within row": [
+                "% per fila"
+            ],
+            "%s%% Inner range": [
+                "Rang intern del %s%%"
+            ],
+            "%s%% inner range": [
+                "Rang intern del %s%%"
+            ],
+            "%s%% trimmed mean": [
+                "Mitjana retallada al %s%%"
+            ],
+            "%s%% winsorized mean": [
+                "Mitjana winsoritzada al %s%%"
+            ],
+            "0.5": [
+                "0.5"
+            ],
+            "25,50,75": [
+                "25,50,75"
+            ],
+            "A basic course on Statistics in jamovi. Basically based on jmv package, the add-in includes a suite of (univariate and bivariate) descriptive methods  for nominal, ordinal, and numeric variables. The add-in also incorporates a module of probability distributions, continuous and discrete, to be used in a Statistics course. This package is primarily thought and developed to be useable within the jamovi statistical spreadsheet (see <https://www.jamovi.org> for more information).": [
+                "Eines per a un curs bàsic d’estadística amb jamovi. Basat principalment en el paquet jmv, el mòdul inclou mètodes descriptius univariats i bivariats per a variables nominals, ordinals i numèriques. També incorpora distribucions de probabilitat contínues i discretes per a ús docent. Aquest paquet està dissenyat principalment per utilitzar-se en el programa estadístic jamovi (vegeu <https://www.jamovi.org> per a més informació)."
+            ],
+            "A dataset on attitudes towards immigration": [
+                "Dades sobre actituds envers la immigració"
+            ],
+            "A dataset on NEO-FFI": [
+                "Dades del NEO-FFI"
+            ],
+            "A dataset on personal beliefs": [
+                "Dades sobre creences personals"
+            ],
+            "A dataset to illustrate linear regression": [
+                "Dades per il·lustrar la regressió lineal"
+            ],
+            "A dataset to illustrate polynomial regression": [
+                "Dades per il·lustrar la regressió polinòmica"
+            ],
+            "A dataset to illustrate simple mediation models": [
+                "Dades per il·lustrar models de mediació simple"
+            ],
+            "A frequencies table": [
+                "Taula de freqüències"
+            ],
+            "a table containing confidence interval estimates for HL estimator": [
+                "Taula d’intervals de confiança de l’estimador de Hodges-Lehmann"
+            ],
+            "a table containing confidence interval estimates for the medians": [
+                "Taula d’intervals de confiança de les medianes"
+            ],
+            "a table containing the group descriptives": [
+                "Taula d’estadístics descriptius per grup"
+            ],
+            "a table containing the Mann-Whitney U test results": [
+                "Taula de resultats del contrast U de Mann-Whitney"
+            ],
+            "a table containing the Wilcoxon T test results": [
+                "Taula de resultats del contrast T de Wilcoxon"
+            ],
+            "A table for the normality tests": [
+                "Taula de contrasts de normalitat"
+            ],
+            "A table of different bivariate association indicators": [
+                "Taula d’índexs d’associació bivariada"
+            ],
+            "A table of different effect size indicators": [
+                "Taula d’índexs de grandària de l’efecte"
+            ],
+            "A table of different prediction error indicators": [
+                "Taula d’índexs d’error de predicció"
+            ],
+            "a table of proportions": [
+                "Taula de proporcions"
+            ],
+            "A table of the descriptive statistics": [
+                "Taula d’estadístics descriptius"
+            ],
+            "a table with a summary for all possible comparisons": [
+                "Taula resum de totes les comparacions possibles"
+            ],
+            "A table with probabilities for selected distributions": [
+                "Taula de probabilitats de les distribucions seleccionades"
+            ],
+            "A table with quantiles for selected distributions": [
+                "Taula de quantils de les distribucions seleccionades"
+            ],
+            "All observations are tied": [
+                "Totes les observacions estan empatades"
+            ],
+            "Alluvial plot": [
+                "Gràfic al·luvial"
+            ],
+            "Alluvial Plot": [
+                "Gràfic al·luvial"
+            ],
+            "Alternative hypothesis": [
+                "Hipòtesi alternativa"
+            ],
+            "Alternative Hypothesis": [
+                "Hipòtesi alternativa"
+            ],
+            "An array of descriptive plots": [
+                "Conjunt de gràfics descriptius"
+            ],
+            "an array of groups of plots": [
+                "Conjunt de grups de gràfics"
+            ],
+            "Anderson-Darling test": [
+                "Contrast d’Anderson-Darling"
+            ],
+            "Approximate 95% white-noise bounds.": [
+                "Límits aproximats del 95 % per a soroll blanc."
+            ],
+            "Association Indices": [
+                "Índexs d’associació"
+            ],
+            "Association indices require at least two observed levels in each variable and complete observations": [
+                "Els índexs d’associació requereixen almenys dos nivells observats en cada variable i observacions completes"
+            ],
+            "attitudes": [
+                "attitudes"
+            ],
+            "Autocorrelation": [
+                "Autocorrelació"
+            ],
+            "Average rank": [
+                "Rang mitjà"
+            ],
+            "Bar plot": [
+                "Gràfic de barres"
+            ],
+            "Bar Plot": [
+                "Gràfic de barres"
+            ],
+            "Bar Plots": [
+                "Gràfics de barres"
+            ],
+            "Bar type": [
+                "Tipus de barres"
+            ],
+            "beliefs": [
+                "beliefs"
+            ],
+            "Binomial": [
+                "Binomial"
+            ],
+            "Binomial size must be a non-negative integer and probability between 0 and 1": [
+                "El nombre d’assaigs binomials ha de ser un enter no negatiu i la probabilitat ha d’estar entre 0 i 1"
+            ],
+            "Bivariate Analysis": [
+                "Anàlisi bivariada"
+            ],
+            "Bivariate Data Analysis": [
+                "Anàlisi de dades bivariades"
+            ],
+            "Bivariate Data Analysis (Categorical Data)": [
+                "Anàlisi bivariada de dades categòriques"
+            ],
+            "Bivariate Data Analysis (Mixed Data)": [
+                "Anàlisi bivariada de dades mixtes"
+            ],
+            "Bivariate Data Analysis (Numerical Data)": [
+                "Anàlisi bivariada de dades numèriques"
+            ],
+            "Bivariate Data Analysis (Ordinal Data)": [
+                "Anàlisi bivariada de dades ordinals"
+            ],
+            "Blau": [
+                "Blau"
+            ],
+            "Bootstrap": [
+                "Bootstrap"
+            ],
+            "Bootstrap Durbin-Watson tests are available for unweighted OLS models only.": [
+                "Els contrasts de Durbin-Watson per bootstrap només estan disponibles per a models de mínims quadrats ordinaris sense ponderació."
+            ],
+            "Box plot": [
+                "Diagrama de caixa"
+            ],
+            "Box Plots": [
+                "Diagrames de caixa"
+            ],
+            "Boxplots": [
+                "Diagrames de caixa"
+            ],
+            "Case": [
+                "Cas"
+            ],
+            "Categorical Data": [
+                "Dades categòriques"
+            ],
+            "Cells": [
+                "Cel·les"
+            ],
+            "Central": [
+                "Central"
+            ],
+            "Central Tendency": [
+                "Tendència central"
+            ],
+            "Chuprov's index": [
+                "Índex de Chuprov"
+            ],
+            "Coefficient of variation (CV)": [
+                "Coeficient de variació (CV)"
+            ],
+            "Cohen's d": [
+                "d de Cohen"
+            ],
+            "Cohen's d (2 levels)": [
+                "d de Cohen (2 nivells)"
+            ],
+            "Column": [
+                "Columna"
+            ],
+            "Columns": [
+                "Columnes"
+            ],
+            "compute f statistic.": [
+                "Calcular l’estadístic f."
+            ],
+            "compute probability of superiority index.": [
+                "Calcular l’índex de probabilitat de superioritat."
+            ],
+            "compute rank biserial correlation.": [
+                "Calcular la correlació biserial de rangs."
+            ],
+            "Concordant pairs": [
+                "Parells concordants"
+            ],
+            "Confidence Intervals": [
+                "Intervals de confiança"
+            ],
+            "Confidence level": [
+                "Nivell de confiança"
+            ],
+            "Confidence level must be between zero and one": [
+                "El nivell de confiança ha d’estar entre zero i u"
+            ],
+            "Contingency index": [
+                "Coeficient de contingència"
+            ],
+            "Contingency Tables": [
+                "Taules de contingència"
+            ],
+            "Continuous Distributions": [
+                "Distribucions contínues"
+            ],
+            "Cook's D": [
+                "D de Cook"
+            ],
+            "Counts": [
+                "Freqüències absolutes"
+            ],
+            "Covariance": [
+                "Covariància"
+            ],
+            "Cramér–von Mises test": [
+                "Contrast de Cramér–von Mises"
+            ],
+            "Cramér's V": [
+                "V de Cramér"
+            ],
+            "Cramér's V index": [
+                "Índex V de Cramér"
+            ],
+            "Cumulative %": [
+                "% acumulat"
+            ],
+            "Cumulative counts": [
+                "Freqüències absolutes acumulades"
+            ],
+            "Cumulative distribution function (Pr(X ≤ x))": [
+                "F. distribució (Pr(X≤x))"
+            ],
+            "Cumulative Distribution Function Plot": [
+                "Gràfic f. distribució"
+            ],
+            "Cumulative percent (%)": [
+                "Percentatge acumulat (%)"
+            ],
+            "Cumulative probability": [
+                "Probabilitat acumulada"
+            ],
+            "Cumulative proportions": [
+                "Proporcions acumulades"
+            ],
+            "CV": [
+                "CV"
+            ],
+            "Data": [
+                "Dades"
+            ],
+            "Densities": [
+                "Densitats"
+            ],
+            "Densities/Probabilities Table": [
+                "Taula de densitats i probabilitats"
+            ],
+            "density": [
+                "Densitat"
+            ],
+            "Density": [
+                "Densitat"
+            ],
+            "Dependent Variables": [
+                "Variables dependents"
+            ],
+            "Descriptive Analyses": [
+                "Anàlisis descriptives"
+            ],
+            "Descriptives": [
+                "Estadístics descriptius"
+            ],
+            "descriptives plot": [
+                "Gràfic descriptiu"
+            ],
+            "Descriptives Plots": [
+                "Gràfics descriptius"
+            ],
+            "Descriptives plots": [
+                "Gràfics descriptius"
+            ],
+            "Descriptives Table": [
+                "Taula d’estadístics descriptius"
+            ],
+            "df (ν)": [
+                "gll (ν)"
+            ],
+            "df denominator (ν2)": [
+                "gll del denominador (ν2)"
+            ],
+            "df numerator (ν1)": [
+                "gll del numerador (ν1)"
+            ],
+            "Differences": [
+                "Diferències"
+            ],
+            "Discordant pairs": [
+                "Parells discordants"
+            ],
+            "Discrete Distributions": [
+                "Distribucions discretes"
+            ],
+            "Dispersion": [
+                "Dispersió"
+            ],
+            "Distribution": [
+                "Distribució"
+            ],
+            "Distribution Information": [
+                "Informació de la distribució"
+            ],
+            "Distributions": [
+                "Distribucions"
+            ],
+            "Doughnut": [
+                "Donut"
+            ],
+            "Draws": [
+                "Extraccions"
+            ],
+            "Durbin-Watson Tests by Lag": [
+                "Contrasts de Durbin-Watson per retard"
+            ],
+            "Durbin-Watson tests require a fitted model with finite, non-zero residuals.": [
+                "Els contrasts de Durbin-Watson requereixen un model ajustat amb residus finits i no tots nuls."
+            ],
+            "ECDF": [
+                "FDEA"
+            ],
+            "ECDF plot": [
+                "Gràfic FDEA"
+            ],
+            "ECDF Plots": [
+                "Gràfics FDEA"
+            ],
+            "Effect Size": [
+                "Grandària de l’efecte"
+            ],
+            "Effect Size Indices": [
+                "Índexs de grandària de l’efecte"
+            ],
+            "Exact": [
+                "Exacte"
+            ],
+            "Exclude cases analysis by analysis": [
+                "Excloure casos segons l’anàlisi"
+            ],
+            "Exclude cases listwise": [
+                "Excloure casos segons la llista de variables"
+            ],
+            "Expected": [
+                "Esperades"
+            ],
+            "Expected counts": [
+                "Freqüències esperades"
+            ],
+            "Exponential": [
+                "Exponencial"
+            ],
+            "F distribution": [
+                "Distribució F"
+            ],
+            "f statistic": [
+                "Estadístic f"
+            ],
+            "f(x)": [
+                "f(x)"
+            ],
+            "Failures": [
+                "Fracassos"
+            ],
+            "Fisher's γ₁": [
+                "γ₁ de Fisher"
+            ],
+            "Fisher's γ₁ (skewness)": [
+                "γ₁ de Fisher (asimetria)"
+            ],
+            "Fisher's γ₂": [
+                "γ₂ de Fisher"
+            ],
+            "Fisher's γ₂ (kurtosis)": [
+                "γ₂ de Fisher (apuntament)"
+            ],
+            "Fitted values": [
+                "Valors ajustats"
+            ],
+            "Frequencies (Y-axis)": [
+                "Freqüències (eix Y)"
+            ],
+            "Frequencies and Odds of $key": [
+                "Freqüències i odds de $key"
+            ],
+            "Frequencies Distribution": [
+                "Distribució de freqüències"
+            ],
+            "Frequency and odds tables": [
+                "Taules de freqüències i odds"
+            ],
+            "Frequency distribution": [
+                "Distribució de freqüències"
+            ],
+            "Geometric": [
+                "Geomètrica"
+            ],
+            "Geometric mean": [
+                "Mitjana geomètrica"
+            ],
+            "Geometric mean can only be computed with positive values (>0)": [
+                "La mitjana geomètrica només es pot calcular amb valors positius (>0)"
+            ],
+            "Geometric probability must be greater than 0 and at most 1": [
+                "La probabilitat de la distribució geomètrica ha de ser superior a 0 i inferior o igual a 1"
+            ],
+            "Geometric standard deviation": [
+                "Desviació típica geomètrica"
+            ],
+            "Geometric std. deviation can only be computed with positive values (>0)": [
+                "La desviació típica geomètrica només es pot calcular amb valors positius (>0)"
+            ],
+            "ginzberg": [
+                "ginzberg"
+            ],
+            "Goodman-Kruskal λ (A/B)": [
+                "λ de Goodman-Kruskal (A/B)"
+            ],
+            "Goodman-Kruskal λ (B/A)": [
+                "λ de Goodman-Kruskal (B/A)"
+            ],
+            "Goodman-Kruskal λ (symmetric)": [
+                "λ de Goodman-Kruskal (simètrica)"
+            ],
+            "Goodman-Kruskal τ (A/B)": [
+                "τ de Goodman-Kruskal (A/B)"
+            ],
+            "Goodman-Kruskal τ (B/A)": [
+                "τ de Goodman-Kruskal (B/A)"
+            ],
+            "Goodman-Kruskal τ (symmetric)": [
+                "τ de Goodman-Kruskal (simètrica)"
+            ],
+            "Goodman-Kruskal's γ": [
+                "γ de Goodman-Kruskal"
+            ],
+            "Group": [
+                "Grup"
+            ],
+            "Group 1": [
+                "Grup 1"
+            ],
+            "Group 1 < Group 2": [
+                "Grup 1 < Grup 2"
+            ],
+            "Group 1 ≠ Group 2": [
+                "Grup 1 ≠ Grup 2"
+            ],
+            "Group 1 > Group 2": [
+                "Grup 1 > Grup 2"
+            ],
+            "Group 2": [
+                "Grup 2"
+            ],
+            "Group by": [
+                "Agrupar per"
+            ],
+            "Group by (optional)": [
+                "Agrupar per (opcional)"
+            ],
+            "Group median confidence intervals": [
+                "Intervals de confiança de les medianes dels grups"
+            ],
+            "Grouping Variable": [
+                "Variable d’agrupació"
+            ],
+            "Grouping variable '{a}' has less than 2 levels after missing values are excluded": [
+                "La variable d’agrupació «{a}» té menys de 2 nivells després d’excloure els valors perduts"
+            ],
+            "Grouping variable '{a}' must have exactly 2 levels": [
+                "La variable d’agrupació «{a}» ha de tenir exactament 2 nivells"
+            ],
+            "Grouping variable '{a}' must not also be a dependent variable": [
+                "La variable d’agrupació «{a}» no pot ser també una variable dependent"
+            ],
+            "Grouping variable must not also be a dependent variable": [
+                "La variable d’agrupació no pot ser també una variable dependent"
+            ],
+            "Groups Descriptives": [
+                "Estadístics descriptius per grups"
+            ],
+            "H1 (skewness)": [
+                "H1 (asimetria)"
+            ],
+            "H3 (skewness)": [
+                "H3 (asimetria)"
+            ],
+            "Heatmap": [
+                "Heatmap"
+            ],
+            "Heteroskedasticity Tests": [
+                "Contrasts d’heteroscedasticitat"
+            ],
+            "Histogram": [
+                "Histograma"
+            ],
+            "Histograms": [
+                "Histogrames"
+            ],
+            "Hodges-Lehmann (difference in location)": [
+                "Hodges-Lehmann (diferència de localització)"
+            ],
+            "Hodges-Lehmann (location diff.)": [
+                "Hodges-Lehmann (dif. localització)"
+            ],
+            "Hodges-Lehmann (pseudo-median)": [
+                "Hodges-Lehmann (pseudomediana)"
+            ],
+            "Hodges-Lehmann estimator": [
+                "Estimador de Hodges-Lehmann"
+            ],
+            "Hodges-Lehmann Estimator CIs": [
+                "IC de l’estimador de Hodges-Lehmann"
+            ],
+            "Hypergeometric": [
+                "Hipergeomètrica"
+            ],
+            "Hypergeometric counts must be non-negative integers, the population positive, and draws no larger than the population": [
+                "Els recomptes hipergeomètrics han de ser enters no negatius, la grandària de la població ha de ser positiva i el nombre d’extraccions no pot superar la grandària de la població"
+            ],
+            "Hypothesis": [
+                "Hipòtesi"
+            ],
+            "Index of qualitative variation (IQV)": [
+                "Índex de variació qualitativa (IVQ)"
+            ],
+            "Indices can only be computed for 2x2 tables.": [
+                "Aquests índexs només es poden calcular per a taules 2×2."
+            ],
+            "Infinite paired differences are not supported": [
+                "No s’admeten diferències aparellades infinites"
+            ],
+            "Infinite values are not supported": [
+                "No s’admeten valors infinits"
+            ],
+            "Influence Indices (Noteworthy Cases)": [
+                "Índexs d’influència (casos destacats)"
+            ],
+            "Influence Plot": [
+                "Gràfic d’influència"
+            ],
+            "Inner fence": [
+                "Límit interior"
+            ],
+            "Inner range": [
+                "Rang intern"
+            ],
+            "Interquartile range (IQR)": [
+                "Rang interquartílic (IQR)"
+            ],
+            "Inverse of cdf (quantiles)": [
+                "Inversa f. distribució (quantils)"
+            ],
+            "IQR": [
+                "IQR"
+            ],
+            "IQV": [
+                "IVQ"
+            ],
+            "Jittered": [
+                "Desplaçament aleatori"
+            ],
+            "K2 (kurtosis)": [
+                "K2 (apuntament)"
+            ],
+            "K3 (kurtosis)": [
+                "K3 (apuntament)"
+            ],
+            "Kendall's correlation": [
+                "Correlació de Kendall"
+            ],
+            "Kendall's τ-a": [
+                "τ-a de Kendall"
+            ],
+            "Kendall's τ-b": [
+                "τ-b de Kendall"
+            ],
+            "Kendall's τ-c": [
+                "τ-c de Kendall"
+            ],
+            "Koenker (studentized Breusch-Pagan)": [
+                "Koenker (Breusch-Pagan estudentitzat)"
+            ],
+            "Kolmogorov-Smirnov (Lilliefors)": [
+                "Kolmogorov-Smirnov (Lilliefors)"
+            ],
+            "Kolmogorov-Smirnov test": [
+                "Contrast de Kolmogorov-Smirnov"
+            ],
+            "Kolmogorov-Smirnov uses the Lilliefors correction for estimated mean and variance. Residual normality diagnostics.": [
+                "Kolmogorov-Smirnov utilitza la correcció de Lilliefors quan s’estimen la mitjana i la variància. Diagnòstics de normalitat dels residus."
+            ],
+            "Kruskal–Wallis η²_H (k levels)": [
+                "η²_H de Kruskal–Wallis (k nivells)"
+            ],
+            "Lag": [
+                "Retard"
+            ],
+            "Lags 1-10, capped at N-1. Two-sided p-values from residual bootstrapping with 5,000 resamples; seed = 123456. Complete-case row order; p-values are not adjusted across lags.": [
+                "Retards d’1 a 10, limitats a N-1. Valors p bilaterals mitjançant bootstrap de residus amb 5.000 remostres; llavor = 123456. S’utilitza l’ordre de les files amb dades completes; els valors p no s’ajusten entre retards."
+            ],
+            "Left": [
+                "Esquerra"
+            ],
+            "Left tail": [
+                "Cua esquerra"
+            ],
+            "Less than 20 observations and ties in the groups: p-value might not be adequate": [
+                "Hi ha menys de 20 observacions i empats en els grups: el valor p podria no ser adequat"
+            ],
+            "Levels": [
+                "Nivells"
+            ],
+            "Leverage (hat value)": [
+                "Palanquejament (valor hat)"
+            ],
+            "Lilliefors test": [
+                "Contrast de Lilliefors"
+            ],
+            "Linear": [
+                "Lineal"
+            ],
+            "linReg": [
+                "Regressió lineal"
+            ],
+            "Lollipop": [
+                "Lollipop"
+            ],
+            "Lower bound": [
+                "Límit inferior"
+            ],
+            "MAD": [
+                "MAD"
+            ],
+            "Mann-Whitney Test": [
+                "Contrast de Mann-Whitney"
+            ],
+            "Mann-Whitney U": [
+                "U de Mann-Whitney"
+            ],
+            "Mann-Whitney U Test and ES Indices": [
+                "Contrast U de Mann-Whitney i índexs de grandària de l’efecte"
+            ],
+            "Marginals": [
+                "Distribucions marginals"
+            ],
+            "Max": [
+                "Màx."
+            ],
+            "Maximum": [
+                "Màxim"
+            ],
+            "Maximum (β)": [
+                "Màxim (β)"
+            ],
+            "Mean": [
+                "Mitjana"
+            ],
+            "Mean (λ)": [
+                "Mitjana (λ)"
+            ],
+            "Mean (μ)": [
+                "Mitjana (μ)"
+            ],
+            "Mean deviation": [
+                "Desviació mitjana"
+            ],
+            "Measure 1": [
+                "Mesura 1"
+            ],
+            "Measure 1 - Measure 2": [
+                "Mesura 1 - Mesura 2"
+            ],
+            "Measure 1 < Measure 2": [
+                "Mesura 1 < Mesura 2"
+            ],
+            "Measure 1 ≠ Measure 2": [
+                "Mesura 1 ≠ Mesura 2"
+            ],
+            "Measure 1 > Measure 2": [
+                "Mesura 1 > Mesura 2"
+            ],
+            "Measure 2": [
+                "Mesura 2"
+            ],
+            "medData": [
+                "medData"
+            ],
+            "Median": [
+                "Mediana"
+            ],
+            "Median ({ciWidth}% CI)": [
+                "Mediana (IC del {ciWidth}%)"
+            ],
+            "Median absolute deviation (MAD)": [
+                "Desviació absoluta mediana (MAD)"
+            ],
+            "Median CIs": [
+                "IC de medianes"
+            ],
+            "Median plot values and confidence intervals are not aligned": [
+                "Els valors de les medianes i els seus intervals de confiança no estan alineats"
+            ],
+            "Medians CIs": [
+                "IC de les medianes"
+            ],
+            "Method": [
+                "Mètode"
+            ],
+            "Mid-range": [
+                "Rang mitjà"
+            ],
+            "Midhinge": [
+                "Mitjana dels quartils"
+            ],
+            "Min": [
+                "Mín."
+            ],
+            "Minimum": [
+                "Mínim"
+            ],
+            "Minimum (α)": [
+                "Mínim (α)"
+            ],
+            "Miscellanea": [
+                "Altres anàlisis"
+            ],
+            "Missing": [
+                "Perduts"
+            ],
+            "Missing values": [
+                "Valors perduts"
+            ],
+            "Missing Values": [
+                "Valors perduts"
+            ],
+            "Mixed Data": [
+                "Dades mixtes"
+            ],
+            "Mode": [
+                "Moda"
+            ],
+            "More than one mode exists, only the first is reported": [
+                "Hi ha més d’una moda; només es mostra la primera"
+            ],
+            "More than two levels, effect size indicator is not reported": [
+                "Hi ha més de dos nivells: no s’informa de l’índex de grandària de l’efecte"
+            ],
+            "Mosaic plot": [
+                "Gràfic de mosaic"
+            ],
+            "N": [
+                "N"
+            ],
+            "Negative Binomial": [
+                "Binomial negativa"
+            ],
+            "Negative binomial": [
+                "Binomial negativa"
+            ],
+            "Negative binomial size must be positive and probability greater than 0 and at most 1": [
+                "El paràmetre de grandària de la binomial negativa ha de ser positiu i la probabilitat ha de ser superior a 0 i inferior o igual a 1"
+            ],
+            "Negative differences": [
+                "Diferències negatives"
+            ],
+            "neoffi": [
+                "neoffi"
+            ],
+            "No complete observations are available for the selected variables": [
+                "No hi ha observacions completes per a les variables seleccionades"
+            ],
+            "No finite medians are available for this plot": [
+                "No hi ha medianes finites disponibles per a aquest gràfic"
+            ],
+            "None": [
+                "Cap"
+            ],
+            "Normal": [
+                "Normal"
+            ],
+            "Normal curve": [
+                "Corba normal"
+            ],
+            "Normal Curve": [
+                "Corba normal"
+            ],
+            "Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference.": [
+                "Els paràmetres de la distribució normal s’estimen a partir d’aquestes dades; aquest valor p no està corregit. Utilitzeu el contrast de Lilliefors per obtenir inferència corregida."
+            ],
+            "Normal Q-Q with Residual Histogram": [
+                "Gràfic Q–Q normal amb histograma de residus"
+            ],
+            "Normality Tests": [
+                "Contrasts de normalitat"
+            ],
+            "Note. Plot obtained with the saRa module.": [
+                "Nota. Gràfic obtingut amb el mòdul saRa."
+            ],
+            "Null hypothesis: constant error variance. GQ: two-sided, ordered by fitted values, split at 50%, no central omission. HMC: ordered by fitted values, split at 50%; 5,000 simulations, seed 123456. BP statistic is chi-square, GQ is F; HMC is a residual sum-of-squares fraction.": [
+                "Hipòtesi nul·la: variància constant dels errors. GQ: bilateral, ordenat per valors ajustats, divisió al 50 %, sense omissió central. HMC: ordenat per valors ajustats, divisió al 50 %; 5.000 simulacions, llavor 123456. L’estadístic BP és khi quadrat i el de GQ és F; HMC és una proporció de sumes de quadrats dels residus."
+            ],
+            "Number of categories": [
+                "Nombre de categories"
+            ],
+            "Number of draws (k)": [
+                "Nombre d’extraccions (k)"
+            ],
+            "Number of failure states (n)": [
+                "Nombre d’elements de fracàs (n)"
+            ],
+            "Number of replicates in Bootstrap CI(s): %s": [
+                "Nombre de rèpliques dels IC bootstrap: %s"
+            ],
+            "number of replications for Bootstrap CIs.": [
+                "Nombre de rèpliques per als IC bootstrap."
+            ],
+            "Number of success states (m)": [
+                "Nombre d’elements d’èxit (m)"
+            ],
+            "Number of successes (r)": [
+                "Nombre d’èxits (r)"
+            ],
+            "Number of trials": [
+                "Nombre d’assaigs"
+            ],
+            "Number of trials (n)": [
+                "Nombre d’assaigs (n)"
+            ],
+            "Numerical Data": [
+                "Dades numèriques"
+            ],
+            "Observed": [
+                "Observades"
+            ],
+            "Observed counts": [
+                "Freqüències observades"
+            ],
+            "Odds": [
+                "Odds"
+            ],
+            "of total": [
+                "del total"
+            ],
+            "One or both groups do not contain enough observations": [
+                "Un dels grups o tots dos no contenen prou observacions"
+            ],
+            "One or both variables are not numeric": [
+                "Una de les variables o totes dues no són numèriques"
+            ],
+            "One or both variables contain infinite values": [
+                "Una de les variables o totes dues contenen valors infinits"
+            ],
+            "One or both variables contain no observations": [
+                "Una de les variables o totes dues no contenen observacions"
+            ],
+            "One or both variables do not contain enough observations": [
+                "Una de les variables o totes dues no contenen prou observacions"
+            ],
+            "Ordinal Data": [
+                "Dades ordinals"
+            ],
+            "Ordinal summaries require numeric stored values.": [
+                "Els resums ordinals requereixen que els valors emmagatzemats siguin numèrics."
+            ],
+            "Outer fence": [
+                "Límit exterior"
+            ],
+            "p": [
+                "p"
+            ],
+            "Paired Comparisons Description": [
+                "Descripció de les comparacions per parells"
+            ],
+            "Paired Variables": [
+                "Variables per parells"
+            ],
+            "Parameter(s)": [
+                "Paràmetre(s)"
+            ],
+            "Pareto plot": [
+                "Gràfic de Pareto"
+            ],
+            "Pearson χ² test": [
+                "Contrast χ² de Pearson"
+            ],
+            "Pearson's contingency index": [
+                "Coeficient de contingència de Pearson"
+            ],
+            "Pearson's correlation": [
+                "Correlació de Pearson"
+            ],
+            "Pearson's r": [
+                "r de Pearson"
+            ],
+            "Pearson's R²": [
+                "R² de Pearson"
+            ],
+            "Pearson's β₁": [
+                "β₁ de Pearson"
+            ],
+            "Pearson's β₁ (skewness)": [
+                "β₁ de Pearson (asimetria)"
+            ],
+            "Pearson's β₂": [
+                "β₂ de Pearson"
+            ],
+            "Pearson's β₂ (kurtosis)": [
+                "β₂ de Pearson (apuntament)"
+            ],
+            "Pearson's β₂ (Kurtosis)": [
+                "β₂ de Pearson (apuntament)"
+            ],
+            "Percentage of data": [
+                "Percentatge de dades"
+            ],
+            "Percentage of trimmed data": [
+                "Percentatge de dades retallades"
+            ],
+            "Percentage of winsorized data": [
+                "Percentatge de dades winsoritzades"
+            ],
+            "Percentages": [
+                "Percentatges"
+            ],
+            "Percentages of total": [
+                "Percentatges del total"
+            ],
+            "Percentages within %s": [
+                "Percentatges dins de %s"
+            ],
+            "Percentile %s": [
+                "Percentil %s"
+            ],
+            "Percentile values": [
+                "Valors dels percentils"
+            ],
+            "Percentiles": [
+                "Percentils"
+            ],
+            "Percentiles must be numbers between 0 and 100": [
+                "Els percentils han de ser nombres entre 0 i 100"
+            ],
+            "perform Anderson-Darling tests.": [
+                "Realitzar contrasts d’Anderson-Darling."
+            ],
+            "perform asymptotic Z tests.": [
+                "Realitzar contrasts Z asimptòtics."
+            ],
+            "perform Cramér–von Mises tests.": [
+                "Realitzar contrasts de Cramér–von Mises."
+            ],
+            "perform Kolmogorov-Smirnov tests.": [
+                "Realitzar contrasts de Kolmogorov-Smirnov."
+            ],
+            "perform Lilliefors tests.": [
+                "Realitzar contrasts de Lilliefors."
+            ],
+            "perform Mann-Whitney's U t-tests.": [
+                "Realitzar contrasts U de Mann-Whitney."
+            ],
+            "perform Pearson's χ² tests.": [
+                "Realitzar contrasts χ² de Pearson."
+            ],
+            "perform Shapiro-Francia tests.": [
+                "Realitzar contrasts de Shapiro-Francia."
+            ],
+            "perform Shapiro-Wilk tests.": [
+                "Realitzar contrasts de Shapiro-Wilk."
+            ],
+            "perform Wilcoxon signed rank tests.": [
+                "Realitzar contrasts de rangs amb signe de Wilcoxon."
+            ],
+            "phobia": [
+                "phobia"
+            ],
+            "Pie chart": [
+                "Gràfic de sectors"
+            ],
+            "Plot could not be drawn: {message}": [
+                "No s’ha pogut generar el gràfic: {message}"
+            ],
+            "Plot data unavailable. Reselect Residual plots to refresh.": [
+                "Les dades del gràfic no estan disponibles. Torneu a seleccionar els gràfics de residus per actualitzar-los."
+            ],
+            "Plots": [
+                "Gràfics"
+            ],
+            "Point-biserial Correlation": [
+                "Correlació biserial puntual"
+            ],
+            "Point-biserial correlation (2 levels)": [
+                "Correlació biserial puntual (2 nivells)"
+            ],
+            "Poisson": [
+                "Poisson"
+            ],
+            "Poisson rate must be non-negative": [
+                "La taxa de Poisson ha de ser no negativa"
+            ],
+            "polynomialReg": [
+                "polynomialReg"
+            ],
+            "Position": [
+                "Posició"
+            ],
+            "Positive differences": [
+                "Diferències positives"
+            ],
+            "Pr(X = x)": [
+                "Pr(X = x)"
+            ],
+            "Pr(X > x)": [
+                "Pr(X > x)"
+            ],
+            "Pr(X ≤ x)": [
+                "Pr(X ≤ x)"
+            ],
+            "Pr(x1 ≤ X ≤ x2)": [
+                "Pr(x1 ≤ X ≤ x2)"
+            ],
+            "Prediction Error Indices": [
+                "Índexs d’error de predicció"
+            ],
+            "Prob": [
+                "Prob."
+            ],
+            "Probabilities Table": [
+                "Taula de probabilitats"
+            ],
+            "Probability": [
+                "Probabilitat"
+            ],
+            "Probability (p)": [
+                "Probabilitat (p)"
+            ],
+            "Probability density function (f(x))": [
+                "F. densitat (f(x))"
+            ],
+            "Probability Density Function Plot": [
+                "Gràfic f. densitat"
+            ],
+            "Probability Interval Plot": [
+                "Gràfic de probabilitat d’un interval"
+            ],
+            "Probability mass function (Pr(X = x))": [
+                "F. massa probabilitat (Pr(X=x))"
+            ],
+            "Probability Mass Function Plot": [
+                "Gràfic f. massa probabilitat"
+            ],
+            "Probability of superiority": [
+                "Probabilitat de superioritat"
+            ],
+            "Probability of superiority (2 levels)": [
+                "Probabilitat de superioritat (2 nivells)"
+            ],
+            "Proportions": [
+                "Proporcions"
+            ],
+            "provide confidence intervals for the Hodges-Lehmann estimator.": [
+                "Mostrar intervals de confiança de l’estimador de Hodges-Lehmann."
+            ],
+            "provide confidence intervals for the medians.": [
+                "Mostrar intervals de confiança de les medianes."
+            ],
+            "provide descriptives for each group of measurements.": [
+                "Mostrar estadístics descriptius per a cada grup de mesures."
+            ],
+            "provide descriptives for each group.": [
+                "Mostrar estadístics descriptius per a cada grup."
+            ],
+            "provide descriptives plots.": [
+                "Mostrar gràfics descriptius."
+            ],
+            "Q-Q": [
+                "Q-Q"
+            ],
+            "Q-Q plot": [
+                "Gràfic Q-Q"
+            ],
+            "Q-Q Plots": [
+                "Gràfics Q-Q"
+            ],
+            "QD": [
+                "DQ"
+            ],
+            "Quantile (ICDF) Plot": [
+                "Gràfic de quantils"
+            ],
+            "Quantile value": [
+                "Valor del quantil"
+            ],
+            "Quantile values": [
+                "Valors dels quantils"
+            ],
+            "Quantile values must be between 0 and 1 (%s).": [
+                "Els valors dels quantils han d’estar entre 0 i 1 (%s)."
+            ],
+            "Quantile values must be real numbers between 0 and 1 (%s).": [
+                "Els valors dels quantils han de ser nombres reals entre 0 i 1 (%s)."
+            ],
+            "Quantiles Table": [
+                "Taula de quantils"
+            ],
+            "Quartile 1 (Q1)": [
+                "Quartil 1 (Q1)"
+            ],
+            "Quartile 2 (Q2)": [
+                "Quartil 2 (Q2)"
+            ],
+            "Quartile 3 (Q3)": [
+                "Quartil 3 (Q3)"
+            ],
+            "Quartile coefficient of dispersion": [
+                "Coeficient de dispersió quartílica"
+            ],
+            "Quartile deviation (QD)": [
+                "Desviació quartílica (DQ)"
+            ],
+            "Quartile dispersion": [
+                "Dispersió quartílica"
+            ],
+            "Random variable value": [
+                "Valor de la variable aleatòria"
+            ],
+            "Random variable value must be a positive number (%s).": [
+                "El valor de la variable aleatòria ha de ser positiu (%s)."
+            ],
+            "Random variable value must be between %s and %s (%s).": [
+                "El valor de la variable aleatòria ha d’estar entre %s i %s (%s)."
+            ],
+            "Random variable values": [
+                "Valors de la variable aleatòria"
+            ],
+            "Random variable values must be a real number (%s).": [
+                "Els valors de la variable aleatòria han de ser nombres reals (%s)."
+            ],
+            "Random variable values must be a real number between 0 and 1(%s).": [
+                "Els valors de la variable aleatòria han de ser nombres reals entre 0 i 1 (%s)."
+            ],
+            "Random variable values must be between %s and %s (%s).": [
+                "Els valors de la variable aleatòria han d’estar entre %s i %s (%s)."
+            ],
+            "Random variable values must be positive (%s).": [
+                "Els valors de la variable aleatòria han de ser positius (%s)."
+            ],
+            "Random variable values must be positive integers (%s).": [
+                "Els valors de la variable aleatòria han de ser enters positius (%s)."
+            ],
+            "Range": [
+                "Rang"
+            ],
+            "Rank sum": [
+                "Suma de rangs"
+            ],
+            "Rank-biserial correlation": [
+                "Correlació biserial de rangs"
+            ],
+            "Rate (λ)": [
+                "Taxa (λ)"
+            ],
+            "Regression line / curve": [
+                "Recta o corba de regressió"
+            ],
+            "Replicates": [
+                "Rèpliques"
+            ],
+            "Requires a non-constant variable": [
+                "Es requereix una variable no constant"
+            ],
+            "Requires at least two non-missing observations": [
+                "Es requereixen almenys dues observacions no perdudes"
+            ],
+            "Requires finite observations": [
+                "Es requereixen observacions finites"
+            ],
+            "Requires two observed groups and finite values": [
+                "Es requereixen dos grups observats i valors finits"
+            ],
+            "Residual ACF": [
+                "FAC dels residus"
+            ],
+            "Residual ACF requires at least two finite, non-constant residuals.": [
+                "La FAC dels residus requereix almenys dos residus finits i no constants."
+            ],
+            "Residuals": [
+                "Residus"
+            ],
+            "Residuals vs Fitted": [
+                "Residus enfront de valors ajustats"
+            ],
+            "Right": [
+                "Dreta"
+            ],
+            "Right tail": [
+                "Cua dreta"
+            ],
+            "Row": [
+                "Fila"
+            ],
+            "Row order; {lags} automatic lags.": [
+                "Ordre de les files; {lags} retards seleccionats automàticament."
+            ],
+            "Rows": [
+                "Files"
+            ],
+            "Sakoda's index": [
+                "Índex de Sakoda"
+            ],
+            "Same noteworthy rule as car::influencePlot(): union of the two largest absolute studentized residuals, leverage values and Cook's distances. Case labels identify original fitted rows; selection is diagnostic, not an exclusion rule.": [
+                "Criteri de car::influencePlot(): casos amb els dos valors més grans de |residu estudentitzat|, palanquejament o distància de Cook. Les etiquetes indiquen les files originals de l’ajust. Selecció diagnòstica, sense exclusió de casos."
+            ],
+            "Sample Size": [
+                "Grandària mostral"
+            ],
+            "saRa": [
+                "saRa"
+            ],
+            "Scale-Location": [
+                "Escala-localització"
+            ],
+            "Scale, rate and degrees of freedom must be positive": [
+                "L’escala, la taxa i els graus de llibertat han de ser positius"
+            ],
+            "Scatterplot": [
+                "Diagrama de dispersió"
+            ],
+            "Select a Group by variable": [
+                "Seleccioneu una variable d’agrupació"
+            ],
+            "Select ordinal variables with ordered levels": [
+                "Seleccioneu variables ordinals amb nivells ordenats"
+            ],
+            "Shape": [
+                "Forma"
+            ],
+            "Shapiro-Francia test": [
+                "Contrast de Shapiro-Francia"
+            ],
+            "Shapiro-Wilk test": [
+                "Contrast de Shapiro-Wilk"
+            ],
+            "Side by side": [
+                "En paral·lel"
+            ],
+            "Simulated data": [
+                "Dades simulades"
+            ],
+            "Smooth": [
+                "Suavitzat"
+            ],
+            "Somers' d (columns)": [
+                "d de Somers (columnes)"
+            ],
+            "Somers' d (rows)": [
+                "d de Somers (files)"
+            ],
+            "Somers' d (symmetric)": [
+                "d de Somers (simètrica)"
+            ],
+            "Spearman's correlation": [
+                "Correlació de Spearman"
+            ],
+            "Spearman's r": [
+                "r de Spearman"
+            ],
+            "Spearman's R²": [
+                "R² de Spearman"
+            ],
+            "Specification Test": [
+                "Contrast d’especificació"
+            ],
+            "Sqrt(|standardized residual|)": [
+                "√(|residu tipificat|)"
+            ],
+            "Squared Kendall’s τ": [
+                "τ de Kendall al quadrat"
+            ],
+            "Stacked": [
+                "Apilat"
+            ],
+            "Standard deviation": [
+                "Desviació típica"
+            ],
+            "Standard error": [
+                "Error estàndard"
+            ],
+            "Standardised values": [
+                "Valors tipificats"
+            ],
+            "Standardized residual quantiles": [
+                "Quantils dels residus tipificats"
+            ],
+            "Statistic": [
+                "Estadístic"
+            ],
+            "Statistical Analyses with R Add-in for Jamovi": [
+                "Anàlisis estadístiques amb R per a jamovi"
+            ],
+            "Statistics": [
+                "Estadístics"
+            ],
+            "Statistics and Tests": [
+                "Estadístics i contrasts"
+            ],
+            "Std. Deviation (σ)": [
+                "Desviació típica (σ)"
+            ],
+            "Std. deviation (σ)": [
+                "Desviació típica (σ)"
+            ],
+            "Studentized residuals": [
+                "Residus estudentitzats"
+            ],
+            "Successes": [
+                "Èxits"
+            ],
+            "Survival function (Pr(X > x))": [
+                "F. supervivència (Pr(X>x))"
+            ],
+            "Survival Function Plot": [
+                "Gràfic f. supervivència"
+            ],
+            "t distribution": [
+                "Distribució t"
+            ],
+            "Table obtained with the saRa module.": [
+                "Taula obtinguda amb el mòdul saRa."
+            ],
+            "Table obtained with the saRa module. Tests squared and cubed fitted values for functional-form misspecification.": [
+                "Taula obtinguda amb el mòdul saRa. Contrasta l’especificació de la forma funcional mitjançant els valors ajustats elevats al quadrat i al cub."
+            ],
+            "Tail of the distribution": [
+                "Cua de la distribució"
+            ],
+            "Teachman": [
+                "Teachman"
+            ],
+            "Test": [
+                "Contrast"
+            ],
+            "Tests": [
+                "Contrasts"
+            ],
+            "The 'group by' variable '{var}' contains no data.": [
+                "La variable d’agrupació «{var}» no conté dades."
+            ],
+            "The 'group by' variable is required.": [
+                "Es requereix una variable d’agrupació."
+            ],
+            "the alternative hypothesis.": [
+                "La hipòtesi alternativa."
+            ],
+            "the confidence interval width.": [
+                "L’amplada de l’interval de confiança."
+            ],
+            "the dependent variables -- a separate MW test is performed for each dependent variable specified.": [
+                "Variables dependents: es realitza un contrast de Mann-Whitney per a cada variable dependent seleccionada."
+            ],
+            "the missing value exclusion method. `Analysis by analysis` excludes missing values from each analysis. `Listwise` excludes a row from all analyses if one of its values is missing.": [
+                "Mètode d’exclusió de valors perduts. «Excloure casos segons l’anàlisi» utilitza els casos complets per a les variables de cada anàlisi. «Excloure casos segons la llista de variables» exclou una fila de totes les anàlisis si té algun valor perdut en les variables seleccionades."
+            ],
+            "the pairs of measurements -- a separate Wilcoxon signed-rank test is performed for each pair of measurements.": [
+                "Parells de mesures: es realitza un contrast de rangs amb signe de Wilcoxon per a cada parell."
+            ],
+            "the variable specifying the groups; must have 2 levels.": [
+                "La variable que identifica els grups; ha de tenir 2 nivells."
+            ],
+            "Theil's index (A/B)": [
+                "Índex de Theil (A/B)"
+            ],
+            "Theil's index (B/A)": [
+                "Índex de Theil (B/A)"
+            ],
+            "Theil's index (symmetric)": [
+                "Índex de Theil (simètric)"
+            ],
+            "Theil's U (columns)": [
+                "U de Theil (columnes)"
+            ],
+            "Theil's U (rows)": [
+                "U de Theil (files)"
+            ],
+            "Theil's U (symmetric)": [
+                "U de Theil (simètrica)"
+            ],
+            "Theoretical normal quantiles": [
+                "Quantils normals teòrics"
+            ],
+            "Theoretical quantiles": [
+                "Quantils teòrics"
+            ],
+            "These parameters require too many plotting points; use less extreme values": [
+                "Aquests paràmetres requereixen massa punts per al gràfic; utilitzeu valors menys extrems"
+            ],
+            "This diagnostic is available for unweighted OLS models only.": [
+                "Aquest diagnòstic només està disponible per a models de mínims quadrats ordinaris sense ponderació."
+            ],
+            "Tied pairs": [
+                "Parells empatats"
+            ],
+            "Ties in %s": [
+                "Empats en %s"
+            ],
+            "Ties in %s and %s": [
+                "Empats en %s i %s"
+            ],
+            "Total": [
+                "Total"
+            ],
+            "Trimean": [
+                "Trimitjana"
+            ],
+            "Trimmed mean": [
+                "Mitjana retallada"
+            ],
+            "Unable to split by a continuous variable": [
+                "No es pot agrupar per una variable contínua"
+            ],
+            "Unavailable": [
+                "No disponible"
+            ],
+            "Uniform": [
+                "Uniforme"
+            ],
+            "Uniform minimum must be smaller than maximum": [
+                "El mínim de la distribució uniforme ha de ser inferior al màxim"
+            ],
+            "Univariate Analysis": [
+                "Anàlisi univariada"
+            ],
+            "Univariate Data Analysis (Categorical Data)": [
+                "Anàlisi univariada de dades categòriques"
+            ],
+            "Univariate Data Analysis (Numerical Data)": [
+                "Anàlisi univariada de dades numèriques"
+            ],
+            "Univariate Data Analysis (Ordinal Data)": [
+                "Anàlisi univariada de dades ordinals"
+            ],
+            "Unknown discrete distribution": [
+                "Distribució discreta desconeguda"
+            ],
+            "Unknown Mann-Whitney output": [
+                "Resultat de Mann-Whitney desconegut"
+            ],
+            "Unknown median confidence-interval method": [
+                "Mètode desconegut per a l’interval de confiança de la mediana"
+            ],
+            "Unknown normality test": [
+                "Contrast de normalitat desconegut"
+            ],
+            "Unknown regression plot type": [
+                "Tipus de gràfic de regressió desconegut"
+            ],
+            "Upper bound": [
+                "Límit superior"
+            ],
+            "Value": [
+                "Valor"
+            ],
+            "Values": [
+                "Valors"
+            ],
+            "Values and Functions": [
+                "Valors i funcions"
+            ],
+            "Variable": [
+                "Variable"
+            ],
+            "Variable contains infinite values": [
+                "La variable conté valors infinits"
+            ],
+            "Variable is not numeric": [
+                "La variable no és numèrica"
+            ],
+            "Variables": [
+                "Variables"
+            ],
+            "Variables Descriptives": [
+                "Estadístics descriptius de les variables"
+            ],
+            "Variables Medians CIs": [
+                "IC de les medianes de les variables"
+            ],
+            "Variance": [
+                "Variància"
+            ],
+            "Variation ratio": [
+                "Raó de variació"
+            ],
+            "Violin": [
+                "Violí"
+            ],
+            "Wilcoxon signed rank test": [
+                "Contrast de rangs amb signe de Wilcoxon"
+            ],
+            "Wilcoxon signed-rank": [
+                "Rangs amb signe de Wilcoxon"
+            ],
+            "Wilcoxon T": [
+                "T de Wilcoxon"
+            ],
+            "Wilcoxon T Test": [
+                "Contrast T de Wilcoxon"
+            ],
+            "Wilcoxon T Test and ES Indices": [
+                "Contrast T de Wilcoxon i índexs de grandària de l’efecte"
+            ],
+            "Wilson's e": [
+                "e de Wilson"
+            ],
+            "Winsorized mean": [
+                "Mitjana winsoritzada"
+            ],
+            "within column": [
+                "per columna"
+            ],
+            "within rows": [
+                "per fila"
+            ],
+            "x": [
+                "x"
+            ],
+            "X variable": [
+                "Variable X"
+            ],
+            "X-axis": [
+                "Eix X"
+            ],
+            "X1 must be a positive number (%s).": [
+                "X1 ha de ser un nombre positiu (%s)."
+            ],
+            "X1 must be between %s and %s (%s).": [
+                "X1 ha d’estar entre %s i %s (%s)."
+            ],
+            "x1 value": [
+                "Valor de x1"
+            ],
+            "X2 must be a positive number (%s).": [
+                "X2 ha de ser un nombre positiu (%s)."
+            ],
+            "X2 must be between %s and %s (%s).": [
+                "X2 ha d’estar entre %s i %s (%s)."
+            ],
+            "x2 value": [
+                "Valor de x2"
+            ],
+            "Y variable": [
+                "Variable Y"
+            ],
+            "Y-axis": [
+                "Eix Y"
+            ],
+            "Yule's Q index": [
+                "Índex Q de Yule"
+            ],
+            "Yule's Q index (2x2 tables)": [
+                "Índex Q de Yule (taules 2×2)"
+            ],
+            "Yule's V index": [
+                "Índex V de Yule"
+            ],
+            "Yule's V index (2x2 tables)": [
+                "Índex V de Yule (taules 2×2)"
+            ],
+            "Yule's Y index": [
+                "Índex Y de Yule"
+            ],
+            "Yule's Y index (2x2 tables)": [
+                "Índex Y de Yule (taules 2×2)"
+            ],
+            "Z statistic": [
+                "Estadístic Z"
+            ],
+            "z statistic": [
+                "Estadístic z"
+            ],
+            "η² (k levels)": [
+                "η² (k nivells)"
+            ],
+            "η²_H (Kruskal–Wallis)": [
+                "η²_H (Kruskal–Wallis)"
+            ],
+            "λ (columns)": [
+                "λ (columnes)"
+            ],
+            "λ (rows)": [
+                "λ (files)"
+            ],
+            "λ (symmetric)": [
+                "λ (simètrica)"
+            ],
+            "τ (columns)": [
+                "τ (columnes)"
+            ],
+            "τ (rows)": [
+                "τ (files)"
+            ],
+            "τ (symmetric)": [
+                "τ (simètrica)"
+            ],
+            "φ": [
+                "φ"
+            ],
+            "φ index": [
+                "Índex φ"
+            ],
+            "φ²": [
+                "φ²"
+            ],
+            "φ² index": [
+                "Índex φ²"
+            ],
+            "χ²": [
+                "χ²"
+            ],
+            "χ² distribution": [
+                "Distribució χ²"
+            ],
+            "χ² index": [
+                "Índex χ²"
+            ],
+            "ω² (k levels)": [
+                "ω² (k nivells)"
+            ],
+            "df1": [
+                "gll1"
+            ],
+            "df2": [
+                "gll2"
+            ],
+            "plotfrequency\u0004Counts": [
+                "Fr. absolutes"
+            ]
+        }
+    }
+}

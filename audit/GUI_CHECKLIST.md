@@ -1,5 +1,15 @@
 # saRa 1.0.0: jamovi library acceptance checklist
 
+## Latest validation — Catalan and Spanish, saRa 1.1.0, 11 November 2026
+
+The developer supplied a final testthat run: **FAIL 0 | WARN 0 | SKIP 0 | PASS 372**, duration **15.7 seconds**, across **48 test blocks**. Contexts: audit-statistics 274, catalan-i18n 27, gui-followup 40, i18n-preparation 31. This run includes the df1/df2 header correction.
+
+The developer confirms the installed candidate's Catalan interface, tables, notes and plots; readable symbols; correct HTML/PDF exports; successful .omv save/reopen on the Catalan branch; and continued correct operation after switching to Spanish and English. The Catalan catalog has 574 entries: 572 reviewed entries plus gll1/gll2. Spanish is retained, with gl1/gl2.
+
+The source tests load the candidate Catalan JSON into a temporary jmvcore catalog cache to avoid resolving an older installed package; real Options and translation code are exercised, and the original cache is restored. Installed behavior is supported separately by the developer's GUI confirmation.
+
+Evidence: `audit/i18n/VALIDACION_FINAL_1.1.0.json`. Earlier sections describe historical states. Exact software versions and the tested checkout hash were not supplied. Separate Linux/macOS compatibility and maintainer approval of private Regression APIs are not asserted. Keep `main` at 1.0.0 during the ongoing jamovi review; changes remain on `feature/catalan-1.1.0`.
+
 ## Latest validation — saRa 1.1.0, 11 November 2026
 
 The developer supplied a complete testthat run: **FAIL 0 | WARN 0 | SKIP 0 | PASS 345**, duration 8.0 seconds, across 44 test blocks (274 audit-statistics, 40 gui-followup and 31 i18n-preparation expectations).

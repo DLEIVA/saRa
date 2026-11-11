@@ -2854,3 +2854,11 @@ msgstr ""
 #: bivmix/options/omegasq.title
 msgid "ω² (k levels)"
 msgstr ""
+
+#: R/i18n.R
+msgid "df1"
+msgstr ""
+
+#: R/i18n.R
+msgid "df2"
+msgstr ""

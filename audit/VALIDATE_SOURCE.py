@@ -83,10 +83,10 @@ if final_path.exists():
  status['candidate_version']=final['candidate_version']
  status['testthat_blocks_added']=sum(p.read_text().count('test_that(') for p in (root/'tests/testthat').glob('test-*.R'))
  status['latest_user_runtime_evidence']=final
- status['R_statistical_tests']='PASS — developer-supplied 345 expectations; FAIL/WARN/SKIP 0; 44 blocks'
+ status['R_statistical_tests']=f"PASS — developer-supplied {final['test_results']['PASS']} expectations; FAIL {final['test_results']['FAIL']} | WARN {final['test_results']['WARN']} | SKIP {final['test_results']['SKIP']}; {final['test_blocks']} blocks"
  status['jmvtools_build']='PASS — developer confirms build/installation and candidate operation'
  status['jamovi_GUI_and_exports']='PASS — GUI, HTML/PDF, sqrt label, .omv persistence and English switching confirmed'
  status['runtime_evidence_note']=final['scope_limit']
- status['source_followup']='spanish-1.1.0 with GUI and plot corrections'
+ status['source_followup']='catalan-1.1.0 with Spanish retained and translated df1/df2 headers'
 (root/'audit/VALIDATION_STATUS.json').write_text(json.dumps(status,indent=2)+'\n')
 print(json.dumps(status,indent=2))

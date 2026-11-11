@@ -1,13 +1,25 @@
-# Cierre de validación — saRa 1.1.0
+# Validación final — saRa 1.1.0: catalán y castellano
 
-El desarrollador confirma: 44 bloques, 345 comprobaciones superadas, cero fallos, advertencias u omisiones; funcionamiento de la interfaz y los gráficos; exportaciones HTML/PDF correctas incluida √; guardado y reapertura .omv; funcionamiento al cambiar al inglés.
+El desarrollador confirma 48 bloques, 372 comprobaciones superadas, FAIL/WARN/SKIP 0; duración 15,7 s. También confirma interfaz, tablas, notas, gráficos y símbolos en catalán; exportaciones HTML/PDF; guardado y recuperación .omv en la rama catalana; y funcionamiento al cambiar a castellano e inglés.
 
-La evidencia se conserva en VALIDACION_FINAL_1.1.0.json. Las notas anteriores de pruebas pendientes describen fases previas y quedan superadas por este registro. La aceptación en la biblioteca de jamovi y la revisión del uso de APIs privadas siguen correspondiendo a sus mantenedores.
+La evidencia actual está en VALIDACION_FINAL_1.1.0.json y VALIDACION_CATALAN_1.1.0.json. La validación anterior del castellano (345 comprobaciones) se conserva en VALIDACION_CASTELLANO_1.1.0_HISTORICA.json. No se ha registrado el hash exacto probado ni las versiones exactas de jamovi, R y jmvtools.
+
+Las pruebas del catálogo usan el JSON del candidato con el traductor real de jmvcore y una caché temporal restaurada al terminar. La comprobación de la instalación procede de la confirmación de GUI del desarrollador. Esta documentación no equivale a aceptación de la biblioteca ni a validación de todas las plataformas. Revisión de APIs privadas de regresión: pendiente de los mantenedores.
 
 ## Guardar en GitHub
 
-Copiar el contenido del ZIP sobre la raíz del proyecto, sustituyendo únicamente los archivos incluidos. No hace falta recompilar por estos cambios documentales.
+Copiar NEWS y audit a la raíz del proyecto, combinando carpetas. Esta actualización es documental: no requiere repetir las pruebas ni recompilar. Mantener feature/catalan-1.1.0. No hacer merge con main mientras jamovi revisa la 1.0.0.
 
-En Terminal, confirmar feature/spanish-1.1.0 con git branch --show-current. Revisar git status --short. Añadir los archivos fuente, catálogos, pruebas y auditoría mediante git add -- DESCRIPTION NEWS R jamovi tests audit. Revisar git diff --cached --stat y hacer commit/push. No añadir ZIP, .jmo ni build/.
+Terminal:
 
-El commit identifica la revisión del repositorio, pero no debe presentarse como el hash exacto probado: no se registró el hash local de aquella ejecución. Una vez subido, se puede abrir una pull request hacia main y revisar el diff antes de fusionar.
+```bash
+git branch --show-current
+git status --short
+git add -- NEWS R jamovi inst/i18n tests audit
+git diff --cached --stat
+git -c commit.gpgsign=false commit -m "Add Catalan translation and record validation"
+git push -u origin feature/catalan-1.1.0
+git status --short --branch
+```
+
+Antes del commit, revisar que el resumen incluye los catálogos ca.po/ca.json, las correcciones de regresión, las pruebas y NEWS/audit. Se añaden las carpetas de código/catálogos/pruebas y audit; no añadir build/, ZIP ni .jmo. Un commit nuevo identifica el código guardado, pero no proporciona retroactivamente el hash exacto de la ejecución anterior.
