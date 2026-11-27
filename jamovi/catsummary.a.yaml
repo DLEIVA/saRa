@@ -25,8 +25,7 @@ options:
       default: true
       description:
           R: >
-            `TRUE` or `FALSE` (default: `TRUE`), provide frequency tables (nominal, ordinal
-            variables only)
+            `TRUE` or `FALSE` (default: `TRUE`), provide frequency and odds tables for nominal variables
     - name: mode 
       title: Mode
       type: Bool
@@ -113,12 +112,12 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide Pareto charts
 
     - name: lolli
-      title: Lollipop 
+      title: Lollipop
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default: `FALSE`), provide Lollipop charts
+            `TRUE` or `FALSE` (default: `FALSE`), provide Lollipopcharts
 
     - name: f2p.lolli
       title: Frequencies (Y-axis)
@@ -135,7 +134,7 @@ options:
             plotting lollipop plots.
             
     - name: dough
-      title: Doughnut 
+      title: Doughnut
       type: Bool
       default: false
       description:

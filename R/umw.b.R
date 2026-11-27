@@ -24,6 +24,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         cismedTable <- self$results$cisMed
         cishlTable <- self$results$cisHL
         descTable <- self$results$desc
+        mwtestTable$setNote("direction",.("Probability of superiority measures group 1 relative to group 2, counting ties as one half. Rank-biserial correlation follows jamovi's sign convention: negative values indicate higher values in group 1."))
 
         confInt <- self$options$ciWidth / 100
 
@@ -43,12 +44,12 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (self$options$miss == "listwise") {
           data <- jmvcore::naOmit(data)
           if (dim(data)[1] == 0)
-            jmvcore::reject("Grouping variable '{a}' has less than 2 levels after missing values are excluded",
-                            code="grouping_var_must_have_2_levels", a=groupVarName)
+            jmvcore::reject(.("No complete observations remain for the selected variables"), code="no_complete_observations")
         }
         
         Ha <- .saraAlternative(self$options$hypothesis)
 
+        medianLevels <- numeric(0)
         for (depName in depVarNames) {
           
           dataMWTest <- data.frame(dep=data[[depName]], group=data[[groupVarName]])
@@ -73,18 +74,26 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           avgR[is.na(avgR)] <- NaN
           
           cimed <- matrix(NaN, nrow=2, ncol=2)
+          medianResult <- NULL
           if (self$options$ciMedians || self$options$plots) {
             ciResult <- try(suppressWarnings(.saraMedianIntervals(
               split(dataMWTest$dep,dataMWTest$group),self$options$ciMethod,
-              confInt,self$options$numR)),silent=TRUE)
-            if (!jmvcore::isError(ciResult)) cimed <- ciResult
-            else cismedTable$addFootnote(rowKey=depName, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
+              confInt,self$options$numR,details=TRUE)),silent=TRUE)
+            if (!jmvcore::isError(ciResult)) {
+              medianResult <- ciResult
+              cimed <- ciResult$values
+              medianLevels <- c(medianLevels,ciResult$confidence)
+            }
           }
           cihl <- rep(NaN, 3)
+          hlError <- NULL
           if (self$options$ciHL) {
-            hlResult <- try(suppressWarnings(.saraHodgesLehmann(dataMWTest$dep,group=dataMWTest$group,conf.level=confInt)), silent=TRUE)
-            if (!jmvcore::isError(hlResult)) cihl <- hlResult
-            else cishlTable$addFootnote(rowKey=depName, 'hlestimate', jmvcore::extractErrorMessage(hlResult))
+            hlResult <- try(suppressWarnings(.saraHodgesLehmann(dataMWTest$dep,group=dataMWTest$group,conf.level=confInt,details=TRUE)), silent=TRUE)
+            if (!jmvcore::isError(hlResult)) {
+              cihl <- hlResult$values
+              hlError <- hlResult$note
+            }
+            else hlError <- jmvcore::extractErrorMessage(hlResult)
           }
 
           
@@ -125,11 +134,37 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "cilMed[1]"=cimed[1,1],
               "ciuMed[1]"=cimed[1,2],              
               "group[2]"=groupLevels[2],
-              "num[2]"=n[2],
               "median[2]"=med[2],
               "cilMed[2]"=cimed[2,1],
               "ciuMed[2]"=cimed[2,2]              
             ))
+            for (g in seq_len(2L)) {
+              column <- paste0('cilMed[',g,']')
+              if (is.null(medianResult)) {
+                cismedTable$addFootnote(rowKey=depName,column,
+                  jmvcore::extractErrorMessage(ciResult))
+                next
+              }
+              groupNotes <- character(0)
+              error <- medianResult$errors[[g]]
+              if (!is.null(error))
+                groupNotes <- c(groupNotes,error)
+              level <- medianResult$confidence[g]
+              if (is.finite(level) && self$options$ciMethod=="exact")
+                groupNotes <- c(groupNotes,
+                  sprintf(.('Requested confidence level: %s%%; reported confidence level: %s%%.'),
+                    trimws(formatC(100*confInt,format="fg",digits=8,width=0)),
+                    trimws(formatC(100*level,format="fg",digits=8,width=0))))
+              else if (!is.finite(level) && is.null(error))
+                groupNotes <- c(groupNotes,
+                  .('The confidence method did not return an achieved confidence level; the requested level is shown.'))
+              if (any(is.infinite(cimed[g,])))
+                groupNotes <- c(groupNotes,
+                  .('The median confidence interval is unbounded; infinite limits are omitted from the plot.'))
+              if (length(groupNotes))
+                cismedTable$addFootnote(rowKey=depName,column,
+                  paste(unique(groupNotes),collapse=" "))
+            }
           }
           
           if (self$options$ciHL) {
@@ -140,6 +175,8 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               "cilHL"=cihl[2],
               "ciuHL"=cihl[3]           
             ))
+            if (!is.null(hlError))
+              cishlTable$addFootnote(rowKey=depName,"hlestimate",hlError)
           }
           
           if (self$options$plots) {
@@ -149,6 +186,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (nrow(dataMWTest) > 0) {
               
               plotData <- .saraMedianPlotData(groupLevels,med,cimed)
+              if (!is.null(medianResult)) plotData$confidence <- medianResult$confidence
 
               if (all(is.na(plotData$median)))
                 image$setState(NULL)
@@ -161,6 +199,13 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
           }          
         }
+        if (self$options$ciMedians) {
+          title <- .saraMedianConfidenceHeading(medianLevels,confInt,translate=.)
+          for (column in c('cilMed[1]','ciuMed[1]','cilMed[2]','ciuMed[2]'))
+            cismedTable$getColumn(column)$setSuperTitle(title)
+        }
+        for (table in list(mwtestTable,cismedTable,cishlTable))
+          .saraTableLetterNotes(table)
         },
       .init=function() {
         
@@ -196,12 +241,13 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> \u2260 \u03BE\u2009<sub>{}</sub>", groups[1], groups[2]))
          
         if(self$options$ciMedians & self$options$ciMethod=='boot')
-          cisMed$setNote("numR", jmvcore::format(paste0("Number of replicates in Bootstrap CI(s): ",reps)))
+          cisMed$setNote("numR", jmvcore::format(.("Number of bootstrap replicates: {}"),reps))
         
       },
       .desc=function(image, ggtheme, theme, ...) {
-        label <- jmvcore::format(.("Median ({ciWidth}% CI)"),ciWidth=self$options$ciWidth)
-        .saraDrawMedianPlot(image$state,label,self$options$group,image$key,ggtheme,theme)
+        label <- .saraMWMedianPlotLabel(image$state,self$options$ciWidth,translate=.)
+        .saraDrawMedianPlot(image$state,label,self$options$group,image$key,ggtheme,theme,
+          legendPosition="bottom")
       }
     )
 )

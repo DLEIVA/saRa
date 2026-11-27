@@ -1,249 +1,122 @@
+# Evidencia de validación saRa 1.0.0 — 27 de noviembre de 2026
+
+Fuente: salidas y confirmaciones del desarrollador durante esta conversación.
+Las capturas son evidencia visual de los casos mostrados; los archivos OMV,
+HTML y PDF han sido confirmados operativos por el usuario, no inspeccionados
+independientemente por el asistente.
+
+## Última ejecución completa
+
+```text
+> testthat::test_local(".")
+Duration: 39.4 s
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 1878 ]
 ```
 
-## Latest runtime validation — 11 November 2026
+PASS cuenta comprobaciones, no bloques de test_that. Contextos:
 
-This section supersedes earlier statements that a fresh 35-block run or build was pending. Historical sections below are retained as dated evidence, not the current validation status.
+| Contexto | Comprobaciones |
+|---|---:|
+| audit-review | 190 |
+| audit-statistics | 242 |
+| categorical-plot-order | 96 |
+| categorical-table-visibility | 108 |
+| continuous-shading | 124 |
+| distribution-display-window | 34 |
+| frequency-range | 11 |
+| frequency-tables | 45 |
+| gini-lorenz | 97 |
+| mann-whitney-median-intervals | 376 |
+| mann-whitney-superiority | 12 |
+| mixed-effect-footnotes | 36 |
+| normality-footnotes | 36 |
+| normality-histograms | 15 |
+| normality-plot-messages | 62 |
+| numeric-frequency-tables | 39 |
+| numeric-qq-message | 35 |
+| ordinal-association-notes | 63 |
+| ordinal-plot-theme | 76 |
+| uniform-plot-jumps | 55 |
+| uniform-support | 52 |
+| wilcoxon-hl-confidence | 74 |
 
-- Developer supplied `testthat::test_local(".")` output: **FAIL 0 | WARN 0 | SKIP 0 | PASS 274**, duration 13.1 seconds. The source contains 35 test blocks; PASS counts individual expectations, not blocks.
-- Compilation and installation completed successfully, as confirmed by the developer.
-- Developer confirms normality tests and residual plots render correctly and that the functionality works independently of moretests.
-- Example datasets open correctly, as separately confirmed by the developer.
-- Windows is inferred from the supplied paths. Exact jamovi/R/jmvtools versions and the hash of the locally tested checkout were not supplied for this run.
-- The fill-scale replacement message is informational; testthat reported zero warnings.
-- No new HTML/PDF or .omv persistence run, Linux/macOS acceptance run, or completion of every manual checklist item is asserted. Earlier evidence remains dated separately. Private Regression API review remains pending.
+Los mensajes stat_bin sobre bins=30 son informativos: testthat contabilizó
+cero advertencias. Las ejecuciones intermedias con fallos están superadas por
+esta ejecución: los últimos fallos de Gini/Lorenz y visibilidad procedían de
+la preparación de pruebas y de atributos de nombre en valores numéricos.
 
-See `RUNTIME_VALIDATION_2026-11-11.json` for the structured record.
+## Confirmaciones manuales más recientes
 
-> source("audit/VALIDATE_IN_R.R")
+- Notas ordinales: constantes, cambio de filas/columnas, recuperación y pareja
+  única; OMV, HTML y PDF generados y operativos.
+- Gini y Gini normalizado: 1:5 → 0.2667/0.3333; iguales positivos → 0/0;
+  0,0,0,10 → .75/1. Curvas de Lorenz coherentes, paleta de jamovi.
+- Suma cero y negativos: índices NaN con nota y explicación en el gráfico;
+  otras estadísticas conservadas. Restauración elimina avisos.
+- Ausentes excluidos sin cambiar los resultados; único 7 → Gini 0,
+  normalizado NaN con nota y curva sobre la diagonal.
+- Gini/Lorenz: archivos OMV, HTML y PDF confirmados operativos.
+- Visibilidad nominal: las tres tablas responden a sus respectivas opciones;
+  selección individual de Cramér V, tau de Goodman-Kruskal y Theil; usuario
+  confirmó funcionamiento tras la suite de 1878.
+- Nombres con espacios, comienzo numérico, acentos y acento grave: tablas y
+  barras/mosaico nominales; barras/heatmap/alluvial ordinales; Pearson r=1,
+  dispersión, recta y los tres marginales numéricos. Usuario confirmó todo.
+- Biblioteca: los ocho conjuntos abren correctamente y son operativos.
 
-jamovi compiler
+## Entorno y código
 
-jamovi 2.7.30 found at /usr/bin/flatpak
-wrote: bivcat.h.R
-wrote: bivcat.src.js
-wrote: bivcat.js
-wrote: bivmix.h.R
-wrote: bivmix.src.js
-wrote: bivmix.js
-wrote: bivnum.h.R
-wrote: bivnum.src.js
-wrote: bivnum.js
-wrote: bivord.h.R
-wrote: bivord.src.js
-wrote: bivord.js
-wrote: catsummary.h.R
-wrote: catsummary.src.js
-wrote: catsummary.js
-wrote: contvars.h.R
-wrote: contvars.src.js
-wrote: contvars.js
-wrote: discvars.h.R
-wrote: discvars.src.js
-wrote: discvars.js
-wrote: linreg.h.R
-wrote: linreg.src.js
-wrote: linreg.js
-wrote: numsummary.h.R
-wrote: numsummary.src.js
-wrote: numsummary.js
-wrote: ordsummary.h.R
-wrote: ordsummary.src.js
-wrote: ordsummary.js
-wrote: testnorm.h.R
-wrote: testnorm.src.js
-wrote: testnorm.js
-wrote: umw.h.R
-wrote: umw.src.js
-wrote: umw.js
-wrote: wilcoxt.h.R
-wrote: wilcoxt.src.js
-wrote: wilcoxt.js
-writing module meta
-wrote: 00jmv.R
-copied phobia.RData
-copied beliefs.RData
-copied NEOFFI.RData
-copied attitudes.immigration.RData
-copied Ginzberg.RData
-copied polynomial_regression.RData
-copied mediation.RData
-wrote: 0000.yaml
-wrote: jamovi.yaml
-wrote: jamovi-full.yaml
-Installing dependencies
-WRS2, rcompanion, effectsize, ggalluvial, latex2exp, DescTools, nortest, jmvtools
-also installing the dependencies ‘bit’, ‘proxy’, ‘bit64’, ‘libcoin’, ‘modeltools’, ‘rootSolve’, ‘e1071’, ‘lmom’, ‘clipr’, ‘vroom’, ‘tzdb’, ‘reshape’, ‘multcompView’, ‘coin’, ‘bayestestR’, ‘insight’, ‘parameters’, ‘performance’, ‘datawizard’, ‘lazyeval’, ‘expm’, ‘Exact’, ‘gld’, ‘readr’, ‘haven’, ‘httr’
+R 4.6.2; Ubuntu 22.04.5 LTS x86_64; testthat 3.3.2; jmvtools 28.4;
+jmvcore 28.3; ggplot2 4.0.3; DescTools 0.99.60. R es la sesión de pruebas
+en RStudio; no se ha verificado por separado el R integrado.
 
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/bit_4.6.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/proxy_0.4-27.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/bit64_4.6.0-1.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/libcoin_1.0-10.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/modeltools_0.2-24.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/rootSolve_1.8.2.4.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/e1071_1.7-16.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/lmom_3.2.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/clipr_0.8.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/vroom_1.6.5.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/tzdb_0.5.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/reshape_0.8.9.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/multcompView_0.1-10.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/coin_1.4-3.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/bayestestR_0.16.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/insight_1.3.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/parameters_0.26.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/performance_0.14.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/datawizard_1.1.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/lazyeval_0.2.2.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/expm_1.0-0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/Exact_3.3.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/gld_2.6.7.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/readr_2.1.5.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/haven_2.5.4.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/httr_1.4.7.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/WRS2_1.1-7.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/rcompanion_2.5.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/effectsize_1.0.0.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/ggalluvial_0.12.5.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/latex2exp_0.9.6.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/DescTools_0.99.60.tar.gz'
-trying URL 'https://repo.jamovi.org/cran-linux/2025-05-25/x64/src/contrib/nortest_1.0-4.tar.gz'
-* installing *binary* package ‘bit’ ...
-* DONE (bit)
-* installing *binary* package ‘proxy’ ...
-* DONE (proxy)
-* installing *binary* package ‘libcoin’ ...
-* DONE (libcoin)
-* installing *binary* package ‘modeltools’ ...
-* DONE (modeltools)
-* installing *binary* package ‘rootSolve’ ...
-* DONE (rootSolve)
-* installing *binary* package ‘lmom’ ...
-* DONE (lmom)
-* installing *binary* package ‘clipr’ ...
-* DONE (clipr)
-* installing *binary* package ‘tzdb’ ...
-* DONE (tzdb)
-* installing *binary* package ‘reshape’ ...
-* DONE (reshape)
-* installing *binary* package ‘multcompView’ ...
-* DONE (multcompView)
-* installing *binary* package ‘insight’ ...
-* DONE (insight)
-* installing *binary* package ‘lazyeval’ ...
-* DONE (lazyeval)
-* installing *binary* package ‘expm’ ...
-* DONE (expm)
-* installing *binary* package ‘httr’ ...
-* DONE (httr)
-* installing *binary* package ‘latex2exp’ ...
-* DONE (latex2exp)
-* installing *binary* package ‘nortest’ ...
-* DONE (nortest)
-* installing *binary* package ‘bit64’ ...
-* DONE (bit64)
-* installing *binary* package ‘e1071’ ...
-* DONE (e1071)
-* installing *binary* package ‘coin’ ...
-* DONE (coin)
-* installing *binary* package ‘datawizard’ ...
-* DONE (datawizard)
-* installing *binary* package ‘Exact’ ...
-* DONE (Exact)
-* installing *binary* package ‘WRS2’ ...
-* DONE (WRS2)
-* installing *binary* package ‘ggalluvial’ ...
-* DONE (ggalluvial)
-* installing *binary* package ‘vroom’ ...
-* DONE (vroom)
-* installing *binary* package ‘bayestestR’ ...
-* DONE (bayestestR)
-* installing *binary* package ‘gld’ ...
-* DONE (gld)
-* installing *binary* package ‘parameters’ ...
-* DONE (parameters)
-* installing *binary* package ‘performance’ ...
-* DONE (performance)
-* installing *binary* package ‘readr’ ...
-* DONE (readr)
-* installing *binary* package ‘haven’ ...
-* DONE (haven)
-* installing *binary* package ‘effectsize’ ...
-* DONE (effectsize)
-* installing *binary* package ‘DescTools’ ...
-* DONE (DescTools)
-* installing *binary* package ‘rcompanion’ ...
-* DONE (rcompanion)
-
-The downloaded source packages are in
-	‘/var/tmp/Rtmp38eQA6/downloaded_packages’
-Warning message:
-package ‘jmvtools’ is not available for this version of R
-
-A version of this package for your version of R might be available elsewhere,
-see the ideas at
-https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages * installing *source* package ‘saRa’ ...
-** this is package ‘saRa’ version ‘1.0.0’
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-** building package indices
-** testing if installed package can be loaded from temporary location
-** testing if installed package can be loaded from final location
-** testing if installed package keeps a record of temporary installation path
-* DONE (saRa)
-wrote module: saRa_1.0.0.jmo
-
-Installing saRa_1.0.0.jmo
-[5:1011/235235.063501:ERROR:bus.cc(399)] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
-Gtk-Message: 23:52:35.203: Failed to load module "canberra-gtk-module"
-Gtk-Message: 23:52:35.203: Failed to load module "canberra-gtk-module"
-[5:1011/235235.224080:ERROR:bus.cc(399)] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
-[5:1011/235235.224132:ERROR:bus.cc(399)] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
-/app/lib/python3.12/site-packages/jamovi/server/__main__.py:121: DeprecationWarning: There is no current event loop
-  loop = get_event_loop()
-
-jamovi
-version: 0.0.0
-cli:     0.0.0
-
-jamovi.server.server - listening across origin(s): 127.0.0.1:37817 127.0.0.1:36975 127.0.0.1:45301
-jamovi.server.server - jamovi accessible from: 127.0.0.1:37817/?access_key=[REDACTED]
-
-ports: 37817, 36975, 45301, access_key: 03fbbae3261949389307f111c412f337
-
-jamovi.server.engine - Stopping engine
-
-jamovi.server.engine - Stopping engine
-
-jamovi.server.engine - Stopping engine
-
-jamovi.server.engine - Stopping engine
-
-jamovi.server.engine - Restarting engine
-
-jamovi.server.engine - Restarting engine
-
-jamovi.server.engine - Restarting engine
-
-jamovi.server.engine - Restarting engine
-
-terminate called after throwing an instance of 'terminate called after throwing an instance of 'ConnectionLostExceptionConnectionLostException'
-'
-  what():    what():  std::exceptionstd::exception
-
-terminate called after throwing an instance of 'ConnectionLostException'
-  what():  std::exception
-terminate called after throwing an instance of 'ConnectionLostException'
-  what():  std::exception
-
-Module installed successfully
-audit-statistics: ............................................................................................................................................................Scale for fill is already present.
-Adding another scale for fill, which will replace the existing scale.
-.....................
-
-══ DONE ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Build and testthat checks completed. Run the jamovi GUI/export checklist next; R CMD build/check are optional supplementary diagnostics.
+```text
+getOption("jamovi_home") → NULL
+jmvtools::check() → jamovi 2.7.30 found at /usr/bin/flatpak
+flatpak info → Version: 2.7.27; Subject: Version 2.7.30 (19f193ffc130)
+branch → fix/audit-review-1.0.0
+HEAD → 2cfe7ee61c580950140c832a4b22163a90bba2f8
 ```
+
+Se conserva la discrepancia entre los metadatos Flatpak y la detección del
+compilador. Las referencias generadas a jamovi 28 no acreditan la versión GUI.
+HEAD es la base, no un commit del candidato: el usuario tiene modificaciones,
+eliminaciones y archivos nuevos pendientes de commit. El estado local del
+usuario incluye tests/gui/ y una modificación del JSON histórico de nortest
+que no están disponibles en la copia revisada por el asistente.
+
+Las validaciones anteriores de distribuciones, resúmenes, normalidad,
+Mann-Whitney y Wilcoxon constan en los documentos históricos. El estado
+consolidado y sus límites están en VALIDATION_STATUS.json.
+
+## Cierre del cotejo del árbol local
+
+El usuario remitió LOCAL_FILE_COMPARISON.csv: 102 MATCH, 7 DIFFERENT y un
+LOCAL_ONLY_NOT_REVIEWED. Después remitió saRa-cotejo-final.zip con las ocho
+rutas y el registro histórico nortest. Revisadas las diferencias, se conserva
+el código del usuario sin modificarlo. Las 110 huellas del inventario
+reconciliado coinciden con las suministradas. El script de selectores pasa
+en Node con controles simulados; no se afirma ejecución browser end-to-end.
+El archivo de pruebas audit-review incorpora cuatro bloques adicionales;
+el total reconciliado es 112 test_that. Esto corrige el recuento de 108 en
+la copia anterior incompleta, sin cambiar las 1878 comprobaciones del usuario.
+El registro mal denominado nortest contiene evidencia general de 16-11-2026
+con 409 comprobaciones; se archiva intacto y se marca como sustituido.
+Detalles: SOURCE_RECONCILIATION_2026-11-27.json.
+
+## Aceptación del artefacto final y cierre previo al commit
+
+El usuario confirma: «jmo final identificado, comprobación conjunta realizada».
+La comprobación solicitada incluía reinicio/carga, reapertura OMV y HTML/PDF.
+Salida aportada desde su terminal:
+
+```text
+sha256sum "saRa_1.0.0.jmo"
+163731acf8c0cee8f838c565e1da270178c35fdbada5ccd15a96fb5a16906b96  saRa_1.0.0.jmo
+```
+
+El binario no se ha recibido ni rehasheado aquí: se registra la evidencia del
+usuario. git status y git diff --stat concuerdan con las familias de archivos
+revisadas. git diff --check señala únicamente espacios finales. Se conservan
+en este candidato sin alterar fuentes ni regenerar el binario.
+Solo queda revisar/stagear el conjunto y crear/registrar su commit.

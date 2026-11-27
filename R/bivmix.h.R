@@ -130,6 +130,8 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..Trim <- jmvcore::OptionNumber$new(
                 "Trim",
                 Trim,
+                min=0,
+                max=49.999,
                 default=5)
             private$..winsmean <- jmvcore::OptionBool$new(
                 "winsmean",
@@ -138,6 +140,8 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..Win <- jmvcore::OptionNumber$new(
                 "Win",
                 Win,
+                min=0,
+                max=49.999,
                 default=5)
             private$..variance <- jmvcore::OptionBool$new(
                 "variance",
@@ -186,6 +190,8 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..NPerc <- jmvcore::OptionNumber$new(
                 "NPerc",
                 NPerc,
+                min=50,
+                max=99,
                 default=90)
             private$..min <- jmvcore::OptionBool$new(
                 "min",
@@ -309,10 +315,12 @@ bivmixOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..innerf <- jmvcore::OptionNumber$new(
                 "innerf",
                 innerf,
+                min=0,
                 default=1.5)
             private$..outerf <- jmvcore::OptionNumber$new(
                 "outerf",
                 outerf,
+                min=0,
                 default=3)
             private$..qq <- jmvcore::OptionBool$new(
                 "qq",
@@ -518,7 +526,8 @@ bivmixResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 refs=list(
                     "WRS2",
                     "effectsize",
-                    "rcompanion"))
+                    "rcompanion",
+                    "solanas2005"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesnum",
@@ -649,10 +658,10 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   the Pearson's \u03B2\u2081 index
 #' @param gamma1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   the Fisher's \u03B3\u2081 index
-#' @param h1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
-#'   H1 index
-#' @param h3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
-#'   H3 index
+#' @param h1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   percentile skewness over the central 50\% (SP50)
+#' @param h3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   percentile skewness over the central 80\% (SP80)
 #' @param beta2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   the Pearson's \u03B2\u2082 index
 #' @param gamma2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide

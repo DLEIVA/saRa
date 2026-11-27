@@ -20,6 +20,15 @@ options:
           R: a vector of strings naming the variables of interest in `data`
     
     
+    - name: freq
+      title: Frequency tables
+      type: Bool
+      default: true
+      description:
+          R: >
+            `TRUE` or `FALSE` (default: `TRUE`), provide ordered frequency tables
+            with cumulative counts, proportions and percentages, without odds.
+
     - name: n
       title: N
       type: Bool
@@ -127,6 +136,8 @@ options:
     - name: NPerc
       title: Percentage of data
       type: Integer
+      min: 50
+      max: 99
       default: 90
       description:
           R: >
@@ -191,20 +202,20 @@ options:
             a comma-separated list (default: 25,50,75) specifying the percentiles
             
     - name: h1
-      title: H1 (skewness)
+      title: Percentile skewness (SP50)
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default: `FALSE`), provide the H1 index
+            `TRUE` or `FALSE` (default: `FALSE`), provide percentile skewness over the central 50% (SP50)
             
     - name: h3
-      title: H3 (skewness)
+      title: Percentile skewness (SP80)
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default: `FALSE`), provide the H3 index
+            `TRUE` or `FALSE` (default: `FALSE`), provide percentile skewness over the central 80% (SP80)
             
     - name: k2
       title: K2 (kurtosis)
@@ -281,6 +292,7 @@ options:
     - name: innerf
       title: Inner fence
       type: Number
+      min: 0
       default: 1.5
       description:
           R: >
@@ -289,6 +301,7 @@ options:
     - name: outerf
       title: Outer fence
       type: Number
+      min: 0
       default: 3.0
       description:
           R: >

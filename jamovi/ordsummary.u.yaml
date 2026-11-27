@@ -5,6 +5,7 @@ stage: 0
 compilerMode: tame
 children:
   - type: VariableSupplier
+    name: ordinalSupplier
     persistentItems: false
     stretchFactor: 1
     children:
@@ -14,6 +15,11 @@ children:
           - type: VariablesListBox
             name: vars
             isTarget: true
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: freq
   - type: CollapseBox
     label: Statistics
     collapsed: true
@@ -152,7 +158,7 @@ children:
             stretchFactor: 1
             children:
               - type: Label
-                label: Bar Plots
+                label: Bar plots
                 iconPosition: right
                 children:
                   - type: CheckBox

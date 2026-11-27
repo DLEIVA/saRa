@@ -28,6 +28,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         Ha <- .saraAlternative(self$options$hypothesisps)
 
+        hlRecords <- list()
         for (i in seq_along(pairs)) {
           pair <- pairs[[i]]
           
@@ -66,18 +67,30 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             else cismedTable$addFootnote(rowKey=pair, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
           }
           cihl <- rep(NaN, 3)
+          hlNote <- NULL
+          hlError <- NULL
           if (self$options$ciHLps) {
-            hlResult <- try(suppressWarnings(.saraHodgesLehmann(column1,column2,paired=TRUE,conf.level=confInt)), silent=TRUE)
-            if (!jmvcore::isError(hlResult)) cihl <- hlResult
-            else cishlTable$addFootnote(rowKey=pair, 'hlestimate', jmvcore::extractErrorMessage(hlResult))
+            hlResult <- try(suppressWarnings(.saraHodgesLehmann(column1,column2,paired=TRUE,conf.level=confInt,details=TRUE)), silent=TRUE)
+            if (!jmvcore::isError(hlResult)) {
+              cihl <- hlResult$values
+              if (!is.null(hlResult$note)) hlError <- .(hlResult$note)
+              hlNote <- .saraHLConfidenceNote(confInt, hlResult$confidence, translate=.)
+              hlRecords[[length(hlRecords)+1L]] <- list(pair=pair,
+                confidence=hlResult$confidence, note=hlNote)
+            }
+            else hlError <- jmvcore::extractErrorMessage(hlResult)
           }
 
           if (is.factor(column1) || is.factor(column2)) {
             wilc <- jmvcore::createError(.('One or both variables are not numeric'))
           }
           else {
-            wilc <- try(suppressWarnings(wilcox.test(column1, column2,
-                    alternative=Ha, paired=TRUE, conf.int=FALSE)), silent=TRUE)
+            wilc <- try({
+              differences <- column1-column2
+              differences <- differences[!is.na(differences)]
+              if(length(differences)>0L && all(differences==0)) stop("All observations are tied")
+              suppressWarnings(wilcox.test(column1,column2,alternative=Ha,paired=TRUE,conf.int=FALSE))
+            },silent=TRUE)
             zstat <- try(.saraSignedRanks(column1,column2,Ha), silent=TRUE)
             rankCorr <- try(list(statistic=.saraSignedRanks(column1,column2)$correlation), silent=TRUE)
           }
@@ -112,7 +125,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               'stat[rankCorrps]'=NaN))
             
             message <- jmvcore::extractErrorMessage(wilc)
-            if (message == "not enough 'x' observations")
+            if (grepl("not enough",message,fixed=TRUE) && grepl("observations",message,fixed=TRUE))
               message <- .('One or both variables do not contain enough observations')
             else if (message == 'missing value where TRUE/FALSE needed')
               message <- .('One or both variables contain infinite values')
@@ -143,8 +156,12 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             cishlTable$setRow(rowKey=pair, list(
               "hlestimate"=cihl[1],
               "cilHL"=cihl[2],
-              "ciuHL"=cihl[3]           
+              "ciuHL"=cihl[3]
             ))
+            if (!is.null(hlError))
+              cishlTable$addFootnote(rowKey=pair, 'hlestimate', hlError)
+            if (!is.null(hlNote))
+              cishlTable$addFootnote(rowKey=pair, 'cilHL', hlNote)
           }          
           
           if (self$options$descps) {
@@ -177,6 +194,21 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
           }          
         }
+        if (self$options$ciHLps) {
+          levels <- as.numeric(unlist(lapply(hlRecords, function(x) x$confidence)))
+          title <- .saraHLConfidenceHeading(levels, confInt, translate=.)
+          cishlTable$getColumn('cilHL')$setSuperTitle(title)
+          cishlTable$getColumn('ciuHL')$setSuperTitle(title)
+          if (length(unique(signif(levels[is.finite(levels)], 10))) > 1L) {
+            for (record in hlRecords) {
+              if (is.null(record$note) && length(record$confidence)==1L &&
+                  is.finite(record$confidence))
+                cishlTable$addFootnote(rowKey=record$pair, 'cilHL',
+                  sprintf(.('Confidence level: %s%%'),
+                    trimws(formatC(100*record$confidence, format="fg", digits=8, width=0))))
+            }
+          }
+        }
       },
       .init=function() {
         
@@ -205,7 +237,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$setNote("hyp", jmvcore::format("H\u2090 \u03BE\u2009<sub>{}</sub> \u2260 0", .("Measure 1 - Measure 2")))
         
         if(self$options$ciMediansps & self$options$ciMethodps=='boot')
-          cisMed$setNote("numR", jmvcore::format(paste0("Number of replicates in Bootstrap CI(s): ",reps)))
+          cisMed$setNote("numR", jmvcore::format(.("Number of bootstrap replicates: {}"),reps))
         
         pairs <- self$options$pairs
         descTable <- self$results$descps
@@ -233,7 +265,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }        
       },
       .desc=function(image, ggtheme, theme, ...) {
-        label <- jmvcore::format(.("Median ({ciWidth}% CI)"),ciWidth=self$options$ciWidthps)
+        label <- .saraMedianPlotLabel(image$state,self$options$ciWidthps,translate=.)
         .saraDrawMedianPlot(image$state,label,ggtheme=ggtheme,theme=theme)
       }
     )

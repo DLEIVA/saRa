@@ -3,7 +3,9 @@ name:  bivcat
 title: Bivariate Data Analysis (Categorical Data)
 jrs:   '1.1'
 
-refs: [vcd]
+
+
+refs: ["vcd", "solanas2005"]
 
 items:
 
@@ -11,6 +13,7 @@ items:
       title: Contingency Tables
       type: Table
       description: A frequencies table
+      visible: (obs || exp || pcRow || pcCol || pcTot)
       columns: [ ]
       clearWith:
         - rows
@@ -129,13 +132,13 @@ items:
     - name: errorind
       title: Prediction Error Indices
       description: A table of different prediction error indicators
-      visible: ( lambdaGKab || lambdaGKba || lambdaGKsym || tauGKab || tauGKba || tauGKsym || theilab || theilba || theilsym)
+      visible: ( lambdaGKab || lambdaGKba || lambdaGKsym || tauGKab || tauGKba || theilab || theilba || theilsym)
       type: Table
       columns:
         - name: t[lambdaGKab]
           title: ''
           type: text
-          content: "\u03BB (rows)"
+          content: "\u03BB (rows dependent)"
           visible: (lambdaGKab)
         
         - name: v[lambdaGKab]
@@ -145,7 +148,7 @@ items:
         - name: t[lambdaGKba]
           title: ''
           type: text
-          content: "\u03BB (columns)"
+          content: "\u03BB (columns dependent)"
           visible: (lambdaGKba)
         
         - name: v[lambdaGKba]
@@ -165,7 +168,7 @@ items:
         - name: t[tauGKab]
           title: ''
           type: text
-          content: "\u03C4 (rows)"
+          content: "\u03C4 (rows dependent)"
           visible: (tauGKab)
         
         - name: v[tauGKab]
@@ -175,27 +178,17 @@ items:
         - name: t[tauGKba]
           title: ''
           type: text
-          content: "\u03C4 (columns)"
+          content: "\u03C4 (columns dependent)"
           visible: (tauGKba)
         
         - name: v[tauGKba]
           title: Value
           visible: (tauGKba)
           
-        - name: t[tauGKsym]
-          title: ''
-          type: text
-          content: "\u03C4 (symmetric)"
-          visible: (tauGKsym)
-        
-        - name: v[tauGKsym]
-          title: Value
-          visible: (tauGKsym)   
-
         - name: t[theilab]
           title: ''
           type: text
-          content: "Theil's U (rows)"
+          content: "Theil's U (rows dependent)"
           visible: (theilab)
         
         - name: v[theilab]
@@ -205,7 +198,7 @@ items:
         - name: t[theilba]
           title: ''
           type: text
-          content: "Theil's U (columns)"
+          content: "Theil's U (columns dependent)"
           visible: (theilba)
         
         - name: v[theilba]

@@ -73,7 +73,7 @@ options:
             greater than measure 1 respectively
             
     - name: ciMediansps
-      title: Medians CIs
+      title: Median confidence intervals
       type: Bool
       default: false
       description:

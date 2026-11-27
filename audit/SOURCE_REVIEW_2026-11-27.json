@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static inspection of the source tree containing this script; not R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 58,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 112,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true,
+  "registered_analyses": 12,
+  "explicit_registered_datasets": 8,
+  "source_inventory_files": 110,
+  "reference_keys_cross_checked": 11,
+  "regenerated_numeric_header_options": "All declared options registered",
+  "GUI_selector_Node_check": "PASS: node tests/gui/frequency-selectors.cjs; substitute controls, not end-to-end browser execution",
+  "source_reconciliation": "audit/SOURCE_RECONCILIATION_2026-11-27.json",
+  "known_unreviewed_user_paths": [],
+  "full_user_tree_identity_verified": "110 runtime inventory paths matched against supplied hashes; historical audit JSON reviewed separately",
+  "runtime_code_modified_during_reconciliation": false
+}

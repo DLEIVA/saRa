@@ -1,14 +1,46 @@
-# Apply and merge this follow-up in RStudio
+# Registrar el candidato validado saRa 1.0.0
 
-The patch is based on main commit 8f54e75 (your previous PR #2 is already merged). It includes the removal/rename of R/audit-utils.R to R/utils.R, so use the patch rather than copying files over an old directory and leaving both helpers present.
+Rama: fix/audit-review-1.0.0. No cambiar a main ni limpiar el árbol.
+Fuente reconciliada: 110 archivos. Última suite del usuario: 1878 comprobaciones
+superadas, sin fallos/warnings/omisiones. JMO final identificado y comprobación
+conjunta confirmada por el usuario. Ver FINAL_ACCEPTANCE_2026-11-27.json.
 
-1. In your existing saRa RStudio Git project, preserve any uncommitted work. Switch to main and Pull. In Terminal verify `git status` reports a clean working tree.
-2. In Terminal run `git switch -c refactor-statistics-followup`.
-3. Extract the supplied archive. Its root contains saRa-followup.patch. Run `git apply --check "/absolute/path/to/saRa-followup.patch"`, then `git apply "/absolute/path/to/saRa-followup.patch"`. Replace that path with the actual extracted file. Stop if the check fails; do not force or bypass it.
-4. In the R Console run `source("audit/VALIDATE_IN_R.R")`. This rebuilds the old .jmo and runs 34 test blocks. Complete the targeted checks in FOLLOWUP_2026-10-13.md and exports/save-reopen.
-5. In the Git pane review/stage the source, NEWS, tests and audit changes (including deleted audit-utils.R and new utils.R). Include regenerated tracked definitions if changed. Exclude the build folder and .jmo. Commit with “Consolidate association helpers and fix ordinal inner-range layout”.
-6. In Terminal run `git push -u origin refactor-statistics-followup`. Open https://github.com/DLEIVA/saRa/compare/main...refactor-statistics-followup and create the PR. State the new validation results; the previous 26-block run does not cover this follow-up.
-7. Once the follow-up checks pass and the PR has no conflicts, click Merge pull request and Confirm merge. This merges into your source repository; it does not automatically publish to the jamovi library or resolve the existing private-API review question.
-8. Return to RStudio, switch to main, click Pull and record `git rev-parse HEAD` for maintainers.
+## Preparar staging desde la terminal del proyecto
 
-The source retains version 1.0.0, as this updates your current candidate. Use a patch-version increment if a previously distributed binary must be distinguished from this new build. Never attach the old uploaded .jmo as though it contains these changes.
+Tras copiar los documentos de cierre:
+
+```bash
+git add -u
+git add -- R/distribution-plots.R R/frequency-tables.R R/inequality.R R/messages.R R/normality-plot-messages.R
+git add -- jamovi/js/catsummary.js jamovi/js/ordsummary.js tests/testthat tests/gui/frequency-selectors.cjs
+git add -- audit/*.md audit/*.json audit/*.R audit/*.py audit/AUDIT_TRACKER.csv audit/REVIEWED_FILES_2026-11-27.csv audit/history
+git diff --cached --stat
+
+```
+
+git add -u incluye las modificaciones y las tres eliminaciones revisadas del
+add-on de regresión. Los comandos siguientes incorporan los auxiliares nuevos,
+JS fuente, pruebas y registros. No usar git add . ni añadir el JMO con -f.
+Los informes locales audit/LOCAL_FILE_COMPARISON.csv y LOCAL_GIT_STATE.txt
+quedan sin añadir; sus copias históricas recibidas forman parte de la evidencia.
+Revisar el resumen del staging antes de ejecutar el commit. Si hubiera algún
+archivo añadido manualmente al staging antes de estos pasos, revisarlo también.
+La salida proporcionada inicialmente no mostraba archivos ya staged.
+
+## Crear el commit
+
+```bash
+git commit -m "Prepare validated saRa 1.0.0 audit candidate"
+git rev-parse HEAD
+git status --short
+```
+
+Conservar el hash que devuelve rev-parse junto al JMO. El documento de
+aceptación se escribe antes del commit, por lo que no contiene su propio hash.
+El commit que incluye ese documento y el hash comunicado después identifican
+el candidato. No se hace otro commit solo para introducir un hash autorreferente.
+
+Los espacios finales informados por diff --check son de formato, incluidos
+archivos generados. Se conservan en este candidato para no alterar las fuentes
+ya validadas. No hay cambios funcionales nuevos ni motivo para recompilar
+por esta documentación. No se ha realizado push, merge, tag o publicación.

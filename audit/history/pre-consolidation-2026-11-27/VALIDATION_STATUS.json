@@ -1,0 +1,175 @@
+{
+  "date": "2026-11-17",
+  "module": "saRa",
+  "version": "1.0.0",
+  "branch": "fix/audit-review-1.0.0",
+  "scope": "Paired Wilcoxon HL confidence metadata",
+  "audited_base_commit": "2cfe7ee61c580950140c832a4b22163a90bba2f8",
+  "tested_checkout_commit": null,
+  "overall_status": "IN PROGRESS",
+  "automated_validation": {
+    "status": "PENDING FOR ONE OBSERVATION PER GROUP HL",
+    "command": "testthat::test_local(\".\")",
+    "reason": "R unavailable in preparation."
+  },
+  "previous_automated_validation": {
+    "status": "PASS",
+    "passed_expectations": 1277,
+    "failed": 0,
+    "warnings": 0,
+    "skipped": 0,
+    "duration_seconds": 15.1,
+    "evidence": "Developer-supplied console output"
+  },
+  "source_validation": {
+    "status": "STATIC REVIEW ONLY",
+    "checks": [
+      "Single production substitution in the shared continuous area layer"
+    ],
+    "limitations": [
+      "R unavailable; new tests and GUI/export checks pending."
+    ]
+  },
+  "build_and_installation": {
+    "status": "PASS FOR PRECEDING Q-Q FOLLOW-UP",
+    "evidence": "Developer confirmed Q-Q message and transitions operational; installation after shading change pending."
+  },
+  "manual_validation": {
+    "status": "PARTIALLY COMPLETED FOR OVERALL CANDIDATE",
+    "evidence": "Developer confirmations and supplied screenshots",
+    "previously_completed_checks": [
+      "SP50/SP80 for numeric and numeric-ordinal data, including shifts, reflection, centred data and constant samples",
+      "Pooled symmetric Goodman-Kruskal lambda and retained empty categories",
+      "Ordered-text summaries and stored numeric ordinal scores, including zero and unequal spacing",
+      "Ordinal Range visibility and numeric-only control availability for text, numeric and mixed selections",
+      "Explanatory cell footnotes for numeric-only statistics in mixed ordinal selections",
+      "Ordinal bars, valid-observation percentages, missing counts and numeric box plots",
+      "Ordinal HTML/PDF exports and .omv save/reopen persistence",
+      "Revised book-reference formatting in the results interface",
+      "Positive and negative perfect numerical bivariate associations and squared coefficients",
+      "Constant-variable covariance and correlation cell footnotes, including removal after variability is restored",
+      "Corrected upper X and right Y marginal histogram and box-plot orientation",
+      "HTML/PDF exports and .omv persistence of the corrected numerical bivariate marginals",
+      "Restored saRa Data Library access and Anscombe registration",
+      "Ordinal frequency tables and mixed numeric/text summaries shown in the developer-supplied GUI screenshot on 17 November 2026",
+      "Categorical statistics in aligned columns: Mode, Blau and Variation ratio on the left; Teachman and IQV on the right; category-count automatic-zero label visible",
+      "Numerical frequency tables operational",
+      "HTML/PDF exports created correctly for all new frequency tables",
+      ".omv created and operational with all new frequency tables",
+      "Bivariate constant-variable correlation-footnote checks, HTML/PDF exports and .omv persistence confirmed by the developer",
+      "Nominal 2x2 example: frequencies and percentages, association indices including Yule Q/Y/V, Chuprov and Sakoda, prediction indices, bars and mosaic, with developer-confirmed HTML/PDF export and operational .omv",
+      "Ordinal Heatmap and Alluvial independently, bars-first and combined selections, off/on toggles and X-axis changes; developer confirmed all four checks",
+      "Corrected ordinal plots: HTML/PDF generation and operational .omv confirmed",
+      "Mixed three-group example: screenshot agrees with expected N, missing counts, means, medians and SDs; eta-squared .9412, omega-squared .9126 and Kruskal-Wallis effect .8667 in both numeric variables"
+    ],
+    "scope_limit": "Ordinal graphics are accepted for the recorded example and combinations. Mixed numeric table values are supported by the screenshot; corrected marker/subscript display and mixed plots/exports/persistence still require validation.",
+    "supplied_ordinal_files": [
+      "Resultados1611.html",
+      "Resultados1611.pdf",
+      "Resultados1611.omv"
+    ],
+    "file_evidence_limit": "Export and persistence success were developer-confirmed; exported contents were not independently inspected by the assistant.",
+    "latest_confirmations": [
+      "Mixed-data formatting, graphs, HTML/PDF and operational .omv confirmed by the developer.",
+      "Geometric summaries: positive values, scaling, missing data, constants, zero/negative guards and restored values checked in screenshots; HTML/PDF and operational .omv developer-confirmed.",
+      "Numerical Q-Q reappears when a constant sample acquires variability; silent constant-sample omission reported.",
+      "Numerical Q-Q message and constant/variable transitions, HTML/PDF and operative .omv confirmed.",
+      "Hypergeometric m=4, n=6, k=3: mass/CDF tables and plots, invalid k=11 and restoration, HTML/PDF and operative .omv confirmed.",
+      "Negative binomial r=2, p=.5 and .1: mass/CDF tables, adaptive plotting range, developer-confirmed exports and operative .omv.",
+      "Standard normal density/CDF tables and interval probability correct; cumulative and interval shading missing in supplied screenshot.",
+      "Normal sigma=0 validation message and recovery at sigma=1 developer-confirmed.",
+      "Screenshots confirm restored continuous CDF/interval shading in blue; user requests yellow highlights consistent with discrete plots.",
+      "Shared highlight colours operational; normal sigma=0/1 transition, HTML/PDF and operational .omv developer-confirmed.",
+      "Exponential rates .1, 1 and 10, rate=0 rejection and recovery, HTML/PDF and operational .omv developer-confirmed.",
+      "Uniform [2,6] tables, interval [3,5] probability .5, invalid maximum=1 and recovery to 6, HTML/PDF and operative .omv confirmed.",
+      "Dynamic HL headings/notes, clearance at 95%, HTML/PDF and operative .omv accepted. All-ties test message and restoration accepted; HL 0% heading exposed and correction prepared."
+    ]
+  },
+  "data_library": {
+    "registration_count": 8,
+    "files": [
+      "phobia.RData",
+      "beliefs.RData",
+      "NEOFFI.RData",
+      "attitudes.immigration.RData",
+      "Ginzberg.RData",
+      "polynomial_regression.RData",
+      "mediation.RData",
+      "Anscombe.RData"
+    ],
+    "anscombe_tags": [
+      "Descriptives",
+      "Correlation"
+    ],
+    "scope_limit": "Registration is unchanged by this update. Individual opening of every file is not recorded."
+  },
+  "scope_decisions": {
+    "categorical_data": "Nominal variables only; frequency and odds tables without cumulative columns.",
+    "ordinal_data": "Optional frequency tables with counts, proportions, percentages and cumulative values; no odds.",
+    "old_saved_analyses": "No compatibility or migration logic for old categorical selections containing ordinal variables, as explicitly requested by the developer.",
+    "regression_addon": "The unpublished parent-analysis add-on is excluded; independent saRa regression development is tracked separately.",
+    "translations": "Deferred to version 1.1.0.",
+    "numerical_data": "Frequency tables enabled by default, matching Ordinal Data: each distinct observed numeric value in ascending numeric order, cumulative counts/proportions/percentages, no odds and no automatic binning.",
+    "categorical_layout": "Two aligned columns: left Mode, Blau, Variation ratio; right Teachman and IQV, with Categories (0 = automatic) below IQV.",
+    "menu_reorganisation": "Deferred at the developer request; retain the current saRa menu."
+  },
+  "pending_validation": [
+    "Run full suite including one-observation-per-group HL and recovery assertions",
+    "Rebuild: A=3 B=2, HL estimate=1, unavailable bounds and explanatory note",
+    "Restore values: verify recovered HL limits and removed note/marker",
+    "Verify HTML/PDF and omv after minimal-sample correction",
+    "Complete remaining audit checklist"
+  ],
+  "acceptance_limits": {
+    "complete_manual_validation": false,
+    "cross_platform_acceptance_established": false,
+    "publication_readiness_established": false
+  },
+  "related_documents": [
+    "audit/AUDIT_TRACKER.md",
+    "audit/FREQUENCY_TABLES_2026-11-17.md",
+    "audit/REVISION_AUDIT_2026-11-16.md",
+    "NEWS",
+    "audit/NUMERICAL_FREQUENCIES_2026-11-17.md",
+    "audit/BOXPLOT_NOTCHES_2026-11-17.md",
+    "audit/ORDINAL_PLOT_THEME_2026-11-17.md",
+    "audit/MIXED_EFFECT_FORMAT_2026-11-17.md",
+    "audit/CONTINUOUS_SHADING_2026-11-17.md"
+  ],
+  "cosmetic_followup": {
+    "status": "DEVELOPER-CONFIRMED APPLIED",
+    "change": "Set notch=FALSE on both numerical bivariate marginal box plots.",
+    "application": "APPLY_NO_NOTCHES.R changes only the two notch declarations in the developer current R/bivnum.b.R, preserving orientation and correlation-footnote fixes.",
+    "local_verification": "Replacement scope and idempotence checked on the available source; R script execution not performed because R is unavailable.",
+    "scope_limit": "Developer applied notch removal; no local runtime claim."
+  },
+  "current_issue": {
+    "analysis": "Mann-Whitney HL with one observation per group",
+    "status": "SOURCE FIX PREPARED; R AND GUI VALIDATION PENDING",
+    "correction": "Preserve observed group1-group2 difference, return unavailable CI bounds and explanatory note instead of degenerate native interval."
+  },
+  "wilcoxon_manual_2026_11_17": {
+    "developer_confirmed": [
+      "Multiple valid pairs: per-analysis and listwise missing exclusion",
+      "Median bootstrap 4999 replicates at 90% and 99%, both pair plots",
+      "Bootstrap-to-exact transition clears replicate note",
+      "HTML/PDF generation and operative .omv before single-pair correction",
+      "Empty pair alongside valid pair, explanatory notes and plot message",
+      "Recovery after refilling empty column, tables/plots and note clearance"
+    ],
+    "single_pair_issue": "Correction accepted: unavailable HL limits, explanatory note, no zero-confidence level, median legend confirmed; restoration, HTML/PDF and operative .omv confirmed."
+  },
+  "mann_whitney_manual_2026_11_17": {
+    "superiority": "GUI corrected to 0.4571; U/Z/other effects unchanged",
+    "unilateral": "A>B: pU .628, pZ .597; A<B: pU .435, pZ .403; notes correct",
+    "median_reference": "Rj DescTools 0.99.60: requested 90% A [3,9], returned .9375; B [2,12], displayed .9844. Requested 95% A [-Inf,Inf], returned1; B [2,12], displayed .9844. Requested99% both [-Inf,Inf], returned1.",
+    "scope_limit": "Rj dependency version is not assumed identical to bundled saRa dependency; tests compare native dependency on executing environment.",
+    "plot_layout": "Screenshots confirm bottom legend, two medians and 2/1/0 finite intervals at 90/95/99%; at 95% B precedes A, prompting explicit axis-order correction.",
+    "exports": "Developer confirmed latest HTML/PDF generation and operative omv.",
+    "bootstrap": "Screenshots confirm 4999 replicates at 90/99%, table/plot agreement and return to exact clears replicate note.",
+    "empty_group": "Valid variable unaffected; second variable retains A and B=0 with explanatory notes. Restored data reproduce both tables and plots. Letter skip reproduced with third distinct note.",
+    "explicit_markers": "Developer GUI confirms a,b,c with empty B, restoration clears obsolete notes; HTML/PDF and operative omv confirmed.",
+    "all_tied": "Correct HL explanatory note confirmed in GUI; restored values recover tables; HTML/PDF and operative omv developer-confirmed.",
+    "minimal_samples": "One observation A=3/B=2: U=1, p=1, Z=1, p=.317, PS=1, rank correlation=-1, f=1; medians unbounded and plot points correct. Native HL returned misleading [1,1] at requested90%; correction prepared. Restored tables and both plots match original."
+  }
+}

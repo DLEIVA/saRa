@@ -3,7 +3,9 @@ name:  bivord
 title: Bivariate Data Analysis (Ordinal Data)
 jrs:   '1.1'
 
-refs: [Somers1962, Wilson1974]
+
+
+refs: ["Somers1962", "Wilson1974", "solanas2005"]
 
 items:
     - name: freqs
@@ -26,7 +28,7 @@ items:
         - name: values
           title: Values
           type: integer
-      rows: 4
+      rows: 5
       clearWith:
         - rows
         - cols
@@ -128,31 +130,48 @@ items:
       height: 400
       renderFun: .heatmap
       visible: (heatmap)
-      requiresData: true  
-      
+      requiresData: true
+      clearWith:
+        - rows
+        - cols
+        - barplot
+        - heatmap
+        - alluvial
+        - xaxis
+
     - name: alluvial
-      title: Alluvial Plot
+      title: Alluvial plot
       type: Image
       width: 450
       height: 400
       renderFun: .alluvial
       visible: (alluvial)
-      requiresData: true    
-        
+      requiresData: true
+      clearWith:
+        - rows
+        - cols
+        - barplot
+        - heatmap
+        - alluvial
+        - xaxis
+
     - name: barplot
-      title: Bar Plot
+      title: Bar plot
       type: Image
       width: 450
       height: 400
       renderFun: .barPlot
       visible: (barplot)
-      requiresData: true    
-
+      requiresData: true
       clearWith:
         - rows
-        - cols  
+        - cols
+        - barplot
+        - heatmap
+        - alluvial
+        - xaxis
         - yaxis
         - yaxisPc
-        - xaxis
-        - bartype                
+        - bartype
+
 ...

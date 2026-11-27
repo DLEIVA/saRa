@@ -3,6 +3,9 @@ name:  bivnum
 title: Bivariate Data Analysis (Numerical Data)
 jrs:   '1.1'
 
+
+refs: ["solanas2005"]
+
 items:
     - name: asocind
       title: Association Indices
@@ -73,7 +76,7 @@ items:
         - name: t[kendallR2]
           title: ''
           type: text
-          content: "Squared Kendall’s τ"
+          content: "Squared Kendall's τ"
           visible: (kendallR2)
         
         - name: v[kendallR2]

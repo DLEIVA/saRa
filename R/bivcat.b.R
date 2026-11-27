@@ -14,9 +14,11 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       private$.initERRORTable()
       private$.initBarPlot()      
       private$.initMosaicPlot()      
+      private$.setTableVisibility()
     },
     
     .run=function() {
+      private$.setTableVisibility()
       
       rowVarName <- self$options$rows
       colVarName <- self$options$cols
@@ -121,13 +123,19 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       othRowNo <- 1
       
       tabla <- table(data[[rowVarName]],data[[colVarName]])
+      emptyLevels <- any(rowSums(tabla)==0) || any(colSums(tabla)==0)
+      emptyNote <- if(emptyLevels) .("Empty defined categories are retained in frequencies and excluded from association calculations.") else NULL
+      asocind$setNote("empty_levels",emptyNote)
+      errorind$setNote("empty_levels",emptyNote)
+      tabla <- .saraObservedTable(tabla)
       n <- sum(tabla)
       valid <- n > 0 && all(rowSums(tabla) > 0) && all(colSums(tabla) > 0) && all(dim(tabla) > 1)
       CHI <- if (valid) suppressWarnings(chisq.test(tabla,correct=FALSE)$statistic) else NaN
-      if (!valid)
-        self$results$asocind$addFootnote(rowKey=1, "v[chiSq]",
-          "Association indices require at least two observed levels in each variable and complete observations")
-      
+      if (!valid) {
+        message <- .("Association indices require at least two observed categories in each variable and complete observations")
+        asocind$setNote("observed_categories",message)
+        errorind$setNote("observed_categories",message)
+      }
       yule <- .saraYulePhi(tabla)
 
       values <- list(
@@ -159,36 +167,10 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                             "Indices can only be computed for 2x2 tables.")
       }
       
-      lambda.a.b <- (sum(apply(tabla,2,max)/sum(tabla)) - max(rowSums(tabla))/
-                       sum(tabla))/(1 - max(rowSums(tabla))/sum(tabla))
-      lambda.b.a <- (sum(apply(tabla,1,max)/sum(tabla)) - max(colSums(tabla))/
-                       sum(tabla))/(1 - max(colSums(tabla))/sum(tabla))
-      .lambda <- (lambda.a.b + lambda.b.a)/2
-      
-      tau.a.b <- (sum((tabla/n)^2/matrix(colSums(tabla)[col(tabla)]/n,
-                  nrow=nrow(tabla)))-sum((rowSums(tabla)/n)^2))/(1-sum((rowSums(tabla)/n)^2))
-      tau.b.a <- (sum((tabla/n)^2/matrix(rowSums(tabla)[row(tabla)]/n,
-                  nrow=nrow(tabla)))-sum((colSums(tabla)/n)^2))/(1-sum((colSums(tabla)/n)^2))      
-      .tau <- (tau.a.b + tau.b.a)/2
-      
-      H.a.b <- -sum(tabla/n*log(tabla/n),na.rm=TRUE)
-      H.a <- -sum(rowSums(tabla)/n*log(rowSums(tabla)/n),na.rm=TRUE)
-      H.b <- -sum(colSums(tabla)/n*log(colSums(tabla)/n),na.rm=TRUE)
-      theil.a.b <- (H.a + H.b - H.a.b)/H.a
-      theil.b.a <- (H.a + H.b - H.a.b)/H.b
-      .theil <- 2*(H.a + H.b - H.a.b)/(H.a+H.b)
-      
-      values <- list(`v[lambdaGKab]` =lambda.a.b,
-                     `v[lambdaGKba]` =lambda.b.a,
-                     `v[lambdaGKsym]` =.lambda,
-                     `v[tauGKab]` =tau.a.b,
-                     `v[tauGKba]` =tau.b.a,
-                     `v[tauGKsym]` =.tau,
-                     `v[theilab]` =theil.a.b,
-                     `v[theilba]` =theil.b.a,
-                     `v[theilsym]` =.theil)
-      
+      prediction <- .saraNominalPrediction(tabla)
+      values <- setNames(prediction,paste0("v[",names(prediction),"]"))
       errorind$setRow(rowNo=othRowNo, values=values)      
+      private$.setTableVisibility()
       
     },
     
@@ -379,35 +361,23 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       }
     },
     .initASSOCTable = function(){
-      asocind <- self$results$asocind
-      asocind$addRow(rowKey=1, values=list())
-      if((self$options$chiSq | self$options$phiind | self$options$phiSq |
-          self$options$contCoef | self$options$craV | self$options$chuprov | 
-          self$options$sakoda | self$options$Qyule |
-          self$options$Yyule | self$options$Vyule) == FALSE){
-        asocind <- self$results$asocind
-        asocind$addColumn(
-          name=' ',
-          title=' ',
-          type='text')
-
-      }      
+      self$results$asocind$addRow(rowKey=1, values=list())
     },
     .initERRORTable = function(){
-      errorind <- self$results$errorind
-      errorind$addRow(rowKey=1, values=list())
-      if((self$options$lambdaGKab || self$options$lambdaGKba ||
-          self$options$lambdaGKsym || self$options$tauGKab ||
-          self$options$tauGKba || self$options$tauGKsym || 
-          self$options$theilab || self$options$theilba ||
-          self$options$theilsym) == FALSE){
-        errorind <- self$results$errorind
-        errorind$addColumn(
-          name=' ',
-          title=' ',
-          type='text')
-        
-      }      
+      self$results$errorind$addRow(rowKey=1, values=list())
+    },
+    .setTableVisibility = function() {
+      selected <- function(names) any(vapply(names, function(name)
+        isTRUE(self$options[[name]]), logical(1)))
+      ready <- !is.null(self$options$rows) && !is.null(self$options$cols)
+      self$results$freqs$setVisible(ready &&
+        selected(c("obs", "exp", "pcRow", "pcCol", "pcTot")))
+      self$results$asocind$setVisible(ready && selected(c(
+        "chiSq", "phiind", "phiSq", "contCoef", "craV", "chuprov",
+        "sakoda", "Qyule", "Yyule", "Vyule")))
+      self$results$errorind$setVisible(ready && selected(c(
+        "lambdaGKab", "lambdaGKba", "lambdaGKsym", "tauGKab", "tauGKba",
+        "theilab", "theilba", "theilsym")))
     },
     #### Plot functions ---- Taken from conttables.b.R in jmv package
     .initBarPlot = function() {
@@ -426,7 +396,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       image$setSize(width * 1.5, height*1.5)
     },    
-    .barPlot = function(image, ggtheme, theme, ...) {
+    .barPlotObject = function(image, ggtheme, theme, ...) {
       
       if (! self$options$barplot)
         return()
@@ -439,18 +409,14 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- self$data
       
-      data <- na.omit(data)
+      data <- data[stats::complete.cases(data[c(rowVarName,colVarName)]),,drop=FALSE]
       
-      formula <- jmvcore::composeFormula(NULL, c(rowVarName, colVarName))
-      counts <- xtabs(formula, data)
+      counts <- table(data[[rowVarName]],data[[colVarName]],dnn=c(rowVarName,colVarName))
       d <- dim(counts)
       
-      expand <- list() 
-      for (i in c(rowVarName, colVarName))
-        expand[[i]] <- base::levels(data[[i]])
-      tab <- expand.grid(expand)
-      tab$Counts <- as.numeric(counts)
-      
+      tab <- as.data.frame(counts,responseName="Counts")
+      names(tab) <- c(rowVarName,colVarName,"Counts")
+
       if (self$options$yaxis == "ypc") { # percentages
         props <- counts
         
@@ -522,7 +488,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- self$data
       
-      data <- na.omit(data)
+      data <- data[stats::complete.cases(data[c(rowVarName,colVarName)]),,drop=FALSE]
       
       if (self$options$xaxis == "xcols") {
         xVarName <- colVarName
@@ -537,6 +503,9 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                        split_vertical=FALSE)
     },        
     
+    .barPlot = function(image,ggtheme,theme,...) {
+      .saraDrawBivariatePlot(function() private$.barPlotObject(image,ggtheme,theme,...))
+    },
     #### Helper functions ----
     
     .grid=function(data, incRows=FALSE) {

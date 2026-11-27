@@ -208,378 +208,26 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         image$setSize(width * 2, height)
       },
-      .contppdf = function(image, ...) {
-        
-        if (! self$options$contppdf)
-          return()
-        
-        Color <- c("#e0bc6b","#7b9ee6")
-        
-        cdistros <- self$options$cdistros
-        
-        x <- if(cdistros=='norm'){
-          data.frame(xlim=c(self$options$mu-4*self$options$sigma,self$options$mu+4*self$options$sigma))
-          } else if(cdistros=='tdist'){
-          data.frame(xlim=c(-4,4))
-          } else if(cdistros=='chisqdist'){
-            data.frame(xlim=c(0,self$options$chinu+3*sqrt(2*self$options$chinu)))
-          } else if(cdistros=='fdist'){data.frame(xlim=c(0,5))} else if(cdistros=='exp'){
-            data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
-              data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
-        
-        k <- private$.getcontppvalue()
-        dval <- if(cdistros=='norm'){dnorm(k,self$options$mu,self$options$sigma)
-        } else if(cdistros=='tdist'){dt(k,self$options$tnu)
-        } else if(cdistros=='chisqdist'){dchisq(k,self$options$chinu)
-        } else if(cdistros=='fdist'){df(k,self$options$f1nu,self$options$f2nu)
-        } else if(cdistros=='exp'){dexp(k,self$options$rate)
-        } else if(cdistros=='unif'){dunif(k,self$options$unifmin,self$options$unifmax)}
-        
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
-          't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
-        
-        p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
-          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-              } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-                list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                  list(rate=self$options$rate)} else if(cdistros=='unif'){
-                    list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-          ggplot2::ggtitle(paste0(cdistroslabel,'f(X = ',k,') = ',round(dval,2))) + 
-          ggplot2::geom_segment(ggplot2::aes(x=k,y=0,xend=k,yend=dval),color=Color[1],lwd=1.1) +
-          ggplot2::geom_point(ggplot2::aes(x=k,y=dval),col=Color[1]) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
-                axis.text.y=ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))        
-        
-        return(p)                
+      .contppdf = function(image, ggtheme, theme, ...) {
+        if (!self$options$contppdf) return(FALSE)
+        .saraDistributionPlot(self$options,"density",FALSE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
       },
-      .contpcdf = function(image, ...) {
-        
-        if (! self$options$contpcdf)
-          return()
-        
-        Color <- c("#e0bc6b","#7b9ee6")
-        
-        cdistros <- self$options$cdistros
-        
-        x <- if(cdistros=='norm'){
-          data.frame(xlim=c(self$options$mu-4*self$options$sigma,self$options$mu+4*self$options$sigma))
-        } else if(cdistros=='tdist'){
-          data.frame(xlim=c(-4,4))
-        } else if(cdistros=='chisqdist'){
-          data.frame(xlim=c(0,self$options$chinu+3*sqrt(2*self$options$chinu)))
-        } else if(cdistros=='fdist'){data.frame(xlim=c(0,5))} else if(cdistros=='exp'){
-          data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
-            data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
-        
-        k <- private$.getcontppvalue()
-        
-        lpval <-  if(cdistros=='norm'){pnorm(k,self$options$mu,self$options$sigma)
-        } else if(cdistros=='tdist'){pt(k,self$options$tnu)
-        } else if(cdistros=='chisqdist'){pchisq(k,self$options$chinu)
-        } else if(cdistros=='fdist'){pf(k,self$options$f1nu,self$options$f2nu)
-        } else if(cdistros=='exp'){pexp(k,self$options$rate)
-        } else if(cdistros=='unif'){punif(k,self$options$unifmin,self$options$unifmax)}
-      
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
-          't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
-        
-        p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
-          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-              list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                  list(rate=self$options$rate)} else if(cdistros=='unif'){
-                    list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-              list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                  list(rate=self$options$rate)} else if(cdistros=='unif'){
-                    list(min=self$options$unifmin,max=self$options$unifmax)}, 
-                        xlim = c(x$xlim[1],k),geom = "area",fill=Color[1]) +          
-          ggplot2::ggtitle(paste0(cdistroslabel,'Pr(X \u2264 ',k,') = ',round(lpval,2))) + 
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
-                axis.text.y=ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))        
-        
-        return(p)                
+      .contpcdf = function(image, ggtheme, theme, ...) {
+        if (!self$options$contpcdf) return(FALSE)
+        .saraDistributionPlot(self$options,"cdf",FALSE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
       },
-      .contpsurv = function(image, ...) {
-        
-        if (! self$options$contpsurv)
-          return()
-        
-        Color <- c("#e0bc6b","#7b9ee6")
-        
-        cdistros <- self$options$cdistros
-        
-        x <- if(cdistros=='norm'){
-          data.frame(xlim=c(self$options$mu-4*self$options$sigma,self$options$mu+4*self$options$sigma))
-        } else if(cdistros=='tdist'){
-          data.frame(xlim=c(-4,4))
-        } else if(cdistros=='chisqdist'){
-          data.frame(xlim=c(0,self$options$chinu+3*sqrt(2*self$options$chinu)))
-        } else if(cdistros=='fdist'){data.frame(xlim=c(0,5))} else if(cdistros=='exp'){
-          data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
-            data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
-        
-        k <- private$.getcontppvalue()
-        
-        rpval <- if(cdistros=='norm'){pnorm(k,self$options$mu,self$options$sigma,lower.tail=FALSE)
-        } else if(cdistros=='tdist'){pt(k,self$options$tnu,lower.tail=FALSE)
-        } else if(cdistros=='chisqdist'){pchisq(k,self$options$chinu,lower.tail=FALSE)
-        } else if(cdistros=='fdist'){pf(k,self$options$f1nu,self$options$f2nu,lower.tail=FALSE)
-        } else if(cdistros=='exp'){pexp(k,self$options$rate,lower.tail=FALSE)
-        } else if(cdistros=='unif'){punif(k,self$options$unifmin,self$options$unifmax,lower.tail=FALSE)}
-        
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
-          't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
-        
-        
-        p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
-          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-              list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                  list(rate=self$options$rate)} else if(cdistros=='unif'){
-                    list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-              list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                  list(rate=self$options$rate)} else if(cdistros=='unif'){
-                    list(min=self$options$unifmin,max=self$options$unifmax)}, 
-            xlim = c(k,x$xlim[2]),geom = "area",fill=Color[1]) +          
-          ggplot2::ggtitle(paste0(cdistroslabel,'Pr(X > ',k,') = ',round(rpval,2))) + 
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
-                axis.text.y=ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))        
-        
-        return(p)                
+      .contpsurv = function(image, ggtheme, theme, ...) {
+        if (!self$options$contpsurv) return(FALSE)
+        .saraDistributionPlot(self$options,"survival",FALSE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
       },
-      .contpinterv = function(image, ...) {
-        
-        if (! self$options$contpinterv)
-          return()
-        
-        Color <- c("#e0bc6b","#7b9ee6")
-        
-        cdistros <- self$options$cdistros
-        
-        x <- if(cdistros=='norm'){
-          data.frame(xlim=c(self$options$mu-4*self$options$sigma,self$options$mu+4*self$options$sigma))
-        } else if(cdistros=='tdist'){
-          data.frame(xlim=c(-4,4))
-        } else if(cdistros=='chisqdist'){
-          data.frame(xlim=c(0,self$options$chinu+3*sqrt(2*self$options$chinu)))
-        } else if(cdistros=='fdist'){data.frame(xlim=c(0,5))} else if(cdistros=='exp'){
-          data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
-            data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
-        
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
-          't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
-        
-        k1 <- private$.getcontX1value() 
-        k2 <- private$.getcontX2value()
-        if(k1>k2){
-          temp <- k2
-          k2 <- k1
-          k1 <- temp
-          rm(temp)
-        }
-        
-        ipval <- if(cdistros=='norm'){diff(pnorm(c(k1,k2),self$options$mu,self$options$sigma))
-        } else if(cdistros=='tdist'){diff(pt(c(k1,k2),self$options$tnu))
-        } else if(cdistros=='chisqdist'){diff(pchisq(c(k1,k2),self$options$chinu))
-        } else if(cdistros=='fdist'){diff(pf(c(k1,k2),self$options$f1nu,self$options$f2nu))
-        } else if(cdistros=='exp'){diff(pexp(c(k1,k2),self$options$rate))
-        } else if(cdistros=='unif'){diff(punif(c(k1,k2),self$options$unifmin,self$options$unifmax))}        
-        
-        p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
-          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-              list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                  list(rate=self$options$rate)} else if(cdistros=='unif'){
-                    list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-          ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-            dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-              df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-            args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-            } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-              list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                  list(rate=self$options$rate)} else if(cdistros=='unif'){
-                    list(min=self$options$unifmin,max=self$options$unifmax)}, 
-            xlim = c(k1,k2),geom = "area",fill=Color[1]) +          
-          ggplot2::ggtitle(paste0(cdistroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',round(ipval,2))) + 
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
-                axis.text.y=ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))      
-        
-        return(p)                
+      .contpinterv = function(image, ggtheme, theme, ...) {
+        if (!self$options$contpinterv) return(FALSE)
+        .saraDistributionPlot(self$options,"interval",FALSE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
       },
-      .contpicdf = function(image, ...) {
-        
-        if (! self$options$contpicdf)
-          return()
-        
-        Color <- c("#e0bc6b","#7b9ee6")
-        
-        cdistros <- self$options$cdistros
-        
-        tail <- self$options$conttail        
-        
-        x <- if(cdistros=='norm'){
-          data.frame(xlim=c(self$options$mu-4*self$options$sigma,self$options$mu+4*self$options$sigma))
-        } else if(cdistros=='tdist'){
-          data.frame(xlim=c(-4,4))
-        } else if(cdistros=='chisqdist'){
-          data.frame(xlim=c(0,self$options$chinu+3*sqrt(2*self$options$chinu)))
-        } else if(cdistros=='fdist'){data.frame(xlim=c(0,5))} else if(cdistros=='exp'){
-          data.frame(xlim=c(0,5))} else if(cdistros=='unif'){
-            data.frame(xlim=c(self$options$unifmin,self$options$unifmax))}
-        
-        cdistroslabel <- if (cdistros=='norm'){'Normal: '} else if(cdistros=='tdist'){
-          't: '} else if(cdistros=='chisqdist'){'\u03c7\u00B2: '} else if(cdistros=='fdist'){
-            'F: '} else if(cdistros=='exp'){'Exponential: '} else if(cdistros=='unif'){'Uniform: '}
-        
-        q <- private$.getcontpqvalue()
-        
-        if(tail=='left'){
-          quant1 <- q
-          qs <- if(cdistros=='norm'){qnorm(quant1,self$options$mu,self$options$sigma)
-          } else if(cdistros=='tdist'){qt(quant1,self$options$tnu)
-          } else if(cdistros=='chisqdist'){qchisq(quant1,self$options$chinu)
-          } else if(cdistros=='fdist'){qf(quant1,self$options$f1nu,self$options$f2nu)
-          } else if(cdistros=='exp'){qexp(quant1,self$options$rate)
-          } else if(cdistros=='unif'){qunif(quant1,self$options$unifmin,self$options$unifmax)}
-          q1 <- qs
-          p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
-            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-              dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-                df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-              args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-              } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-                list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                  list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                    list(rate=self$options$rate)} else if(cdistros=='unif'){
-                      list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-              dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-                df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-              args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-              } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-                list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                  list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                    list(rate=self$options$rate)} else if(cdistros=='unif'){
-                      list(min=self$options$unifmin,max=self$options$unifmax)}, 
-              xlim = c(x$xlim[1],q1),geom = "area",fill=Color[1]) +          
-            ggplot2::ggtitle(latex2exp::TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,'$')))
-        }  else if(tail=='right'){
-          quant1 <- 1-q
-          qs <- if(cdistros=='norm'){qnorm(quant1,self$options$mu,self$options$sigma)
-          } else if(cdistros=='tdist'){qt(quant1,self$options$tnu)
-          } else if(cdistros=='chisqdist'){qchisq(quant1,self$options$chinu)
-          } else if(cdistros=='fdist'){qf(quant1,self$options$f1nu,self$options$f2nu)
-          } else if(cdistros=='exp'){qexp(quant1,self$options$rate)
-          } else if(cdistros=='unif'){qunif(quant1,self$options$unifmin,self$options$unifmax)}
-          q1 <- qs
-          p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
-            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-              dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-                df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-              args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-              } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-                list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                  list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                    list(rate=self$options$rate)} else if(cdistros=='unif'){
-                      list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-              dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-                df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-              args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-              } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-                list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                  list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                    list(rate=self$options$rate)} else if(cdistros=='unif'){
-                      list(min=self$options$unifmin,max=self$options$unifmax)}, 
-              xlim = c(q1,x$xlim[2]),geom = "area",fill=Color[1]) +          
-            ggplot2::ggtitle(latex2exp::TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,'$')))
-        } else if(tail=='central'){
-          quant1 <- (1-q)/2
-          quant2 <- 1-(1-q)/2
-          qs <- if(cdistros=='norm'){qnorm(c(quant1,quant2),self$options$mu,self$options$sigma)
-          } else if(cdistros=='tdist'){qt(c(quant1,quant2),self$options$tnu)
-          } else if(cdistros=='chisqdist'){qchisq(c(quant1,quant2),self$options$chinu)
-          } else if(cdistros=='fdist'){qf(c(quant1,quant2),self$options$f1nu,self$options$f2nu)
-          } else if(cdistros=='exp'){qexp(c(quant1,quant2),self$options$rate)
-          } else if(cdistros=='unif'){qunif(c(quant1,quant2),self$options$unifmin,self$options$unifmax)}
-          q1 <- qs[1]
-          q2 <- qs[2]
-          p <- ggplot2::ggplot(x,ggplot2::aes(x=xlim)) +
-            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-              dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-                df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-              args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-              } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-                list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                  list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                    list(rate=self$options$rate)} else if(cdistros=='unif'){
-                      list(min=self$options$unifmin,max=self$options$unifmax)},color=Color[2],lwd=1.1) +
-            ggplot2::stat_function(fun = if(cdistros=='norm'){dnorm} else if(cdistros=='tdist'){
-              dt} else if(cdistros=='chisqdist'){dchisq} else if(cdistros=='fdist'){
-                df} else if(cdistros=='exp'){dexp} else if(cdistros=='unif'){dunif},
-              args= if(cdistros=='norm'){list(mean=self$options$mu,sd=self$options$sigma)
-              } else if(cdistros=='tdist'){list(df=self$options$tnu)} else if(cdistros=='chisqdist'){
-                list(df=self$options$chinu)} else if(cdistros=='fdist'){
-                  list(df1=self$options$f1nu,df2=self$options$f2nu)} else if(cdistros=='exp'){
-                    list(rate=self$options$rate)} else if(cdistros=='unif'){
-                      list(min=self$options$unifmin,max=self$options$unifmax)}, 
-              xlim = c(q1,q2),geom = "area",fill=Color[1]) +          
-            ggplot2::ggtitle(latex2exp::TeX(paste0(cdistroslabel,' $Q_{',quant1,'} = ',q1,
-                               ' \\phantom{xx} ','Q_{',quant2,'} = ',q2,'$')))
-        }        
-        
-        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
-                axis.text.y=ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))
-        return(p)                
-      },      
+      .contpicdf = function(image, ggtheme, theme, ...) {
+        if (!self$options$contpicdf) return(FALSE)
+        .saraDistributionPlot(self$options,"quantile",FALSE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
+      },
       #### Helper functions ----
       .getcontProbValues = function(){
         cdistros <- self$options$cdistros
@@ -591,15 +239,8 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                  paste0(unlist(strsplit(self$options$contvaluesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$contvaluesfunc, ","))))],collapse=','),').'))          
         }
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(any(probValues < 0)) jmvcore::reject(paste0('Random variable values must be positive (',
+          if(any(probValues < 0)) jmvcore::reject(paste0('Random variable values must be non-negative (',
                                                   paste0(probValues[probValues < 0],collapse=','),').')) 
-        }
-        if(cdistros=='unif'){
-          probValues[probValues < self$options$unifmin | probValues > self$options$unifmax]   
-          if(any(probValues < self$options$unifmin | probValues > self$options$unifmax)){
-            jmvcore::reject(paste0('Random variable values must be between ',self$options$unifmin,' and ',self$options$unifmax,' (',
-                            paste0(probValues[probValues < self$options$unifmin | probValues > self$options$unifmax],collapse=','),').'))
-          }
         }
         probValues <- sort(unique(probValues[!is.na(probValues)]))
         return(probValues)
@@ -625,12 +266,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(ppval) && is.character(ppval))
           ppval <- as.numeric(unlist(strsplit(ppval, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(ppval<0) jmvcore::reject(paste0('Random variable value must be a positive number (',ppval,').')) 
-        }
-        if(cdistros=='unif'){
-          if(ppval < self$options$unifmin | ppval > self$options$unifmax)  
-            jmvcore::reject(paste0('Random variable value must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
-                                   ppval,').'))           
+          if(ppval<0) jmvcore::reject(paste0('Random variable value must be a non-negative number (',ppval,').')) 
         }
         ppval <- unique(ppval[!is.na(ppval)])
         return(ppval)
@@ -641,12 +277,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(X1val) && is.character(X1val))
           X1val <- as.numeric(unlist(strsplit(X1val, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(X1val<0) jmvcore::reject(paste0('X1 must be a positive number (',X1val,').'))
-        }
-        if(cdistros=='unif'){
-          if(X1val < self$options$unifmin | X1val > self$options$unifmax)  
-            jmvcore::reject(paste0('X1 must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
-                                   X1val,').'))
+          if(X1val<0) jmvcore::reject(paste0('X1 must be a non-negative number (',X1val,').'))
         }
         X1val <- unique(X1val[!is.na(X1val)])[1]
         return(X1val)
@@ -657,12 +288,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(X2val) && is.character(X2val))
           X2val <- as.numeric(unlist(strsplit(X2val, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(X2val<0) jmvcore::reject(paste0('X2 must be a positive number (',X2val,').'))
-        }
-        if(cdistros=='unif'){
-          if(X2val < self$options$unifmin | X2val > self$options$unifmax)
-          jmvcore::reject(paste0('X2 must be between ',self$options$unifmin,' and ',self$options$unifmin,' (',
-          X2val,').'))
+          if(X2val<0) jmvcore::reject(paste0('X2 must be a non-negative number (',X2val,').'))
         }
         X2val <- unique(X2val[!is.na(X2val)])[1]
         return(X2val)

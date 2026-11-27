@@ -5,6 +5,7 @@ stage: 0
 compilerMode: tame
 children:
   - type: VariableSupplier
+    name: nominalSupplier
     persistentItems: false
     stretchFactor: 1
     children:
@@ -29,36 +30,31 @@ children:
         cell:
           column: 0
           row: 0
-        fitToGrid: true
         children:
           - type: CheckBox
             name: mode
           - type: CheckBox
             name: Blau
           - type: CheckBox
-            name: IQV
-            label: Index of qualitative variation (IQV)
-            style: inline
-            verticalAlignment: center
-            children:
-              - type: TextBox
-                name: NCat
-                label: ''
-                suffix: '# categories (0: automatic detection)'
-                format: number
-                enable: (IQV)
+            name: VR
       - type: LayoutBox
-        stretchFactor: 1
         margin: large
+        stretchFactor: 1
         cell:
           column: 1
           row: 0
         children:
           - type: CheckBox
-            name: VR
-          - type: CheckBox
             name: Teachman
-            
+          - type: CheckBox
+            name: IQV
+            label: IQV
+            children:
+              - type: TextBox
+                name: NCat
+                label: Categories (0 = automatic)
+                format: number
+                enable: (IQV)
   - type: CollapseBox
     label: Plots
     collapsed: true

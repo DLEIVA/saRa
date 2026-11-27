@@ -111,8 +111,10 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provides the Trimmed mean
             
     - name: Trim
-      title: Percentage of trimmed data
+      title: Trimmed percentage per tail
       type: Number
+      min: 0
+      max: 49.999
       default: 5
       description:
           R: >
@@ -127,8 +129,10 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provides the Winsorized mean
             
     - name: Win
-      title: Percentage of winsorized data
+      title: Winsorized percentage per tail
       type: Number
+      min: 0
+      max: 49.999
       default: 5
       description:
           R: >
@@ -225,6 +229,8 @@ options:
     - name: NPerc
       title: Percentage of data
       type: Number
+      min: 50
+      max: 99
       default: 90
       description:
           R: >
@@ -288,20 +294,20 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide the Fisher's \u03B3\u2081 index
             
     - name: h1
-      title: H1 (skewness)
+      title: Percentile skewness (SP50)
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default: `FALSE`), provide the H1 index
+            `TRUE` or `FALSE` (default: `FALSE`), provide percentile skewness over the central 50% (SP50)
             
     - name: h3
-      title: H3 (skewness)
+      title: Percentile skewness (SP80)
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default: `FALSE`), provide the H3 index            
+            `TRUE` or `FALSE` (default: `FALSE`), provide percentile skewness over the central 80% (SP80)            
             
     - name: beta2
       title: "Pearson's \u03B2\u2082 (kurtosis)"
@@ -385,7 +391,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provides \u03B7\u00B2 effect size indicator
             
     - name: omegasq
-      title: "\u03C9\u00B3 (k levels)"
+      title: "\u03C9\u00B2 (k levels)"
       type: Bool
       default: false
       description:
@@ -393,7 +399,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provides \u03C9\u00B2 effect size indicator
             
     - name: kwind
-      title: "Kruskal–Wallis η²_H (k levels)"
+      title: "Kruskal-Wallis η²<sub>H</sub> (k levels)"
       type: Bool
       default: false
       description:
@@ -469,6 +475,7 @@ options:
     - name: innerf
       title: Inner fence
       type: Number
+      min: 0
       default: 1.5
       description:
           R: >
@@ -477,6 +484,7 @@ options:
     - name: outerf
       title: Outer fence
       type: Number
+      min: 0
       default: 3.0
       description:
           R: >

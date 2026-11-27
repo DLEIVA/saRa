@@ -43,10 +43,11 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 }
                 if (testName == "kstest")
                   table$addFootnote(rowKey=key, pColumn,
-                    "Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference.")
+                    .("Normal parameters are estimated from these data; this p-value is uncorrected. Use the Lilliefors test for corrected inference."))
               }
             }
           }
+          .saraTableLetterNotes(table)
           private$.preparePlots()
         },
         #### Init plots ----    
@@ -136,17 +137,12 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             ) {
               
               if (length(na.omit(column)) > 0) {
-                columns <- na.omit(c(var, groupBy))
-                plotData <- jmvcore::naOmit(data[columns])
-                plotData[[var]] <- jmvcore::toNumeric(plotData[[var]])
                 names <- if(!is.null(groupBy)){
                   list("x"="x", "s1"="s1") 
                 } else{ list("x"="x")}
                 labels <- if(!is.null(groupBy)){
                   list("x"=var, "s1"=groupBy) 
                 } else{list("x"=var)}
-                
-                colnames(plotData) <- as.character(unlist(names))
                 
                 if (self$options$hist || self$options$dens || self$options$norm)
                   hist$setState(list(names=names, labels=labels))
@@ -174,9 +170,6 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             alpha <- 1
           
           nBins <- 12
-          nSplits <- if(!is.null(groupBy)){
-            length(unique(groupBy)) 
-          } else{ 1 }
           
           fill <- theme$fill[2]
           color <- theme$color[1]
@@ -197,6 +190,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           else
             binWidth <- if (nUniques > 1) range / (nUniques - 1) else 1
           
+          normalOmitted <- FALSE
           if(self$options$norm){
             grids <- seq(min, max, 
                          length.out = 150)
@@ -204,15 +198,22 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if(!is.null(groupBy)) datos$s1 <- data[[names$s1]]
             
             .getDensity <- function(x){
+              spread <- sd(x$val)
+              if (nrow(x) < 2L || !is.finite(spread) || spread <= 0) {
+                normalOmitted <<- TRUE
+                return(data.frame(val=numeric(),density=numeric()))
+              }
               data.frame(
                 val = grids,
-                density = dnorm(grids, mean(x$val), sd(x$val))
+                density = dnorm(grids, mean(x$val), spread)
               )
             }
             
             densDAT <- if(!is.null(groupBy)){
-              datos |>  dplyr::group_by(s1) |>  dplyr::do(.getDensity(.)) |>  data.frame() 
-            } else{ datos |>  dplyr::do(.getDensity(.)) |>  data.frame() }
+              do.call(rbind,lapply(split(datos,datos$s1),function(group) {
+            out <- .getDensity(group); out$s1 <- rep(group$s1[1],nrow(out)); out
+          }))
+            } else{ .getDensity(datos) }
           }
           
           plot <- ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[names$x]])) +
@@ -227,7 +228,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               fill=fill
             )}+
             {if(self$options$dens) ggplot2::geom_density(color=color, fill=fill, alpha=alpha)}+
-            {if(self$options$norm) ggplot2::geom_line(data = densDAT, ggplot2::aes(x=.data[['val']], y=.data[['density']]),
+            {if(self$options$norm && nrow(densDAT) > 0L) ggplot2::geom_line(data = densDAT, ggplot2::aes(x=.data[['val']], y=.data[['density']]),
                                              col='red',lty=2,lwd=1.15)} +
             {if(!is.null(groupBy)) ggplot2::facet_grid(rows=ggplot2::vars(s1))} +
             ggtheme
@@ -235,32 +236,21 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           themeSpec <- ggplot2::theme(legend.position = 'none')
           
           plot <- plot + themeSpec
+          if (normalOmitted)
+            plot <- plot + ggplot2::labs(caption=paste(strwrap(
+              .("Normal curve omitted for samples with fewer than two observations or zero variance."),
+              width=55),collapse="\n"))
           return(plot)      
         },
     .qq = function(image, ggtheme, theme, ...) {
       if (is.null(image$state)) return(FALSE)
-      .saraQQPlot(self$data, image$state, self$options$groupBy, ggtheme)
+      .saraNormalityPlot(self$data, image$state, self$options$groupBy,
+                        "qq", ggtheme, translate=function(message) .(message))
     },
-        .ecdf = function(image, ggtheme, theme, ...) {
-          if (is.null(image$state))
-            return(FALSE)
-          
-          var <- image$state
-          data <- self$data
-          groupBy <- self$options$groupBy
-          
-          df <- .saraECDFData(jmvcore::toNumeric(data[[var]]),
-                              if (is.null(groupBy)) NULL else data[[groupBy]])
-          if (is.null(df) || nrow(df) == 0L) return(FALSE)
-          plot <- ggplot2::ggplot(df, ggplot2::aes(x=z)) +
-            ggplot2::geom_line(ggplot2::aes(y=normal), colour="#7b9ee6") +
-            ggplot2::geom_step(ggplot2::aes(y=empirical)) +
-            ggplot2::geom_point(ggplot2::aes(y=empirical)) +
-            ggplot2::xlab("Standardised values") +
-            ggplot2::ylab("Cumulative probability") + ggtheme
-          if (!is.null(groupBy)) plot <- plot + ggplot2::facet_wrap(~ group)
-
-          return(plot)
-        }
-        )
+    .ecdf = function(image, ggtheme, theme, ...) {
+      if (is.null(image$state)) return(FALSE)
+      .saraNormalityPlot(self$data, image$state, self$options$groupBy,
+                        "ecdf", ggtheme, translate=function(message) .(message))
+    }
+  )
 )

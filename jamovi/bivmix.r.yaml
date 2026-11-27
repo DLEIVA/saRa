@@ -3,7 +3,9 @@ name:  bivmix
 title: Bivariate Data Analysis (Mixed Data)
 jrs:   '1.1'
 
-refs: [WRS2, effectsize, rcompanion]
+
+
+refs: ["WRS2", "effectsize", "rcompanion", "solanas2005"]
 
 items:
     - name: indicesnum

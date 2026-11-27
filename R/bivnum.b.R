@@ -22,26 +22,70 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           othRowNo <- 1  
           
           datos <- data[c(xVarName,yVarName)]
+          datos[] <- lapply(datos,.saraNumeric)
+          datos <- datos[complete.cases(datos),,drop=FALSE]
+          if(nrow(datos)<2L) {
+            asocind$setNote("observations",.("At least two complete observations are required"))
+            return()
+          }
           
-          covar <- cov(datos,use='na.or.complete')[1,2]
-          pearsonr <- cor(datos,use='na.or.complete')[1,2]
-          spearmanr <- cor(datos,method='spearman',use='na.or.complete')[1,2]
-          tauk <- cor(datos,method='kendall',use='na.or.complete')[1,2]
-
-          values <- list(`v[covar]` = covar,
-                         `v[pearsonR]` = pearsonr,
-                         `v[spearmanR]` = spearmanr,
-                         `v[tauK]` = tauk,
-                         `v[pearsonR2]` = pearsonr^2,
-                         `v[spearmanR2]` = spearmanr^2,
-                         `v[kendallR2]` = tauk^2)
-          asocind$setRow(rowNo=othRowNo, values=values)  
+          x <- datos[[1L]]
+          y <- datos[[2L]]
+          
+          constant <- length(unique(x)) < 2L ||
+            length(unique(y)) < 2L
+          
+          covar <- stats::cov(x, y)
+          
+          if (constant) {
+            pearsonr <- spearmanr <- tauk <- NaN
+          } else {
+            pearsonr <- stats::cor(x, y, method = "pearson")
+            spearmanr <- stats::cor(x, y, method = "spearman")
+            tauk <- stats::cor(x, y, method = "kendall")
+          }
+          
+          values <- list(
+            `v[covar]` = covar,
+            `v[pearsonR]` = pearsonr,
+            `v[spearmanR]` = spearmanr,
+            `v[tauK]` = tauk,
+            `v[pearsonR2]` = pearsonr^2,
+            `v[spearmanR2]` = spearmanr^2,
+            `v[kendallR2]` = tauk^2
+          )
+          
+          asocind$setRow(rowNo = othRowNo, values = values)
+          
+          correlationColumns <- setdiff(names(values), "v[covar]")
+          
+          for (column in correlationColumns) {
+            cell <- asocind$getCell(
+              rowNo = othRowNo,
+              col = column
+            )
+            cell$footnotes <- character(0)
+          }
+          
+          if (constant) {
+            note <- .(
+              "Correlation is undefined because at least one variable is constant."
+            )
+            
+            for (column in correlationColumns) {
+              asocind$addFootnote(
+                rowNo = othRowNo,
+                col = column,
+                note = note
+              )
+            }
+          }  
         },
         #### Init tables ----
         .initASSOCTable = function(){
           asocind <- self$results$asocind
           asocind$addRow(rowKey=1, values=list())
-          if((self$options$pearsonR | self$options$pearsonR | self$options$spearmanR |
+          if((self$options$covar | self$options$pearsonR | self$options$spearmanR |
               self$options$tauK | self$options$pearsonR2 | self$options$spearmanR2 |
               self$options$kendallR2) == FALSE){
             asocind <- self$results$asocind
@@ -73,7 +117,10 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           data <- self$data
           
-          data <- na.omit(data)
+          data <- data[c(xVarName,yVarName)]
+          data[] <- lapply(data,.saraNumeric)
+          data <- data[complete.cases(data),,drop=FALSE]
+          if(nrow(data)<2L) return(FALSE)
           
           marg <- self$options$marg
           line <- self$options$line
@@ -134,31 +181,40 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 fill='transparent', color=NA)
             )
             
-            xbox <- ggplot2::ggplot() +
+            xbox <- ggplot2::ggplot(
+              data,
+              ggplot2::aes(
+                x = .data[[xVarName]],
+                y = 1,
+                group = 1
+              )
+            ) +
               ggplot2::geom_boxplot(
-                data=data, 
-                ggplot2::aes(y=.data[[xVarName]]), 
-                position=ggplot2::position_dodge(0.8),
-                width=0.5, 
-                alpha=0.9, 
-                notch=TRUE,
-                fill ="#ADD8E6"
-              ) + 
-              ggtheme + 
-              themeBox + 
-              ggplot2::coord_flip()
+                orientation = "y",
+                width = 0.5,
+                alpha = 0.9,
+                notch = FALSE,
+                fill = "#ADD8E6"
+              ) +
+              ggtheme +
+              themeBox
             
-            ybox <- ggplot2::ggplot() +
+            ybox <- ggplot2::ggplot(
+              data,
+              ggplot2::aes(
+                x = 1,
+                y = .data[[yVarName]],
+                group = 1
+              )
+            ) +
               ggplot2::geom_boxplot(
-                data=data, 
-                ggplot2::aes(y=.data[[yVarName]]), 
-                position=ggplot2::position_dodge(0.8),
-                width=0.5, 
-                alpha=0.9, 
-                notch=TRUE,
-                fill ="#ADD8E6"
-              ) + 
-              ggtheme + 
+                orientation = "x",
+                width = 0.5,
+                alpha = 0.9,
+                notch = FALSE,
+                fill = "#ADD8E6"
+              ) +
+              ggtheme +
               themeBox
             
             p <- cowplot::insert_xaxis_grob(
@@ -186,26 +242,24 @@ bivnumClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             
             xhist <- ggplot2::ggplot() +
               ggplot2::geom_histogram(
-                data=data, 
-                ggplot2::aes(y=.data[[xVarName]]), 
-#                position=ggplot2::position_dodge(0.8),
-                alpha=0.9,
-                fill ="#ADD8E6"
-              ) + 
-              ggtheme + 
-              themeHist + 
-              ggplot2::coord_flip()
+                data = data,
+                ggplot2::aes(x = .data[[xVarName]]),
+                alpha = 0.9,
+                fill = "#ADD8E6"
+              ) +
+              ggtheme +
+              themeHist
             
             yhist <- ggplot2::ggplot() +
               ggplot2::geom_histogram(
-                data=data, 
-                ggplot2::aes(y=.data[[yVarName]]), 
-#                position=ggplot2::position_dodge(0.8),
-                alpha=0.9, 
-                fill ="#ADD8E6"
-              ) + 
-              ggtheme + 
-              themeHist
+                data = data,
+                ggplot2::aes(x = .data[[yVarName]]),
+                alpha = 0.9,
+                fill = "#ADD8E6"
+              ) +
+              ggtheme +
+              themeHist +
+              ggplot2::coord_flip()
             
             p <- cowplot::insert_xaxis_grob(
               p, 

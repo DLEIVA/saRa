@@ -15,7 +15,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             "mode","VR","Blau","Teachman","IQV"
           ),
           title = c(
-            "Mode","Variation ratio","Blau","Teachman","IQV"
+            "Mode","Variation ratio","Blau index","Teachman index","IQV"
           ),
           superTitle = c(
             "","","","",""
@@ -56,57 +56,10 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
       #### Init tables ----
       .initFreqTable = function() {
-        if ( ! self$options$freq)
-          return()
-        
-        tables <- self$results$frequencies
-        vars <- self$options$vars
-        
-        for (i in seq_along(vars)) {
-          var <- vars[i]
-          column <- self$data[[var]]
-          
-          if (private$.treatAsFactor(column)) {
-            table <- tables$get(var)
-            levels <- c(base::levels(column),'Missing')
-            if (is.null(levels)) {
-              levels <- c(levels(factor(jmvcore::naOmit(column))),'Missing')
-              table$setVisible(TRUE)
-            }
-            
-              table$addColumn(
-                name='levels', title='Levels', type='text'
-              )
-              table$addColumn(
-                name='counts', title='Counts', type='integer'
-              )
-              table$addColumn(
-                name='cumcounts', title='Cumulative counts', type='integer'
-              )
-              table$addColumn(
-                name='prop', title='Proportions', type='number'
-              )
-              table$addColumn(
-                name='cumprop', title='Cumulative proportions', type='number'
-              )              
-              table$addColumn(
-                name='pc', title='% of Total', type='number', format='pc'
-              )
-              table$addColumn(
-                name='cumpc', title='Cumulative %', type='number', format='pc'
-              )
-              table$addColumn(
-                name='odds', title='Odds', type='number', format='number'
-              )
-              
-              for (k in seq_along(levels)) {
-                table$addRow(
-                  levels[k], values = list(levels = levels[k])
-                )
-              }
-            }
-          }
-        },
+        if (!self$options$freq) return()
+        .saraInitFrequencyTables(self$results$frequencies, self$data,
+                                self$options$vars, odds=TRUE)
+      },
       .initIndicesTable = function() {
         table <- self$results$indices
         
@@ -237,59 +190,9 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
       #### Populate tables ----
       .populateFreqTable = function(results) {
-        if ( ! self$options$freq)
-          return()
-        
-        tables <- self$results$frequencies
-        vars <- self$options$vars
-        freqs <- results$freq
-        
-        for (i in seq_along(vars)) {
-          var <- vars[i]
-          column <- self$data[[var]]
-          
-          if (private$.treatAsFactor(column)) {
-            table <- tables$get(var)
-            
-            if ( ! table$visible)
-              next()
-            
-            levels <- c(base::levels(column),'Missing')
-            if (is.null(levels)) {
-              levels <- c(levels(factor(jmvcore::naOmit(column)),'Missing'))
-              table$setVisible(TRUE)
-            }
-            freq <- freqs[[var]]
-            
-            n <- sum(freq)
-            cumcounts <- 0
-            cumprop <- 0
-            cumpc <- 0
-            for (k in seq_along(levels)) {
-              counts <- as.numeric(freq[[k]])
-              cumcounts <- cumcounts + counts
-              prop <- counts/n
-              cumprop <- cumprop + prop 
-              pc <- prop
-              cumpc <- cumpc + counts/n
-              odds <- prop/(1-prop)
-              #if (is.na(pc)) pc <- 0
-              #if (is.na(cumpc)) cumpc <- 0
-              table$setRow(
-                rowNo=k,
-                values=list(
-                  counts=counts,
-                  cumcounts=cumcounts,
-                  prop=prop,
-                  cumprop=cumprop,
-                  pc=pc,
-                  cumpc=cumpc,
-                  odds=odds
-                  )
-                )
-              }
-          }
-        }
+        if (!self$options$freq) return()
+        .saraPopulateFrequencyTables(self$results$frequencies, self$data,
+                                    self$options$vars, odds=TRUE)
       },
       .populateIndicesTable = function(results) {
 #        if (self$options$indic != "columns")
@@ -325,7 +228,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$addFootnote(
             rowNo=1,
             footnotes[[i]],
-            ('More than one mode exists, only the first is reported')
+            .('More than one mode exists, only the first is reported')
           )
         }
       },
@@ -340,6 +243,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             var <- vars[i]
             group <- plots$get(var)
             column <- data[[var]]
+            if (!any(!is.na(column))) next
 
             if (self$options$pie) {
               pie  <- group$get('pie')
@@ -355,7 +259,6 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               colnames(plotData) <- c('x','y')
               plotData$label <- paste0(cts,' (',round(cts/sum(cts)*100,2),
                                        "%)")
-              plotData <- plotData[order(plotData$y,decreasing=TRUE), ]
               plotData$x <- factor(plotData$x, levels=plotData$x)
               plotData$cumulative <-  cumsum(plotData$y)
               plotData$pct <-  round(plotData$y/sum(plotData$y)*100,2)
@@ -385,7 +288,6 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               
               plotData <- data.frame(cts, stringsAsFactors = FALSE)
               colnames(plotData) <- c('x','y')
-              plotData <- plotData[order(plotData$y,decreasing=TRUE), ]
               plotData$x <- factor(plotData$x, levels=plotData$x)
               plotData$cumulative <-  cumsum(plotData$y)
               plotData$pct <-  round(plotData$y/sum(plotData$y)*100,2)
@@ -416,12 +318,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               lbls <- names(table(column))
               plotData <- data.frame(cts, stringsAsFactors = FALSE)
               colnames(plotData) <- c('x','y')
-              plotData <- plotData[order(plotData$y,decreasing=TRUE), ]
               plotData$x <- factor(plotData$x, levels=plotData$x)
               
-              plotData <- plotData |> 
-                dplyr::arrange(y) |> 
-                dplyr::mutate(x=factor(x, x))
               
               labels <- list("x"=var)
               
@@ -506,7 +404,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         plot <- ggplot2::ggplot(data, ggplot2::aes(x=1, y=.data[[names$y]], fill=.data[[names$x]]))+
           ggplot2::geom_bar(stat='identity',width = 1)+
           ggplot2::coord_polar("y") +
-          ggplot2::scale_fill_brewer(palette=1) +
+          ggplot2::scale_fill_manual(values=.saraPalette(theme$fill,nlevels(data[[names$x]]))) +
           ggplot2::theme(axis.text.x=ggplot2::element_blank())+
           ggplot2::guides(fill=ggplot2::guide_legend(override.aes=ggplot2::aes(label = ''))) +
           ggrepel::geom_label_repel(data = data,
@@ -530,11 +428,10 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         plot <- ggplot2::ggplot(data, ggplot2::aes(ymax=.data[[names$cumulative]], ymin=.data[[names$ymin]], xmax=4, xmin=3, fill=.data[[names$x]])) +
           ggplot2::geom_rect() +
-          ggplot2::geom_text( x=1.5, ggplot2::aes(y=.data[[names$labelPosition]], label=.data[[names$label]], color=.data[[names$x]]), size=4.5) +
+          ggplot2::geom_text( x=1.5, ggplot2::aes(y=.data[[names$labelPosition]], label=.data[[names$label]]), color=theme$color[1], size=4.5) +
           ggplot2::coord_polar(theta="y") +
           ggplot2::xlim(c(-1, 4)) +
-          ggplot2::scale_fill_brewer(palette=1) +
-          ggplot2::scale_color_brewer(palette=1)
+          ggplot2::scale_fill_manual(values=.saraPalette(theme$fill,nlevels(data[[names$x]])))
         
         plot <- plot + ggtheme + plotSpecificTheme
         return(plot)
@@ -554,8 +451,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         plotSpecificTheme <- NULL
   
         plot <- ggplot2::ggplot(data=data,ggplot2::aes(x=.data[[names$x]], y=.data[[names$y]])) +
-          ggplot2::geom_segment(ggplot2::aes(x=.data[[names$x]], xend=.data[[names$x]], y=0, yend=.data[[names$y]]), color='grey') +
-          ggplot2::geom_point(size=3,color='blue') +
+          ggplot2::geom_segment(ggplot2::aes(x=.data[[names$x]], xend=.data[[names$x]], y=0, yend=.data[[names$y]]), color=theme$color[1]) +
+          ggplot2::geom_point(size=3,color=theme$color[2]) +
           ggplot2::coord_flip() +
           ggplot2::theme(
             panel.grid.minor.y = ggplot2::element_blank(),
@@ -591,7 +488,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                    color=color,stat='identity') +
           ggplot2::geom_point(ggplot2::aes(y=.data[[names$cumulative]]),col='grey',pch=16,size=4) +
           ggplot2::geom_path(ggplot2::aes(y=.data[[names$cumulative]], group=1),lty=2,col='grey',
-                    size=0.7) +
+                    linewidth=0.7) +
           ggplot2::scale_y_continuous(sec.axis=ggplot2::sec_axis(~.*scaleRight, 
                                                name = "Cumulative percent (%)",
                                                breaks=seq(0,100,20))) +
@@ -682,12 +579,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }
             
         } else if (n==0) {
-          l <- list(
-            VR=NaN, mode=NaN, Blau=NaN, IQV=NaN
-          )
+          stats <- list(VR=NaN,mode=NA_character_,Blau=NaN,Teachman=NaN,IQV=NaN)
         }
-        
-        #stats <- append(stats, l)
         return(stats)
       }
       )

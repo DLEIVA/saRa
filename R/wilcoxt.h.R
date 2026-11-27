@@ -161,7 +161,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="wilcoxttest",
-                title="Wilcoxon T Test and ES Indices",
+                title="Wilcoxon T Test and effect sizes",
                 rows="(pairs)",
                 visible="(wilcoxon || zstatps || rankCorrps)",
                 clearWith=list(
@@ -175,13 +175,13 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="", 
                         `type`="text", 
                         `combineBelow`=TRUE, 
-                        `visible`="(wilcoxon || zstatps)"),
+                        `visible`="(wilcoxon || zstatps || rankCorrps)"),
                     list(
                         `name`="var2", 
                         `title`="", 
                         `type`="text", 
                         `combineBelow`=TRUE, 
-                        `visible`="(wilcoxon || zstatps)"),
+                        `visible`="(wilcoxon || zstatps || rankCorrps)"),
                     list(
                         `name`="name[wilcoxon]", 
                         `title`="", 
@@ -230,7 +230,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="cisMedps",
-                title="Variables Medians CIs",
+                title="Variables Median confidence intervals",
                 visible="(ciMediansps)",
                 rows="(pairs)",
                 clearWith=list(
@@ -308,7 +308,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="descps",
-                title="Variables Descriptives",
+                title="Variable descriptives",
                 visible="(descps)",
                 rows=0,
                 clearWith=list(

@@ -17,7 +17,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         ),
         title = c(
           "N", "Missing", "Median", "Mode", "Trimean", "Midhinge", "Mid-range",
-          "Range", "IQR", "QD", "MAD", "Quartile dispersion", "Min", "Max", "Q1", "Q2", "Q3", "H1","H3","K2","K3"
+          "Range", "IQR", "QD", "MAD", "Quartile coefficient of dispersion", "Min", "Max", "Q1", "Q2", "Q3", "SP50","SP80","K2","K3"
         ),
         superTitle = rep("",21),
         type = c("integer","integer","number","text",rep("number",17)),
@@ -28,6 +28,9 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "(h1)","(h3)","(k2)","(k3)"
         )
       )
+      if (self$options$freq)
+        .saraInitFrequencyTables(self$results$frequencies, self$data,
+                                self$options$vars, cumulative=TRUE)
       private$.addQuantiles()
       private$.initIndicesTableOrd()
       private$.initPlotsOrd()
@@ -35,6 +38,9 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     .run = function(){
       if (length(self$options$vars) > 0) {
         results <- private$.compute()
+        if (self$options$freq)
+          .saraPopulateFrequencyTables(self$results$frequencies, self$data,
+                                      self$options$vars, cumulative=TRUE)
         private$.populateIndicesTableOrd(results)
         private$.preparePlotsOrd()
       }
@@ -46,6 +52,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       indic <- list()
       for(var in vars){
         column <- data[[var]]
+        if (!is.ordered(column)) jmvcore::reject(.("Select ordinal variables with ordered levels"), code="requires_ordinal_variables")
         #if (private$.treatAsFactor(column)) {            
         #}
         indic[[var]] <- private$.computeIndicesOrd(column)
@@ -72,6 +79,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           next
         
         name <- colArgs$name[i]
+        if (name == "range" && !.saraFrequencyHasNumeric(data, vars)) next
         title <- colArgs$title[i]
         format <- colArgs$format[i]
         type <- colArgs$type[i]
@@ -92,7 +100,9 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           table$addColumn(
             name=subName,
             title=vars[k],
-            type=type,
+            type=if (name %in% c("median","mode","min","max","q1","q2","q3") || startsWith(name,"perc")) {
+              if (is.numeric(tryCatch(.saraNumeric(data[[vars[k]]]),error=function(e) NULL))) "number" else "text"
+            } else type,
             format=format,
             visible=visible
           )
@@ -150,6 +160,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       table <- self$results$indicesord
       vars <- self$options$vars
+      availableColumns <- vapply(table$columns, function(column) column$name, character(1))
       
       colNames <- private$colArgs$name
       indic <- results$indic
@@ -165,20 +176,31 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           name <- colNames[k]
           post <- paste0("[", name, "]")
           subName <- paste0(vars[i], post)
+          if (!subName %in% availableColumns) next
           
           values[[subName]] <- r[[name]][1]
         }
         
-        if (self$options$mode && length(r[['mode']]) > 1)
+        if (self$options$mode && length(r[['mode']]) > 1 &&
+            paste0(vars[i], '[mode]') %in% availableColumns)
           footnotes <- c(footnotes, paste0(vars[i], '[mode]'))
       }
       table$setRow(rowNo=1, values=values)
       
+      for (i in seq_along(vars)) {
+        errors <- attr(indic[[vars[i]]],"errors")
+        for (name in names(errors)) {
+          index <- match(name,private$colArgs$name)
+          if (!is.na(index) && !private$.skipOption(private$colArgs$visible[index]) &&
+              paste0(vars[i],"[",name,"]") %in% availableColumns)
+            table$addFootnote(rowNo=1,paste0(vars[i],"[",name,"]"),.saraMessage(errors[[name]],self))
+        }
+      }
       for (i in seq_along(footnotes)) {
         table$addFootnote(
           rowNo=1,
           footnotes[[i]],
-          ('More than one mode exists, only the first is reported')
+          .('More than one mode exists, only the first is reported')
         )
       }
     },
@@ -223,22 +245,13 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           self$options$violin ||
           self$options$dot
         ){
-          if(length(na.omit(column)) > 0){
-            columns <- na.omit(c(var))
-            plotData <- na.omit(data[columns])
-            plotData[[var]] <- jmvcore::toNumeric(plotData[[var]])
-            names <- list("x"="x")
-            labels <- list("x"=var)
+          numeric <- tryCatch(.saraNumeric(column),error=function(e) NULL)
+          if (!is.numeric(numeric)) {
+            box$setVisible(FALSE)
+          } else {
+            box$setVisible(TRUE)
+            box$setState(list(names=list(x="x"),labels=list(x=var)))
           }
-          else{
-            plotData <- data.frame(x=character())
-            names <- list("x"="x")
-            labels <- list("x"=var)
-          }
-          colnames(plotData) <- as.character(unlist(names))
-          
-          if (self$options$box || self$options$violin || self$options$dot)
-            box$setState(list(names=names, labels=labels))
         }
       }
     },
@@ -387,6 +400,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           private$colArgs$name <- append(colArgs$name, paste0('perc', 1:npcValues), after = 17)
           private$colArgs$title <- append(colArgs$title, paste0("Percentile ", round(pcValues * 100, 2)), after = 17)
           private$colArgs$type <- append(colArgs$type, rep('number', npcValues), after = 17)
+          if (!is.null(colArgs$format)) private$colArgs$format <- append(colArgs$format, rep('', npcValues), after=17)
+          if (!is.null(colArgs$superTitle)) private$colArgs$superTitle <- append(colArgs$superTitle, rep('', npcValues), after=17)
           private$colArgs$visible <- append(colArgs$visible, rep("(pc)", npcValues), after = 17)
         }
       }
@@ -398,8 +413,10 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('ir'), after = 12)
-          private$colArgs$title <- append(colArgs$title, paste0(NPerc, ('% Inner range')), after = 12)
+          private$colArgs$title <- append(colArgs$title, paste0(NPerc, ('% inner range')), after = 12)
           private$colArgs$type <- append(colArgs$type, 'number', after = 12)
+          if (!is.null(colArgs$format)) private$colArgs$format <- append(colArgs$format, '', after=12)
+          if (!is.null(colArgs$superTitle)) private$colArgs$superTitle <- append(colArgs$superTitle, '', after=12)
           private$colArgs$visible <- append(colArgs$visible, "(irange)", after = 12)
         }
       }
@@ -414,6 +431,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
+      .saraValidateFences(intervinf,intervsup)
       .bxp1 <- boxplot.stats(jmvcore::toNumeric(column), coef = intervinf)
       .bxp2 <- boxplot.stats(jmvcore::toNumeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out
@@ -425,209 +443,9 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       return(out)
     },
     .computeIndicesOrd = function(column) {
-      converted <- jmvcore::toNumeric(column)
-      if (is.factor(converted)) {
-        converted <- suppressWarnings(as.numeric(as.character(converted)))
-        if (any(is.na(converted) & !is.na(column)))
-          stop("Ordinal summaries require numeric stored values.")
-      }
-      column <- converted
-      stats <- list()
-      
-      total <- length(column)
-      column <- jmvcore::naOmit(column)
-      n <- length(column)
-      stats[['n']] <- n
-      stats[['missing']] <- total - n
-      
-      if (n > 0) {
-        ni <- jmvcore::toNumeric(column)
-        trimedia <- function(x){
-          FN <- fivenum(jmvcore::toNumeric(x)) 
-          Finf <- FN[2]
-          Md <- FN[3]
-          Fsup <- FN[4]
-          res <- (Finf+2*Md+Fsup)/4
-          res
-        }
-        promcuar <- function(x){
-          FN <- fivenum(jmvcore::toNumeric(x),na.rm=TRUE)
-          Q1 <- FN[2]
-          Q3 <- FN[4]
-          res <- (Q1+Q3)/2
-          res
-        }
-        midR <- function(x){
-          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE)
-          min <- QU[1]
-          max <- QU[5]
-          res <- (min+max)/2
-          res
-        }
-        
-        rango <- function(x){
-          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE)
-          min <- QU[1]
-          max <- QU[5]
-          res <- max-min
-          res
-        }
-        
-        IQR <- function(x){
-          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE)
-          Q1 <- QU[2]
-          Q3 <- QU[4]
-          res <- Q3-Q1
-          res
-        }
-        
-        QD <- function(x){
-          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE)
-          Q1 <- QU[2]
-          Q3 <- QU[4]
-          res <- (Q3-Q1)/2
-          res
-        }
-        
-        MAD <- function(x){
-          mediana <- median(jmvcore::toNumeric(x),na.rm=TRUE)
-          res <- median(abs(jmvcore::toNumeric(x)-mediana),na.rm=TRUE)
-          res
-        }
-        
-        RCV <- function(x){
-          FN <- fivenum(jmvcore::toNumeric(x))
-          Finf <- FN[2]
-          Fsup <- FN[4]
-          res <- (Fsup-Finf)/(Finf+Fsup)
-          res
-        }
-        
-        H1 <- function(x) {
-          FN <- fivenum(jmvcore::toNumeric(x))
-          Finf <- FN[2]
-          Md <- FN[3]
-          Fsup <- FN[4]
-          res <- (Finf+Fsup-2*Md)/(2*Md)
-          res
-        }
-        H3 <- function(x) {
-          AC90 <- quantile(jmvcore::toNumeric(x),probs=0.9,na.rm=TRUE)
-          AC10 <- quantile(jmvcore::toNumeric(x),probs=0.1,na.rm=TRUE)
-          Md <- fivenum(jmvcore::toNumeric(x))[3]
-          res <- (AC90+AC10-2*Md)/(2*Md)
-          res
-        }
-        K2 <- function(x){
-          QU <- quantile(jmvcore::toNumeric(x),na.rm=TRUE) 
-          AC90 <- quantile(jmvcore::toNumeric(x),probs=0.9,na.rm=TRUE)
-          AC10 <- quantile(jmvcore::toNumeric(x),probs=0.1,na.rm=TRUE)
-          Q1 <- QU[2]
-          Q3 <- QU[4]
-          res <- (AC90-AC10)/(1.9*(Q3-Q1))        
-          res
-        }
-        K3 <- function(x){
-          FN <- fivenum(jmvcore::toNumeric(x))
-          Einf <- quantile(jmvcore::toNumeric(x),probs=0.125,na.rm=TRUE)
-          Esup <- quantile(jmvcore::toNumeric(x),probs=0.875,na.rm=TRUE)
-          Finf <- FN[2]
-          Fsup <- FN[4]
-          res <- (Esup-Einf)/(1.7*(Fsup-Finf))        
-          res
-        }
-        
-        
-        if ( self$options$median )
-          stats[['median']] <- median(as.numeric(ni),na.rm=TRUE)
-        
-        if ( self$options$mode )
-          stats[['mode']] <- 
-          names(table(column)[ table(column) == max(table(column)) ])
-        
-        if ( self$options$trimean )
-          stats[['trimean']] <- trimedia(column)
-        
-        if ( self$options$avquartile )
-          stats[['avquartile']] <- promcuar(column)
-        
-        if ( self$options$midrange )
-          stats[['midrange']] <- midR(column)
-        
-        if ( self$options$range )
-          stats[['range']] <- rango(column)
-        
-        if ( self$options$iqr )
-          stats[['iqr']] <- IQR(column)
-        
-        if (self$options$qd)
-          stats[['qd']] <- QD(column)
-        
-        if (self$options$mad)
-          stats[['mad']] <- MAD(column)
-        
-        if (self$options$rcv)
-          stats[['rcv']] <- RCV(column)
-        
-        if(self$options$min)
-          stats[['min']] <- min(jmvcore::toNumeric(column), na.rm=TRUE)
-        
-        if(self$options$max)
-          stats[['max']] <- max(jmvcore::toNumeric(column), na.rm=TRUE)
-        
-        if (self$options$q1)
-          stats[['q1']] <- quantile(jmvcore::toNumeric(column),na.rm=TRUE)[2]
-        
-        if (self$options$q2)
-          stats[['q2']] <- quantile(jmvcore::toNumeric(column),na.rm=TRUE)[3]
-        
-        if (self$options$q3)
-          stats[['q3']] <- quantile(jmvcore::toNumeric(column),na.rm=TRUE)[4]
-        
-        if(self$options$pc){
-          pcValues <- private$.getPcValues()
-          npcValues <- length(pcValues)
-          
-          if( npcValues > 0 ){
-            quants <- quantile(jmvcore::toNumeric(column), pcValues, na.rm=TRUE)
-            for(i in 1:npcValues)
-              stats[[paste0('perc', i)]] <- quants[i]
-          }
-        }
-        
-        if(self$options$irange){
-          NPerc <- self$options$NPerc
-          nNPerc <- NPerc / 100
-          
-          if( nNPerc > 0 ){
-            .ACinf <- quantile(jmvcore::toNumeric(column),probs=(1-nNPerc)/2,na.rm=TRUE)
-            .ACsup <- quantile(jmvcore::toNumeric(column),probs=1-(1-nNPerc)/2,na.rm=TRUE)
-            res <- .ACsup-.ACinf
-            stats[[paste0('ir')]] <- res
-          }
-        }
-        
-        if (self$options$h1)
-          stats[['h1']] <- H1(column)
-        
-        if (self$options$h3)
-          stats[['h3']] <- H3(column)
-        
-        if (self$options$k2)
-          stats[['k2']] <- K2(column)
-        
-        if (self$options$k3)
-          stats[['k3']] <- K3(column)
-        
-      }
-      else if (n==0) {
-        stats <- list(
-          n=0, missing=total, median=NaN, mode=NaN, trimean=NaN, avquartile=NaN, midrange=NaN,
-          range=NaN, iqr=NaN, qd=NaN, mad=NaN, rcv=NaN, min=NaN, max=NaN, q1=NaN, q2=NaN, q3=NaN,
-          h1=NaN, h3=NaN, k2=NaN, k3=NaN
-        )
-      }
-      return(stats)  
+      .saraOrdinalSummary(column,self$options,list(
+        inner=function() self$options$NPerc/100,
+        percentiles=function() private$.getPcValues()))
     }
   )
 )
