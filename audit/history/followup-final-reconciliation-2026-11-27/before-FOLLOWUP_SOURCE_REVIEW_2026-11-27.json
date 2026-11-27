@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static source review of the assistant follow-up snapshot, including audit R scripts; not user source reconciliation or R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 62,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 130,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true,
+  "reviewed_source_paths": 113,
+  "user_runtime": {
+    "pass": 2107,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 22.5
+  },
+  "final_local_tree_reconciled": false,
+  "new_JMO_sha256": null
+}

@@ -43,4 +43,4 @@ lines <- unlist(lapply(names(commands),function(name) c(paste0("## ",name),
 writeLines(lines,"audit/LOCAL_GIT_STATE.txt",useBytes=TRUE)
 cat("Informes: audit/LOCAL_FILE_COMPARISON.csv y audit/LOCAL_GIT_STATE.txt\n")
 cat("Las diferencias requieren cotejo; los encabezados .h.R pueden haber sido regenerados.\n")
-cat("Cotejo de 27-11 completado; ver audit/SOURCE_RECONCILIATION_2026-11-27.json.\n")
+cat("Referencia reconciliada: 113 rutas del seguimiento; ver FOLLOWUP_SOURCE_RECONCILIATION_2026-11-27.json.\n")

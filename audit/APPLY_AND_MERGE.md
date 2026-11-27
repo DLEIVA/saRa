@@ -1,46 +1,58 @@
-# Registrar el candidato validado saRa 1.0.0
+# Cotejo cerrado y commit del seguimiento
 
-Rama: fix/audit-review-1.0.0. No cambiar a main ni limpiar el árbol.
-Fuente reconciliada: 110 archivos. Última suite del usuario: 1878 comprobaciones
-superadas, sin fallos/warnings/omisiones. JMO final identificado y comprobación
-conjunta confirmada por el usuario. Ver FINAL_ACCEPTANCE_2026-11-27.json.
+Copiar archivos/ sobre la raíz del proyecto. Solo se actualizan documentos y
+huellas: conservar los encabezados locales regenerados. No recompilar ni repetir
+toda la suite por esta actualización documental.
 
-## Preparar staging desde la terminal del proyecto
+Opcionalmente, verificar el inventario desde la consola de RStudio:
 
-Tras copiar los documentos de cierre:
-
-```bash
-git add -u
-git add -- R/distribution-plots.R R/frequency-tables.R R/inequality.R R/messages.R R/normality-plot-messages.R
-git add -- jamovi/js/catsummary.js jamovi/js/ordsummary.js tests/testthat tests/gui/frequency-selectors.cjs
-git add -- audit/*.md audit/*.json audit/*.R audit/*.py audit/AUDIT_TRACKER.csv audit/REVIEWED_FILES_2026-11-27.csv audit/history
-git diff --cached --stat
-
+```r
+source("audit/COMPARE_REVIEWED_FILES.R")
 ```
 
-git add -u incluye las modificaciones y las tres eliminaciones revisadas del
-add-on de regresión. Los comandos siguientes incorporan los auxiliares nuevos,
-JS fuente, pruebas y registros. No usar git add . ni añadir el JMO con -f.
-Los informes locales audit/LOCAL_FILE_COMPARISON.csv y LOCAL_GIT_STATE.txt
-quedan sin añadir; sus copias históricas recibidas forman parte de la evidencia.
-Revisar el resumen del staging antes de ejecutar el commit. Si hubiera algún
-archivo añadido manualmente al staging antes de estos pasos, revisarlo también.
-La salida proporcionada inicialmente no mostraba archivos ya staged.
+Se esperan 113 MATCH. Si aparece otra diferencia, cotejarla antes de crear commit.
 
-## Crear el commit
+## Revisar y crear el commit (Terminal de RStudio)
+
+La rama verificada es fix/audit-submission-followup. Revisar primero su nombre y
+el estado, sin cambiar de rama ni descartar archivos:
 
 ```bash
-git commit -m "Prepare validated saRa 1.0.0 audit candidate"
+git branch --show-current
+git status --short
+git add -- NEWS R jamovi tests audit
+git --no-pager diff --cached --stat
+```
+
+El staging debe contener los cambios del seguimiento, las tres pruebas nuevas,
+los cuatro encabezados regenerados y los registros históricos/documentales.
+No incluir el JMO ni los informes locales LOCAL_FILE_COMPARISON.csv y
+LOCAL_GIT_STATE.txt de la raíz de audit; estos dos informes ya estaban excluidos
+localmente. Sus copias históricas documentales sí se incluyen.
+
+Si la revisión del staging corresponde a ese conjunto, crear el commit:
+
+```bash
+git commit -m "Address jamovi follow-up audit for saRa 1.0.0"
 git rev-parse HEAD
 git status --short
 ```
 
-Conservar el hash que devuelve rev-parse junto al JMO. El documento de
-aceptación se escribe antes del commit, por lo que no contiene su propio hash.
-El commit que incluye ese documento y el hash comunicado después identifican
-el candidato. No se hace otro commit solo para introducir un hash autorreferente.
+Compartir la salida para registrar el commit y continuar con el push y la PR.
+Si quedan archivos imprevistos, revisar su origen antes de incluirlos o borrarlos.
+No se ha realizado ningún commit/push desde esta actualización.
 
-Los espacios finales informados por diff --check son de formato, incluidos
-archivos generados. Se conservan en este candidato para no alterar las fuentes
-ya validadas. No hay cambios funcionales nuevos ni motivo para recompilar
-por esta documentación. No se ha realizado push, merge, tag o publicación.
+## Binario validado
+
+saRa_1.0.0.jmo; SHA-256 aportado por el usuario:
+
+```text
+20bdc32ce37742b1b2e77e2735573381e5e23bc8819bbe804a5ded09b69fb865
+```
+
+No confundir con el hash histórico del candidato anterior. No recompilar entre
+la identificación del binario y su publicación sin actualizar su hash y validación.
+
+Tras commit y PR, comprobar el estado real de la release v1.0.0 antes de actualizar
+sus archivos. No mover una etiqueta publicada sin revisar la decisión. La respuesta
+a los 22 puntos declara la excepción de paleta jmv fija y la retirada del add-on.

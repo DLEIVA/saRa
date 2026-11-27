@@ -224,7 +224,7 @@ options:
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default: `FALSE`), provides the Inner range
+            `TRUE` or `FALSE` (default: `FALSE`), provides the inner range
             
     - name: NPerc
       title: Percentage of data

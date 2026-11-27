@@ -20,7 +20,7 @@
     usable <- !is.null(frame) && nrow(frame)>0L
     if (usable) {
         if (kind=="qq") {
-            plot <- .saraQQPlot(data,variable,groupBy,ggtheme)
+            plot <- .saraQQPlot(data,variable,groupBy,ggtheme,translate=translate)
         } else {
             plot <- ggplot2::ggplot(frame,ggplot2::aes(x=.data$z)) +
                 ggplot2::geom_line(ggplot2::aes(y=.data$normal),colour="#7b9ee6") +

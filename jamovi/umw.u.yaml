@@ -127,8 +127,8 @@ children:
 
               - type: CheckBox
                 name: desc
-                label: Descriptives
+                label: Descriptive statistics
 
               - type: CheckBox
                 name: plots
-                label: Descriptives plots
+                label: Descriptive plots

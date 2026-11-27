@@ -22,16 +22,16 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "h1","h3","beta2","gamma2","k2","k3"
         ),
         title = c(
-          "N", "Missing","Mean", "Median", "Mode", "Geometric mean", "Trimean",
-          "Midhinge", "Mid-range", 
-          paste0(self$options$Trim,'% trimmed mean'),
-          paste0(self$options$Win,'% winsorized mean'),
-          "Variance","Standard deviation", "Geometric standard deviation",
-          "Mean deviation","CV", "Range", "IQR", "QD", "MAD", 
-          "Quartile coefficient of dispersion", paste0(self$options$NPerc,'% inner range'),
-          "Min", "Max", "Q1", "Q2", "Q3", "Pearson's \u03B2\u2081",
-          "Fisher's \u03B3\u2081","SP50","SP80","Pearson's \u03B2\u2082",
-          "Fisher's \u03B3\u2082","K2","K3"
+          .("N"), .("Missing"),.("Mean"), .("Median"), .("Mode"), .("Geometric mean"), .("Trimean"),
+          .("Midhinge"), .("Mid-range"), 
+          jmvcore::format(.("{}% trimmed mean"), self$options$Trim),
+          jmvcore::format(.("{}% winsorized mean"), self$options$Win),
+          .("Variance"),.("Standard deviation"), .("Geometric standard deviation"),
+          .("Mean deviation"),.("CV"), .("Range"), .("IQR"), .("QD"), .("MAD"), 
+          .("Quartile coefficient of dispersion"), jmvcore::format(.("{}% inner range"), self$options$NPerc),
+          .("Min"), .("Max"), .("Q1"), .("Q2"), .("Q3"), .("Pearson's \u03B2\u2081"),
+          .("Fisher's \u03B3\u2081"),.("SP50"),.("SP80"),.("Pearson's \u03B2\u2082"),
+          .("Fisher's \u03B3\u2082"),.("K2"),.("K3")
         ),
         superTitle = rep("",35),
         type = c("integer","integer",rep("number",33)),
@@ -49,8 +49,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "cohend", "rbp", "probsup","etasq","omegasq","kwind"
         ),
         title = c(
-          "Cohen's d","Point-biserial correlation","Probability of superiority",
-          "\u03B7\u00B2","\u03C9\u00B2","η²<sub>H</sub> (Kruskal-Wallis)"
+          .("Cohen's d"),.("Point-biserial correlation"),.("Probability of superiority"),
+          .("\u03B7\u00B2"),.("\u03C9\u00B2"),.("η²<sub>H</sub> (Kruskal-Wallis)")
         ),
         superTitle = rep("",6),
         type = c(rep("number",6)),
@@ -70,7 +70,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     },    
     .run = function(){
       if (length(self$options$vars) > 0 && is.null(self$options$groupBy))
-        jmvcore::reject("Select a Group by variable", code="missing_group_variable")
+        jmvcore::reject(.("Select a Group by variable"), code="missing_group_variable")
       if ( (length(self$options$vars) > 0) & (!is.null(self$options$groupBy)) )  {
         results <- private$.compute()
         private$.populateIndicesTableNum(results)
@@ -415,7 +415,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         
         plot <- ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[names$x]])) +
-          ggplot2::labs(x=labels$x, y='density') +
+          ggplot2::labs(x=labels$x, y=.('density')) +
           ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
           {if(self$options$hist) ggplot2::geom_histogram(
             ggplot2::aes(y=ggplot2::after_stat(density)),
@@ -565,7 +565,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     },
     .qq = function(image, ggtheme, theme, ...) {
       if (is.null(image$state)) return(FALSE)
-      .saraQQPlot(self$data, image$state, self$options$groupBy, ggtheme)
+      .saraQQPlot(self$data, image$state, self$options$groupBy, ggtheme,
+        translate=function(message) .saraMessage(message,self))
     },
     #### Clear tables ----
     .clearIndicesTableNum = function(vChanges) {
@@ -793,7 +794,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('perc', 1:npcValues), after = 27)
-          private$colArgs$title <- append(colArgs$title, paste0("Percentile ", round(pcValues * 100, 2)), after = 27)
+          private$colArgs$title <- append(colArgs$title, vapply(round(pcValues * 100, 2), function(value)
+            jmvcore::format(.("Percentile {}"), value), character(1)), after = 27)
           private$colArgs$type <- append(colArgs$type, rep('number', npcValues), after = 27)
           private$colArgs$visible <- append(colArgs$visible, rep("(pc)", npcValues), after = 27)
         }
@@ -809,7 +811,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
-      .saraValidateFences(intervinf,intervsup)
+      .saraValidateFences(intervinf,intervsup,
+        translate=function(message) .saraMessage(message,self))
       .bxp1 <- grDevices::boxplot.stats(as.numeric(column), coef = intervinf)
       .bxp2 <- grDevices::boxplot.stats(as.numeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out

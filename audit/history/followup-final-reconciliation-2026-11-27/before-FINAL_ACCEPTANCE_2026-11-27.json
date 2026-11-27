@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-27",
+  "module": "saRa",
+  "version": "1.0.0",
+  "status": "Recorded automated and GUI/export acceptance; source reconciliation and new artifact identity pending",
+  "automated": {
+    "pass": 2107,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 22.5
+  },
+  "manual_source": "User confirmations and screenshots",
+  "artifact": {
+    "filename": "saRa_1.0.0.jmo",
+    "sha256": null
+  },
+  "followup_commit": null,
+  "publication_ready": false,
+  "prior_acceptance": "audit/history/submission-followup-2026-11-27/FINAL_ACCEPTANCE_2026-11-27.json",
+  "next_step": "Run source comparison and supply current branch/HEAD/status/diff and new JMO SHA-256"
+}

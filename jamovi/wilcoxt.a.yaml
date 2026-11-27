@@ -36,7 +36,7 @@ options:
             `TRUE` or `FALSE` (default: `TRUE`), perform Wilcoxon signed rank tests
             
     - name: zstatps
-      title: Z statistic
+      title: z statistic
       type: Bool
       default: true
       description:
@@ -133,7 +133,7 @@ options:
             Bootstrap CIs.            
 
     - name: descps
-      title: Descriptives Table
+      title: Descriptive statistics
       type: Bool
       default: false
       description:
@@ -141,7 +141,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide descriptive statistics
 
     - name: plotsps
-      title: Descriptives Plots
+      title: Descriptive plots
       type: Bool
       default: false
       description:

@@ -191,7 +191,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="mwutest",
-                title="Mann-Whitney U Test and effect sizes",
+                title="Mann-Whitney U test and effect sizes",
                 rows="(vars)",
                 visible="(mwu || zstat || pSup || rankCorr || fstat)",
                 clearWith=list(
@@ -353,7 +353,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="cisHL",
-                title="Hodges-Lehmann Estimator CIs",
+                title="Hodges-Lehmann confidence intervals",
                 visible="(ciHL)",
                 rows="(vars)",
                 clearWith=list(

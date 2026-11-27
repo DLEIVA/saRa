@@ -21,32 +21,32 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           negbinom=.("X counts failures before the requested number of successes (0, 1, 2, ...)."),NULL)
         self$results$InfoTab$setNote("counting",convention)
 
-        .saraDiscreteUpper(self$options)
+        .saraDiscreteUpper(self$options, translate=function(message) .saraMessage(message,self))
           distros <- self$options$distros
           InfoTab <- self$results$InfoTab
           probstab <- self$results$probstab
           quantstab <- self$results$quantstab
           
           if (distros=='binom'){
-            distroslabel <- 'Binomial'
+            distroslabel <- .('Binomial')
             param1 <- paste('n:',self$options$binomn)
             param2 <- paste('p:',self$options$binomp)  
             paramlabel <- paste(param1,param2,sep='; ')
           } else if (distros=='poiss'){
-            distroslabel <- 'Poisson'
+            distroslabel <- .('Poisson')
             param1 <- paste('\u3bb:',self$options$lambda)
             paramlabel <- param1
           } else if (distros=='negbinom'){
-            distroslabel <- 'Negative Binomial'
+            distroslabel <- .('Negative Binomial')
             param1 <- paste('r:',self$options$negbinomr)
             param2 <- paste('p:',self$options$negbinomp)  
             paramlabel <- paste(param1,param2,sep='; ')
           } else if (distros=='geom'){
-            distroslabel <- 'Geometric'
+            distroslabel <- .('Geometric')
             param1 <- paste('p:',self$options$geomp)
             paramlabel <- param1
           } else if (distros=='hypergeom'){
-            distroslabel <- 'Hypergeometric'
+            distroslabel <- .('Hypergeometric')
             param1 <- paste('m:',self$options$hyperm)
             param2 <- paste('n:',self$options$hypern)
             param3 <- paste('k:',self$options$hyperk)
@@ -215,13 +215,11 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
         if(any(!is.finite(as.numeric(probValues)))){
-          jmvcore::reject(paste0('Random variable values must be non-negative integers (',
-                                 paste0(unlist(strsplit(self$options$valuesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$valuesfunc, ","))))],collapse=','),').'))          
+          jmvcore::reject(jmvcore::format(.("Random variable values must be non-negative integers ({})."), paste0(unlist(strsplit(self$options$valuesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$valuesfunc, ","))))],collapse=',')))          
         }        
         if(any(!(probValues%%1==0 & sign(probValues)>=0))){
-          jmvcore::reject(paste0("Random variable values must be non-negative integers (",
-                                 paste0(probValues[!(probValues%%1==0 & sign(probValues)>=0)],
-                                        collapse=','),")."))
+          jmvcore::reject(jmvcore::format(.("Random variable values must be non-negative integers ({})."), paste0(probValues[!(probValues%%1==0 & sign(probValues)>=0)],
+                                        collapse=',')))
         }
         probValues <- sort(unique(probValues[!is.na(probValues)]))
         return(probValues)
@@ -231,13 +229,11 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (!is.na(quantValues) && is.character(quantValues))
         quantValues <- as.numeric(unlist(strsplit(quantValues, ",")))
       if(any(is.na(as.numeric(quantValues)))){
-        jmvcore::reject(paste0('Random variable values must be a real number between 0 and 1(',
-                               paste0(unlist(strsplit(self$options$qvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$qvalues, ","))))],collapse=','),').'))          
+        jmvcore::reject(jmvcore::format(.("Random variable values must be a real number between 0 and 1({})."), paste0(unlist(strsplit(self$options$qvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$qvalues, ","))))],collapse=',')))          
       }
       if(any(quantValues<0 | quantValues>1)){
-        jmvcore::reject(paste0("Quantile values must be real numbers between 0 and 1 (",
-                               paste0(quantValues[quantValues<0 | quantValues>1],
-                                      collapse=','),")."))
+        jmvcore::reject(jmvcore::format(.("Quantile values must be real numbers between 0 and 1 ({})."), paste0(quantValues[quantValues<0 | quantValues>1],
+                                      collapse=',')))
       }      
       quantValues <- sort(unique(quantValues[!is.na(quantValues)]))
       return(quantValues)

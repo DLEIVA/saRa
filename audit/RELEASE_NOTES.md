@@ -1,40 +1,30 @@
-# saRa 1.0.0 — candidato consolidado, 27 de noviembre de 2026
+# saRa 1.0.0 — follow-up audit changes
 
-## Cambios incluidos
+- Correct statistical calculations and edge-case handling covered by the audit.
+- Remove the regression add-on and its private image bridge.
+- Complete translation marking, label harmonization and decomposition of the
+  numeric, ordinal and nominal routines named in the report.
+- Remove redundant proportions and cumulative proportions from every univariate
+  frequency table; percentages use non-missing observations.
+- Preserve categorical plot theme typography and backgrounds. Pie and doughnut
+  explicitly use the multicolour jmv palette requested by the module author;
+  their fills do not follow other global palette choices. Doughnut percentages
+  are inside the ring, with categories in the legend.
+- Include empirical/normalized Gini and the independent Lorenz curve from the
+  preceding validated candidate.
 
-- Correcciones en resúmenes numéricos y ordinales, valores almacenados,
-  medias/desviaciones geométricas, SP50/SP80 y tratamiento de ausentes.
-- Frecuencias coherentes con el tipo de variable: acumuladas en ordinales y
-  numéricas; tablas nominales sin acumuladas y opciones alineadas.
-- Índices bivariantes revisados, empates y dirección ordinal, notas para
-  índices no definidos y visibilidad de tablas nominales sin casillas activas.
-- Gini empírico y normalizado con una casilla; curva de Lorenz independiente,
-  ggplot2, tema/paleta de jamovi y explicaciones para datos no admisibles.
-- Normality Tests ejecuta solo las pruebas seleccionadas; errores por celda,
-  aviso de K-S sin corrección y Q-Q/ECDF por grupo sin bloquear grupos válidos.
-- Ventanas de representación adaptadas, soporte uniforme, cuantiles infinitos,
-  sombreado y marcadores discretos sin alterar probabilidades calculadas.
-- Correcciones de Mann-Whitney y Wilcoxon: rangos, empates, dirección,
-  superioridad, intervalos de medianas/HL y explicaciones con muestras mínimas.
-- Gráficos y tablas compatibles con los nombres especiales comprobados.
-- Biblioteca de ocho conjuntos; referencias y dependencias revisadas.
+Validation: author-reported full suite, 2,107 expectations passed, zero failures,
+warnings or skips (22.5 s). Compilation/installation and recorded GUI, OMV reopening,
+HTML and PDF checks confirmed by the author on Ubuntu. These are not independent
+cross-platform checks. Language catalogues are not included.
 
-## Alcance y validación
+The final 113-path source comparison is reconciled. The author-reported new JMO
+SHA-256 is:
 
-No se añade inferencia a los módulos descriptivos univariantes/bivariantes.
-El add-on de la regresión de jamovi está retirado del registro. Se conservan
-auxiliares matemáticos sin registrar para desarrollo independiente futuro.
-Traducciones 1.1.0 y reorganización del menú aplazadas.
+```text
+20bdc32ce37742b1b2e77e2735573381e5e23bc8819bbe804a5ded09b69fb865
+```
 
-Última suite del usuario: 1878 comprobaciones, 0 fallos/advertencias/omisiones.
-GUI y exportaciones aceptadas para los casos registrados; los nombres
-especiales y visibilidad final se confirmaron en GUI. Ver los límites y el
-entorno en VALIDATION_STATUS.json. No es todavía una publicación: queda crear el commit del candidato. El
-cotejo de los 110 archivos, la identificación del binario y la comprobación
-conjunta final están completados.
-
-## Cierre previo al commit
-
-JMO final identificado y comprobación conjunta final confirmada por el usuario.
-Nombre/hash y límites de evidencia en FINAL_ACCEPTANCE_2026-11-27.json.
-Candidato listo para commit revisado; no publicado ni fusionado.
+The follow-up commit identifier remains to be recorded after committing. The
+previous JMO hash identifies a different binary. Full point-by-point response:
+JAMOVI_AUDIT_RESPONSE_2026-11-27.md.

@@ -1,0 +1,138 @@
+{
+  "date": "2026-11-27",
+  "module": "saRa",
+  "version": "1.0.0",
+  "branch_expected": "fix/audit-submission-followup",
+  "branch_verified_for_final_closeout": false,
+  "base_commit": "a4f850848ccc76cb58f41bd714853f409de80de8",
+  "candidate_commit": null,
+  "overall_status": "FOLLOW-UP TESTS AND RECORDED GUI/EXPORT CHECKS ACCEPTED; FINAL LOCAL SOURCE RECONCILIATION AND NEW ARTIFACT IDENTITY PENDING",
+  "automated_validation": {
+    "source": "User-supplied testthat console output",
+    "command": "testthat::test_local(\".\")",
+    "pass": 2107,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 22.5,
+    "contexts": {
+      "audit-review": 190,
+      "audit-statistics": 242,
+      "categorical-plot-order": 96,
+      "categorical-plot-theme": 128,
+      "categorical-table-visibility": 108,
+      "continuous-shading": 124,
+      "distribution-display-window": 34,
+      "frequency-range": 11,
+      "frequency-tables": 55,
+      "gini-lorenz": 97,
+      "mann-whitney-median-intervals": 376,
+      "mann-whitney-superiority": 12,
+      "mixed-effect-footnotes": 36,
+      "nominal-refactor": 49,
+      "normality-footnotes": 36,
+      "normality-histograms": 15,
+      "normality-plot-messages": 62,
+      "numeric-frequency-tables": 38,
+      "numeric-qq-message": 35,
+      "ordinal-association-notes": 63,
+      "ordinal-plot-theme": 76,
+      "translation-output": 41,
+      "uniform-plot-jumps": 55,
+      "uniform-support": 52,
+      "wilcoxon-hl-confidence": 76
+    },
+    "independently_executed_here": false
+  },
+  "environment": {
+    "os": "Ubuntu 22.04.5 LTS",
+    "architecture": "x86_64-pc-linux-gnu",
+    "test_R": "4.6.2 (2026-10-29)",
+    "testthat": "3.3.2",
+    "jmvtools": "28.4",
+    "jmvcore": "28.3",
+    "ggplot2": "4.0.3",
+    "DescTools": "0.99.60",
+    "WRS2": "1.1-7",
+    "rcompanion": "2.5.4",
+    "effectsize": "1.0.3",
+    "ggalluvial": "0.12.6",
+    "nortest": "1.0-4",
+    "jamovi_home": null,
+    "jmvtools_check": "jamovi 2.7.30 found at /usr/bin/flatpak",
+    "flatpak_metadata_version": "2.7.27",
+    "flatpak_subject": "Version 2.7.30 (19f193ffc130)",
+    "flatpak_active_commit": "e327557fb5ed856676649205e56f7bd9501c1939001ae7c5266871195712736b",
+    "flatpak_latest_commit": "bad119b14df2ce122f1d9c50cbb398fe8507b77a235f7afe0f9a1a8576f13316",
+    "embedded_R": "Not separately verified; test-session R is not assumed to be embedded R",
+    "note": "References to jamovi 28 in generated results do not establish the application version."
+  },
+  "manual_validation": {
+    "source": "User confirmations and supplied screenshots in the conversation",
+    "new_build_compiled_and_installed": true,
+    "frequency_tables": "All three univariate tables checked: proportions removed, counts/percentages/cumulatives and missing denominators accepted",
+    "polar_plots": "Screenshot confirms jmv multicolor palette in pie and doughnut, no axes/internal labels, percentages in ring, category-only legend",
+    "persistence_exports": "User confirmed generated files operational after requested OMV save, close/reopen and HTML/PDF export checks with five categorical plots",
+    "independent_export_inspection": false,
+    "prior_accepted_blocks": [
+      "univariate nominal, ordinal and numeric summaries and frequencies (scoped prior confirmations)",
+      "numerical and mixed descriptive bivariate values, plots and explanatory notes",
+      "nominal association reference values and table visibility",
+      "ordinal associations, ties, level order, directional Somers, constant and single-pair notes and recovery",
+      "continuous and discrete distribution tables, probability and quantile plots, parameter guards and finite windows (recorded cases)",
+      "Normality Tests: individual errors, grouped Q-Q/ECDF, constant/insufficient groups, legible messages and recovery",
+      "Mann-Whitney and paired Wilcoxon corrections, median/HL intervals and recorded edge cases (prior confirmations)",
+      "Gini, normalized Gini and Lorenz: reference values, equal values, concentration, zeros, negatives, missing values, single observation and recovery",
+      "non-syntactic variable names: spaces, initial number, accents and backtick; nominal bars/mosaic, ordinal bars/heatmap/alluvial, numerical scatter/linear fit and density/histogram/boxplot marginals",
+      "all eight example datasets open and are operational"
+    ],
+    "scope_limit": "Earlier accepted blocks remain historical validation; no claim of a fresh complete manual rerun of every analysis after follow-up"
+  },
+  "scope_decisions": {
+    "regression_addon": "Entire add-on removed, including private image bridge and registration; mathematical helpers remain unregistered",
+    "translation_marking": "Implemented, including complete templates and shared output callbacks; language catalogues not included",
+    "polar_palette": "Explicit user-requested jmv palette for pie/doughnut; other global palettes do not change their fills; typography/background continue to follow ggtheme",
+    "frequencies": "Proportions and cumulative proportions removed from all three univariate tables; percentages exclude missing values",
+    "descriptive_modules": "No inferential tests or confidence intervals added"
+  },
+  "latest_audit": {
+    "findings": 22,
+    "addressed_by_correction": 19,
+    "addressed_by_addon_removal": 2,
+    "addressed_with_declared_design_exception": 1,
+    "response_file": "audit/JAMOVI_AUDIT_RESPONSE_2026-11-27.md",
+    "unresolved_reported_statistical_defects_identified": []
+  },
+  "final_artifact": {
+    "filename": "saRa_1.0.0.jmo",
+    "sha256": null,
+    "status": "New compiled/installed build manually accepted; hash requested from user",
+    "independently_received_or_hashed": false
+  },
+  "historical_candidate": {
+    "source_commit": "cc15a0dcbad46671f8d8f1a74197252d1ba0de3f",
+    "merged_main_snapshot": "a4f850848ccc76cb58f41bd714853f409de80de8",
+    "jmo_sha256": "163731acf8c0cee8f838c565e1da270178c35fdbada5ccd15a96fb5a16906b96",
+    "current_followup_binary": false,
+    "preserved_records": "audit/history/submission-followup-2026-11-27/"
+  },
+  "source_review": {
+    "reference_manifest": "audit/REVIEWED_FILES_2026-11-27.csv",
+    "reference_scope": "Reviewed assistant follow-up source snapshot; generated .h.R may differ after user compilation and must be reconciled",
+    "exact_final_user_tree_reconciled": false
+  },
+  "remaining": [
+    "Run updated file comparison and inspect any differences, including regenerated headers",
+    "Record actual branch, HEAD and final git status/diff",
+    "Record SHA-256 of the new saRa_1.0.0.jmo",
+    "Review staging and create follow-up commit, then identify its hash",
+    "Prepare PR/release/submission for the reviewed commit and new binary"
+  ],
+  "acceptance_limits": {
+    "publication_ready": false,
+    "ready_for_candidate_commit": false,
+    "new_binary_hash_recorded": false,
+    "cross_platform_validation_established": false,
+    "all_new_language_catalogues_validated": false
+  }
+}

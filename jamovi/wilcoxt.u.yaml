@@ -118,7 +118,7 @@ children:
             children:
               - type: CheckBox
                 name: descps
-                label: Descriptives
+                label: Descriptive statistics
               - type: CheckBox
                 name: plotsps
-                label: Descriptives plots
+                label: Descriptive plots

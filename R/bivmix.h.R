@@ -641,7 +641,7 @@ bivmixBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param rcv \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
 #'   the rcv
 #' @param irange \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
-#'   the Inner range
+#'   the inner range
 #' @param NPerc a number (detects by default the number) specifying the
 #'   percentage of data used
 #' @param min \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides the

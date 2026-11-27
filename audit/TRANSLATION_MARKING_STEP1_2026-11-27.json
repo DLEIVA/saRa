@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static inspection of the source tree containing this script; not R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 59,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 119,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true,
+  "base_main_commit": "a4f850848ccc76cb58f41bd714853f409de80de8",
+  "step": "1 — translation marking",
+  "runtime_status": "PASS — user-supplied full-suite testthat output",
+  "translation_extractor": "jamovi compiler i18n.js; temporary catalogue only",
+  "extracted_messages_before_final_cleanup": 599,
+  "shared_callback_literal_keys_unregistered": [],
+  "user_runtime": {
+    "command": "testthat::test_local(\".\")",
+    "pass": 1920,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 19.7,
+    "translation_output_expectations": 40,
+    "independently_executed": false,
+    "scope": "Step 1 tree before the label changes of Step 2"
+  }
+}

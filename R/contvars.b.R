@@ -27,17 +27,17 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (cdistros %in% c("expon", "expdist")) parameterNames <- "rate"
         for (parameter in parameterNames)
           if (!is.finite(self$options[[parameter]]) || self$options[[parameter]] <= 0)
-            jmvcore::reject("Scale, rate and degrees of freedom must be positive", code="invalid_distribution_parameters")
+            jmvcore::reject(.("Scale, rate and degrees of freedom must be positive"), code="invalid_distribution_parameters")
         if (cdistros %in% c("unif", "uniform") &&
             (!is.finite(self$options$unifmin) || !is.finite(self$options$unifmax) ||
              self$options$unifmin >= self$options$unifmax))
-          jmvcore::reject("Uniform minimum must be smaller than maximum", code="invalid_distribution_parameters")
+          jmvcore::reject(.("Uniform minimum must be smaller than maximum"), code="invalid_distribution_parameters")
         ContInfoTab <- self$results$ContInfoTab
         Contprobstab <- self$results$Contprobstab
         Contquantstab <- self$results$Contquantstab
         
         if (cdistros=='norm'){
-          cdistroslabel <- 'Normal'
+          cdistroslabel <- .('Normal')
           param1 <- paste('μ:',self$options$mu)
           param2 <- paste('σ:',self$options$sigma)  
           paramlabel <- paste(param1,param2,sep='; ')
@@ -55,11 +55,11 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           param2 <- paste('\u03BD\u2082:',self$options$f2nu)          
           paramlabel <- paste(param1,param2,sep='; ')
         } else if (cdistros=='exp'){
-          cdistroslabel <- 'Exponential'
+          cdistroslabel <- .('Exponential')
           param1 <- paste('\u03bb:',self$options$rate)
           paramlabel <- param1            
         } else if (cdistros=='unif'){
-          cdistroslabel <- 'Uniform'
+          cdistroslabel <- .('Uniform')
           param1 <- paste('\u03b1:',self$options$unifmin)
           param2 <- paste('\u03b2:',self$options$unifmax)
           paramlabel <- paste(param1,param2,sep='; ')            
@@ -235,12 +235,10 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
         if(any(is.na(as.numeric(probValues)))){
-          jmvcore::reject(paste0('Random variable values must be a real number (',
-                                 paste0(unlist(strsplit(self$options$contvaluesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$contvaluesfunc, ","))))],collapse=','),').'))          
+          jmvcore::reject(jmvcore::format(.("Random variable values must be a real number ({})."), paste0(unlist(strsplit(self$options$contvaluesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$contvaluesfunc, ","))))],collapse=',')))          
         }
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(any(probValues < 0)) jmvcore::reject(paste0('Random variable values must be non-negative (',
-                                                  paste0(probValues[probValues < 0],collapse=','),').')) 
+          if(any(probValues < 0)) jmvcore::reject(jmvcore::format(.("Random variable values must be non-negative ({})."), paste0(probValues[probValues < 0],collapse=','))) 
         }
         probValues <- sort(unique(probValues[!is.na(probValues)]))
         return(probValues)
@@ -250,12 +248,10 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(quantValues) && is.character(quantValues))
           quantValues <- as.numeric(unlist(strsplit(quantValues, ",")))
         if(any(is.na(as.numeric(quantValues)))){
-          jmvcore::reject(paste0('Random variable values must be a real number between 0 and 1(',
-                                 paste0(unlist(strsplit(self$options$contqvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$contqvalues, ","))))],collapse=','),').'))          
+          jmvcore::reject(jmvcore::format(.("Random variable values must be a real number between 0 and 1({})."), paste0(unlist(strsplit(self$options$contqvalues, ","))[is.na(as.numeric(unlist(strsplit(self$options$contqvalues, ","))))],collapse=',')))          
         }
         if(any(quantValues<0 | quantValues>1)){
-          jmvcore::reject(paste0('Quantile values must be between 0 and 1 (',
-                                 paste0(quantValues[quantValues<0 | quantValues>1],collapse=','),').'))
+          jmvcore::reject(jmvcore::format(.("Quantile values must be between 0 and 1 ({})."), paste0(quantValues[quantValues<0 | quantValues>1],collapse=',')))
         }
         quantValues <- sort(unique(quantValues[!is.na(quantValues)]))
         return(quantValues)
@@ -266,7 +262,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(ppval) && is.character(ppval))
           ppval <- as.numeric(unlist(strsplit(ppval, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(ppval<0) jmvcore::reject(paste0('Random variable value must be a non-negative number (',ppval,').')) 
+          if(ppval<0) jmvcore::reject(jmvcore::format(.("Random variable value must be a non-negative number ({})."), ppval)) 
         }
         ppval <- unique(ppval[!is.na(ppval)])
         return(ppval)
@@ -277,7 +273,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(X1val) && is.character(X1val))
           X1val <- as.numeric(unlist(strsplit(X1val, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(X1val<0) jmvcore::reject(paste0('X1 must be a non-negative number (',X1val,').'))
+          if(X1val<0) jmvcore::reject(jmvcore::format(.("X1 must be a non-negative number ({})."), X1val))
         }
         X1val <- unique(X1val[!is.na(X1val)])[1]
         return(X1val)
@@ -288,7 +284,7 @@ contvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(X2val) && is.character(X2val))
           X2val <- as.numeric(unlist(strsplit(X2val, ",")))
         if(cdistros%in%c('chisqdist','fdist','exp')){
-          if(X2val<0) jmvcore::reject(paste0('X2 must be a non-negative number (',X2val,').'))
+          if(X2val<0) jmvcore::reject(jmvcore::format(.("X2 must be a non-negative number ({})."), X2val))
         }
         X2val <- unique(X2val[!is.na(X2val)])[1]
         return(X2val)

@@ -15,7 +15,7 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             "mode","VR","Blau","Teachman","IQV"
           ),
           title = c(
-            "Mode","Variation ratio","Blau index","Teachman index","IQV"
+            .("Mode"),.("Variation ratio"),.("Blau index"),.("Teachman index"),.("IQV")
           ),
           superTitle = c(
             "","","","",""
@@ -58,7 +58,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       .initFreqTable = function() {
         if (!self$options$freq) return()
         .saraInitFrequencyTables(self$results$frequencies, self$data,
-                                self$options$vars, odds=TRUE)
+                                self$options$vars, odds=TRUE,
+          translate=function(message) .saraMessage(message,self))
       },
       .initIndicesTable = function() {
         table <- self$results$indices
@@ -192,7 +193,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       .populateFreqTable = function(results) {
         if (!self$options$freq) return()
         .saraPopulateFrequencyTables(self$results$frequencies, self$data,
-                                    self$options$vars, odds=TRUE)
+                                    self$options$vars, odds=TRUE,
+          translate=function(message) .saraMessage(message,self))
       },
       .populateIndicesTable = function(results) {
 #        if (self$options$indic != "columns")
@@ -388,30 +390,38 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         type <- image$state$type
         fill <- theme$fill[2]
         color <- theme$color[1]
-        plotSpecificTheme <- ggplot2::theme_void() +
-          ggplot2::theme(
-            axis.title.x = ggplot2::element_blank(),
-            axis.title.y = ggplot2::element_blank(),
-            panel.border = ggplot2::element_blank(),
-            panel.grid=ggplot2::element_blank(),
-            legend.title = ggplot2::element_blank(),
-            legend.key.size = grid::unit(1, 'cm'),
-            legend.text = ggplot2::element_text(size=14),
-            axis.ticks = ggplot2::element_blank(),
-            plot.title=ggplot2::element_text(size=14, face="bold")
-          )
+        textStyle <- .saraPlotTextStyle(ggtheme)
+        # Polar charts omit meaningless Cartesian axes, but keep the user's
+        # background, title/legend fonts and other theme settings.
+        plotSpecificTheme <- ggplot2::theme(
+          axis.title=ggplot2::element_blank(),
+          axis.title.x=ggplot2::element_blank(),
+          axis.title.y=ggplot2::element_blank(),
+          axis.text=ggplot2::element_blank(),
+          axis.text.x=ggplot2::element_blank(),
+          axis.text.y=ggplot2::element_blank(),
+          axis.ticks=ggplot2::element_blank(),
+          axis.ticks.x=ggplot2::element_blank(),
+          axis.ticks.y=ggplot2::element_blank(),
+          axis.line=ggplot2::element_blank(),
+          axis.line.x=ggplot2::element_blank(),
+          axis.line.y=ggplot2::element_blank(),
+          panel.grid=ggplot2::element_blank(),
+          legend.title=ggplot2::element_blank())
         
-        plot <- ggplot2::ggplot(data, ggplot2::aes(x=1, y=.data[[names$y]], fill=.data[[names$x]]))+
+        plot <- ggplot2::ggplot(data, ggplot2::aes(x=1, y=.data[[names$y]], fill=.data[[names$x]])) + ggtheme +
           ggplot2::geom_bar(stat='identity',width = 1)+
           ggplot2::coord_polar("y") +
-          ggplot2::scale_fill_manual(values=.saraPalette(theme$fill,nlevels(data[[names$x]]))) +
+          ggplot2::scale_fill_manual(values=jmvcore::colorPalette(nlevels(data[[names$x]]), pal="jmv", type="fill")) +
           ggplot2::theme(axis.text.x=ggplot2::element_blank())+
           ggplot2::guides(fill=ggplot2::guide_legend(override.aes=ggplot2::aes(label = ''))) +
           ggrepel::geom_label_repel(data = data,
                            ggplot2::aes(y=.data[[names$pos]], label=.data[[names$label]]),
-                                      nudge_x = .6, show.legend = FALSE, size = 3.5)
+                                      nudge_x=.6, show.legend=FALSE, size=textStyle$size,
+                                      family=textStyle$family, fontface=textStyle$face,
+                                      colour=theme$color[1])
         
-        plot <- plot + ggtheme + plotSpecificTheme
+        plot <- plot + ggplot2::labs(x=NULL, y=NULL) + plotSpecificTheme
         return(plot)
       },
       .doughnutPlot = function(image, ggtheme, theme, ...) {
@@ -424,16 +434,38 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         type <- image$state$type
         fill <- theme$fill[2]
         color <- theme$color[1]
-        plotSpecificTheme <- ggplot2::theme_void() + ggplot2::theme(legend.position='none')
+        textStyle <- .saraPlotTextStyle(ggtheme)
+        plotSpecificTheme <- ggplot2::theme(
+          axis.title=ggplot2::element_blank(),
+          axis.title.x=ggplot2::element_blank(),
+          axis.title.y=ggplot2::element_blank(),
+          axis.text=ggplot2::element_blank(),
+          axis.text.x=ggplot2::element_blank(),
+          axis.text.y=ggplot2::element_blank(),
+          axis.ticks=ggplot2::element_blank(),
+          axis.ticks.x=ggplot2::element_blank(),
+          axis.ticks.y=ggplot2::element_blank(),
+          axis.line=ggplot2::element_blank(),
+          axis.line.x=ggplot2::element_blank(),
+          axis.line.y=ggplot2::element_blank(),
+          panel.grid=ggplot2::element_blank(),
+          legend.title=ggplot2::element_blank(),
+          legend.position='right')
         
-        plot <- ggplot2::ggplot(data, ggplot2::aes(ymax=.data[[names$cumulative]], ymin=.data[[names$ymin]], xmax=4, xmin=3, fill=.data[[names$x]])) +
+        plot <- ggplot2::ggplot(data, ggplot2::aes(ymax=.data[[names$cumulative]], ymin=.data[[names$ymin]], xmax=4, xmin=2.5, fill=.data[[names$x]])) + ggtheme +
           ggplot2::geom_rect() +
-          ggplot2::geom_text( x=1.5, ggplot2::aes(y=.data[[names$labelPosition]], label=.data[[names$label]]), color=theme$color[1], size=4.5) +
+          ggplot2::geom_text(data=data[data[[names$y]] > 0,,drop=FALSE],
+            ggplot2::aes(x=3.25, y=.data[[names$labelPosition]],
+                         label=paste0(.data[[names$pct]], "%")),
+            inherit.aes=FALSE, show.legend=FALSE, color=color,
+            size=.75*textStyle$size, family=textStyle$family,
+            fontface=textStyle$face) +
           ggplot2::coord_polar(theta="y") +
           ggplot2::xlim(c(-1, 4)) +
-          ggplot2::scale_fill_manual(values=.saraPalette(theme$fill,nlevels(data[[names$x]])))
+          ggplot2::scale_fill_manual(
+            values=jmvcore::colorPalette(nlevels(data[[names$x]]), pal="jmv", type="fill"))
         
-        plot <- plot + ggtheme + plotSpecificTheme
+        plot <- plot + ggplot2::labs(x=NULL, y=NULL) + plotSpecificTheme
         return(plot)
       },
       .lolliPlot = function(image, ggtheme, theme, ...) {
@@ -460,8 +492,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             legend.position="none",
           ) +
           ggplot2::xlab("") +
-          ggplot2::ylab(if(freqtype=='absolutefreq') 'Counts' else
-            'Percentages')
+          ggplot2::ylab(if(freqtype=='absolutefreq') .('Counts') else
+            .('Percentages'))
         
         
           plot <- plot + ggtheme + plotSpecificTheme
@@ -478,21 +510,18 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         scaleRight <- image$state$scaleRight
         fill <- theme$fill[2]
         color <- theme$color[1]
-        plotSpecificTheme <- ggplot2::theme_classic() + 
-          ggplot2::theme(axis.text=ggplot2::element_text(size=12),
-                axis.title=ggplot2::element_text(size=14),
-                legend.position = 'none')
+        plotSpecificTheme <- ggplot2::theme(legend.position='none')
         
         plot <- ggplot2::ggplot(data, ggplot2::aes(x=.data[[names$x]])) +
           ggplot2::geom_bar(ggplot2::aes(y=.data[[names$y]]),fill=fill,
                    color=color,stat='identity') +
-          ggplot2::geom_point(ggplot2::aes(y=.data[[names$cumulative]]),col='grey',pch=16,size=4) +
-          ggplot2::geom_path(ggplot2::aes(y=.data[[names$cumulative]], group=1),lty=2,col='grey',
+          ggplot2::geom_point(ggplot2::aes(y=.data[[names$cumulative]]),col=theme$color[2],pch=16,size=4) +
+          ggplot2::geom_path(ggplot2::aes(y=.data[[names$cumulative]], group=1),lty=2,col=theme$color[2],
                     linewidth=0.7) +
           ggplot2::scale_y_continuous(sec.axis=ggplot2::sec_axis(~.*scaleRight, 
-                                               name = "Cumulative percent (%)",
+                                               name = .("Cumulative percent (%)"),
                                                breaks=seq(0,100,20))) +
-          ggplot2::ylab('Counts') + ggplot2::xlab('')
+          ggplot2::ylab(.('Counts')) + ggplot2::xlab('')
           
         plot <- plot + ggtheme + plotSpecificTheme
         return(plot)
@@ -520,8 +549,8 @@ catSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             fill=fill,
             color=color
           ) +
-          ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') 'Counts' else
-            'Percentages')
+          ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') .('Counts') else
+            .('Percentages'))
         
         plot <- plot + ggtheme + plotSpecificTheme
         return(plot)

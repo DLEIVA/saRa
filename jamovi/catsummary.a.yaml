@@ -42,20 +42,20 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide the variation ratio
       
     - name: Blau
-      title: Blau
+      title: Blau index
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default: `FALSE`), provide the Blau's Index
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Blau index
             
     - name: Teachman
-      title: Teachman
+      title: Teachman index
       type: Bool
       default: false
       description:
           R: >
-            `TRUE` or `FALSE` (default: `FALSE`), provide the Teachman's Index
+            `TRUE` or `FALSE` (default: `FALSE`), provide the Teachman index
             
     - name: IQV
       title: IQV

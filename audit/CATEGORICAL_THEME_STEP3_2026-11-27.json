@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static inspection of the source tree containing this script; not R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 60,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 123,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true,
+  "step": "3 — categorical plot themes",
+  "runtime_status": "PASS — user-supplied full-suite testthat output",
+  "baseline_user_suite": {
+    "pass": 1920,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 19.8,
+    "scope": "Step 2 before this patch"
+  },
+  "new_test_blocks": 4,
+  "known_prior_step_errata_fixed": [
+    "ggplot2::ylab. replaced by ggplot2::ylab with a translation marker",
+    "jmvcore::createError. replaced by jmvcore::createError with a translation marker"
+  ],
+  "manual_visual_check": "Pending final jamovi recompilation; include pie, doughnut and Pareto under at least two themes/palettes",
+  "user_runtime": {
+    "pass": 2005,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 21.4,
+    "categorical_plot_theme_expectations": 85,
+    "independently_executed": false,
+    "scope": "Step 3 before the refactor in Step 4"
+  }
+}

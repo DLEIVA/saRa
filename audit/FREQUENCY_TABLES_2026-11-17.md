@@ -1,3 +1,9 @@
+> Superseded on 27 November 2026: proportion and cumulative proportion
+> columns are removed from all three univariate frequency tables, including
+> numerical data. Counts, percentages, ordered cumulative values and nominal
+> odds remain. See FREQUENCY_COLUMNS_STEP5_2026-11-27.md.
+> The original decisions and validation history below are preserved.
+
 # Nominal and ordinal frequency-table separation — 17 November 2026
 
 ## Approved behaviour

@@ -1,37 +1,22 @@
-# Lista de aceptación saRa 1.0.0 — 27 de noviembre de 2026
+# Validación GUI — seguimiento del último audit
 
-Este documento sustituye la lista acumulativa anterior, archivada en
-history/pre-consolidation-2026-11-27/GUI_CHECKLIST.md. No deben repetirse
-comprobaciones ya aceptadas salvo cambios relevantes en el código.
+Evidencia: confirmaciones y capturas del usuario en Ubuntu; no ejecución GUI independiente.
 
-## Bloques aceptados para los casos registrados
+| Comprobación del nuevo compilado | Estado |
+|---|---|
+| Compilación e instalación | Confirmadas |
+| Frecuencias categóricas, ordinales y numéricas sin proporciones redundantes | Confirmadas |
+| Porcentajes válidos, acumulados y Missing en el ejemplo 1,1,2,3,NA | Confirmados |
+| Sectores y anillo con 12 categorías y paleta multicolor jmv | Captura aportada |
+| Ejes y nombres internos ocultos en ambos gráficos | Captura aportada |
+| Porcentajes dentro del anillo y leyenda solo de categorías | Captura aportada |
+| Conjunto de cinco gráficos: guardado OMV y cierre/reapertura | Usuario confirma archivos operativos tras la solicitud |
+| Exportaciones HTML y PDF | Usuario confirma archivos operativos tras la solicitud |
+| Identidad SHA-256 del nuevo JMO | Registrada desde salida local del usuario |
+| Cotejo de 113 rutas con CSV y encabezados suministrados | Completado |
 
-- [x] Resúmenes y frecuencias nominales, ordinales y numéricas.
-- [x] Asociaciones descriptivas numéricas, ordinales y nominales; efectos mixtos.
-- [x] Distribuciones continuas y discretas: resultados, gráficos y casos límite.
-- [x] Normality Tests: mensajes individuales, ECDF/Q-Q agrupados y recuperación.
-- [x] Correcciones de Mann-Whitney y Wilcoxon y casos límite registrados.
-- [x] Gini, Gini normalizado y curva de Lorenz; controles, avisos y recuperación.
-- [x] Visibilidad de las tres tablas nominales y selección individual de índices.
-- [x] Nombres especiales en gráficos y tablas bivariantes nominales/ordinales/numéricas.
-- [x] Apertura y operatividad de los ocho conjuntos de la biblioteca.
-- [x] OMV/HTML/PDF para los bloques confirmados, incluidos Gini/Lorenz y notas ordinales.
-
-## Cierre de validación y commit
-
-- [x] Cotejados los 110 archivos del inventario de código/datos/pruebas del usuario.
-- [x] Revisados tests/gui/frequency-selectors.cjs (ejecutado en Node) y el JSON histórico nortest.
-- [x] Identificado saRa_1.0.0.jmo con SHA-256 del usuario; comprobado
-      instalación tras reinicio, una reapertura OMV y exportación HTML/PDF conjunta.
-      Confirmación conjunta final del usuario recibida; ver FINAL_ACCEPTANCE_2026-11-27.json.
-- [ ] Registrar el nuevo commit del candidato; el HEAD comunicado es la base.
-
-La prueba final conjunta ya fue confirmada por el usuario; no se exige
-repetir las exportaciones anteriores por este cierre documental. No se afirma compatibilidad multiplataforma del último
-candidato a partir de pruebas anteriores en Windows.
-
-## Fuera del alcance actual
-
-Traducciones 1.1.0, reorganización de menús y regresión independiente.
-La revisión de una API privada del antiguo add-on de regresión no es un
-requisito de este candidato: ese add-on está excluido.
+La última captura no prueba por sí sola el cambio entre dos temas o paletas.
+Los casos automatizados comprueban fuentes, fondo y escalas, y la selección fija
+jmv es deliberada en sectores/anillo. No se declara inspección independiente de
+los archivos OMV/HTML/PDF ni validación multiplataforma del nuevo compilado.
+Los casos manuales previos permanecen en history/submission-followup-2026-11-27/GUI_CHECKLIST.md.

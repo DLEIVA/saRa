@@ -13,7 +13,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           groupName <- self$options$groupBy
           variables <- self$options$vars
           if (!is.null(groupName) && groupName %in% variables)
-            jmvcore::reject("Grouping variable must not also be a dependent variable",
+            jmvcore::reject(.("Grouping variable must not also be a dependent variable"),
                             code="a_is_dependent_variable")
           tests <- c("chisqtest","kstest","swtest","adtest",
                      "lillietest","sftest","cvmtest")
@@ -37,7 +37,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 pColumn <- paste0("p[", testName, "]")
                 if (inherits(result, "error")) {
                   table$setRow(rowKey=key, setNames(list(NaN, NaN), c(statColumn, pColumn)))
-                  table$addFootnote(rowKey=key, statColumn, conditionMessage(result))
+                  table$addFootnote(rowKey=key, statColumn, .saraMessage(conditionMessage(result),self))
                 } else {
                   table$setRow(rowKey=key, setNames(list(unname(result$statistic), result$p.value), c(statColumn, pColumn)))
                 }
@@ -217,7 +217,7 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }
           
           plot <- ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[names$x]])) +
-            ggplot2::labs(x=labels$x, y='density') +
+            ggplot2::labs(x=labels$x, y=.('density')) +
             ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
             {if(self$options$hist) ggplot2::geom_histogram(
               ggplot2::aes(y=ggplot2::after_stat(density)),
@@ -245,12 +245,12 @@ testnormClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     .qq = function(image, ggtheme, theme, ...) {
       if (is.null(image$state)) return(FALSE)
       .saraNormalityPlot(self$data, image$state, self$options$groupBy,
-                        "qq", ggtheme, translate=function(message) .(message))
+                        "qq", ggtheme, translate=function(message) .saraMessage(message,self))
     },
     .ecdf = function(image, ggtheme, theme, ...) {
       if (is.null(image$state)) return(FALSE)
       .saraNormalityPlot(self$data, image$state, self$options$groupBy,
-                        "ecdf", ggtheme, translate=function(message) .(message))
+                        "ecdf", ggtheme, translate=function(message) .saraMessage(message,self))
     }
   )
 )

@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static inspection of the source tree containing this script; not R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 61,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 129,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true,
+  "step": "6 — polar chart axes and doughnut label layout",
+  "runtime_status": "PASSED after test-only removal of ggplot2 pos attribute",
+  "baseline_user_suite": {
+    "pass": 2064,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 23.7
+  },
+  "reported_visual_defects": [
+    "Cartesian axes and internal labels visible in pie/doughnut",
+    "Overlapping doughnut labels with 12 categories"
+  ],
+  "new_JMO_validated": false,
+  "user_runtime": {
+    "pass": 2088,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 21.6
+  },
+  "first_user_runtime": {
+    "pass": 2087,
+    "fail": 1,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 24.6,
+    "cause": "get_labels retained pos attribute after unname; test corrected to as.character"
+  }
+}

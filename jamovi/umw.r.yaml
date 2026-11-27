@@ -6,7 +6,7 @@ refs: [DescTools, rcompanion]
 
 items:
 - name: mwutest
-  title: Mann-Whitney U Test and effect sizes
+  title: Mann-Whitney U test and effect sizes
   description: a table containing the Mann-Whitney U test results
   type: Table
   rows: (vars)
@@ -142,7 +142,7 @@ items:
     title: Upper bound
     type: number
 - name: cisHL
-  title: Hodges-Lehmann Estimator CIs
+  title: Hodges-Lehmann confidence intervals
   type: Table
   description: a table containing confidence interval estimates for HL estimator
   visible: (ciHL)
