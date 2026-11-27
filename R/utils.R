@@ -50,7 +50,7 @@
   if (any(!is.finite(d))) stop("Infinite paired differences are not supported")
   d <- d[d != 0]
   n <- length(d)
-  if (n == 0L) return(list(statistic=NaN, p.value=NaN, correlation=NaN, W=0, n=0))
+  if (n == 0L) stop("All observations are tied")
   ranks <- rank(abs(d))
   W <- sum(ranks[d > 0])
   ties <- table(abs(d))
@@ -70,7 +70,8 @@
   ranks <- rank(dep)
   U <- sum(ranks[group == levels(group)[1]]) - n[1]*(n[1]+1)/2
   variance <- prod(n)/12 * (N+1-sum(ties^3-ties)/(N*(N-1)))
-  z <- if (variance > 0) (U-prod(n)/2)/sqrt(variance) else NaN
+  if (!is.finite(variance) || variance<=0) stop("All observations are tied")
+  z <- (U-prod(n)/2)/sqrt(variance)
   list(statistic=z, p.value=.saraTailP(z, alternative), U=U, n=n, t=as.numeric(ties))
 }
 
@@ -94,6 +95,11 @@
 .saraPlotFrame <- function(data, state) {
   frame <- data[unlist(state$labels, use.names=FALSE)]
   frame[[1]] <- jmvcore::toNumeric(frame[[1]])
+  if (!is.numeric(frame[[1]])) {
+    frame <- frame[FALSE,,drop=FALSE]
+    names(frame) <- unlist(state$names,use.names=FALSE)
+    return(frame)
+  }
   frame <- frame[complete.cases(frame) & is.finite(frame[[1]]), , drop=FALSE]
   names(frame) <- unlist(state$names, use.names=FALSE)
   frame
@@ -208,6 +214,8 @@
 }
 
 .saraRankTestError <- function(message) {
+  if (grepl("not enough",message,fixed=TRUE) && grepl("observations",message,fixed=TRUE))
+    return("One or both variables do not contain enough observations")
   switch(message,
     "grouping factor must have exactly 2 levels" = "One or both groups do not contain enough observations",
     "not enough observations" = "One or both groups do not contain enough observations",
@@ -221,9 +229,42 @@
   switch(hypothesis, oneGreater="greater", twoGreater="less", "two.sided")
 }
 
+# Central order-statistic interval from the exact binomial sign distribution.
+# With k=0 no finite endpoints can attain the requested coverage.
+.saraExactMedianCI <- function(x,conf.level=.95) {
+  if (length(conf.level)!=1L || !is.finite(conf.level) ||
+      conf.level<=0 || conf.level>=1)
+    stop("Confidence level must be between zero and one")
+  if (!is.numeric(x) || !length(x) || any(!is.finite(x)))
+    stop("Exact median confidence interval requires finite observations")
+  x <- sort(x)
+  n <- length(x)
+  k <- stats::qbinom((1-conf.level)/2,n,.5)
+  bounds <- if (k==0) c(-Inf,Inf) else c(x[k],x[n-k+1])
+  result <- setNames(c(stats::median(x),bounds),c("median","lwr.ci","upr.ci"))
+  attr(result,"conf.level") <- if (k==0) 1 else 1-2*stats::pbinom(k-1,n,.5)
+  result
+}
+
 # Shared exact/bootstrap median-CI assembly. Samples retain their input order.
-.saraMedianIntervals <- function(samples, method, conf.level, R=999) {
+.saraMedianIntervals <- function(samples, method, conf.level, R=999, details=FALSE) {
   if (!method %in% c("exact","boot")) stop("Unknown median confidence-interval method")
+  if (details) {
+    records <- lapply(samples,function(x) tryCatch({
+      result <- if (method=="exact")
+        .saraExactMedianCI(x,conf.level=conf.level)
+      else .saraBootstrapMedian(x,conf.level=conf.level,R=R)
+      level <- if (method=="exact") attr(result,"conf.level") else conf.level
+      # Older DescTools versions may omit confidence metadata.
+      if (length(level)!=1L || !is.finite(level) || level<=0 || level>1)
+        level <- NA_real_
+      list(values=unname(result[2:3]),confidence=level,error=NULL)
+    },error=function(e) list(values=c(NaN,NaN),confidence=NA_real_,
+                            error=conditionMessage(e))))
+    return(list(values=t(vapply(records,function(x) x$values,numeric(2))),
+      confidence=vapply(records,function(x) x$confidence,numeric(1)),
+      errors=lapply(records,function(x) x$error)))
+  }
   t(vapply(samples, function(x) {
     if (method == "exact")
       DescTools::MedianCI(x, conf.level=conf.level, method="exact")[2:3]
@@ -231,21 +272,76 @@
   }, numeric(2)))
 }
 
+.saraMedianConfidenceHeading <- function(levels,requested,translate=identity) {
+  valid <- levels[is.finite(levels) & levels>0 & levels<=1]
+  if (length(valid)!=length(levels) || !length(valid))
+    return(translate("Confidence Interval (requested level; see notes)"))
+  valid <- unique(signif(valid,10))
+  if (length(valid)>1L)
+    return(translate("Confidence Interval (level reported per group)"))
+  sprintf(translate("%s%% Confidence Interval"),
+    trimws(formatC(100*valid,format="fg",digits=8,width=0)))
+}
+
+.saraMWMedianPlotLabel <- function(state,width,translate=identity) {
+  if (!is.null(state) && any(is.infinite(state$lower) | is.infinite(state$upper)))
+    return(translate("Median (unbounded intervals; see table)"))
+  if (!is.null(state) && "confidence" %in% names(state) &&
+      any(!is.finite(state$confidence) | abs(state$confidence-width/100)>1e-8))
+    return(translate("Median (confidence intervals reported in table)"))
+  .saraMedianPlotLabel(state,width,translate)
+}
+
 # Same output contract for paired differences and independent group shifts.
-.saraHodgesLehmann <- function(x, y=NULL, group=NULL, paired=FALSE, conf.level=.95) {
+.saraHodgesLehmann <- function(x, y=NULL, group=NULL, paired=FALSE, conf.level=.95, details=FALSE) {
+  if (paired && is.null(group)) {
+    differences <- x-y
+    differences <- differences[!is.na(differences)]
+    if (length(differences)>0L && all(differences==0))
+      stop("Hodges-Lehmann confidence interval is unavailable because all paired differences are zero.")
+    if (length(differences)==1L) {
+      values <- c(differences,NaN,NaN)
+      if (!details) return(values)
+      return(list(values=values,confidence=NULL,
+        note="Hodges-Lehmann confidence interval is unavailable because only one complete pair is available."))
+    }
+  }
   if (is.null(group))
     result <- stats::wilcox.test(x,y,paired=paired,conf.int=TRUE,conf.level=conf.level)
   else {
     data <- data.frame(value=x,group=group)
+    complete <- !is.na(data$value) & !is.na(data$group)
+    observed <- data$value[complete]
+    if (length(unique(data$group[complete]))==2L &&
+        length(observed)>0L && length(unique(observed))==1L)
+      stop("Hodges-Lehmann confidence interval is unavailable because all observations are tied.")
+    samples <- split(data$value[complete],droplevels(factor(data$group[complete])))
+    if (length(samples)==2L && all(lengths(samples)==1L)) {
+      values <- c(unname(samples[[1]]-samples[[2]]),NaN,NaN)
+      if (!details) return(values)
+      return(list(values=values,confidence=NULL,
+        note="Hodges-Lehmann confidence interval is unavailable because only one observation per group is available."))
+    }
     result <- stats::wilcox.test(value~group,data=data,conf.int=TRUE,conf.level=conf.level)
   }
-  unname(c(result$estimate,result$conf.int))
+  values <- unname(c(result$estimate,result$conf.int))
+  if (!details) return(values)
+  list(values=values, confidence=attr(result$conf.int, "conf.level"))
+}
+
+.saraHLConfidenceNote <- function(requested, returned, translate=identity) {
+  if (length(returned) != 1L || !is.finite(returned) || returned<=0 || returned>=1 ||
+      abs(returned-requested) <= 1e-8) return(NULL)
+  sprintf(translate("Requested confidence level %s%% is not reachable, %s%% reported instead"),
+          trimws(formatC(100*requested, format="fg", digits=8, width=0)),
+          trimws(formatC(100*returned, format="fg", digits=8, width=0)))
 }
 
 .saraMWEffects <- function(dep, group) {
   ranks <- .saraMWZ(dep,group)
   denominator <- prod(ranks$n)
-  list(correlation=1-2*ranks$U/denominator,
+  list(superiority=ranks$U/denominator,
+       correlation=1-2*ranks$U/denominator,
        f=max(ranks$U,denominator-ranks$U)/denominator)
 }
 
@@ -310,10 +406,12 @@
   try({
     if (is.factor(data$dep)) stop("Variable is not numeric")
     if (any(is.infinite(data$dep))) stop("Variable contains infinite values")
+    values <- data$dep[!is.na(data$dep)]
+    if(length(values)>0L && length(unique(values))==1L) stop("All observations are tied")
     suppressWarnings(switch(test,
       mwu=stats::wilcox.test(dep~group,data=data,alternative=alternative,conf.level=conf.level),
       zstat=.saraMWZ(data$dep,data$group,alternative),
-      pSup=list(statistic=rcompanion::wilcoxonPS(dep~group,data=data)[[1]]),
+      pSup=list(statistic=.saraMWEffects(data$dep,data$group)$superiority),
       rankCorr=list(statistic=.saraMWEffects(data$dep,data$group)$correlation),
       fstat=list(statistic=.saraMWEffects(data$dep,data$group)$f),
       stop("Unknown Mann-Whitney output")))
@@ -333,6 +431,47 @@
   !failed
 }
 
+# jmvcore's Unicode superscript alphabet omits c (and other letters).
+# Render a complete alphabet with supported HTML symbols and table notes instead.
+.saraLetterMarker <- function(index) {
+  marker <- ""
+  while (index>0L) {
+    index <- index-1L
+    marker <- paste0(letters[index%%26L+1L],marker)
+    index <- index%/%26L
+  }
+  marker
+}
+.saraTableLetterNotes <- function(table) {
+  prefix <- "sara_letter_"
+  for (key in names(table$notes))
+    if (startsWith(key,prefix)) table$setNote(key,NULL)
+  notes <- character()
+  for (row in seq_len(table$rowCount)) {
+    for (column in table$columns) {
+      if (!column$visible) next
+      cell <- column$getCell(row)
+      texts <- unique(as.character(cell$footnotes))
+      if (!length(texts)) next
+      cell$footnotes <- character()
+      cell$sups <- integer()
+      for (note in texts) {
+        index <- match(note,notes)
+        if (is.na(index)) {
+          notes <- c(notes,note)
+          index <- length(notes)
+          marker <- .saraLetterMarker(index)
+          table$setNote(paste0(prefix,index),paste0("<sup>",marker,"</sup> ",note),
+            init=FALSE)
+        }
+        table$addSymbol(col=column$name,rowNo=row,
+          paste0("<sup>",.saraLetterMarker(index),"</sup>"))
+      }
+    }
+  }
+  invisible(notes)
+}
+
 # Explicit plot schema: never rely on names produced by cbind() or CI methods.
 .saraMedianPlotData <- function(groups, medians, intervals) {
   if (!is.matrix(intervals) || nrow(intervals)!=length(groups) ||
@@ -342,8 +481,16 @@
     median=as.numeric(medians),lower=as.numeric(intervals[,1]),
     upper=as.numeric(intervals[,2]),type="median")
 }
+.saraMedianPlotLabel <- function(state, width, translate=identity) {
+  if (!is.null(state) && any(is.finite(state$median)) &&
+      !any(is.finite(state$median) & is.finite(state$lower) & is.finite(state$upper)))
+    return(translate("Median (confidence interval unavailable)"))
+  sprintf(translate("Median (%s%% CI)"),width)
+}
 .saraMedianPlot <- function(state, label, xLabel=NULL, yLabel=NULL,
-                            ggtheme=NULL, theme=NULL) {
+                            ggtheme=NULL, theme=NULL, legendPosition=NULL) {
+  if (identical(legendPosition,"bottom"))
+    label <- paste(strwrap(label,width=42),collapse="\n")
   if (is.null(state) || !any(is.finite(state$median)))
     stop("No finite medians are available for this plot")
   points <- state[is.finite(state$median),,drop=FALSE]
@@ -356,15 +503,19 @@
       ggplot2::aes(ymin=.data$lower,ymax=.data$upper),width=.1,
       linewidth=.8,colour=intervalColour)+
     ggplot2::geom_point(colour=colour,fill=fill,size=3)+
+    ggplot2::scale_x_discrete(limits=unique(as.character(state$group)))+
     ggplot2::labs(x=xLabel,y=yLabel)
   if (!is.null(ggtheme)) p <- p+ggtheme
-  p+ggplot2::scale_shape_manual(name="",values=c(median=22),labels=c(median=label))+
+  p <- p+ggplot2::scale_shape_manual(name="",values=c(median=22),labels=c(median=label))+
     ggplot2::theme(plot.margin=ggplot2::margin(8,12,8,8))
+  if (!is.null(legendPosition))
+    p <- p+ggplot2::theme(legend.position=legendPosition)
+  p
 }
 .saraDrawMedianPlot <- function(state,label,xLabel=NULL,yLabel=NULL,
-                                ggtheme=NULL,theme=NULL) {
+                                ggtheme=NULL,theme=NULL,legendPosition=NULL) {
   tryCatch({
-    print(.saraMedianPlot(state,label,xLabel,yLabel,ggtheme,theme))
+    print(.saraMedianPlot(state,label,xLabel,yLabel,ggtheme,theme,legendPosition))
     TRUE
   },error=function(e) {
     graphics::plot.new()
@@ -372,4 +523,58 @@
       conditionMessage(e)),width=55),collapse="\n"),cex=.85)
     TRUE
   })
+}
+
+# Empty defined levels are retained for display, excluded from association maths.
+.saraObservedTable <- function(tab) tab[rowSums(tab)>0,colSums(tab)>0,drop=FALSE]
+.saraNominalPrediction <- function(tab) {
+  keys <- c("lambdaGKab","lambdaGKba","lambdaGKsym","tauGKab","tauGKba","theilab","theilba","theilsym")
+  out <- setNames(as.list(rep(NaN,length(keys))),keys)
+  tab <- .saraObservedTable(tab)
+  n <- sum(tab)
+  if (n<=0 || any(dim(tab)<2L)) return(out)
+  rows <- rowSums(tab); columns <- colSums(tab)
+  maxRows <- max(rows); maxCols <- max(columns)
+  gainRows <- sum(apply(tab,2,max))-maxRows
+  gainCols <- sum(apply(tab,1,max))-maxCols
+  out$lambdaGKab <- .saraDivide(gainRows,n-maxRows)
+  out$lambdaGKba <- .saraDivide(gainCols,n-maxCols)
+  out$lambdaGKsym <- .saraDivide(gainRows+gainCols,2*n-maxRows-maxCols)
+  p <- tab/n; pr <- rows/n; pc <- columns/n
+  out$tauGKab <- .saraDivide(sum(sweep(p^2,2,pc,"/"))-sum(pr^2),1-sum(pr^2))
+  out$tauGKba <- .saraDivide(sum(sweep(p^2,1,pr,"/"))-sum(pc^2),1-sum(pc^2))
+  entropy <- function(p) -sum(p[p>0]*log(p[p>0]))
+  ha <- entropy(pr); hb <- entropy(pc); information <- ha+hb-entropy(p)
+  out$theilab <- .saraDivide(information,ha)
+  out$theilba <- .saraDivide(information,hb)
+  out$theilsym <- .saraDivide(2*information,ha+hb)
+  out
+}
+.saraValidateFences <- function(inner,outer) {
+  if(length(inner)!=1L || length(outer)!=1L || !is.finite(inner) ||
+     !is.finite(outer) || inner<0 || outer<=inner)
+    stop("Fence multipliers must be non-negative, with outer greater than inner")
+  invisible(TRUE)
+}
+
+.saraPalette <- function(colors,n) {
+  if(n<=length(colors)) return(colors[seq_len(n)])
+  grDevices::colorRampPalette(colors)(n)
+}
+# The renderer must draw a resource rather than merely return a ggplot object.
+.saraDrawBivariatePlot <- function(build) {
+  plot <- build()
+  if(is.null(plot) || identical(plot,FALSE)) return(FALSE)
+  print(plot)
+  TRUE
+}
+
+.saraHLConfidenceHeading <- function(levels, requested, translate=identity) {
+  levels <- as.numeric(levels)
+  levels <- unique(signif(levels[is.finite(levels) & levels>0 & levels<1], 10))
+  if (length(levels) > 1L)
+    return(translate("Confidence Interval (level reported per row)"))
+  if (length(levels) == 0L) return(translate("Confidence Interval"))
+  sprintf(translate("%s%% Confidence Interval"),
+          trimws(formatC(100*levels, format="fg", digits=8, width=0)))
 }

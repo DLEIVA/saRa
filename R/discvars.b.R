@@ -16,6 +16,11 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           for (k in seq.int(2L, length(values))) self$results$quantstab$addRow(rowKey=k)
       },       
         .run = function() {
+        convention <- switch(self$options$distros,
+          geom=.("X counts failures before the first success (0, 1, 2, ...)."),
+          negbinom=.("X counts failures before the requested number of successes (0, 1, 2, ...)."),NULL)
+        self$results$InfoTab$setNote("counting",convention)
+
         .saraDiscreteUpper(self$options)
           distros <- self$options$distros
           InfoTab <- self$results$InfoTab
@@ -184,300 +189,25 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         image$setSize(width * 2, height)
       },      
-      .ppmf = function(image, ...) {
-        
-        if (! self$options$ppmf)
-          return()
-        
-        Color <- c("#e0bc6b", "#9f9f9f")
-        
-        distros <- self$options$distros
-        
-        n <- .saraDiscreteUpper(self$options)
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
-          self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
-          self$options$lambda} else if(distros=='negbinom'){NA} else if(distros=='geom'){
-            NA} else if(distros=='hypergeom'){NA} 
-        k <- private$.getppvalue()
-        
-        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '} else if(distros=='geom'){
-            'Geometric: '}  else if(distros=='hypergeom'){'Hypergeometric: '}     
-        
-        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
-            } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)} else if(distros=='geom'){
-              dgeom(0:n,p) 
-            } else if(distros=='hypergeom'){dhyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)
-              }  else if(distros=='geom'){pgeom(0:n,p)} else if(distros=='hypergeom'){
-                phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
-            } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)
-              } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
-                phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
-        
-        p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x==k))) +
-          ggplot2::geom_col() + 
-          ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-          ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
-          ggplot2::ggtitle(paste0(distroslabel,'Pr(X = ',k,') = ',round(plotData$pmf[plotData$x==k],2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
-                axis.text.y= ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))
-        return(p)                
-      }, 
-      .pcdf = function(image, ...) {
-        
-        if (! self$options$pcdf)
-          return()
-        
-        Color <- c("#e0bc6b","#9f9f9f")
-        
-        distros <- self$options$distros
-        
-        n <- .saraDiscreteUpper(self$options)
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
-          self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
-          self$options$lambda} else if(distros=='negbinom'){NA} else if(distros=='geom'){
-            NA} else if(distros=='hypergeom'){NA} 
-        k <- private$.getppvalue()
-        
-        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '} else if(distros=='geom'){
-            'Geometric: '}  else if(distros=='hypergeom'){'Hypergeometric: '}      
-        
-        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
-          } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)} else if(distros=='geom'){
-            dgeom(0:n,p) 
-          } else if(distros=='hypergeom'){dhyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)
-            }  else if(distros=='geom'){pgeom(0:n,p)} else if(distros=='hypergeom'){
-              phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
-          } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)
-          } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
-            phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})        
-
-        p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x<=k))) +
-          ggplot2::geom_col() + 
-          ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-          ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-          ggplot2::ggtitle(paste0(distroslabel,'Pr(X \u2264 ',k,') = ',round(plotData$cdf[plotData$x==k],2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
-                axis.text.y= ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))
-        return(p)                
+      .ppmf = function(image, ggtheme, theme, ...) {
+        if (!self$options$ppmf) return(FALSE)
+        .saraDistributionPlot(self$options,"density",TRUE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
       },
-      .psurv = function(image, ...) {
-        
-        if (! self$options$psurv)
-          return()
-        
-        Color <- c("#e0bc6b","#9f9f9f")
-        
-        distros <- self$options$distros
-        
-        n <- .saraDiscreteUpper(self$options)
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
-          self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
-          self$options$lambda} else if(distros=='negbinom'){NA} else if(distros=='geom'){
-            NA} else if(distros=='hypergeom'){NA} 
-        k <- private$.getppvalue()
-        
-        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '} else if(distros=='geom'){
-            'Geometric: '}  else if(distros=='hypergeom'){'Hypergeometric: '}       
-        
-        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
-          } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)} else if(distros=='geom'){
-            dgeom(0:n,p) 
-          } else if(distros=='hypergeom'){dhyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)
-            }  else if(distros=='geom'){pgeom(0:n,p)} else if(distros=='hypergeom'){
-              phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
-          } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)
-          } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
-            phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
-        
-        p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x>k))) +
-          ggplot2::geom_col() + 
-          ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-          ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +  
-          ggplot2::ggtitle(paste0(distroslabel,'Pr(X > ',k,') = ',round(plotData$surv[plotData$x==k],2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
-              axis.text.y= ggplot2::element_text(size=13),
-              axis.title.x = ggplot2::element_text(size=14),
-              axis.title.y = ggplot2::element_text(size=14))
-        return(p)                
+      .pcdf = function(image, ggtheme, theme, ...) {
+        if (!self$options$pcdf) return(FALSE)
+        .saraDistributionPlot(self$options,"cdf",TRUE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
       },
-      .pinterv = function(image, ...) {
-        
-        if (! self$options$pinterv)
-          return()
-        
-        Color <- c("#e0bc6b","#9f9f9f")
-        
-        distros <- self$options$distros
-        
-        n <- .saraDiscreteUpper(self$options)
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
-          self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
-          self$options$lambda} else if(distros=='negbinom'){NA} else if(distros=='geom'){
-            NA} else if(distros=='hypergeom'){NA} 
-        
-        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '} else if(distros=='geom'){
-            'Geometric: '}  else if(distros=='hypergeom'){'Hypergeometric: '}  
-        
-        k1 <- private$.getX1value() 
-        k2 <- private$.getX2value()
-        
-        if(k1>k2){
-          temp <- k2
-          k2 <- k1
-          k1 <- temp
-          rm(temp)
-        }        
-        
-        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
-          } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)} else if(distros=='geom'){
-            dgeom(0:n,p) 
-          } else if(distros=='hypergeom'){dhyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)
-            }  else if(distros=='geom'){pgeom(0:n,p)} else if(distros=='hypergeom'){
-              phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
-          } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)
-          } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
-            phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})
-        
-        p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x>=k1 & x<=k2))) +
-          ggplot2::geom_col() + 
-          ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-          ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-          ggplot2::ggtitle(paste0(distroslabel,'Pr(',k1,' \u2264 X \u2264 ',k2,') =',
-                         round(sum(plotData$pmf[plotData$x>=k1 & plotData$x<=k2]),2))) +
-          ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
-                axis.text.y= ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))
-        return(p)                
-      },  
-      .picdf = function(image, ...) {
-        
-        if (! self$options$picdf)
-          return()
-        
-        Color <- c("#e0bc6b","#9f9f9f")
-        
-        distros <- self$options$distros
-        
-        tail <- self$options$tail
-        
-        n <- .saraDiscreteUpper(self$options)
-        p <- if(distros=='binom'){self$options$binomp} else if(distros=='poiss'){NA} else if(distros=='negbinom'){
-          self$options$negbinomp}  else if(distros=='geom'){self$options$geomp} else if(distros=='hypergeom'){NA}
-        lambda <- if(distros=='binom'){NA} else if(distros=='poiss'){
-          self$options$lambda} else if(distros=='negbinom'){NA} else if(distros=='geom'){
-            NA} else if(distros=='hypergeom'){NA} 
-        
-        distroslabel <- if (distros=='binom'){'Binomial: '} else if(distros=='poiss'){
-          'Poisson: '} else if(distros=='negbinom'){'Negative Binomial: '} else if(distros=='geom'){
-            'Geometric: '}  else if(distros=='hypergeom'){'Hypergeometric: '}  
-        
-        q <- private$.getpqvalue()
-        
-        plotData <- data.frame(x=0:n,pmf=if(distros=='binom'){
-          dbinom(0:n,n,p)} else if(distros=='poiss'){dpois(0:n,lambda)
-          } else if(distros=='negbinom'){dnbinom(0:n,self$options$negbinomr,p)} else if(distros=='geom'){
-            dgeom(0:n,p) 
-          } else if(distros=='hypergeom'){dhyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          cdf=if(distros=='binom'){pbinom(0:n,n,p)} else if(distros=='poiss'){
-            ppois(0:n,lambda)} else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p)
-            }  else if(distros=='geom'){pgeom(0:n,p)} else if(distros=='hypergeom'){
-              phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk)},
-          surv=if(distros=='binom'){pbinom(0:n,n,p,lower.tail=FALSE)
-          } else if(distros=='poiss'){ppois(0:n,lambda,lower.tail=FALSE)
-          } else if(distros=='negbinom'){pnbinom(0:n,self$options$negbinomr,p,lower.tail=FALSE)
-          } else if(distros=='geom'){pgeom(0:n,p,lower.tail=FALSE)} else if(distros=='hypergeom'){
-            phyper(0:n,self$options$hyperm,self$options$hypern,self$options$hyperk,lower.tail=FALSE)})        
-
-        if(tail=='left'){
-          quant1 <- q
-          qs <- if(distros=='binom'){qbinom(quant1,n,p)} else if(distros=='poiss'){
-              qpois(quant1,lambda)} else if(distros=='negbinom'){
-                qnbinom(quant1,self$options$negbinomr,p)
-              } else if(distros=='geom'){qgeom(quant1,p)} else if(distros=='hypergeom'){
-                qhyper(quant1,self$options$hyperm,self$options$hypern,self$options$hyperk)}
-          q1 <- qs
-          p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x==q1))) +
-            ggplot2::geom_col() + 
-            ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-            ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-            ggplot2::ggtitle(latex2exp::TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,'$')))          
-        }  else if(tail=='right'){
-          quant1 <- 1-q
-          qs <- if(distros=='binom'){
-            qbinom(quant1,n,p)} else if(distros=='poiss'){
-              qpois(quant1,lambda)} else if(distros=='negbinom'){
-                qnbinom(quant1,self$options$negbinomr,p)
-              } else if(distros=='geom'){qgeom(quant1,p)} else if(distros=='hypergeom'){
-                qhyper(quant1,self$options$hyperm,self$options$hypern,self$options$hyperk)}
-          q1 <- qs
-          p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x==q1))) +
-            ggplot2::geom_col() + 
-            ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-            ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-            ggplot2::ggtitle(latex2exp::TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,'$')))          
-        } else if(tail=='central'){
-          quant1 <- (1-q)/2
-          quant2 <- 1-(1-q)/2
-          qs <- if(distros=='binom'){
-            qbinom(c(quant1,quant2),n,p)} else if(distros=='poiss'){
-              qpois(c(quant1,quant2),lambda)} else if(distros=='negbinom'){
-                qnbinom(c(quant1,quant2),self$options$negbinomr,p)
-              } else if(distros=='geom'){qgeom(c(quant1,quant2),p)
-              } else if(distros=='hypergeom'){
-                qhyper(c(quant1,quant2),self$options$hyperm,self$options$hypern,self$options$hyperk)}
-          q1 <- qs[1]
-          q2 <- qs[2]
-          p <- ggplot2::ggplot(plotData,ggplot2::aes(x=x,y=pmf,fill= (x==q1 | x==q2))) +
-            ggplot2::geom_col() + 
-            ggplot2::scale_fill_manual(values = setNames(c(Color[1],Color[2]),c(T,F))) +
-            ggplot2::scale_x_continuous('', 0:n, 0:n, c(0,n)) +
-            ggplot2::ggtitle(latex2exp::TeX(paste0(distroslabel,' $Q_{',quant1,'} = ',q1,
-                               ' \\phantom{xx} ','Q_{',quant2,'} = ',q2,'$')))        
-        }        
-        
-        p <- p + ggplot2::ylab('') + ggplot2::xlab('') + ggplot2::guides(fill="none") + ggplot2::theme_classic() +
-          ggplot2::theme(axis.text.x= ggplot2::element_text(size=13),
-                axis.text.y= ggplot2::element_text(size=13),
-                axis.title.x = ggplot2::element_text(size=14),
-                axis.title.y = ggplot2::element_text(size=14))
-        return(p)                
+      .psurv = function(image, ggtheme, theme, ...) {
+        if (!self$options$psurv) return(FALSE)
+        .saraDistributionPlot(self$options,"survival",TRUE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
+      },
+      .pinterv = function(image, ggtheme, theme, ...) {
+        if (!self$options$pinterv) return(FALSE)
+        .saraDistributionPlot(self$options,"interval",TRUE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
+      },
+      .picdf = function(image, ggtheme, theme, ...) {
+        if (!self$options$picdf) return(FALSE)
+        .saraDistributionPlot(self$options,"quantile",TRUE,ggtheme,theme,translate=function(message) .saraMessage(message,self))
       },
     #### Helper functions ----
       .getProbValues = function(){
@@ -485,11 +215,11 @@ discvarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (!is.na(probValues) && is.character(probValues))
           probValues <- as.numeric(unlist(strsplit(probValues, ",")))
         if(any(!is.finite(as.numeric(probValues)))){
-          jmvcore::reject(paste0('Random variable values must be positive integers (',
+          jmvcore::reject(paste0('Random variable values must be non-negative integers (',
                                  paste0(unlist(strsplit(self$options$valuesfunc, ","))[is.na(as.numeric(unlist(strsplit(self$options$valuesfunc, ","))))],collapse=','),').'))          
         }        
         if(any(!(probValues%%1==0 & sign(probValues)>=0))){
-          jmvcore::reject(paste0("Random variable values must be positive integers (",
+          jmvcore::reject(paste0("Random variable values must be non-negative integers (",
                                  paste0(probValues[!(probValues%%1==0 & sign(probValues)>=0)],
                                         collapse=','),")."))
         }

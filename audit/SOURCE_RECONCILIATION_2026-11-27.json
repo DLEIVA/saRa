@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-27",
+  "input_archive": "saRa-cotejo-final.zip",
+  "input_archive_sha256": "28cd6bfd8df8e45db831cff3734ab34302f3c44cd90fae8f04eb0cecfad7872c",
+  "initial_comparison": {
+    "match": 102,
+    "different": 7,
+    "local_only": 1,
+    "missing": 0
+  },
+  "reconciled_runtime_inventory_files": 110,
+  "all_reconciled_files_match_user_supplied_md5": true,
+  "reviewed_differences": [
+    {
+      "files": [
+        "R/00jmv.R",
+        "jamovi/00refs.yaml"
+      ],
+      "classification": "Bibliographic/reference formatting changes",
+      "decision": "KEEP USER VERSION; 11 YAML and generated R reference keys agree"
+    },
+    {
+      "files": [
+        "R/bivnum.b.R"
+      ],
+      "classification": "Previously accepted constant-correlation explanations and marginal orientations/notch removal",
+      "decision": "KEEP USER VERSION; do not revert to older assistant copy"
+    },
+    {
+      "files": [
+        "R/numeric-statistics.R"
+      ],
+      "classification": "Additional stored-score ordinal classification helper",
+      "decision": "KEEP USER VERSION; paired with the supplied ordinal metadata tests"
+    },
+    {
+      "files": [
+        "R/numsummary.h.R"
+      ],
+      "classification": "jmvtools regenerated option ordering/formatting/documentation",
+      "decision": "KEEP USER VERSION; every declared option registered, defaults and public Gini/Lorenz arguments retained"
+    },
+    {
+      "files": [
+        "jamovi/0000.yaml"
+      ],
+      "classification": "Explicit 8-dataset registration and compiler metadata",
+      "decision": "KEEP USER VERSION; 12 analyses, no regression add-on registration; all 8 dataset paths present"
+    },
+    {
+      "files": [
+        "tests/testthat/test-audit-review.R"
+      ],
+      "classification": "Four previously validated regression test blocks missing from the older review copy",
+      "decision": "KEEP USER VERSION; reconciled source contains 112 test_that blocks"
+    },
+    {
+      "files": [
+        "tests/gui/frequency-selectors.cjs"
+      ],
+      "classification": "Node unit checks with substitute controls for supplier filtering and Range transitions",
+      "decision": "KEEP USER VERSION; executed successfully with Node; not a browser end-to-end test"
+    },
+    {
+      "files": [
+        "audit/NORTEST_VALIDATION_2026-11-10.json"
+      ],
+      "classification": "Historical general candidate record dated 2026-11-16, 409 expectations, misnamed as nortest record",
+      "decision": "Preserve exact uploaded record in history; annotate current file as superseded by VALIDATION_STATUS.json"
+    }
+  ],
+  "functional_changes_made_during_reconciliation": false,
+  "runtime_validation": "User supplied: 1878 pass, 0 fail/warn/skip, 39.4 seconds. No R executed by assistant.",
+  "remaining": [
+    "Identify and retain final JMO hash/build evidence",
+    "Final short combined restart/OMV/HTML/PDF check",
+    "Create and record candidate commit after source freeze"
+  ],
+  "source_identity_limit": "Covers the 110 source/configuration/data/test paths in the supplied comparison plus the supplied historical audit JSON. Does not identify a final binary or a future edited tree."
+}

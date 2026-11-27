@@ -154,6 +154,18 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                      `v[dSommerS]` = .sommers,
                      `v[eWilson]` = .wilson)
       asocind$setRow(rowNo=othRowNo, values=values)
+      # Keep defined zeros; explain only selected, undefined indices.
+      for (column in names(values)) {
+        option <- sub("^v\\[(.*)\\]$", "\\1", column)
+        if (isTRUE(self$options[[option]]) && !is.finite(values[[column]])) {
+          message <- if (n < 2L)
+            .("Requires at least two complete observations")
+          else
+            .("Statistic is undefined because its denominator is zero (constant variable or no comparable pairs)")
+          asocind$addFootnote(rowNo=othRowNo, column, message)
+        }
+      }
+      .saraTableLetterNotes(asocind)
 
     },
     
@@ -350,7 +362,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     },
     .initCOMPTable = function(){
       desc <- self$results$desc
-      desc$addRow(rowKey=1, values=list())
+
       if(is.null(self$options$rows) | is.null(self$options$cols) ){
         desc <- self$results$desc
         resnames <- c(' ',' ',
@@ -387,7 +399,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       image$setSize(width * 2, height)
     },    
-    .barPlot = function(image, ggtheme, theme, ...) {
+    .barPlotObject = function(image, ggtheme, theme, ...) {
       
       if (! self$options$barplot)
         return()
@@ -400,18 +412,14 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- self$data
       
-      data <- na.omit(data)
+      data <- data[stats::complete.cases(data[c(rowVarName,colVarName)]),,drop=FALSE]
       
-      formula <- jmvcore::composeFormula(NULL, c(rowVarName, colVarName))
-      counts <- xtabs(formula, data)
+      counts <- table(data[[rowVarName]],data[[colVarName]],dnn=c(rowVarName,colVarName))
       d <- dim(counts)
       
-      expand <- list() 
-      for (i in c(rowVarName, colVarName))
-        expand[[i]] <- base::levels(data[[i]])
-      tab <- expand.grid(expand)
-      tab$Counts <- as.numeric(counts)
-      
+      tab <- as.data.frame(counts,responseName="Counts")
+      names(tab) <- c(rowVarName,colVarName,"Counts")
+
       if (self$options$yaxis == "ypc") { # percentages
         props <- counts
         
@@ -470,7 +478,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       return(p)
     },  
-    .heatmap = function(image, ...) {
+    .heatmapObject = function(image, ggtheme, theme, ...) {
       
       if (! self$options$heatmap)
         return()
@@ -483,7 +491,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- self$data
       
-      data <- na.omit(data)
+      data <- data[stats::complete.cases(data[c(rowVarName,colVarName)]),,drop=FALSE]
       
       if (self$options$xaxis == "xcols") {
         xVarName <- colVarName
@@ -494,16 +502,18 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       }
       
       tabla <- as.data.frame(table(data[[xVarName]], data[[zVarName]], dnn=c(xVarName, zVarName)))
+      names(tabla) <- c(xVarName,zVarName,"Freq")
       p <- ggplot2::ggplot(tabla,ggplot2::aes(x=.data[[xVarName]], y=.data[[zVarName]])) +
         ggplot2::geom_tile(ggplot2::aes(fill = Freq), colour ="black") +
-        ggplot2::scale_fill_gradient(low='white',high='steelblue') + ggplot2::theme_bw() +
+        ggtheme +
+        ggplot2::scale_fill_gradient(low=theme$fill[1],high=theme$fill[2]) +
         ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
               axis.text.y=ggplot2::element_text(size=13),
               axis.title.x = ggplot2::element_text(size=14),
               axis.title.y = ggplot2::element_text(size=14))
       return(p)
     },
-    .alluvial =  function(image, ...) {
+    .alluvialObject = function(image, ggtheme, theme, ...) {
       if (! self$options$alluvial)
         return()
       
@@ -515,7 +525,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       data <- self$data
       
-      data <- na.omit(data)
+      data <- data[stats::complete.cases(data[c(rowVarName,colVarName)]),,drop=FALSE]
       
       if (self$options$xaxis == "xcols") {
         xVarName <- colVarName
@@ -526,19 +536,29 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       }
       
       tabla <- as.data.frame(table(data[[xVarName]], data[[zVarName]], dnn=c(xVarName, zVarName)))
+      names(tabla) <- c(xVarName,zVarName,"Freq")
       p <- ggplot2::ggplot(data = tabla,
                            ggplot2::aes(axis1=.data[[xVarName]], axis2=.data[[zVarName]], y=.data[["Freq"]])) +
         ggplot2::scale_x_discrete(limits = c(xVarName, zVarName), expand = c(.2, .05)) +
-        ggplot2::scale_fill_gradient(low = "white", high = "steelblue") +
+        ggtheme +
+        ggplot2::scale_fill_gradient(low=theme$fill[1],high=theme$fill[2]) +
         ggalluvial::geom_alluvium(ggplot2::aes(fill = Freq)) +
         ggalluvial::geom_stratum() +
         ggplot2::geom_text(stat = ggalluvial::StatStratum, ggplot2::aes(label = ggplot2::after_stat(stratum))) +
-        ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x=ggplot2::element_text(size=13),
               axis.text.y=ggplot2::element_text(size=13),
               axis.title.x = ggplot2::element_text(size=14),
               axis.title.y = ggplot2::element_text(size=14))
       return(p)
+    },
+    .barPlot = function(image,ggtheme,theme,...) {
+      .saraDrawBivariatePlot(function() private$.barPlotObject(image,ggtheme,theme,...))
+    },
+    .heatmap = function(image,ggtheme,theme,...) {
+      .saraDrawBivariatePlot(function() private$.heatmapObject(image,ggtheme,theme,...))
+    },
+    .alluvial = function(image,ggtheme,theme,...) {
+      .saraDrawBivariatePlot(function() private$.alluvialObject(image,ggtheme,theme,...))
     },
     #### Helper functions ----
     

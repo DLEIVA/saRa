@@ -6,11 +6,11 @@ jms: '1.0'
 authors:
   - David Leiva, Sara Martí
 maintainer: David Leiva <dleivaur@ub.edu>
-date: '2026-10-11'
+date: '2026-11-16'
 type: R
 description: >-
   A basic course on Statistics in jamovi. Basically based on jmv package, the
-  add-in includes a suite of (univariate and bivariate) descriptive methods  for
+  add-in includes a suite of (univariate and bivariate) descriptive methods for
   nominal, ordinal, and numeric variables. The add-in also incorporates a module
   of probability distributions, continuous and discrete, to be used in a
   Statistics course. This package is primarily thought and developed to be
@@ -104,13 +104,6 @@ analyses:
     menuSubgroup: Miscellanea
     menuTitle: Normality Tests
     category: analyses
-  - title: linReg
-    name: linReg
-    ns: saRa
-    menuGroup: saRa
-    menuTitle: linReg
-    addonFor: jmv::linReg
-    category: analyses
 datasets:
   - name: phobia
     path: phobia.RData
@@ -156,6 +149,12 @@ datasets:
     tags:
       - Regression
       - Simple Mediation
+  - name: Anscombe
+    path: Anscombe.RData
+    description: Anscombe's quartet
+    tags:
+      - Descriptives
+      - Correlation
 usesNative: true
 minApp: 1.0.8
 

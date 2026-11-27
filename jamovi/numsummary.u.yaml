@@ -14,6 +14,11 @@ children:
           - type: VariablesListBox
             name: vars
             isTarget: true
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: freq
   - type: CollapseBox
     label: Statistics
     collapsed: true
@@ -103,6 +108,8 @@ children:
                 name: meandev
               - type: CheckBox
                 name: cv
+              - type: CheckBox
+                name: gini
               - type: CheckBox
                 name: range
               - type: CheckBox
@@ -214,6 +221,12 @@ children:
                   - type: CheckBox
                     name: qq
                     label: Q-Q
+              - type: Label
+                label: Lorenz Plots
+                iconPosition: right
+                children:
+                  - type: CheckBox
+                    name: lorenz
           - type: Label
             label: Box Plots
             stretchFactor: 1

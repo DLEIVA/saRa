@@ -3,6 +3,9 @@ name:  catSummary
 title: Univariate Data Analysis (Categorical Data)
 jrs:   '1.1'
 
+
+refs: ["solanas2005"]
+
 items:
     - name: indices
       title: Descriptives

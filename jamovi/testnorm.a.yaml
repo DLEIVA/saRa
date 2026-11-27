@@ -117,7 +117,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provides density plots (continuous variables only)
             
     - name: norm
-      title: Normal Curve
+      title: Normal curve
       type: Bool
       default: false
       description:

@@ -1,0 +1,93 @@
+{
+  "date": "2026-11-16",
+  "module": "saRa",
+  "version": "1.0.0",
+  "branch": "fix/audit-review-1.0.0",
+  "scope": "Validation of the current 1.0.0 audit-review candidate",
+  "audited_base_commit": "2cfe7ee61c580950140c832a4b22163a90bba2f8",
+  "tested_checkout_commit": null,
+  "overall_status": "IN PROGRESS",
+  "automated_validation": {
+    "status": "PASS",
+    "evidence": "Developer-supplied console output",
+    "command": "testthat::test_local(\".\")",
+    "failed": 0,
+    "warnings": 0,
+    "skipped": 0,
+    "passed_expectations": 409,
+    "duration_seconds": 2.9,
+    "contexts": {
+      "audit-review": 167,
+      "audit-statistics": 242
+    },
+    "counting_note": "Counts refer to individual expectations, not test blocks.",
+    "correlation_footnote_test": {
+      "status": "PASS",
+      "checks": [
+        "Constant X, constant Y and both variables constant",
+        "Zero covariance for constant-variable samples",
+        "Undefined correlations and squared correlations",
+        "Explanatory footnotes on affected cells",
+        "Removal of footnotes when variability is restored",
+        "Correct calculations for a non-perfect association with ties"
+      ],
+      "method": "Executes the actual bivariate analysis .run method with a test table and test cells.",
+      "limitation": "This test does not exercise the jamovi table renderer."
+    }
+  },
+  "build_and_installation": {
+    "status": "PASS",
+    "evidence": "Developer-confirmed successful local compilation and installation"
+  },
+  "manual_validation": {
+    "status": "PARTIALLY COMPLETED",
+    "evidence": "Developer confirmations and supplied GUI screenshots",
+    "completed_checks": [
+      "SP50/SP80 for numeric and numeric-ordinal data, including shifts, reflection, centred data and constant samples",
+      "Pooled symmetric Goodman-Kruskal lambda",
+      "Retained empty categories in frequency tables, explanatory notes and unchanged association indices",
+      "Ordered-text summaries preserve category order",
+      "Numeric ordinal summaries preserve stored scores, zero and unequal spacing",
+      "Ordinal Range visibility for text-only, numeric and mixed selections",
+      "Numeric-only ordinal controls are disabled for text-only selections",
+      "Explanatory cell footnotes for numeric-only statistics in mixed ordinal selections",
+      "Ordinal frequency bars preserve category order",
+      "Ordinal percentages are calculated from valid observations",
+      "Ordinal valid and missing observation counts",
+      "Numeric ordinal box plots and removal of numeric plots for text-only selections",
+      "Ordinal HTML and PDF exports",
+      "Ordinal .omv save and reopen with options, tables and plots preserved",
+      "Revised book-reference formatting in the results interface",
+      "Positive and negative perfect numerical bivariate associations",
+      "Squared Pearson, Spearman and Kendall coefficients for a perfect association",
+      "Constant-variable covariance and explanatory correlation footnotes",
+      "Removal of correlation markers and footnotes when variability is restored"
+    ],
+    "supplied_ordinal_files": [
+      "Resultados1611.html",
+      "Resultados1611.pdf",
+      "Resultados1611.omv"
+    ],
+    "file_evidence_limit": "Export and persistence success were confirmed by the developer. The supplied files have not been independently inspected by the assistant."
+  },
+  "scope_decisions": {
+    "regression_addon": "The unpublished add-on to jamovi Linear Regression was removed to eliminate dependencies on private parent-analysis APIs. Independent saRa regression development will be tracked separately.",
+    "translations": "Version 1.1.0 translations are deferred and excluded from this candidate."
+  },
+  "pending_validation": [
+    "Complete the remaining manual GUI checks for analyses included in this candidate",
+    "Verify HTML/PDF export and .omv persistence of the latest bivariate correlation-footnote change",
+    "Record the tested checkout commit together with any uncommitted source changes",
+    "Document the platforms and software versions covered by final acceptance testing"
+  ],
+  "acceptance_limits": {
+    "complete_manual_validation": false,
+    "cross_platform_acceptance_established": false,
+    "publication_readiness_established": false
+  },
+  "related_documents": [
+    "audit/AUDIT_TRACKER.md",
+    "audit/REVISION_AUDIT_2026-11-16.md",
+    "NEWS"
+  ]
+}

@@ -6,7 +6,7 @@ refs: [DescTools]
 
 items:
 - name: wilcoxttest
-  title: Wilcoxon T Test and ES Indices
+  title: Wilcoxon T Test and effect sizes
   description: a table containing the Wilcoxon T test results
   type: Table
   rows: (pairs)
@@ -21,12 +21,12 @@ items:
     title: ''
     type: text
     combineBelow: true
-    visible: (wilcoxon || zstatps)
+    visible: (wilcoxon || zstatps || rankCorrps)
   - name: var2
     title: ''
     type: text
     combineBelow: true
-    visible: (wilcoxon || zstatps)
+    visible: (wilcoxon || zstatps || rankCorrps)
   - name: name[wilcoxon]
     title: ''
     type: text
@@ -65,7 +65,7 @@ items:
     content: .
     visible: (rankCorrps)
 - name: cisMedps
-  title: Variables Medians CIs
+  title: Variables Median confidence intervals
   type: Table
   description: a table containing confidence interval estimates for the medians
   visible: (ciMediansps)
@@ -130,7 +130,7 @@ items:
     title: Upper bound
     type: number
 - name: descps
-  title: Variables Descriptives
+  title: Variable descriptives
   type: Table
   description: a table containing the group descriptives
   visible: (descps)

@@ -191,7 +191,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="mwutest",
-                title="Mann-Whitney U Test and ES Indices",
+                title="Mann-Whitney U Test and effect sizes",
                 rows="(vars)",
                 visible="(mwu || zstat || pSup || rankCorr || fstat)",
                 clearWith=list(
@@ -303,7 +303,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="cisMed",
-                title="Medians CIs",
+                title="Median confidence intervals",
                 visible="(ciMedians)",
                 rows="(vars)",
                 clearWith=list(
@@ -383,7 +383,7 @@ umwResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="desc",
-                title="Groups Descriptives",
+                title="Group descriptives",
                 visible="(desc)",
                 rows="(vars)",
                 clearWith=list(

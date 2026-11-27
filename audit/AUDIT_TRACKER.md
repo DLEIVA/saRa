@@ -1,68 +1,67 @@
-# jamovi library audit tracker — saRa 1.0.0 candidate
+# Registro consolidado de la auditoría — saRa 1.0.0
 
-## Latest runtime validation — 11 November 2026
+Fecha: 27 de noviembre de 2026. Rama del usuario: fix/audit-review-1.0.0.
+Base: 2cfe7ee61c580950140c832a4b22163a90bba2f8. Candidato aún sin commit propio.
 
-This section supersedes earlier statements that a fresh 35-block run or build was pending. Historical sections below are retained as dated evidence, not the current validation status.
+## Estado actual
 
-- Developer supplied `testthat::test_local(".")` output: **FAIL 0 | WARN 0 | SKIP 0 | PASS 274**, duration 13.1 seconds. The source contains 35 test blocks; PASS counts individual expectations, not blocks.
-- Compilation and installation completed successfully, as confirmed by the developer.
-- Developer confirms normality tests and residual plots render correctly and that the functionality works independently of moretests.
-- Example datasets open correctly, as separately confirmed by the developer.
-- Windows is inferred from the supplied paths. Exact jamovi/R/jmvtools versions and the hash of the locally tested checkout were not supplied for this run.
-- The fill-scale replacement message is informational; testthat reported zero warnings.
-- No new HTML/PDF or .omv persistence run, Linux/macOS acceptance run, or completion of every manual checklist item is asserted. Earlier evidence remains dated separately. Private Regression API review remains pending.
+La última suite del usuario pasa 1878 comprobaciones, sin fallos, advertencias
+ni omisiones (39.4 s). Los bloques manuales registrados se han aceptado en
+la instalación Linux indicada en USER_VALIDATION_LOG.md. El cotejo posterior de los 110 archivos y la identificación del JMO final
+constan en los registros de cierre; no se afirma inspección independiente
+del binario ni de las exportaciones.
 
-See `RUNTIME_VALIDATION_2026-11-11.json` for the structured record.
+Este archivo sustituye los pendientes acumulativos anteriores. Se conservan
+intactos en history/pre-consolidation-2026-11-27/. El registro A01–A29 se
+mantiene en AUDIT_TRACKER.csv; sus estados diferencian corrección funcional,
+comprobación estática y tareas de mantenimiento.
 
+| Bloque | Evidencia actual |
+|---|---|
+| Resúmenes y frecuencias | Casos y exportaciones confirmados en las revisiones previas |
+| Distribuciones | Casos registrados, colas, cuantiles infinitos, soporte y recuperación aceptados |
+| Normalidad | Tablas, Q-Q/ECDF, grupos válidos e inválidos, mensajes legibles y exportaciones aceptados |
+| Mann-Whitney/Wilcoxon | Correcciones, intervalos y casos límite registrados aceptados |
+| Asociaciones numéricas/ordinales | Contraste Rj, empates, dirección, constantes y recuperación aceptados |
+| Notas ordinales | Pareja única y constantes; OMV/HTML/PDF aceptados |
+| Gini y Lorenz | 97 comprobaciones automáticas; casos manuales y exportaciones aceptados |
+| Visibilidad nominal | 108 comprobaciones; funcionamiento GUI confirmado |
+| Nombres especiales | Gráficos bivariantes nominales, ordinales y numéricos confirmados |
+| Biblioteca | Ocho conjuntos abiertos y operativos |
 
-Target: jamovi library (hub). This is not a CRAN submission. The original audit reviewed 0.1.1; the edited source starts from 0.1.2. Source corrections are distinguished from runtime acceptance. Earlier candidate tests do not establish that the latest candidate passes.
+## Cotejo del código del usuario completado
 
-| ID | Severity | Finding | Source status / action |
-|---|---|---|---|
-| A01 | HIGH | Geometric mean and geometric SD are reported on the log scale | SOURCE APPLIED — R/jamovi verification pending. Shared numeric-statistics.R computes exp(mean(log(x))) and exp(sd(log(x))) without internal rounding. |
-| A02 | HIGH | Yule's V and Wilson's e compute the wrong values | SOURCE APPLIED — R/jamovi verification pending. Yule’s V uses the marginal square root; Wilson’s e uses unordered pair counts without doubling. |
-| A03 | HIGH | The ordinal "inner range" is always the full range | SOURCE APPLIED — R/jamovi verification pending. Ordinal coverage uses NPerc/100 rather than length(NPerc). |
-| A04 | HIGH | Ordinal Data analysis summarises factor codes, not the data's values | SOURCE APPLIED — R/jamovi verification pending. Ordinal numerical operations and plots use jmvcore::toNumeric instead of factor level codes. |
-| A05 | HIGH | The Wilcoxon signed-rank analysis computes several statistics as if the samples were independent | SOURCE APPLIED — R/jamovi verification pending. Paired HL; corrected signed-rank denominator and one-sided tails; selected-pair CIs, requested confidence width and variable labels. Paired z was already in 0.1.2. |
-| A06 | HIGH | Mann-Whitney: group 2's average rank and the tie-corrected z are wrong | SOURCE APPLIED — R/jamovi verification pending. Group 2 divides by n2; shared z helper uses N+1 and the tie correction. Rank sums safely handle empty groups. |
-| A07 | HIGH | Discrete Distributions: the hypergeometric is mislabelled and its plots can crash | SOURCE APPLIED — R/jamovi verification pending. Hypergeometric label; shared validated finite plot support; corrected validation variable. Quantile-based infinite-support bounds avoid the old negative-binomial SD error. |
-| A08 | HIGH | Normality Tests always runs all seven tests, so an unrequested test can fail the whole analysis | SOURCE APPLIED — R/jamovi verification pending. Only selected tests execute; errors are per-cell footnotes; missing/constant values are checked; K–S inference caveat. |
-| A09 | HIGH | Grouped ECDF plot pairs values with the wrong groups | SOURCE APPLIED — R/jamovi verification pending. Shared ECDF frame retains group pairing, excludes incomplete rows, standardises per group and facets by group. |
-| A10 | HIGH | Two plots call ggplot2 functions without the namespace and fail | ALREADY PRESENT IN 0.1.2 — runtime verification pending. Both namespace fixes already existed in the uploaded 0.1.2 source; retained. |
-| A11 | HIGH | boot is used but not declared | SOURCE APPLIED — R/jamovi verification pending. boot declared; reproducible bootstrap with RNG restoration; computation gated by displayed CIs/plots. Q–Q plotting is internal; qqplotr/qqconf are not imported. |
-| A12 | HIGH | The version is below the library's minimum | SOURCE APPLIED — R/jamovi verification pending. DESCRIPTION, manifest and analysis definitions use 1.0.0; generated R headers require jmvtools regeneration. |
-| A13 | MEDIUM | Table visibility rules use names that aren't options | SOURCE APPLIED — R/jamovi verification pending. Bivariate visibility expressions name every contributing real option. |
-| A14 | MEDIUM | Variable names with spaces break the bivariate plots | SOURCE APPLIED — R/jamovi verification pending. aes_string replaced with data-mask mappings; pasted table formulas replaced with table() and explicit dimension names. |
-| A15 | MEDIUM | Inputs that crash an analysis with an R error instead of a message | SOURCE APPLIED — R/jamovi verification pending. Empty summaries, constant histogram widths, mixed one-level effects, empty contingency tables, percentile bounds and distribution parameter guards. |
-| A16 | MEDIUM | A "plots only" type check stops the whole analysis | SOURCE APPLIED — R/jamovi verification pending. Plot preparation skips unsupported types rather than stopping tables; ordinal selectors permit factors and bivariate ordinal validation rejects unordered inputs clearly. |
-| A17 | MEDIUM | Table rows and plot images are created in .run() when the structure is known earlier | SOURCE APPLIED — R/jamovi verification pending. Normality plots initialize once; group-dependent rows are populated from full data; unique variable/group keys; distribution rows moved to initialization; duplicate mixed plot initialization removed. |
-| A18 | LOW | clearWith entries that name no option | SOURCE APPLIED — R/jamovi verification pending. Result clearWith keys corrected; CI/plot dependencies and group changes recorded. |
-| A19 | LOW | Spelling, symbols and statistic names | SOURCE APPLIED — R/jamovi verification pending. Corrected names, symbols, percentiles and the names of squared Kendall tau, quartile dispersion and Kruskal–Wallis effect size. |
-| A20 | LOW | Casing is inconsistent across panels and results | SOURCE APPLIED — R/jamovi verification pending. Sentence casing normalized for cited controls and columns; X/Y boxes use variable labels; optional grouping label corrected. |
-| A21 | LOW | Box-plot fence controls are greyed out when they still have an effect | SOURCE APPLIED — R/jamovi verification pending. Fence controls and CI width/method controls include plot activation. |
-| A22 | LOW | Wilcoxon Descriptives spreads categories across identically titled columns | SOURCE APPLIED — R/jamovi verification pending. Three rank-descriptive rows per pair with numeric missing tied-rank cells. |
-| A23 | LOW | Raw data is stored in plot state, sometimes twice | SOURCE APPLIED — R/jamovi verification pending. Histogram/box plots store descriptors and declare requiresData; ordinal frequency bars keep aggregate state. |
-| A24 | LOW | NAMESPACE imports the whole of jmvcore, and two Imports are unused | SOURCE APPLIED — R/jamovi verification pending. Selective jmvcore translation import; qualified remaining calls; unused hrbrthemes/magrittr removed; data-mask pronoun imported from rlang. |
-| A25 | LOW | No citations for the methods and packages doing the work | SOURCE APPLIED — rendering/build verification pending. Package and method references added and connected in result YAML. Rendering/compilation remains to verify. |
-| A26 | LOW | Very long functions | PARTIAL REFACTOR — further decomposition pending. Shared numeric/Q–Q/distribution/rank/CI/error helpers reduce duplication. Further per-table decomposition of remaining long routines is pending. |
-| A27 | LOW | Deprecated ggplot2 usage | SOURCE APPLIED — R/jamovi verification pending. Active aes_string, fun.y and guides(fill=FALSE) removed; line geom widths use linewidth; density mappings use after_stat. |
-| A28 | INFO | Option descriptions contradict their defaults | SOURCE APPLIED — R/jamovi verification pending. Bool descriptions updated to their actual defaults; stray embedded mode declaration removed; grouping descriptions corrected. |
-| A29 | INFO | No unit tests | 35 TEST BLOCKS — the nortest correction is developer-confirmed working. Prior 34-block suite success was confirmed; a new full-suite log was not supplied with this confirmation. |
+Se recibieron y revisaron las siete diferencias y el script adicional. Los
+110 archivos de código, configuración, pruebas y datos del inventario
+reconciliado coinciden con las huellas suministradas por el usuario. Se
+conservan todas sus versiones: las diferencias contienen correcciones ya
+validadas, el manifiesto de los ocho datos, referencias y regeneración de
+encabezados. Se ejecutó correctamente el script Node de selectores.
+El registro nortest de nombre antiguo contiene validación general del
+16 de noviembre (409 comprobaciones); se preserva y marca como histórico.
+El código reconciliado contiene 112 bloques test_that; la ejecución del
+usuario contabiliza 1878 comprobaciones. Son magnitudes distintas.
 
-Additional correction: Chuprov’s T for larger contingency tables. Regression extensions now include RESET; Shapiro–Wilk, Lilliefors and Anderson–Darling; four heteroskedasticity tests; multi-lag DW (5,000 residual resamples, seed 123456); automatic-lag ACF; four residual/influence plots and an influence-index table. Latest build/install and 26-block R suite passed in the supplied user log. GUI functionality is reported working; HTML/PDF export and .omv save/reopen checks are developer-confirmed passed.
+## Cierre de validación completado; commit pendiente
 
-Compatibility review: the Regression image-owner/resource bridge uses private jamovi/jmvcore APIs. It needs explicit maintainer review; successful local rendering alone does not establish supported compatibility.
+El usuario ha identificado saRa_1.0.0.jmo y confirmado la comprobación
+conjunta final (reinicio/carga, OMV y HTML/PDF). SHA-256 registrado en
+FINAL_ACCEPTANCE_2026-11-27.json. El binario no se ha inspeccionado aquí.
+La revisión del último git status/stat no incorpora familias nuevas fuera
+del alcance revisado; diff --check solo señala espacios finales.
 
-## Latest verification evidence
+Solo queda revisar el staging y crear/registrar el commit del candidato.
+El binario JMO se conserva como entregable externo al commit de fuentes.
+No se ha realizado push, merge ni publicación. Traducciones, menú y
+regresión independiente continúan aplazados.
 
-See USER_VALIDATION_LOG.md and USER_VALIDATION_EVIDENCE.json. On 11 October 2026 the user supplied a successful jamovi 2.7.30 Linux Flatpak compilation/install log with no testthat failures (26 blocks), and reported modules working. Individual tracker rows retain pending verification where complete GUI/export coverage is not established. This evidence supersedes historical execution-pending statements for the current suite.
+## Evidencia y revisión
 
-Developer confirmation on 11 October 2026: HTML/PDF exports and .omv save/reopen checks passed. This supersedes earlier export/persistence pending notes; it does not establish cross-platform coverage or approval of private APIs.
+- USER_VALIDATION_LOG.md y USER_VALIDATION_EVIDENCE.json: evidencia del usuario.
+- VALIDATION_STATUS.json: estado consolidado, entorno y límites.
+- SOURCE_REVIEW_2026-11-27.json: revisión estática de la copia disponible.
+- FINAL_FILE_REVIEW_2026-11-27.md: revisión final de archivos y limitaciones.
+- GUI_CHECKLIST.md: comprobaciones aceptadas y cierre pendiente.
 
-## Follow-up source changes — 13 October 2026
-
-See FOLLOWUP_2026-10-13.md for consolidated association helpers, the ordinal column-layout correction and additional shared routines. The current suite contains 34 blocks; a fresh build/test and GUI run is required. The previously recorded successful 26-block run applies to the preceding candidate only.
-
-## On-demand nortest correction — 10 November 2026
-
-The developer reported the missing-nortest error in Regression on both Windows and Linux, masked when moretests preloaded nortest. saRa now resolves the bundled package on demand via loadNamespace(lib.loc=...), without eager nortest NAMESPACE imports or global .libPaths changes. The developer confirms that the correction works. See WINDOWS_NORTEST_FIX.md and NORTEST_VALIDATION_2026-11-10.json for scope and evidence. The source contains 35 test blocks; this confirmation did not supply a new full-suite log or repeat export/persistence results.
+VALIDATE_SOURCE.py genera un informe independiente. Nunca sustituye resultados
+runtime ni vuelve a marcar como pendiente lo ya validado por el usuario.

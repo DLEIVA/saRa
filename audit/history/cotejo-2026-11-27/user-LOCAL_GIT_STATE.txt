@@ -1,0 +1,122 @@
+## branch
+fix/audit-review-1.0.0
+## head
+2cfe7ee61c580950140c832a4b22163a90bba2f8
+## status
+ M .Rbuildignore
+ M DESCRIPTION
+ M NAMESPACE
+ M NEWS
+ M R/00jmv.R
+ M R/bivcat.b.R
+ M R/bivcat.h.R
+ M R/bivmix.b.R
+ M R/bivmix.h.R
+ M R/bivnum.b.R
+ M R/bivnum.h.R
+ M R/bivord.b.R
+ M R/bivord.h.R
+ M R/catsummary.b.R
+ M R/catsummary.h.R
+ M R/contvars.b.R
+ M R/discvars.b.R
+ D R/linreg.b.R
+ D R/linreg.h.R
+ M R/numeric-statistics.R
+ M R/numsummary.b.R
+ M R/numsummary.h.R
+ M R/ordsummary.b.R
+ M R/ordsummary.h.R
+ M R/regression-diagnostics.R
+ M R/testnorm.b.R
+ M R/umw.b.R
+ M R/umw.h.R
+ M R/utils.R
+ M R/wilcoxt.b.R
+ M R/wilcoxt.h.R
+ M audit/APPLY_AND_MERGE.md
+ M audit/AUDIT_TRACKER.csv
+ M audit/AUDIT_TRACKER.md
+ M audit/GUI_CHECKLIST.md
+ M audit/NORTEST_VALIDATION_2026-11-10.json
+ M audit/RELEASE_NOTES.md
+ M audit/USER_VALIDATION_EVIDENCE.json
+ M audit/USER_VALIDATION_LOG.md
+ M audit/VALIDATE_SOURCE.py
+ M audit/VALIDATION_STATUS.json
+ M jamovi/0000.yaml
+ M jamovi/00refs.yaml
+ M jamovi/bivcat.a.yaml
+ M jamovi/bivcat.r.yaml
+ M jamovi/bivcat.u.yaml
+ M jamovi/bivmix.a.yaml
+ M jamovi/bivmix.r.yaml
+ M jamovi/bivnum.a.yaml
+ M jamovi/bivnum.r.yaml
+ M jamovi/bivnum.u.yaml
+ M jamovi/bivord.r.yaml
+ M jamovi/bivord.u.yaml
+ M jamovi/catsummary.a.yaml
+ M jamovi/catsummary.r.yaml
+ M jamovi/catsummary.u.yaml
+ D jamovi/linreg.a.yaml
+ M jamovi/numsummary.a.yaml
+ M jamovi/numsummary.r.yaml
+ M jamovi/numsummary.u.yaml
+ M jamovi/ordsummary.a.yaml
+ M jamovi/ordsummary.r.yaml
+ M jamovi/ordsummary.u.yaml
+ M jamovi/testnorm.a.yaml
+ M jamovi/umw.r.yaml
+ M jamovi/wilcoxt.a.yaml
+ M jamovi/wilcoxt.r.yaml
+ M tests/testthat/test-audit-statistics.R
+?? R/distribution-plots.R
+?? R/frequency-tables.R
+?? R/inequality.R
+?? R/messages.R
+?? R/normality-plot-messages.R
+?? audit/BOXPLOT_NOTCHES_2026-11-17.md
+?? audit/COMPARE_REVIEWED_FILES.R
+?? audit/CONTINUOUS_SHADING_2026-11-17.md
+?? audit/DENSITY_MARKER_2026-11-17.md
+?? audit/DISTRIBUTION_COLOURS_2026-11-17.md
+?? audit/FINAL_FILE_REVIEW_2026-11-27.md
+?? audit/FREQUENCY_TABLES_2026-11-17.md
+?? audit/GINI_LORENZ_2026-11-27.md
+?? audit/LOCAL_FILE_COMPARISON.csv
+?? audit/MANN_WHITNEY_MEDIAN_INTERVALS_2026-11-17.md
+?? audit/MANN_WHITNEY_SUPERIORITY_2026-11-17.md
+?? audit/MIXED_EFFECT_FORMAT_2026-11-17.md
+?? audit/NUMERICAL_FREQUENCIES_2026-11-17.md
+?? audit/NUMERICAL_QQ_MESSAGE_2026-11-17.md
+?? audit/ORDINAL_PLOT_THEME_2026-11-17.md
+?? audit/REVIEWED_FILES_2026-11-27.csv
+?? audit/REVISION_AUDIT_2026-11-16.md
+?? audit/SOURCE_REVIEW_2026-11-27.json
+?? audit/UNIFORM_SUPPORT_2026-11-17.md
+?? audit/WILCOXON_HL_CONFIDENCE_2026-11-17.md
+?? audit/history/
+?? jamovi/js/
+?? tests/gui/
+?? tests/testthat/test-audit-review.R
+?? tests/testthat/test-categorical-plot-order.R
+?? tests/testthat/test-categorical-table-visibility.R
+?? tests/testthat/test-continuous-shading.R
+?? tests/testthat/test-distribution-display-window.R
+?? tests/testthat/test-frequency-range.R
+?? tests/testthat/test-frequency-tables.R
+?? tests/testthat/test-gini-lorenz.R
+?? tests/testthat/test-mann-whitney-median-intervals.R
+?? tests/testthat/test-mann-whitney-superiority.R
+?? tests/testthat/test-mixed-effect-footnotes.R
+?? tests/testthat/test-normality-footnotes.R
+?? tests/testthat/test-normality-histograms.R
+?? tests/testthat/test-normality-plot-messages.R
+?? tests/testthat/test-numeric-frequency-tables.R
+?? tests/testthat/test-numeric-qq-message.R
+?? tests/testthat/test-ordinal-association-notes.R
+?? tests/testthat/test-ordinal-plot-theme.R
+?? tests/testthat/test-uniform-plot-jumps.R
+?? tests/testthat/test-uniform-support.R
+?? tests/testthat/test-wilcoxon-hl-confidence.R

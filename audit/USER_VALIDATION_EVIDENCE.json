@@ -1,21 +1,125 @@
 {
-  "reported_date": "2026-10-11",
-  "candidate_version": "1.0.0",
-  "jamovi_version": "2.7.30",
-  "platform": "Linux Flatpak",
-  "testthat_blocks": 26,
-  "build": "PASS: compiler and package installation completed; saRa_1.0.0.jmo written",
-  "module_install": "PASS: Module installed successfully",
-  "R_statistical_tests": "PASS: testthat completed without failures in supplied log",
-  "GUI": "PASS: developer reports modules working; coverage is developer-confirmed, not independently observed here",
-  "exports_and_persistence": "PASS: developer confirms HTML/PDF exports and .omv save/reopen checks on 11 October 2026",
-  "warnings": [
-    "jmvtools unavailable in embedded dependency repository; build nevertheless completed",
-    "fill scale replacement message",
-    "Flatpak DBus/GTK messages and engine ConnectionLostException during installation"
-  ],
-  "R_version": "not recorded in supplied log",
-  "jmvtools_version": "not recorded in supplied log",
-  "evidence_file": "audit/USER_VALIDATION_LOG.md",
-  "scope": "Previous candidate, before the 13 October association/refactoring follow-up. Does not validate these new changes."
+  "date": "2026-11-27",
+  "source": "User conversation, screenshots and console output",
+  "runtime": {
+    "source": "User-supplied console output",
+    "command": "testthat::test_local(\".\")",
+    "pass": 1878,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 39.4,
+    "contexts": {
+      "audit-review": 190,
+      "audit-statistics": 242,
+      "categorical-plot-order": 96,
+      "categorical-table-visibility": 108,
+      "continuous-shading": 124,
+      "distribution-display-window": 34,
+      "frequency-range": 11,
+      "frequency-tables": 45,
+      "gini-lorenz": 97,
+      "mann-whitney-median-intervals": 376,
+      "mann-whitney-superiority": 12,
+      "mixed-effect-footnotes": 36,
+      "normality-footnotes": 36,
+      "normality-histograms": 15,
+      "normality-plot-messages": 62,
+      "numeric-frequency-tables": 39,
+      "numeric-qq-message": 35,
+      "ordinal-association-notes": 63,
+      "ordinal-plot-theme": 76,
+      "uniform-plot-jumps": 55,
+      "uniform-support": 52,
+      "wilcoxon-hl-confidence": 74
+    },
+    "scope": "Latest user working tree; not an independently executed test of the assistant review checkout"
+  },
+  "environment": {
+    "os": "Ubuntu 22.04.5 LTS",
+    "architecture": "x86_64-pc-linux-gnu",
+    "test_R": "4.6.2 (2026-10-29)",
+    "testthat": "3.3.2",
+    "jmvtools": "28.4",
+    "jmvcore": "28.3",
+    "ggplot2": "4.0.3",
+    "DescTools": "0.99.60",
+    "WRS2": "1.1-7",
+    "rcompanion": "2.5.4",
+    "effectsize": "1.0.3",
+    "ggalluvial": "0.12.6",
+    "nortest": "1.0-4",
+    "jamovi_home": null,
+    "jmvtools_check": "jamovi 2.7.30 found at /usr/bin/flatpak",
+    "flatpak_metadata_version": "2.7.27",
+    "flatpak_subject": "Version 2.7.30 (19f193ffc130)",
+    "flatpak_active_commit": "e327557fb5ed856676649205e56f7bd9501c1939001ae7c5266871195712736b",
+    "flatpak_latest_commit": "bad119b14df2ce122f1d9c50cbb398fe8507b77a235f7afe0f9a1a8576f13316",
+    "embedded_R": "Not separately verified; test-session R is not assumed to be embedded R",
+    "note": "References to jamovi 28 in generated results do not establish the application version."
+  },
+  "manual_validation": {
+    "evidence": "User confirmations and screenshots in the audit conversation",
+    "accepted_blocks": [
+      "univariate nominal, ordinal and numeric summaries and frequencies (scoped prior confirmations)",
+      "numerical and mixed descriptive bivariate values, plots and explanatory notes",
+      "nominal association reference values and table visibility",
+      "ordinal associations, ties, level order, directional Somers, constant and single-pair notes and recovery",
+      "continuous and discrete distribution tables, probability and quantile plots, parameter guards and finite windows (recorded cases)",
+      "Normality Tests: individual errors, grouped Q-Q/ECDF, constant/insufficient groups, legible messages and recovery",
+      "Mann-Whitney and paired Wilcoxon corrections, median/HL intervals and recorded edge cases (prior confirmations)",
+      "Gini, normalized Gini and Lorenz: reference values, equal values, concentration, zeros, negatives, missing values, single observation and recovery",
+      "non-syntactic variable names: spaces, initial number, accents and backtick; nominal bars/mosaic, ordinal bars/heatmap/alluvial, numerical scatter/linear fit and density/histogram/boxplot marginals",
+      "all eight example datasets open and are operational"
+    ],
+    "exports": "OMV/HTML/PDF accepted for previously confirmed blocks, including new ordinal notes and Gini/Lorenz. Latest nominal visibility and name checks confirmed in GUI; no distinct export confirmation after that last change.",
+    "independent_export_inspection": false
+  },
+  "limits": {
+    "exact_user_source_reviewed": true,
+    "final_binary_hash_recorded": true,
+    "cross_platform_current_candidate_established": false,
+    "publication_ready": false,
+    "source_review_scope": "Covers the 110 source/configuration/data/test paths in the supplied comparison plus the supplied historical audit JSON. Does not identify a final binary or a future edited tree.",
+    "final_binary_independently_inspected": false,
+    "ready_for_candidate_commit": true
+  },
+  "source_reconciliation": {
+    "status": "COMPLETE FOR THE SUPPLIED 110-FILE RUNTIME INVENTORY",
+    "details": "audit/SOURCE_RECONCILIATION_2026-11-27.json",
+    "initial_match": 102,
+    "initial_different": 7,
+    "initial_extra": 1,
+    "reviewed_source_files": 110,
+    "testthat_blocks_in_reconciled_source": 112,
+    "functional_changes": false
+  },
+  "final_acceptance": {
+    "date": "2026-11-27",
+    "module": "saRa",
+    "version": "1.0.0",
+    "artifact": {
+      "filename": "saRa_1.0.0.jmo",
+      "sha256": "163731acf8c0cee8f838c565e1da270178c35fdbada5ccd15a96fb5a16906b96",
+      "evidence": "User-supplied sha256sum terminal output; assistant has not received or independently hashed the binary"
+    },
+    "source": {
+      "branch": "fix/audit-review-1.0.0",
+      "base_commit": "2cfe7ee61c580950140c832a4b22163a90bba2f8",
+      "candidate_commit": null,
+      "reconciled_inventory_files": 110
+    },
+    "acceptance": {
+      "testthat_pass": 1878,
+      "testthat_fail": 0,
+      "testthat_warn": 0,
+      "testthat_skip": 0,
+      "final_combined_check": "PASS — user confirms final JMO identified and combined check performed",
+      "combined_scope": "Restart/load module, OMV reopening and HTML/PDF export, as requested in preceding instructions",
+      "evidence_kind": "User confirmation; no independent binary/export inspection"
+    },
+    "git_diff_check": "Only trailing-whitespace diagnostics in the user supplied output; no runtime source edits performed for this closeout",
+    "next_step": "Review staged set and create candidate commit; record returned hash outside the self-referential precommit record",
+    "publication": "No push, merge, tag or publication performed"
+  }
 }

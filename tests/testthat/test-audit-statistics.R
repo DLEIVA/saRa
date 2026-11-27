@@ -50,7 +50,7 @@ test_that("signed ranks agree with R's uncorrected normal approximation", {
     expect_lte(abs(result$correlation), 1)
   }
   expect_equal(saRa:::.saraSignedRanks(c(1,3,4),c(1,1,1))$correlation, 1)
-  expect_true(is.nan(saRa:::.saraSignedRanks(c(1,1),c(1,1))$correlation))
+  expect_error(saRa:::.saraSignedRanks(c(1,1),c(1,1)),"All observations are tied")
 })
 
 test_that("Mann-Whitney ties and unequal group sizes agree with R", {
@@ -191,85 +191,6 @@ test_that("residual ACF uses automatic lags and fitted rows after exclusions", {
   expect_type(saRa:::.saraResidualACF(list(residuals=1))$error,"character")
 })
 
-test_that("regression add-on leaves incomplete and disabled analyses alone", {
-  cls <- getFromNamespace("linRegClass","saRa")
-  for (opts in list(list(dep=NULL,norm=TRUE,durbin=TRUE),
-                   list(dep="y",norm=FALSE,durbin=FALSE),
-                   list(dep="y",covs=character(),factors=character(),
-                        blocks=list(character()),norm=TRUE,durbin=TRUE))) {
-    parent <- new.env(parent=emptyenv())
-    parent$options <- opts
-    makeActiveBinding("models",function(value) stop("Incomplete models were requested"),parent)
-    methods <- cls$private_methods
-    context <- new.env(parent=asNamespace("saRa"))
-    context$self <- list(parent=parent)
-    context$private <- new.env(parent=emptyenv())
-    for (name in c(".getModelTerms",".isReady",".enabled",".table")) {
-      method <- methods[[name]]
-      environment(method) <- context
-      context$private[[name]] <- method
-    }
-    for (name in c(".init",".run")) {
-      method <- methods[[name]]
-      environment(method) <- context
-      expect_error(method(),NA)
-    }
-  }
-})
-
-test_that("regression tables explicitly create their rows before filling", {
-  parentOptions <- jmvcore::Options$new()
-  assumptions <- jmvcore::Group$new(options=parentOptions,name="assump")
-  # Regression's generated model group has an active assump binding;
-  # a generic Group does not. Preserve that interface in the fixture.
-  modelGroup <- list(assump=assumptions)
-  groups <- list(get=function(key) modelGroup)
-  parent <- list(options=list(dep="y",norm=TRUE,durbin=FALSE,
-      blocks=list("x")),results=list(models=groups))
-  # Table expressions use parent options, whereas the fake option values drive init.
-  # Use a small R6 option fixture with real Options evaluation.
-  parent$options <- R6::R6Class("RegressionOptionFixture",inherit=jmvcore::Options,
-    public=list(dep="y",norm=TRUE,durbin=FALSE,resPlots=FALSE,blocks=list("x")))$new()
-  cls <- getFromNamespace("linRegClass","saRa")
-  context <- new.env(parent=asNamespace("saRa"))
-  context$self <- list(parent=parent)
-  context$private <- new.env(parent=emptyenv())
-  for (name in c(".getModelTerms",".isReady",".enabled",".table")) {
-    method <- cls$private_methods[[name]]
-    environment(method) <- context
-    context$private[[name]] <- method
-  }
-  method <- cls$private_methods$.init
-  environment(method) <- context
-  expect_error(method(),NA)
-  reset <- assumptions$get("reset")
-  bp <- assumptions$get("saraBP")
-  expect_equal(reset$rowCount,1L)
-  expect_equal(bp$rowCount,4L)
-  expect_error(reset$setRow(rowNo=1,list(`s[reset]`=2,`p[reset]`=.1)),NA)
-  expect_error(bp$setRow(rowNo=2,list(stat=3,df1=1,p=.08)),NA)
-})
-
-test_that("inserted ACF images retain the add-on renderer owner", {
-  calls <- character()
-  owner <- list(.render=function(funName,image,...) {
-    calls <<- c(calls,funName)
-    TRUE
-  },.createImage=function(funName,image,...) {
-    calls <<- c(calls,funName)
-    TRUE
-  })
-  options <- jmvcore::Options$new()
-  image <- saRa:::.saraAddonImage$new(owner=owner,options=options,
-    name="saraACF1",renderFun=".diagnosticPlot")
-  group <- jmvcore::Group$new(options=options,name="assump")
-  group$add(image)
-  expect_identical(image$analysis,owner)
-  expect_true(image$.render())
-  expect_true(image$.createImages())
-  expect_identical(calls,c(".diagnosticPlot",".diagnosticPlot"))
-})
-
 test_that("multi-lag DW reproduces car bootstrap and restores random state", {
   d <- data.frame(x=seq_len(40),y=seq_len(40)+sin(seq_len(40)))
   model <- lm(y~x,d)
@@ -327,49 +248,6 @@ test_that("influence indices retain fitted rows and match base R with exclusions
     head(order(cooks.distance(reference),decreasing=TRUE),2))))
   expect_equal(result$selected,expected)
 })
-
-test_that("all regression plot types build from compact state", {
-  d <- data.frame(x=seq_len(40),y=seq_len(40)+sin(seq_len(40)))
-  model <- lm(y~x,d)
-  frame <- saRa:::.saraRegressionFrame(model)
-  for (kind in c("residual","scale","qq","influence")) {
-    plot <- saRa:::.saraRegressionPlot(frame,kind)
-    expect_error(ggplot2::ggplot_build(plot),NA)
-  }
-  plot <- saRa:::.saraRegressionPlot(saRa:::.saraResidualACF(model),"acf")
-  expect_error(ggplot2::ggplot_build(plot),NA)
-})
-
-test_that("regression plots draw on a device and failed draws yield a visible result", {
-  d <- data.frame(x=seq_len(40),y=seq_len(40)+sin(seq_len(40)))
-  model <- lm(y~x,d)
-  state <- saRa:::.saraRegressionFrame(model)
-  path <- tempfile(fileext=".pdf")
-  grDevices::pdf(path,width=9,height=6)
-  on.exit({grDevices::dev.off();unlink(path)},add=TRUE)
-  for (kind in c("residual","scale","qq","influence")) {
-    # Draw directly so underlying errors cannot be hidden by the fallback.
-    expect_error(print(saRa:::.saraRegressionPlot(state,kind)),NA)
-    expect_true(saRa:::.saraDrawRegressionPlot(list(values=state,kind=kind)))
-  }
-  expect_true(saRa:::.saraDrawRegressionPlot(NULL))
-  expect_true(saRa:::.saraDrawRegressionPlot(list(values=state,kind="invalid")))
-})
-
-test_that("influence plot retains numeric Cook scale after a discrete jamovi palette", {
-  d <- data.frame(x=seq_len(40),y=seq_len(40)+sin(seq_len(40)))
-  state <- saRa:::.saraRegressionFrame(lm(y~x,d))
-  theme <- list(ggplot2::theme_minimal(),
-    ggplot2::scale_fill_manual(values=c("#3366AA","#CC6677")),
-    ggplot2::scale_colour_manual(values=c("#3366AA","#CC6677")))
-  plot <- saRa:::.saraRegressionPlot(state,"influence",theme)
-  expect_error(ggplot2::ggplot_build(plot),NA)
-  path <- tempfile(fileext=".pdf")
-  grDevices::pdf(path)
-  on.exit({grDevices::dev.off();unlink(path)},add=TRUE)
-  expect_error(print(plot),NA)
-})
-
 
 test_that("internal Q-Q calculations preserve 0.1.2 pointwise bands", {
   z <- as.vector(scale(c(-2,-1,0,1,4)))
@@ -456,7 +334,7 @@ test_that("ordinal inner-range column metadata stays aligned at fractional cover
     args <- context$private$colArgs
     expect_equal(lengths(args),c(name=18L,title=18L,type=18L,visible=18L))
     expect_equal(args$name[13],"ir")
-    expect_equal(args$title[13],paste0(coverage,"% Inner range"))
+    expect_equal(args$title[13],paste0(coverage,"% inner range"))
     expect_equal(args$type[13],"number")
     expect_equal(args$visible[13],"(irange)")
   }

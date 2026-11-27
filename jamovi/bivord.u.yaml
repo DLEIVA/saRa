@@ -127,10 +127,12 @@ children:
                 children:
                   - type: RadioButton
                     name: dodge
+                    enable: (barplot)
                     optionName: bartype
                     optionPart: dodge
                   - type: RadioButton
                     name: stack
+                    enable: (barplot)
                     optionName: bartype
                     optionPart: stack
           - type: LayoutBox
@@ -140,15 +142,17 @@ children:
             stretchFactor: 1
             children:
               - type: Label
-                label: Y variable
+                label: Y-axis
                 fitToGrid: true
                 children:
                   - name: ycounts
+                    enable: (barplot)
                     type: RadioButton
                     optionName: yaxis
                     optionPart: ycounts
                   - type: RadioButton
                     name: ypc
+                    enable: (barplot)
                     optionName: yaxis
                     optionPart: ypc
                     style: inline
@@ -156,9 +160,9 @@ children:
                     children:
                       - type: ComboBox
                         name: yaxisPc
-                        enable: (ypc)
+                        enable: (barplot && ypc)
               - type: Label
-                label: X variable
+                label: X-axis
                 fitToGrid: true
                 children:
                   - type: RadioButton

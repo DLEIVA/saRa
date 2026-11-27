@@ -24,16 +24,13 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         title = c(
           "N", "Missing","Mean", "Median", "Mode", "Geometric mean", "Trimean",
           "Midhinge", "Mid-range", 
-          paste0(ifelse(!is.na(private$.getTrim()*100),
-                        private$.getTrim()*100,''),'% trimmed mean'),
-          paste0(ifelse(!is.na(private$.getWin()*100),
-                        private$.getWin()*100,''),'% winsorized mean'),
+          paste0(self$options$Trim,'% trimmed mean'),
+          paste0(self$options$Win,'% winsorized mean'),
           "Variance","Standard deviation", "Geometric standard deviation",
           "Mean deviation","CV", "Range", "IQR", "QD", "MAD", 
-          "Quartile dispersion", paste0(ifelse(!is.na(private$.getNPerc()*100),
-                               private$.getNPerc()*100,''),'% Inner range'),
+          "Quartile coefficient of dispersion", paste0(self$options$NPerc,'% inner range'),
           "Min", "Max", "Q1", "Q2", "Q3", "Pearson's \u03B2\u2081",
-          "Fisher's \u03B3\u2081","H1","H3","Pearson's \u03B2\u2082",
+          "Fisher's \u03B3\u2081","SP50","SP80","Pearson's \u03B2\u2082",
           "Fisher's \u03B3\u2082","K2","K3"
         ),
         superTitle = rep("",35),
@@ -52,8 +49,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "cohend", "rbp", "probsup","etasq","omegasq","kwind"
         ),
         title = c(
-          "Cohen's d","Point-biserial Correlation","Probability of superiority",
-          "\u03B7\u00B2","\u03C9\u00B2","η²_H (Kruskal–Wallis)"
+          "Cohen's d","Point-biserial correlation","Probability of superiority",
+          "\u03B7\u00B2","\u03C9\u00B2","η²<sub>H</sub> (Kruskal-Wallis)"
         ),
         superTitle = rep("",6),
         type = c(rep("number",6)),
@@ -70,7 +67,6 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     },
     .clear = function(vChanges,...) {
       private$.clearIndicesTableNum(vChanges)
-      private$.clearEffSTable(vChanges)      
     },    
     .run = function(){
       if (length(self$options$vars) > 0 && is.null(self$options$groupBy))
@@ -343,13 +339,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         ) {
           
           if (length(na.omit(column)) > 0) {
-            columns <- na.omit(c(var, groupBy))
-            plotData <- jmvcore::naOmit(data[columns])
-            plotData[[var]] <- jmvcore::toNumeric(plotData[[var]])
             names <- list("x"="x", "s1"="s1")
             labels <- list("x"=var, "s1"=groupBy)
-            
-            colnames(plotData) <- as.character(unlist(names))
           
           if (self$options$hist || self$options$dens || self$options$norm)
             hist$setState(list(names=names, labels=labels))
@@ -379,7 +370,6 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           alpha <- 1
         
         nBins <- 12
-        nSplits <- length(groupBy)
         
         fill <- theme$fill[2]
         color <- theme$color[1]
@@ -413,7 +403,9 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             )
           }
           
-          densDAT <- datos |>  dplyr::group_by(s1) |>  dplyr::do(.getDensity(.)) |>  data.frame()
+          densDAT <- do.call(rbind,lapply(split(datos,datos$s1),function(group) {
+            out <- .getDensity(group); out$s1 <- group$s1[1]; out
+          }))
           #dens <- plyr::ddply(datos,.(s1), function(x){
           #  data.frame(
           #    y = grids,
@@ -620,6 +612,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       names(values) <- names
       table$setRow(rowNo=1, values=values)
+      for (column in names(errorNotes)) table$addFootnote(rowNo=1,column,.saraMessage(errorNotes[[column]],self))
     },
     #### Populate tables ----
     .populateIndicesTableNum = function(results) {
@@ -634,6 +627,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       colNames <- private$colArgs$name
       indic <- results$indic
       
+      errorNotes <- list()
       values <- list(); footnotes <- list(); footnotes2 <- list()
       footnotes3 <- list()
       for (i in seq_along(vars)) {
@@ -653,6 +647,8 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               subName <- paste0(vars[i], post)
               
               values[[subName]] <- stats[[name]][1]
+              error <- attr(stats,"errors")[[name]]
+              if (!is.null(error)) errorNotes[[subName]] <- error
             }
             
             if (self$options$mode && length(stats[['mode']]) > 1) {
@@ -681,7 +677,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes[[i]],
-          ('More than one mode exists, only the first is reported')
+          .('More than one mode exists, only the first is reported')
         )
       }
       
@@ -689,7 +685,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes2[[i]],
-          ('Geometric mean can only be computed with positive values (>0)')
+          .('Geometric mean can only be computed with positive values (>0)')
         )
       }
       
@@ -697,7 +693,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes3[[i]],
-          ('Geometric std. deviation can only be computed with positive values (>0)')
+          .('Geometric std. deviation can only be computed with positive values (>0)')
         )
       }
     },
@@ -706,12 +702,12 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       table <- self$results$esindices
       vars <- self$options$vars
       groupBy <-  self$options$groupBy
-      ngroups <- length(levels(self$data[[groupBy]]))
+
       
       colNames <- private$colArgs2$name
       indic <- results$indic
       
-      values <- list(); footnotes <- list(); 
+      values <- list(); 
       
       for (i in seq_along(vars)) {
         
@@ -727,59 +723,25 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           values[[subName]] <- r[[name]][1]
         }
         
-        if ( self$options$cohend && ngroups > 2 )
-          footnotes <- c(footnotes, paste0(vars[i],'[cohend]'))
-        
-        if (self$options$rbp && ngroups > 2)
-          footnotes <- c(footnotes, paste0(vars[i], '[rbp]'))
-        
-        if (self$options$probsup && ngroups > 2)
-          footnotes <- c(footnotes, paste0(vars[i], '[probsup]'))
       }
       table$setRow(rowNo=1, values=values)
-      
-      for (i in seq_along(footnotes)) {
-        table$addFootnote(
-          rowNo=1,
-          footnotes[[i]],
-          ("More than two levels, effect size indicator is not reported")
-        )
+      availableColumns <- vapply(table$columns, function(column) column$name, character(1))
+      for(variable in vars) {
+        errors <- attr(indic[[variable]],"errors")
+        for(name in names(errors)) {
+          column <- paste0(variable,"[",name,"]")
+          if (column %in% availableColumns)
+            table$addFootnote(rowNo=1, column, .saraMessage(errors[[name]],self))
+        }
+      }
+      for(var in vars) {
+        groups <- self$data[[groupBy]][complete.cases(self$data[c(var,groupBy)])]
+        if(length(unique(groups))<2L) table$setNote(paste0("groups_",var),
+          jmvcore::format(.("At least two observed groups are required for effect sizes: {variable}"),variable=var))
       }
     },    
     
     #### Helper functions ----
-    .errorCheck = function() {
-      data <- self$data
-      groupBy <- self$options$groupBy
-      
-      if ( ! is.null(groupBy)) {
-        for (item in groupBy) {
-          if ( ! is.factor(data[[item]])) {
-            jmvcore::reject(
-              .('Unable to split by a continuous variable')
-            )
-          }
-        }
-      }
-      
-      for (var in groupBy) {
-        if (length(levels(data[[var]])) == 0) {
-          jmvcore::reject(
-            jmvcore::format(
-              .("The 'group by' variable '{var}' contains no data."), var=var
-            ),
-            code=''
-          )
-        } else if (is.null(groupBy)) {
-          jmvcore::reject(
-            jmvcore::format(
-              .("The 'group by' variable is required."), var=var
-            ),
-            code=''
-          )
-        }
-      }
-    },    
     .skipOption = function(visible) {
       return(! self$options[[ gsub("[()]", "", visible) ]])
     },
@@ -847,6 +809,7 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
+      .saraValidateFences(intervinf,intervsup)
       .bxp1 <- grDevices::boxplot.stats(as.numeric(column), coef = intervinf)
       .bxp2 <- grDevices::boxplot.stats(as.numeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out
@@ -870,53 +833,37 @@ bivmixClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         inner=private$.getNPerc, percentiles=private$.getPcValues))
     }, 
 .computeEffSIndices = function(ESdf) {
-  es <- list()
+  keys <- c("cohend","rbp","probsup","etasq","omegasq","kwind")
+  es <- setNames(as.list(rep(NaN,length(keys))),keys)
+  errors <- list()
   ESdf <- data.frame(ESdf)
-  n <- nrow(ESdf)
-  k <- length(unique(ESdf$f))
-  if (k < 2L || n < 2L)
-    return(setNames(as.list(rep(NaN, 6)), c("cohend", "rbp", "probsup", "etasq", "omegasq", "kwind")))
-  if (n > 0) {
-    
-    if ( self$options$cohend & is.numeric(ESdf$c) & k == 2 ){
-      es[['cohend']] <- psych::cohen.d(ESdf$c,ESdf$f)$cohen.d[[1,2]]
-    } else if ( self$options$cohend & is.numeric(ESdf$c) & 
-                k != 2 ) {es[['cohend']] <- NA}
-    
-    if ( self$options$rbp & is.numeric(ESdf$c) & k == 2 ){
-      es[['rbp']] <- cor(ESdf$c,as.numeric(ESdf$f))
-    } else if ( self$options$rbp & is.numeric(ESdf$c) & 
-                k != 2 ) {es[['rbp']] <- NA}
-  
-    if ( self$options$probsup & is.numeric(ESdf$c) & k == 2 ){
-      es[['probsup']] <- rcompanion::wilcoxonPS(c~f,data=ESdf)[[1]]
-    } else if ( self$options$probsup & is.numeric(ESdf$c) & 
-                k != 2 ) {es[['probsup']] <- NA}
-    
-    if ( self$options$etasq & is.numeric(ESdf$c) ){
-      es[['etasq']] <- effectsize::eta_squared(lm(c~f,data=ESdf),partial=FALSE)[[2]]
-    } else if ( self$options$etasq & !is.numeric(ESdf$c) ) {es[['omegasq']] <- NA}
-    
-    if ( self$options$omegasq & is.numeric(ESdf$c) ){
-      es[['omegasq']] <- effectsize::omega_squared(lm(c~f,data=ESdf),partial=FALSE)[[2]]
-    } else if ( self$options$omegasq & !is.numeric(ESdf$c) ) {es[['omegasq']] <- NA}
-    
-    if ( self$options$kwind & is.numeric(ESdf$c) ){
-      H <- kruskal.test(c~f,data=ESdf)$statistic[[1]]
-      es[['kwind']] <- (H-k+1)/(n-k)
-    } else if ( self$options$kwind & !is.numeric(ESdf$c) ) {es[['kwind']] <- NA}    
-  
-  } else if (n==0) {
-    l <- list(
-      cohend=NaN,
-      rbp = NaN,
-      probsup = NaN,
-      etasq = NaN,
-      omegasq = NaN,
-      kwind = NaN
-    )
+  converted <- tryCatch(.saraNumeric(ESdf$c),error=function(e) e)
+  if(inherits(converted,"error")) {
+    for(name in keys) if(isTRUE(self$options[[name]])) errors[[name]] <- conditionMessage(converted)
+    attr(es,"errors") <- errors
+    return(es)
   }
-  return(es)  
-} 
+  ESdf$c <- converted
+  ESdf <- droplevels(ESdf[complete.cases(ESdf[c("c","f")]),,drop=FALSE])
+  n <- nrow(ESdf); k <- length(unique(ESdf$f))
+  compute <- function(name,fun,two=FALSE) {
+    if(!isTRUE(self$options[[name]])) return()
+    es[[name]] <<- tryCatch({
+      if(k<2L) stop("At least two observed groups are required")
+      if(two && k!=2L) stop("This effect size requires exactly two observed groups")
+      value <- unname(fun())
+      if(length(value)!=1L || !is.finite(value)) stop("Effect size is undefined for these data")
+      value
+    },error=function(e) { errors[[name]] <<- conditionMessage(e);NaN })
+  }
+  compute("cohend",function() psych::cohen.d(ESdf$c,ESdf$f)$cohen.d[[1,2]],TRUE)
+  compute("rbp",function() cor(ESdf$c,as.numeric(ESdf$f)),TRUE)
+  compute("probsup",function() rcompanion::wilcoxonPS(c~f,data=ESdf)[[1]],TRUE)
+  compute("etasq",function() effectsize::eta_squared(lm(c~f,data=ESdf),partial=FALSE)[[2]])
+  compute("omegasq",function() effectsize::omega_squared(lm(c~f,data=ESdf),partial=FALSE)[[2]])
+  compute("kwind",function() .saraDivide(kruskal.test(c~f,data=ESdf)$statistic[[1]]-k+1,n-k))
+  attr(es,"errors") <- errors
+  es
+}
   )
 )

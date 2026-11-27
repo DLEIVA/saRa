@@ -3,7 +3,23 @@ name:  ordSummary
 title: Univariate Data Analysis (Ordinal Data)
 jrs:   '1.1'
 
+
+refs: ["solanas2005"]
+
 items:
+    - name: frequencies
+      title: Frequency distribution
+      type: Array
+      description: Ordered frequencies and cumulative frequencies
+      visible: (freq)
+      items: (vars)
+      clearWith:
+        - freq
+      template:
+          title: Frequencies of $key
+          type: Table
+          columns: []
+
     - name: indicesord
       title: Statistics
       description: A table of the descriptive statistics

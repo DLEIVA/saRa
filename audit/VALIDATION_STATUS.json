@@ -1,91 +1,133 @@
 {
-  "date": "2026-11-11",
-  "candidate_version": "1.0.0",
-  "basis_version": "0.1.2",
-  "audit_version": "0.1.1",
-  "R_syntax_parser": "tree-sitter-language-pack 0.9.0; grammar check, not R execution",
-  "R_files_parsed": 33,
-  "YAML_files_parsed": 39,
-  "testthat_blocks_added": 35,
-  "source_option_visibility_reference_dependency_issues": [],
-  "R_statistical_tests": "PASS — developer-supplied testthat output: 274 expectations; FAIL/WARN/SKIP 0",
-  "jmvtools_build": "PASS — developer confirms compilation and installation",
-  "submission_target": "jamovi library",
-  "R_CMD_check": "OPTIONAL supplementary diagnostic; NOT RUN",
-  "private_Regression_API_review": "PENDING maintainer review",
-  "jamovi_GUI_and_exports": "Normality and residual plots PASS; independent of moretests; example data opens. Exports/persistence remain historical.",
-  "baseline_user_runtime_evidence": {
-    "reported_date": "2026-10-11",
-    "candidate_version": "1.0.0",
-    "jamovi_version": "2.7.30",
-    "platform": "Linux Flatpak",
-    "testthat_blocks": 26,
-    "build": "PASS: compiler and package installation completed; saRa_1.0.0.jmo written",
-    "module_install": "PASS: Module installed successfully",
-    "R_statistical_tests": "PASS: testthat completed without failures in supplied log",
-    "GUI": "PASS: developer reports modules working; coverage is developer-confirmed, not independently observed here",
-    "exports_and_persistence": "PASS: developer confirms HTML/PDF exports and .omv save/reopen checks on 11 October 2026",
-    "warnings": [
-      "jmvtools unavailable in embedded dependency repository; build nevertheless completed",
-      "fill scale replacement message",
-      "Flatpak DBus/GTK messages and engine ConnectionLostException during installation"
-    ],
-    "R_version": "not recorded in supplied log",
-    "jmvtools_version": "not recorded in supplied log",
-    "evidence_file": "audit/USER_VALIDATION_LOG.md",
-    "scope": "Previous candidate, before the 13 October association/refactoring follow-up. Does not validate these new changes."
-  },
-  "baseline_evidence_scope": "Previous 26-block candidate only; follow-up changes require a fresh run.",
-  "source_base_commit": "4e639ad082b78c4aa868be15d4ca61090d402b71",
-  "source_followup": "regression-nortest-lazy-resolution",
-  "nortest_fix_developer_confirmation": {
-    "date": "2026-11-10",
-    "scope": "Regression add-on: on-demand resolution of bundled nortest without moretests",
-    "result": "PASS — developer confirmation",
-    "developer_statement": "Funciona perfectamente con estas modificaciones.",
-    "implementation": "R/utils.R .saraLoadNamespace; reduced NAMESPACE; nortest retained in DESCRIPTION Imports",
-    "issue_reported_on": [
-      "Windows",
-      "Linux"
-    ],
-    "fixed_platforms": "Not separately enumerated in the confirmation",
-    "testthat_blocks_in_source": 35,
-    "current_testthat_log": "Not supplied with this confirmation",
-    "scope_limit": "Confirms the reported fix works; does not assert a new complete GUI/export or cross-platform acceptance run.",
-    "source_base_commit": "4e639ad082b78c4aa868be15d4ca61090d402b71"
-  },
-  "runtime_evidence_note": "Latest runtime evidence is developer-supplied. Static validation does not execute R. See dated scope limits.",
-  "latest_user_runtime_evidence": {
-    "reported_date": "2026-11-11",
-    "candidate_version": "1.0.0",
-    "source_reference_commit": "dafeb60a6004c07090406d5edf80212d3ffe7a49",
-    "source_reference_note": "GitHub main inspected when preparing this record; the exact locally tested checkout hash was not supplied.",
-    "platform": "Windows, inferred from the supplied C:/Users/DLEIVA installation paths",
-    "R_library_series": "4.5, from supplied library and binary download paths; exact R version not supplied",
-    "jamovi_version": "Not supplied for this run",
-    "jmvtools_version": "Not supplied",
-    "test_command": "testthat::test_local(\".\")",
-    "testthat_blocks_in_source": 35,
-    "test_results": {
-      "FAIL": 0,
-      "WARN": 0,
-      "SKIP": 0,
-      "PASS": 274,
-      "duration_seconds": 13.1
+  "date": "2026-11-27",
+  "module": "saRa",
+  "version": "1.0.0",
+  "branch": "fix/audit-review-1.0.0",
+  "base_commit": "2cfe7ee61c580950140c832a4b22163a90bba2f8",
+  "candidate_commit": null,
+  "overall_status": "VALIDATED CANDIDATE; SOURCE RECONCILED AND FINAL ARTIFACT IDENTIFIED; READY FOR REVIEWED COMMIT",
+  "automated_validation": {
+    "source": "User-supplied console output",
+    "command": "testthat::test_local(\".\")",
+    "pass": 1878,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 39.4,
+    "contexts": {
+      "audit-review": 190,
+      "audit-statistics": 242,
+      "categorical-plot-order": 96,
+      "categorical-table-visibility": 108,
+      "continuous-shading": 124,
+      "distribution-display-window": 34,
+      "frequency-range": 11,
+      "frequency-tables": 45,
+      "gini-lorenz": 97,
+      "mann-whitney-median-intervals": 376,
+      "mann-whitney-superiority": 12,
+      "mixed-effect-footnotes": 36,
+      "normality-footnotes": 36,
+      "normality-histograms": 15,
+      "normality-plot-messages": 62,
+      "numeric-frequency-tables": 39,
+      "numeric-qq-message": 35,
+      "ordinal-association-notes": 63,
+      "ordinal-plot-theme": 76,
+      "uniform-plot-jumps": 55,
+      "uniform-support": 52,
+      "wilcoxon-hl-confidence": 74
     },
-    "test_evidence": "Console output pasted by developer in conversation",
-    "build": "PASS — developer confirms compilation completed",
-    "module_install": "PASS — developer confirms installation completed",
-    "GUI": {
-      "normality_tests": "PASS — developer confirmation",
-      "residual_plots": "PASS — developer confirmation",
-      "independence_from_moretests": "PASS — developer explicitly confirms no dependency on moretests",
-      "example_datasets": "PASS — developer confirms examples open correctly"
-    },
-    "developer_statement": "Compilado, instalado y comprobado que los contrastes de normalidad y los gráficos de residuos se generan perfectamente y no hay dependencia del paquete moretests.",
-    "informational_messages": [
-      "Scale for fill is already present. Adding another scale for fill, which will replace the existing scale."
+    "scope": "Latest user working tree; not an independently executed test of the assistant review checkout"
+  },
+  "environment": {
+    "os": "Ubuntu 22.04.5 LTS",
+    "architecture": "x86_64-pc-linux-gnu",
+    "test_R": "4.6.2 (2026-10-29)",
+    "testthat": "3.3.2",
+    "jmvtools": "28.4",
+    "jmvcore": "28.3",
+    "ggplot2": "4.0.3",
+    "DescTools": "0.99.60",
+    "WRS2": "1.1-7",
+    "rcompanion": "2.5.4",
+    "effectsize": "1.0.3",
+    "ggalluvial": "0.12.6",
+    "nortest": "1.0-4",
+    "jamovi_home": null,
+    "jmvtools_check": "jamovi 2.7.30 found at /usr/bin/flatpak",
+    "flatpak_metadata_version": "2.7.27",
+    "flatpak_subject": "Version 2.7.30 (19f193ffc130)",
+    "flatpak_active_commit": "e327557fb5ed856676649205e56f7bd9501c1939001ae7c5266871195712736b",
+    "flatpak_latest_commit": "bad119b14df2ce122f1d9c50cbb398fe8507b77a235f7afe0f9a1a8576f13316",
+    "embedded_R": "Not separately verified; test-session R is not assumed to be embedded R",
+    "note": "References to jamovi 28 in generated results do not establish the application version."
+  },
+  "manual_validation": {
+    "evidence": "User confirmations and screenshots in the audit conversation",
+    "accepted_blocks": [
+      "univariate nominal, ordinal and numeric summaries and frequencies (scoped prior confirmations)",
+      "numerical and mixed descriptive bivariate values, plots and explanatory notes",
+      "nominal association reference values and table visibility",
+      "ordinal associations, ties, level order, directional Somers, constant and single-pair notes and recovery",
+      "continuous and discrete distribution tables, probability and quantile plots, parameter guards and finite windows (recorded cases)",
+      "Normality Tests: individual errors, grouped Q-Q/ECDF, constant/insufficient groups, legible messages and recovery",
+      "Mann-Whitney and paired Wilcoxon corrections, median/HL intervals and recorded edge cases (prior confirmations)",
+      "Gini, normalized Gini and Lorenz: reference values, equal values, concentration, zeros, negatives, missing values, single observation and recovery",
+      "non-syntactic variable names: spaces, initial number, accents and backtick; nominal bars/mosaic, ordinal bars/heatmap/alluvial, numerical scatter/linear fit and density/histogram/boxplot marginals",
+      "all eight example datasets open and are operational"
     ],
-    "scope_limit": "Latest runtime evidence is developer-supplied, not independently executed here. Does not assert a fresh Linux/macOS run, every checklist item, or new HTML/PDF/.omv checks. Earlier export/persistence evidence remains historical. Private Regression API review remains pending."
-  }
+    "exports": "OMV/HTML/PDF accepted for previously confirmed blocks, including new ordinal notes and Gini/Lorenz. Latest nominal visibility and name checks confirmed in GUI; no distinct export confirmation after that last change.",
+    "independent_export_inspection": false
+  },
+  "data_library": {
+    "files": [
+      "phobia.RData",
+      "beliefs.RData",
+      "NEOFFI.RData",
+      "attitudes.immigration.RData",
+      "Ginzberg.RData",
+      "polynomial_regression.RData",
+      "mediation.RData",
+      "Anscombe.RData"
+    ],
+    "status": "All eight user-confirmed open and operational"
+  },
+  "scope_decisions": {
+    "regression_addon": "Excluded from registered analyses; mathematical helpers retained unregistered for separate future work",
+    "translations": "Deferred to 1.1.0",
+    "menu_reorganisation": "Deferred",
+    "descriptive_modules": "No inferential tests or confidence intervals introduced for univariate/bivariate descriptive modules"
+  },
+  "remaining": [
+    "Stage the reviewed source/tests/documentation and create candidate commit",
+    "Record the candidate commit hash; keep final JMO as an external deliverable"
+  ],
+  "acceptance_limits": {
+    "exact_user_source_reviewed": true,
+    "final_binary_hash_recorded": true,
+    "cross_platform_current_candidate_established": false,
+    "publication_ready": false,
+    "source_review_scope": "Covers the 110 source/configuration/data/test paths in the supplied comparison plus the supplied historical audit JSON. Does not identify a final binary or a future edited tree.",
+    "final_binary_independently_inspected": false,
+    "ready_for_candidate_commit": true
+  },
+  "historical_records": "audit/history/pre-consolidation-2026-11-27/",
+  "static_review_report": "audit/SOURCE_REVIEW_2026-11-27.json",
+  "source_reconciliation": {
+    "status": "COMPLETE FOR THE SUPPLIED 110-FILE RUNTIME INVENTORY",
+    "details": "audit/SOURCE_RECONCILIATION_2026-11-27.json",
+    "initial_match": 102,
+    "initial_different": 7,
+    "initial_extra": 1,
+    "reviewed_source_files": 110,
+    "testthat_blocks_in_reconciled_source": 112,
+    "functional_changes": false
+  },
+  "final_artifact": {
+    "filename": "saRa_1.0.0.jmo",
+    "sha256": "163731acf8c0cee8f838c565e1da270178c35fdbada5ccd15a96fb5a16906b96",
+    "evidence": "User-supplied sha256sum terminal output; assistant has not received or independently hashed the binary"
+  },
+  "final_combined_check": "PASS — user confirms final JMO identified and combined check performed"
 }

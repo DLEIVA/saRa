@@ -225,7 +225,8 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 title="Bivariate Data Analysis (Ordinal Data)",
                 refs=list(
                     "Somers1962",
-                    "Wilson1974"))
+                    "Wilson1974",
+                    "solanas2005"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="freqs",
@@ -247,7 +248,7 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="values", 
                         `title`="Values", 
                         `type`="integer")),
-                rows=4,
+                rows=5,
                 clearWith=list(
                     "rows",
                     "cols")))
@@ -348,20 +349,34 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 height=400,
                 renderFun=".heatmap",
                 visible="(heatmap)",
-                requiresData=TRUE))
+                requiresData=TRUE,
+                clearWith=list(
+                    "rows",
+                    "cols",
+                    "barplot",
+                    "heatmap",
+                    "alluvial",
+                    "xaxis")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="alluvial",
-                title="Alluvial Plot",
+                title="Alluvial plot",
                 width=450,
                 height=400,
                 renderFun=".alluvial",
                 visible="(alluvial)",
-                requiresData=TRUE))
+                requiresData=TRUE,
+                clearWith=list(
+                    "rows",
+                    "cols",
+                    "barplot",
+                    "heatmap",
+                    "alluvial",
+                    "xaxis")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="barplot",
-                title="Bar Plot",
+                title="Bar plot",
                 width=450,
                 height=400,
                 renderFun=".barPlot",
@@ -370,9 +385,12 @@ bivordResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 clearWith=list(
                     "rows",
                     "cols",
+                    "barplot",
+                    "heatmap",
+                    "alluvial",
+                    "xaxis",
                     "yaxis",
                     "yaxisPc",
-                    "xaxis",
                     "bartype")))}))
 
 bivordBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(

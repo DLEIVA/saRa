@@ -3,13 +3,28 @@ name:  numSummary
 title: Univariate Data Analysis (Numerical Data)
 jrs:   '1.1'
 
-refs: [WRS2]
+
+
+refs: ["WRS2", "solanas2005"]
 
 items:
+    - name: frequencies
+      title: Frequency distribution
+      type: Array
+      description: Observed numerical values and cumulative frequencies
+      visible: (freq)
+      items: (vars)
+      clearWith:
+        - freq
+      template:
+          title: Frequencies of $key
+          type: Table
+          columns: []
+
     - name: indicesnum
       title: Statistics
       description: A table of the descriptive statistics
-      visible: (n || missing || mean || median || mode || geommean || trimean || avquartile || midrange || trimmean || winsmean || variance || stddev || geomsd || meandev || cv || range || iqr || qd || mad || rcv || irange || min || max || q1 || q2 || q3 || pc || beta1 || gamma1 || h1 || h3 || beta2 || gamma2 || k2 || k3)
+      visible: (gini || n || missing || mean || median || mode || geommean || trimean || avquartile || midrange || trimmean || winsmean || variance || stddev || geomsd || meandev || cv || range || iqr || qd || mad || rcv || irange || min || max || q1 || q2 || q3 || pc || beta1 || gamma1 || h1 || h3 || beta2 || gamma2 || k2 || k3)
       type: Table
       rows: 1
       clearWith:

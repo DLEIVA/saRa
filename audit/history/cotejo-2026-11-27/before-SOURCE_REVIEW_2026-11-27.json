@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static inspection of the source tree containing this script; not R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 58,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 112,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true
+}

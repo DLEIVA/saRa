@@ -7,6 +7,7 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             vars = NULL,
+            freq = TRUE,
             n = TRUE,
             missing = FALSE,
             mean = TRUE,
@@ -57,7 +58,9 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             boxMean = FALSE,
             innerf = 1.5,
             outerf = 3,
-            qq = FALSE, ...) {
+            qq = FALSE,
+            gini = FALSE,
+            lorenz = FALSE, ...) {
 
             super$initialize(
                 package="saRa",
@@ -72,6 +75,10 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "continuous"),
                 permitted=list(
                     "numeric"))
+            private$..freq <- jmvcore::OptionBool$new(
+                "freq",
+                freq,
+                default=TRUE)
             private$..n <- jmvcore::OptionBool$new(
                 "n",
                 n,
@@ -115,6 +122,8 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..Trim <- jmvcore::OptionNumber$new(
                 "Trim",
                 Trim,
+                min=0,
+                max=49.999,
                 default=5)
             private$..winsmean <- jmvcore::OptionBool$new(
                 "winsmean",
@@ -123,6 +132,8 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..Win <- jmvcore::OptionNumber$new(
                 "Win",
                 Win,
+                min=0,
+                max=49.999,
                 default=5)
             private$..variance <- jmvcore::OptionBool$new(
                 "variance",
@@ -171,6 +182,8 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..NPerc <- jmvcore::OptionNumber$new(
                 "NPerc",
                 NPerc,
+                min=50,
+                max=99,
                 default=90)
             private$..min <- jmvcore::OptionBool$new(
                 "min",
@@ -270,17 +283,28 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..innerf <- jmvcore::OptionNumber$new(
                 "innerf",
                 innerf,
+                min=0,
                 default=1.5)
             private$..outerf <- jmvcore::OptionNumber$new(
                 "outerf",
                 outerf,
+                min=0,
                 default=3)
             private$..qq <- jmvcore::OptionBool$new(
                 "qq",
                 qq,
                 default=FALSE)
+            private$..gini <- jmvcore::OptionBool$new(
+                "gini",
+                gini,
+                default=FALSE)
+            private$..lorenz <- jmvcore::OptionBool$new(
+                "lorenz",
+                lorenz,
+                default=FALSE)
 
             self$.addOption(private$..vars)
+            self$.addOption(private$..freq)
             self$.addOption(private$..n)
             self$.addOption(private$..missing)
             self$.addOption(private$..mean)
@@ -332,9 +356,12 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..innerf)
             self$.addOption(private$..outerf)
             self$.addOption(private$..qq)
+            self$.addOption(private$..gini)
+            self$.addOption(private$..lorenz)
         }),
     active = list(
         vars = function() private$..vars$value,
+        freq = function() private$..freq$value,
         n = function() private$..n$value,
         missing = function() private$..missing$value,
         mean = function() private$..mean$value,
@@ -385,9 +412,12 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         boxMean = function() private$..boxMean$value,
         innerf = function() private$..innerf$value,
         outerf = function() private$..outerf$value,
-        qq = function() private$..qq$value),
+        qq = function() private$..qq$value,
+        gini = function() private$..gini$value,
+        lorenz = function() private$..lorenz$value),
     private = list(
         ..vars = NA,
+        ..freq = NA,
         ..n = NA,
         ..missing = NA,
         ..mean = NA,
@@ -438,13 +468,16 @@ numSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..boxMean = NA,
         ..innerf = NA,
         ..outerf = NA,
-        ..qq = NA)
+        ..qq = NA,
+        ..gini = NA,
+        ..lorenz = NA)
 )
 
 numSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "numSummaryResults",
     inherit = jmvcore::Group,
     active = list(
+        frequencies = function() private$.items[["frequencies"]],
         indicesnum = function() private$.items[["indicesnum"]],
         plots = function() private$.items[["plots"]]),
     private = list(),
@@ -455,12 +488,25 @@ numSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="",
                 title="Univariate Data Analysis (Numerical Data)",
                 refs=list(
-                    "WRS2"))
+                    "WRS2",
+                    "solanas2005"))
+            self$add(jmvcore::Array$new(
+                options=options,
+                name="frequencies",
+                title="Frequency distribution",
+                visible="(freq)",
+                items="(vars)",
+                clearWith=list(
+                    "freq"),
+                template=jmvcore::Table$new(
+                    options=options,
+                    title="Frequencies of $key",
+                    columns=list())))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesnum",
                 title="Statistics",
-                visible="(n || missing || mean || median || mode || geommean || trimean || avquartile || midrange || trimmean || winsmean || variance || stddev || geomsd || meandev || cv || range || iqr || qd || mad || rcv || irange || min || max || q1 || q2 || q3 || pc || beta1 || gamma1 || h1 || h3 || beta2 || gamma2 || k2 || k3)",
+                visible="(gini || n || missing || mean || median || mode || geommean || trimean || avquartile || midrange || trimmean || winsmean || variance || stddev || geomsd || meandev || cv || range || iqr || qd || mad || rcv || irange || min || max || q1 || q2 || q3 || pc || beta1 || gamma1 || h1 || h3 || beta2 || gamma2 || k2 || k3)",
                 rows=1,
                 clearWith=list(
                     "pcValues",
@@ -514,6 +560,9 @@ numSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data .
 #' @param vars a vector of strings naming the variables of interest in
 #'   \code{data}
+#' @param freq \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   frequency tables for distinct observed values in ascending numeric order,
+#'   with cumulative counts, proportions and percentages, without odds.
 #' @param n \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides the N
 #' @param missing \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
 #'   provides the missing values
@@ -577,10 +626,10 @@ numSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   the Pearson's \u03B2\u2081 index
 #' @param gamma1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   the Fisher's \u03B3\u2081 index
-#' @param h1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
-#'   H1 index
-#' @param h3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
-#'   H3 index
+#' @param h1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   percentile skewness over the central 50\% (SP50)
+#' @param h3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   percentile skewness over the central 80\% (SP80)
 #' @param beta2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   the Pearson's \u03B2\u2082 index
 #' @param gamma2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
@@ -614,8 +663,15 @@ numSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   fence for detecting outliers
 #' @param qq \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide Q-Q
 #'   plots (continuous variables only)
+#' @param gini \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   empirical Gini and normalized Gini (multiplied by n/(n-1)) for non-negative
+#'   values with a positive total. Missing values are excluded.
+#' @param lorenz \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   the empirical Lorenz curve and equality diagonal for non-negative values
+#'   with a positive total. Missing values are excluded.
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$frequencies} \tab \tab \tab \tab \tab Observed numerical values and cumulative frequencies \cr
 #'   \code{results$indicesnum} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }
@@ -630,6 +686,7 @@ numSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 numSummary <- function(
     data,
     vars,
+    freq = TRUE,
     n = TRUE,
     missing = FALSE,
     mean = TRUE,
@@ -680,7 +737,9 @@ numSummary <- function(
     boxMean = FALSE,
     innerf = 1.5,
     outerf = 3,
-    qq = FALSE) {
+    qq = FALSE,
+    gini = FALSE,
+    lorenz = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("numSummary requires jmvcore to be installed (restart may be required)")
@@ -694,6 +753,7 @@ numSummary <- function(
 
     options <- numSummaryOptions$new(
         vars = vars,
+        freq = freq,
         n = n,
         missing = missing,
         mean = mean,
@@ -744,7 +804,9 @@ numSummary <- function(
         boxMean = boxMean,
         innerf = innerf,
         outerf = outerf,
-        qq = qq)
+        qq = qq,
+        gini = gini,
+        lorenz = lorenz)
 
     analysis <- numSummaryClass$new(
         options = options,

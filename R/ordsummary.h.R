@@ -7,6 +7,7 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             vars = NULL,
+            freq = TRUE,
             n = TRUE,
             missing = FALSE,
             median = TRUE,
@@ -54,6 +55,10 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "ordinal"),
                 permitted=list(
                     "factor"))
+            private$..freq <- jmvcore::OptionBool$new(
+                "freq",
+                freq,
+                default=TRUE)
             private$..n <- jmvcore::OptionBool$new(
                 "n",
                 n,
@@ -109,6 +114,8 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..NPerc <- jmvcore::OptionInteger$new(
                 "NPerc",
                 NPerc,
+                min=50,
+                max=99,
                 default=90)
             private$..min <- jmvcore::OptionBool$new(
                 "min",
@@ -187,13 +194,16 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..innerf <- jmvcore::OptionNumber$new(
                 "innerf",
                 innerf,
+                min=0,
                 default=1.5)
             private$..outerf <- jmvcore::OptionNumber$new(
                 "outerf",
                 outerf,
+                min=0,
                 default=3)
 
             self$.addOption(private$..vars)
+            self$.addOption(private$..freq)
             self$.addOption(private$..n)
             self$.addOption(private$..missing)
             self$.addOption(private$..median)
@@ -230,6 +240,7 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         }),
     active = list(
         vars = function() private$..vars$value,
+        freq = function() private$..freq$value,
         n = function() private$..n$value,
         missing = function() private$..missing$value,
         median = function() private$..median$value,
@@ -265,6 +276,7 @@ ordSummaryOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         outerf = function() private$..outerf$value),
     private = list(
         ..vars = NA,
+        ..freq = NA,
         ..n = NA,
         ..missing = NA,
         ..median = NA,
@@ -304,6 +316,7 @@ ordSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "ordSummaryResults",
     inherit = jmvcore::Group,
     active = list(
+        frequencies = function() private$.items[["frequencies"]],
         indicesord = function() private$.items[["indicesord"]],
         plots = function() private$.items[["plots"]]),
     private = list(),
@@ -312,7 +325,21 @@ ordSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Univariate Data Analysis (Ordinal Data)")
+                title="Univariate Data Analysis (Ordinal Data)",
+                refs=list(
+                    "solanas2005"))
+            self$add(jmvcore::Array$new(
+                options=options,
+                name="frequencies",
+                title="Frequency distribution",
+                visible="(freq)",
+                items="(vars)",
+                clearWith=list(
+                    "freq"),
+                template=jmvcore::Table$new(
+                    options=options,
+                    title="Frequencies of $key",
+                    columns=list())))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indicesord",
@@ -369,6 +396,9 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data .
 #' @param vars a vector of strings naming the variables of interest in
 #'   \code{data}
+#' @param freq \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
+#'   ordered frequency tables with cumulative counts, proportions and
+#'   percentages, without odds.
 #' @param n \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide the N
 #' @param missing \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   the missing values
@@ -410,10 +440,10 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   Percentiles
 #' @param pcValues a comma-separated list (default: 25,50,75) specifying the
 #'   percentiles
-#' @param h1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
-#'   H1 index
-#' @param h3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
-#'   H3 index
+#' @param h1 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   percentile skewness over the central 50\% (SP50)
+#' @param h3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+#'   percentile skewness over the central 80\% (SP80)
 #' @param k2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
 #'   K2 index
 #' @param k3 \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
@@ -435,6 +465,7 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   fence for detecting outliers
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$frequencies} \tab \tab \tab \tab \tab Ordered frequencies and cumulative frequencies \cr
 #'   \code{results$indicesord} \tab \tab \tab \tab \tab A table of the descriptive statistics \cr
 #'   \code{results$plots} \tab \tab \tab \tab \tab An array of descriptive plots \cr
 #' }
@@ -449,6 +480,7 @@ ordSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 ordSummary <- function(
     data,
     vars,
+    freq = TRUE,
     n = TRUE,
     missing = FALSE,
     median = TRUE,
@@ -496,6 +528,7 @@ ordSummary <- function(
 
     options <- ordSummaryOptions$new(
         vars = vars,
+        freq = freq,
         n = n,
         missing = missing,
         median = median,

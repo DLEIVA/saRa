@@ -150,7 +150,9 @@ bivnumResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Bivariate Data Analysis (Numerical Data)")
+                title="Bivariate Data Analysis (Numerical Data)",
+                refs=list(
+                    "solanas2005"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="asocind",
@@ -221,7 +223,7 @@ bivnumResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="t[kendallR2]", 
                         `title`="", 
                         `type`="text", 
-                        `content`="Squared Kendall\u2019s \u03C4", 
+                        `content`="Squared Kendall's \u03C4", 
                         `visible`="(kendallR2)"),
                     list(
                         `name`="v[kendallR2]", 
@@ -279,14 +281,11 @@ bivnumBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param tauK \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
 #'   Kendall's tau-b association index for numeric variables.
 #' @param pearsonR2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
-#'   provide Pearson's coefficient of determination for numeric variables (rows
-#'   dependent).
+#'   provide Pearson's coefficient of determination for numeric variables.
 #' @param spearmanR2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
-#'   provide Spearman's coefficient of determination for numeric variables (rows
-#'   dependent).
+#'   provide Spearman's coefficient of determination for numeric variables.
 #' @param kendallR2 \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
-#'   provide squared Kendall’s tau-b association index for numeric variables
-#'   (rows dependent).
+#'   provide squared Kendall's tau-b association index for numeric variables.
 #' @param scat \code{TRUE} or \code{FALSE} (default: \code{FALSE}), show
 #'   scatterplots
 #' @param marg \code{none} (default), \code{dens}, 'hist', or \code{box},

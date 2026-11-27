@@ -150,7 +150,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide Yule's V index for 2x2 contingency tables            
 
     - name: lambdaGKab
-      title: "Goodman-Kruskal \u03BB (A/B)"
+      title: "Goodman-Kruskal \u03BB (rows dependent)"
       type: Bool
       default: false
       description:
@@ -158,7 +158,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide Goodman and Kruskal lambda prediction error index (dependent variable by rows)
 
     - name: lambdaGKba
-      title: "Goodman-Kruskal \u03BB (B/A)"
+      title: "Goodman-Kruskal \u03BB (columns dependent)"
       type: Bool
       default: false
       description:
@@ -174,7 +174,7 @@ options:
             `TRUE` or `FALSE` (default: `TRUE`), provide Goodman and Kruskal lambda prediction error index (symmetric)            
 
     - name: tauGKab
-      title: "Goodman-Kruskal \u03C4 (A/B)"
+      title: "Goodman-Kruskal \u03C4 (rows dependent)"
       type: Bool
       default: false
       description:
@@ -182,23 +182,15 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide Goodman and Kruskal tau prediction error index (dependent variable by rows)
 
     - name: tauGKba
-      title: "Goodman-Kruskal \u03C4 (B/A)"
+      title: "Goodman-Kruskal \u03C4 (columns dependent)"
       type: Bool
       default: false
       description:
           R: >
             `TRUE` or `FALSE` (default: `FALSE`), provide Goodman and Kruskal tau prediction error index (dependent variable by columns)
             
-    - name: tauGKsym
-      title: "Goodman-Kruskal \u03C4 (symmetric)"
-      type: Bool
-      default: true
-      description:
-          R: >
-            `TRUE` or `FALSE` (default: `TRUE`), provide Goodman and Kruskal tau prediction error index (symmetric)            
-
     - name: theilab
-      title: "Theil's index (A/B)"
+      title: "Theil's index (rows dependent)"
       type: Bool
       default: false
       description:
@@ -206,7 +198,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide Theil's prediction error index (dependent variable by rows)
 
     - name: theilba
-      title: "Theil's index (B/A)"
+      title: "Theil's index (columns dependent)"
       type: Bool
       default: false
       description:

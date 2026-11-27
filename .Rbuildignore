@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^audit$
+^img$
+^saRa_logo\.svg$

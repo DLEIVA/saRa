@@ -1,43 +1,114 @@
 -------------
 VERSION 1.0.0
 -------------
-* Resolve nortest from saRa's bundled library only when its tests are requested,
-  retaining lazy loading when the Regression parent changes library paths.
-* Follow-up: consolidated Yule's Y/Q/V into one validated helper; added
-  validated Cramer, contingency and Sakoda helpers alongside Chuprov's T.
-* Fixed ordinal inner-range column metadata for fractional coverage.
-* Shared rank-effect, rank-summary, confidence-interval, percentage parsing
-  and normality-test routines reduce duplication; moved helpers to R/utils.R.
-* Expanded the test suite to 34 blocks; follow-up runtime validation pending.
+* Add empirical and normalized Gini coefficients under one Numerical Data
+  option, and an independent Lorenz curve using the jamovi theme and palette.
+  Explain unsupported data and undefined normalization for a single value.
+* Explain unavailable ordinal association indices without changing defined
+  zeros; clear notes after recovery and preserve directional Somers behavior.
+* Keep grouped Q-Q/ECDF messages legible without hiding valid groups.
+* Hide nominal frequency, association and prediction tables independently
+  when none of their output options is selected; remove blank placeholders.
+* Preserve variable category order in pie, doughnut and lollipop plots;
+  retain decreasing frequency order in Pareto plots.
+* Omit undefined fitted normal curves for constant or single-observation
+  samples, with an explanation, while retaining other groups' curves.
+* Use consecutive footnote letters in normality tables and remove obsolete
+  explanations when data or selected tests change.
+* Retain the Mann-Whitney Hodges-Lehmann estimate with one observation per
+  group, but report confidence limits as unavailable with an explanation.
+* Explain unavailable Mann-Whitney Hodges-Lehmann confidence intervals when
+  all observations are tied, instead of exposing an internal R error.
+* Use explicit a/b/c footnote markers in Mann-Whitney tables; jmvcore
+  superscript letters omit c. Preserve Hodges-Lehmann failure explanations
+  after writing the result row.
+* Keep median plot groups in their original order when only some groups have
+  finite confidence limits.
+* Place Mann-Whitney median plot legends below the panel and wrap long text
+  so the legend cannot squeeze the two groups out of view.
+* Combine median interval explanations into one footnote per group so
+  confidence and unbounded-interval messages share a single marker.
+* Compute Mann-Whitney exact group median intervals from the binomial sign
+  distribution, including infinite endpoints when the requested confidence
+  cannot be attained with a finite interval in small samples.
+* Mann-Whitney group median intervals preserve each group's result and native
+  confidence metadata independently, report unbounded limits explicitly,
+  and use plot legends that distinguish finite from unbounded intervals.
+* Mann-Whitney probability of superiority now counts between-group ties as
+  one half, consistently with the reported U statistic and direction note.
+* Preserve the paired Hodges-Lehmann estimate for a single complete pair,
+  but report its confidence interval as unavailable rather than confidence 0%.
+  Median plot legends identify when no confidence limits are available.
+* Draw the continuous-density query marker as one annotated segment, avoiding
+  repeated scalar aesthetics and ggplot2 warnings.
+* Uniform distribution queries now accept values and interval bounds outside
+  the support, returning the corresponding zero densities and tail probabilities.
+* Unified discrete and continuous probability highlights using the second
+  jamovi palette fill (yellow in the default palette); unselected discrete
+  bars use the first fill (blue). Explicit mappings follow the global theme.
+* Restored visible shading in continuous cumulative, survival, interval and
+  quantile plots by using the jamovi accent fill rather than its background fill.
+* Numerical Q-Q plots now explain constant or insufficient finite data in the
+  plot area instead of silently disappearing.
+* Removed duplicate footnote markers from unavailable mixed-data effect sizes
+  and formatted the H in Kruskal-Wallis eta-squared as a subscript.
+* Fixed ordinal heatmap and alluvial frequency gradients being replaced by
+  the global jamovi discrete palette; declared plot-selection dependencies
+  so ordinal image resources refresh when plot combinations change.
+* Removed notches from numerical bivariate marginal box plots.
+* Added frequency tables to univariate Numerical Data, with distinct observed
+  values in ascending numeric order, cumulative counts and relative values,
+  valid-observation denominators and no odds or automatic interval grouping.
+* Reorganised categorical statistics into two aligned columns and moved the
+  category-count field below IQV, with an explicit automatic-zero label.
+* Restricted univariate Categorical Data to nominal selections. Its frequency
+  and odds tables no longer contain cumulative columns.
+* Added optional frequency tables to Ordinal Data, including counts,
+  proportions, percentages and cumulative values in defined category order,
+  without odds. Missing observations are reported separately and excluded
+  from relative-frequency denominators and cumulative values.
+* Corrected symmetric Goodman-Kruskal lambda using pooled prediction errors;
+  removed the unsupported symmetric Goodman-Kruskal tau.
+* Replaced H1/H3 with percentile skewness coefficients SP50/SP80.
+* Ordinal analyses distinguish ordered text categories from numeric scores.
+  Text summaries preserve category order; numeric summaries retain stored
+  values, including zero and unequal spacing.
+* Numeric-only ordinal controls are disabled for text-only selections.
+  Range is omitted for text-only selections, and mixed selections include
+  cell footnotes for statistics that require numeric values.
+* Bivariate numerical analyses explain undefined correlations and their
+  squared values with cell footnotes when either variable is constant.
+  Covariance remains available, and footnotes are removed when variability
+  is restored.
+* Corrected marginal histogram and box-plot orientation in numerical
+  bivariate scatterplots so each marginal follows its corresponding axis.
+* Restored example dataset registration in the jamovi Data Library
+  and added Anscombe's quartet.
+* Empty defined categories are retained in frequency tables when requested
+  and excluded from association calculations, with explanatory notes.
 * Corrected geometric mean and geometric standard deviation, Yule's V,
   Wilson's e and Chuprov's T.
-* Ordinal summaries now use stored numeric values; corrected inner ranges
-  and handling of ordered variables.
 * Corrected paired Hodges-Lehmann estimates and confidence intervals,
   Wilcoxon rank-biserial correlation, Mann-Whitney average ranks and
   tie-corrected z statistics, and one-sided normal-approximation p-values.
 * Improved confidence-interval handling, selected-pair extraction and
   Wilcoxon rank descriptives, with three rows per pair.
-* Normality tests now run only when selected, handle failures individually,
+* Normality tests run only when selected, handle failures individually,
   and correctly populate grouped results. Added an inference caveat for
   Kolmogorov-Smirnov tests with estimated normal parameters.
 * Corrected grouped ECDF and Q-Q plots and within-group standardisation.
-  Q-Q plotting uses internal functions without importing qqplotr or qqconf.
-* Improved discrete and continuous distribution validation and plotting,
-  including hypergeometric labels, probability endpoints and degenerate cases.
-* Improved handling of missing, empty, constant and invalid inputs;
-  corrected result visibility, invalidation, labels and dependent controls.
-* Added diagnostics to the existing Linear Regression controls:
-  - Normality: RESET, Shapiro-Wilk, Lilliefors and Anderson-Darling tests;
-    classical Breusch-Pagan, Koenker, Goldfeld-Quandt and Harrison-McCabe
-    heteroskedasticity tests.
-  - Autocorrelation: automatic-lag residual ACF plots and multi-lag
-    Durbin-Watson tests using 5,000 residual resamples and seed 123456.
-  - Residual plots: residuals versus fitted, scale-location, normal Q-Q
-    with histogram inset, and influence plots, plus an influence-index table.
-  Added saRa attribution and relevant package references to these outputs.
-* Updated dependency declarations and package/method references; reduced
-  duplicated code, deprecated plotting calls and raw data stored in plot state.
+  Q-Q plotting no longer requires qqplotr or qqconf.
+* Improved discrete and continuous distribution validation, plotting ranges,
+  probability labels and handling of endpoint and degenerate cases.
+* Corrected bivariate plots for variable names containing spaces.
+* Improved handling of missing, empty, constant and invalid inputs,
+  per-statistic error reporting, result invalidation and dependent controls.
+* Added compatibility with jmvcore versions without a translation marker
+  or an analysis translation method.
+* Added Solanas et al. (2005) to all seven descriptive analyses.
+  Standardised reference author formatting and adopted the recommended
+  methodological citations for effectsize and WRS2.
+* Updated dependency declarations and improved plot rendering and restoration.
 
 
 -------------
@@ -54,3 +125,14 @@ VERSION 0.1.2
 VERSION 0.1.1
 -------------
 *First public version available at jamovi library
+
+* Paired Wilcoxon Hodges-Lehmann intervals now retain R's returned confidence
+  level and explain differences from the requested level in a cell footnote.
+* HL confidence headings now display the level returned by R. Unreachable
+  requested levels use a concise note; different levels across pairs are
+  identified per row under a neutral confidence-interval heading.
+* Remove field-width padding from HL confidence percentages in headings and
+  notes without changing interval calculations.
+* Explicitly trim formatted HL confidence percentages to remove remaining padding.
+* Explain unavailable paired HL intervals when every paired difference is zero,
+  avoiding a misleading zero-confidence heading.

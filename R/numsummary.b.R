@@ -11,7 +11,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         name = c(
           "n", "missing", "mean", "median", "mode", "geommean",
           "trimean", "avquartile", "midrange", "trimmean","winsmean",
-          "variance", "stddev", "geomsd", "meandev", "cv",
+          "variance", "stddev", "geomsd", "meandev", "cv", "gini", "giniNormalized",
           "range", "iqr", "qd", "mad", 
           "rcv", "ir", "min", "max", "q1", "q2", "q3","beta1","gamma1",
           "h1","h3","beta2","gamma2","k2","k3"
@@ -19,29 +19,29 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         title = c(
           "N", "Missing", "Mean", "Median", "Mode", "Geometric mean", "Trimean",
           "Midhinge", "Mid-range", 
-          paste0(ifelse(!is.na(private$.getTrim()*100),
-                        private$.getTrim()*100,''),'% trimmed mean'),
-          paste0(ifelse(!is.na(private$.getWin()*100),
-                        private$.getWin()*100,''),'% winsorized mean'),
+          paste0(self$options$Trim,'% trimmed mean'),
+          paste0(self$options$Win,'% winsorized mean'),
           "Variance","Standard deviation", "Geometric standard deviation",
-          "Mean deviation","CV", "Range", "IQR", "QD", "MAD", 
-          "Quartile dispersion", paste0(ifelse(!is.na(private$.getNPerc()*100),
-                               private$.getNPerc()*100,''),'% inner range'),
+          "Mean deviation","CV", "Gini", "Normalized Gini", "Range", "IQR", "QD", "MAD",
+          "Quartile coefficient of dispersion", paste0(self$options$NPerc,'% inner range'),
           "Min", "Max", "Q1", "Q2", "Q3", "Pearson's \u03B2\u2081",
-          "Fisher's \u03B3\u2081","H1","H3","Pearson's \u03B2\u2082",
+          "Fisher's \u03B3\u2081","SP50","SP80","Pearson's \u03B2\u2082",
           "Fisher's \u03B3\u2082","K2","K3"
         ),
-        superTitle = rep("",35),
-        type = c("integer","integer",rep("number",33)),
-        format = rep("",35),
+        superTitle = rep("",37),
+        type = c("integer","integer",rep("number",35)),
+        format = rep("",37),
         visible = c(
           "(n)","(missing)","(mean)","(median)","(mode)","(geommean)",
           "(trimean)","(avquartile)","(midrange)","(trimmean)","(winsmean)",
-          "(variance)","(stddev)","(geomsd)","(meandev)","(cv)","(range)","(iqr)",
+          "(variance)","(stddev)","(geomsd)","(meandev)","(cv)","(gini)","(gini)","(range)","(iqr)",
           "(qd)","(mad)","(rcv)","(irange)","(min)","(max)","(q1)","(q2)","(q3)",
           "(beta1)","(gamma1)","(h1)","(h3)","(beta2)","(gamma2)","(k2)","(k3)"
         )
       )
+      if (self$options$freq)
+        .saraInitFrequencyTables(self$results$frequencies, self$data,
+                                self$options$vars, cumulative=TRUE, numericValues=TRUE)
       private$.addQuantiles()
       private$.initIndicesTableNum()
       private$.initPlots()
@@ -49,6 +49,9 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     .run = function(){
       if (length(self$options$vars) > 0) {
         results <- private$.compute()
+        if (self$options$freq)
+          .saraPopulateFrequencyTables(self$results$frequencies, self$data,
+                                      self$options$vars, cumulative=TRUE, numericValues=TRUE)
         private$.populateIndicesTableNum(results)
         private$.preparePlots()
       }
@@ -156,6 +159,11 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           group$add(image)
         }
         
+        if (isTRUE(self$options$lorenz)) {
+          group$add(jmvcore::Image$new(options=self$options, name="lorenz",
+            title="Lorenz curve", renderFun=".lorenz", requiresData=TRUE,
+            width=550, height=550, clearWith=list("vars", "lorenz")))
+        }
         if (self$options$qq) {
           
           image <- jmvcore::Image$new(
@@ -165,7 +173,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             requiresData = TRUE,
             width = 550,
             height = 550,
-            clearWith = list("qq")
+            clearWith = list("vars", "qq")
           )
           
           group$add(image)
@@ -188,6 +196,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         hist  <- group$get('hist')
         box   <- group$get('box')
         qq    <- group$get('qq')
+        if (isTRUE(self$options$lorenz)) group$get('lorenz')$setState(var)
         
         if (self$options$qq)
           qq$setState(var)
@@ -201,19 +210,9 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           self$options$dot
         ) {
           
-          if (length(na.omit(column)) > 0) {
-            columns <- na.omit(c(var))
-            plotData <- na.omit(data[columns])
-            names <- list("x"="x")
-            labels <- list("x"=var)
-          } else {
-            plotData <- data.frame(x=character())
-            names <- list("x"="x")
-            labels <- list("x"=var)
-          }
-          
-          colnames(plotData) <- as.character(unlist(names))
-          
+          names <- list("x"="x")
+          labels <- list("x"=var)
+
           if (self$options$hist || self$options$dens || self$options$norm)
             hist$setState(list(names=names, labels=labels))
           
@@ -389,7 +388,27 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     },
     .qq = function(image, ggtheme, theme, ...) {
       if (is.null(image$state)) return(FALSE)
-      .saraQQPlot(self$data, image$state, NULL, ggtheme)
+      variable <- image$state
+      values <- jmvcore::toNumeric(self$data[[variable]])
+      values <- values[is.finite(values)]
+      message <- NULL
+      if (length(values) < 2L)
+        message <- .("Q-Q plot requires at least two finite observations.")
+      else if (stats::sd(values) == 0)
+        message <- .("Q-Q plot is unavailable because the variable is constant.")
+      if (!is.null(message)) {
+        return(ggplot2::ggplot() +
+          ggplot2::annotate("text", x=0, y=0, label=message, size=4) +
+          ggplot2::labs(title=paste("Q-Q:", variable)) +
+          ggplot2::theme_void())
+      }
+      .saraQQPlot(self$data, variable, NULL, ggtheme)
+    },
+    .lorenz = function(image, ggtheme, theme, ...) {
+      if (is.null(image$state)) return(FALSE)
+      variable <- image$state
+      .saraLorenzPlot(self$data[[variable]], variable, ggtheme, theme,
+        translate=function(message) .(message))
     },
     #### Populate tables ----
     .populateIndicesTableNum = function(results) {
@@ -428,12 +447,17 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           footnotes3 <- c(footnotes3, paste0(vars[i], '[geomsd]'))
       }
       table$setRow(rowNo=1, values=values)
+      for (variable in vars) {
+        errors <- attr(indic[[variable]],"errors")
+        for (name in names(errors)) table$addFootnote(rowNo=1,
+          paste0(variable,"[",name,"]"),.saraMessage(errors[[name]],self))
+      }
       
       for (i in seq_along(footnotes)) {
         table$addFootnote(
           rowNo=1,
           footnotes[[i]],
-          ('More than one mode exists, only the first is reported')
+          .('More than one mode exists, only the first is reported')
         )
       }
       
@@ -441,7 +465,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes2[[i]],
-          ('Geometric mean can only be computed with positive values (>0)')
+          .('Geometric mean can only be computed with positive values (>0)')
         )
       }
       
@@ -449,7 +473,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         table$addFootnote(
           rowNo=1,
           footnotes3[[i]],
-          ('Geometric std. deviation can only be computed with positive values (>0)')
+          .('Geometric std. deviation can only be computed with positive values (>0)')
         )
       }
     },
@@ -496,6 +520,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
+      .saraValidateFences(intervinf,intervsup)
       .bxp1 <- grDevices::boxplot.stats(as.numeric(column), coef = intervinf)
       .bxp2 <- grDevices::boxplot.stats(as.numeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out
@@ -507,9 +532,38 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       return(out)
     },
     .computeIndicesNum = function(column) {
-      .saraComputeNumeric(column, self$options, list(
+      result <- tryCatch(.saraComputeNumeric(column, self$options, list(
         trim=private$.getTrim, win=private$.getWin,
-        inner=private$.getNPerc, percentiles=private$.getPcValues))
+        inner=private$.getNPerc, percentiles=private$.getPcValues)),
+        error=function(e) {
+          if (!isTRUE(self$options$gini)) stop(e)
+          # Unsupported values in one variable must not hide valid variables.
+          names <- private$colArgs$name
+          out <- setNames(as.list(rep(NaN, length(names))), names)
+          out$n <- sum(!is.na(column))
+          out$missing <- sum(is.na(column))
+          selected <- vapply(private$colArgs$visible, function(x)
+            !private$.skipOption(x), logical(1))
+          names <- setdiff(names[selected], c("n", "missing"))
+          attr(out, "errors") <- setNames(
+            rep(list(conditionMessage(e)), length(names)), names)
+          out
+        })
+      if (isTRUE(self$options$gini)) {
+        inequality <- tryCatch(.saraInequality(column), error=function(e) e)
+        errors <- attr(result, "errors")
+        if (inherits(inequality, "error")) {
+          result$gini <- result$giniNormalized <- NaN
+          errors$gini <- errors$giniNormalized <- conditionMessage(inequality)
+        } else {
+          result$gini <- inequality$gini
+          result$giniNormalized <- inequality$normalized
+          if (inequality$n < 2L)
+            errors$giniNormalized <- "Normalized Gini requires at least two non-missing observations"
+        }
+        attr(result, "errors") <- errors
+      }
+      result
     }
 )
 )

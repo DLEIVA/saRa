@@ -161,7 +161,9 @@ catSummaryResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Univariate Data Analysis (Categorical Data)")
+                title="Univariate Data Analysis (Categorical Data)",
+                refs=list(
+                    "solanas2005"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="indices",
@@ -224,7 +226,7 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param vars a vector of strings naming the variables of interest in
 #'   \code{data}
 #' @param freq \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provide
-#'   frequency tables (nominal, ordinal variables only)
+#'   frequency and odds tables for nominal variables
 #' @param mode \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   the mode
 #' @param VR \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
@@ -246,7 +248,7 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param pareto \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
 #'   Pareto charts
 #' @param lolli \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
-#'   Lollipop charts
+#'   Lollipopcharts
 #' @param f2p.lolli \code{'absolute'} (default) or \code{'relative'}
 #'   frequencies, to be used when plotting lollipop plots.
 #' @param dough \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
