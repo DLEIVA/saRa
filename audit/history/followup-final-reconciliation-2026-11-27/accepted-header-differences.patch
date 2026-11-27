@@ -1,0 +1,77 @@
+--- reviewed/R/bivmix.h.R
++++ accepted/R/bivmix.h.R
+@@ -641,7 +641,7 @@
+ #' @param rcv \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+ #'   the rcv
+ #' @param irange \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provides
+-#'   the Inner range
++#'   the inner range
+ #' @param NPerc a number (detects by default the number) specifying the
+ #'   percentage of data used
+ #' @param min \code{TRUE} or \code{FALSE} (default: \code{TRUE}), provides the
+
+--- reviewed/R/catsummary.h.R
++++ accepted/R/catsummary.h.R
+@@ -232,9 +232,9 @@
+ #' @param VR \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+ #'   variation ratio
+ #' @param Blau \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
+-#'   the Blau's Index
++#'   the Blau index
+ #' @param Teachman \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
+-#'   provide the Teachman's Index
++#'   provide the Teachman index
+ #' @param IQV \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
+ #'   Index Qualitative Variation
+ #' @param NCat an integer (detects by default the number) specifying the
+
+--- reviewed/R/umw.h.R
++++ accepted/R/umw.h.R
+@@ -191,7 +191,7 @@
+             self$add(jmvcore::Table$new(
+                 options=options,
+                 name="mwutest",
+-                title="Mann-Whitney U Test and effect sizes",
++                title="Mann-Whitney U test and effect sizes",
+                 rows="(vars)",
+                 visible="(mwu || zstat || pSup || rankCorr || fstat)",
+                 clearWith=list(
+@@ -353,7 +353,7 @@
+             self$add(jmvcore::Table$new(
+                 options=options,
+                 name="cisHL",
+-                title="Hodges-Lehmann Estimator CIs",
++                title="Hodges-Lehmann confidence intervals",
+                 visible="(ciHL)",
+                 rows="(vars)",
+                 clearWith=list(
+
+--- reviewed/R/wilcoxt.h.R
++++ accepted/R/wilcoxt.h.R
+@@ -161,7 +161,7 @@
+             self$add(jmvcore::Table$new(
+                 options=options,
+                 name="wilcoxttest",
+-                title="Wilcoxon T Test and effect sizes",
++                title="Wilcoxon T test and effect sizes",
+                 rows="(pairs)",
+                 visible="(wilcoxon || zstatps || rankCorrps)",
+                 clearWith=list(
+@@ -230,7 +230,7 @@
+             self$add(jmvcore::Table$new(
+                 options=options,
+                 name="cisMedps",
+-                title="Variables Median confidence intervals",
++                title="Median confidence intervals",
+                 visible="(ciMediansps)",
+                 rows="(pairs)",
+                 clearWith=list(
+@@ -279,7 +279,7 @@
+             self$add(jmvcore::Table$new(
+                 options=options,
+                 name="cisHLps",
+-                title="Hodges-Lehmann Estimator CIs",
++                title="Hodges-Lehmann confidence intervals",
+                 visible="(ciHLps)",
+                 rows="(pairs)",
+                 clearWith=list(

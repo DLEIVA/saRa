@@ -1,0 +1,71 @@
+## branch
+fix/audit-submission-followup
+## head
+a4f850848ccc76cb58f41bd714853f409de80de8
+## status
+ M NEWS
+ M R/bivcat.b.R
+ M R/bivmix.b.R
+ M R/bivmix.h.R
+ M R/bivord.b.R
+ M R/catsummary.b.R
+ M R/catsummary.h.R
+ M R/contvars.b.R
+ M R/discvars.b.R
+ M R/distribution-plots.R
+ M R/frequency-tables.R
+ M R/messages.R
+ M R/normality-plot-messages.R
+ M R/numsummary.b.R
+ M R/ordsummary.b.R
+ M R/testnorm.b.R
+ M R/umw.b.R
+ M R/umw.h.R
+ M R/utils.R
+ M R/wilcoxt.b.R
+ M R/wilcoxt.h.R
+ M audit/APPLY_AND_MERGE.md
+ M audit/AUDIT_TRACKER.csv
+ M audit/AUDIT_TRACKER.md
+ M audit/COMPARE_REVIEWED_FILES.R
+ M audit/FINAL_ACCEPTANCE_2026-11-27.json
+ M audit/FINAL_FILE_REVIEW_2026-11-27.md
+ M audit/FREQUENCY_TABLES_2026-11-17.md
+ M audit/GUI_CHECKLIST.md
+ M audit/RELEASE_NOTES.md
+ M audit/REVIEWED_FILES_2026-11-27.csv
+ M audit/USER_VALIDATION_EVIDENCE.json
+ M audit/USER_VALIDATION_LOG.md
+ M audit/VALIDATION_STATUS.json
+ M jamovi/bivmix.a.yaml
+ M jamovi/catsummary.a.yaml
+ M jamovi/umw.a.yaml
+ M jamovi/umw.r.yaml
+ M jamovi/umw.u.yaml
+ M jamovi/wilcoxt.a.yaml
+ M jamovi/wilcoxt.r.yaml
+ M jamovi/wilcoxt.u.yaml
+ M tests/testthat/test-frequency-tables.R
+ M tests/testthat/test-numeric-frequency-tables.R
+?? audit/CATEGORICAL_THEME_STEP3_2026-11-27.json
+?? audit/CATEGORICAL_THEME_STEP3_2026-11-27.md
+?? audit/FOLLOWUP_SOURCE_REVIEW_2026-11-27.json
+?? audit/FREQUENCY_COLUMNS_STEP5_2026-11-27.json
+?? audit/FREQUENCY_COLUMNS_STEP5_2026-11-27.md
+?? audit/JAMOVI_AUDIT_RESPONSE_2026-11-27.md
+?? audit/JMV_POLAR_PALETTE_STEP8_2026-11-27.json
+?? audit/JMV_POLAR_PALETTE_STEP8_2026-11-27.md
+?? audit/LABELS_STEP2_2026-11-27.json
+?? audit/LABELS_STEP2_2026-11-27.md
+?? audit/NOMINAL_REFACTOR_STEP4_2026-11-27.json
+?? audit/NOMINAL_REFACTOR_STEP4_2026-11-27.md
+?? audit/POLAR_LAYOUT_STEP6_2026-11-27.json
+?? audit/POLAR_LAYOUT_STEP6_2026-11-27.md
+?? audit/POLAR_PERCENTAGES_STEP7_2026-11-27.json
+?? audit/POLAR_PERCENTAGES_STEP7_2026-11-27.md
+?? audit/TRANSLATION_MARKING_STEP1_2026-11-27.json
+?? audit/TRANSLATION_MARKING_STEP1_2026-11-27.md
+?? audit/history/submission-followup-2026-11-27/
+?? tests/testthat/test-categorical-plot-theme.R
+?? tests/testthat/test-nominal-refactor.R
+?? tests/testthat/test-translation-output.R

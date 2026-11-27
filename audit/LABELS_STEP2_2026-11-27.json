@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static inspection of the source tree containing this script; not R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 59,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 119,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true,
+  "step": "2 — labels and spelling",
+  "runtime_status": "PASS — user-supplied full-suite testthat output",
+  "yaml_behavioral_equivalence_ignoring_display_fields": true,
+  "changed_yaml_files": [
+    "wilcoxt.u.yaml",
+    "catsummary.a.yaml",
+    "umw.a.yaml",
+    "wilcoxt.r.yaml",
+    "wilcoxt.a.yaml",
+    "bivmix.a.yaml",
+    "umw.r.yaml",
+    "umw.u.yaml"
+  ],
+  "new_tests_added": false,
+  "updated_existing_test": "Q-Q y-axis uses Standardized values",
+  "baseline_user_suite": {
+    "pass": 1920,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 19.7,
+    "scope": "Step 1 before Step 2 changes"
+  },
+  "user_runtime": {
+    "pass": 1920,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 19.8,
+    "independently_executed": false,
+    "scope": "Step 2 before the theme changes of Step 3"
+  }
+}

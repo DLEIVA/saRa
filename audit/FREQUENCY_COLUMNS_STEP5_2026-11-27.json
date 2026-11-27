@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static inspection of the source tree containing this script; not R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 61,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 128,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true,
+  "step": "5 — remove redundant univariate frequency proportions",
+  "runtime_status": "PASSED user testthat and manual frequency checks",
+  "baseline_user_suite": {
+    "pass": 2054,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 22.6
+  },
+  "removed_output_columns": [
+    "prop",
+    "cumprop"
+  ],
+  "analyses": [
+    "catSummary",
+    "ordSummary",
+    "numSummary"
+  ],
+  "new_JMO_validated": false,
+  "user_runtime": {
+    "pass": 2064,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 23.7
+  },
+  "manual_frequency_checks": "User confirmed compilation/installation, removed columns, counts, percentages, cumulative values and missing-data denominators"
+}

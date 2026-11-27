@@ -16,8 +16,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "range", "iqr", "qd", "mad", "rcv", "min", "max", "q1", "q2", "q3", "h1","h3","k2","k3"
         ),
         title = c(
-          "N", "Missing", "Median", "Mode", "Trimean", "Midhinge", "Mid-range",
-          "Range", "IQR", "QD", "MAD", "Quartile coefficient of dispersion", "Min", "Max", "Q1", "Q2", "Q3", "SP50","SP80","K2","K3"
+          .("N"), .("Missing"), .("Median"), .("Mode"), .("Trimean"), .("Midhinge"), .("Mid-range"),
+          .("Range"), .("IQR"), .("QD"), .("MAD"), .("Quartile coefficient of dispersion"), .("Min"), .("Max"), .("Q1"), .("Q2"), .("Q3"), .("SP50"),.("SP80"),.("K2"),.("K3")
         ),
         superTitle = rep("",21),
         type = c("integer","integer","number","text",rep("number",17)),
@@ -30,7 +30,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       )
       if (self$options$freq)
         .saraInitFrequencyTables(self$results$frequencies, self$data,
-                                self$options$vars, cumulative=TRUE)
+                                self$options$vars, cumulative=TRUE,
+          translate=function(message) .saraMessage(message,self))
       private$.addQuantiles()
       private$.initIndicesTableOrd()
       private$.initPlotsOrd()
@@ -40,7 +41,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         results <- private$.compute()
         if (self$options$freq)
           .saraPopulateFrequencyTables(self$results$frequencies, self$data,
-                                      self$options$vars, cumulative=TRUE)
+                                      self$options$vars, cumulative=TRUE,
+          translate=function(message) .saraMessage(message,self))
         private$.populateIndicesTableOrd(results)
         private$.preparePlotsOrd()
       }
@@ -278,8 +280,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           fill=fill,
           color=color
         ) +
-        ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') 'Counts' else
-          'Percentages')
+        ggplot2::labs(x=labels$x, y=if(freqtype=='absolutefreq') .('Counts') else
+          .('Percentages'))
       
       plot <- plot + ggtheme + plotSpecificTheme
       return(plot)
@@ -383,7 +385,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (is.character(pcValues))
         pcValues <- as.numeric(unlist(strsplit(pcValues, ",")))
       if (any(!is.finite(pcValues)) || any(pcValues < 0 | pcValues > 100))
-        jmvcore::reject("Percentiles must be numbers between 0 and 100", code="invalid_percentiles")
+        jmvcore::reject(.("Percentiles must be numbers between 0 and 100"), code="invalid_percentiles")
       pcValues <- pcValues / 100
       pcValues <- pcValues[!is.na(pcValues)]
       
@@ -398,7 +400,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('perc', 1:npcValues), after = 17)
-          private$colArgs$title <- append(colArgs$title, paste0("Percentile ", round(pcValues * 100, 2)), after = 17)
+          private$colArgs$title <- append(colArgs$title, vapply(round(pcValues * 100, 2), function(value)
+            jmvcore::format(.("Percentile {}"), value), character(1)), after = 17)
           private$colArgs$type <- append(colArgs$type, rep('number', npcValues), after = 17)
           if (!is.null(colArgs$format)) private$colArgs$format <- append(colArgs$format, rep('', npcValues), after=17)
           if (!is.null(colArgs$superTitle)) private$colArgs$superTitle <- append(colArgs$superTitle, rep('', npcValues), after=17)
@@ -413,7 +416,7 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('ir'), after = 12)
-          private$colArgs$title <- append(colArgs$title, paste0(NPerc, ('% inner range')), after = 12)
+          private$colArgs$title <- append(colArgs$title, jmvcore::format(.("{}% inner range"), NPerc), after = 12)
           private$colArgs$type <- append(colArgs$type, 'number', after = 12)
           if (!is.null(colArgs$format)) private$colArgs$format <- append(colArgs$format, '', after=12)
           if (!is.null(colArgs$superTitle)) private$colArgs$superTitle <- append(colArgs$superTitle, '', after=12)
@@ -431,7 +434,8 @@ ordSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
-      .saraValidateFences(intervinf,intervsup)
+      .saraValidateFences(intervinf,intervsup,
+        translate=function(message) .saraMessage(message,self))
       .bxp1 <- boxplot.stats(jmvcore::toNumeric(column), coef = intervinf)
       .bxp2 <- boxplot.stats(jmvcore::toNumeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out

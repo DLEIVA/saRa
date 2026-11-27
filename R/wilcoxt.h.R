@@ -161,7 +161,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="wilcoxttest",
-                title="Wilcoxon T Test and effect sizes",
+                title="Wilcoxon T test and effect sizes",
                 rows="(pairs)",
                 visible="(wilcoxon || zstatps || rankCorrps)",
                 clearWith=list(
@@ -230,7 +230,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="cisMedps",
-                title="Variables Median confidence intervals",
+                title="Median confidence intervals",
                 visible="(ciMediansps)",
                 rows="(pairs)",
                 clearWith=list(
@@ -279,7 +279,7 @@ wilcoxTResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Table$new(
                 options=options,
                 name="cisHLps",
-                title="Hodges-Lehmann Estimator CIs",
+                title="Hodges-Lehmann confidence intervals",
                 visible="(ciHLps)",
                 rows="(pairs)",
                 clearWith=list(

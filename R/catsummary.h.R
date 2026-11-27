@@ -232,9 +232,9 @@ catSummaryBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param VR \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
 #'   variation ratio
 #' @param Blau \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide
-#'   the Blau's Index
+#'   the Blau index
 #' @param Teachman \code{TRUE} or \code{FALSE} (default: \code{FALSE}),
-#'   provide the Teachman's Index
+#'   provide the Teachman index
 #' @param IQV \code{TRUE} or \code{FALSE} (default: \code{FALSE}), provide the
 #'   Index Qualitative Variation
 #' @param NCat an integer (detects by default the number) specifying the

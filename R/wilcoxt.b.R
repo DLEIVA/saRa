@@ -64,7 +64,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             ciResult <- try(suppressWarnings(.saraMedianIntervals(
               pairsData,self$options$ciMethodps,confInt,self$options$numR)),silent=TRUE)
             if (!jmvcore::isError(ciResult)) cimed <- ciResult
-            else cismedTable$addFootnote(rowKey=pair, 'cilMed[1]', jmvcore::extractErrorMessage(ciResult))
+            else cismedTable$addFootnote(rowKey=pair, 'cilMed[1]', .saraMessage(jmvcore::extractErrorMessage(ciResult),self))
           }
           cihl <- rep(NaN, 3)
           hlNote <- NULL
@@ -73,12 +73,12 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             hlResult <- try(suppressWarnings(.saraHodgesLehmann(column1,column2,paired=TRUE,conf.level=confInt,details=TRUE)), silent=TRUE)
             if (!jmvcore::isError(hlResult)) {
               cihl <- hlResult$values
-              if (!is.null(hlResult$note)) hlError <- .(hlResult$note)
-              hlNote <- .saraHLConfidenceNote(confInt, hlResult$confidence, translate=.)
+              if (!is.null(hlResult$note)) hlError <- .saraMessage(hlResult$note,self)
+              hlNote <- .saraHLConfidenceNote(confInt, hlResult$confidence, translate=function(message) .saraMessage(message,self))
               hlRecords[[length(hlRecords)+1L]] <- list(pair=pair,
                 confidence=hlResult$confidence, note=hlNote)
             }
-            else hlError <- jmvcore::extractErrorMessage(hlResult)
+            else hlError <- .saraMessage(jmvcore::extractErrorMessage(hlResult),self)
           }
 
           if (is.factor(column1) || is.factor(column2)) {
@@ -165,7 +165,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }          
           
           if (self$options$descps) {
-            categories <- c("Positive differences", "Negative differences", "Tied pairs")
+            categories <- c(.("Positive differences"), .("Negative differences"), .("Tied pairs"))
             counts <- c(np, nn, nt)
             averages <- c(RankAp, RankAn, NaN)
             sums <- c(RankSp, RankSn, NaN)
@@ -196,7 +196,7 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }
         if (self$options$ciHLps) {
           levels <- as.numeric(unlist(lapply(hlRecords, function(x) x$confidence)))
-          title <- .saraHLConfidenceHeading(levels, confInt, translate=.)
+          title <- .saraHLConfidenceHeading(levels, confInt, translate=function(message) .saraMessage(message,self))
           cishlTable$getColumn('cilHL')$setSuperTitle(title)
           cishlTable$getColumn('ciuHL')$setSuperTitle(title)
           if (length(unique(signif(levels[is.finite(levels)], 10))) > 1L) {
@@ -265,8 +265,9 @@ wilcoxTClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         }        
       },
       .desc=function(image, ggtheme, theme, ...) {
-        label <- .saraMedianPlotLabel(image$state,self$options$ciWidthps,translate=.)
-        .saraDrawMedianPlot(image$state,label,ggtheme=ggtheme,theme=theme)
+        label <- .saraMedianPlotLabel(image$state,self$options$ciWidthps,translate=function(message) .saraMessage(message,self))
+        .saraDrawMedianPlot(image$state,label,ggtheme=ggtheme,theme=theme,
+          translate=function(message) .saraMessage(message,self))
       }
     )
 )

@@ -29,7 +29,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         confInt <- self$options$ciWidth / 100
 
         if (any(depVarNames == groupVarName))
-          jmvcore::reject("Grouping variable '{a}' must not also be a dependent variable",
+          jmvcore::reject(.("Grouping variable '{a}' must not also be a dependent variable"),
                           code="a_is_dependent_variable", a=groupVarName)
         
         # exclude rows with missings in the grouping variable
@@ -38,7 +38,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         groupLevels <- base::levels(data[[groupVarName]])
         
         if (length(groupLevels) != 2)
-          jmvcore::reject("Grouping variable '{a}' must have exactly 2 levels",
+          jmvcore::reject(.("Grouping variable '{a}' must have exactly 2 levels"),
                           code="grouping_var_must_have_2_levels", a=groupVarName)
         
         if (self$options$miss == "listwise") {
@@ -91,9 +91,9 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             hlResult <- try(suppressWarnings(.saraHodgesLehmann(dataMWTest$dep,group=dataMWTest$group,conf.level=confInt,details=TRUE)), silent=TRUE)
             if (!jmvcore::isError(hlResult)) {
               cihl <- hlResult$values
-              hlError <- hlResult$note
+              hlError <- if (is.null(hlResult$note)) NULL else .saraMessage(hlResult$note,self)
             }
-            else hlError <- jmvcore::extractErrorMessage(hlResult)
+            else hlError <- .saraMessage(jmvcore::extractErrorMessage(hlResult),self)
           }
 
           
@@ -102,7 +102,8 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!self$options[[test]]) next
             result <- .saraMWTest(dataMWTest,test,Ha,confInt)
             success <- .saraWriteRankResult(mwtestTable,depName,test,result,
-                                            withP=test %in% c("mwu","zstat"))
+                                            withP=test %in% c("mwu","zstat"),
+                                            translate=function(message) .saraMessage(message,self))
             if (success && test=="zstat" && any(result$n<20) && any(result$t>1))
               mwtestTable$addFootnote(rowKey=depName,"p[zstat]",
                 .("Less than 20 observations and ties in the groups: p-value might not be adequate"))
@@ -142,7 +143,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
               column <- paste0('cilMed[',g,']')
               if (is.null(medianResult)) {
                 cismedTable$addFootnote(rowKey=depName,column,
-                  jmvcore::extractErrorMessage(ciResult))
+                  .saraMessage(jmvcore::extractErrorMessage(ciResult),self))
                 next
               }
               groupNotes <- character(0)
@@ -200,7 +201,7 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           }          
         }
         if (self$options$ciMedians) {
-          title <- .saraMedianConfidenceHeading(medianLevels,confInt,translate=.)
+          title <- .saraMedianConfidenceHeading(medianLevels,confInt,translate=function(message) .saraMessage(message,self))
           for (column in c('cilMed[1]','ciuMed[1]','cilMed[2]','ciuMed[2]'))
             cismedTable$getColumn(column)$setSuperTitle(title)
         }
@@ -245,9 +246,9 @@ umwClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
       },
       .desc=function(image, ggtheme, theme, ...) {
-        label <- .saraMWMedianPlotLabel(image$state,self$options$ciWidth,translate=.)
+        label <- .saraMWMedianPlotLabel(image$state,self$options$ciWidth,translate=function(message) .saraMessage(message,self))
         .saraDrawMedianPlot(image$state,label,self$options$group,image$key,ggtheme,theme,
-          legendPosition="bottom")
+          legendPosition="bottom", translate=function(message) .saraMessage(message,self))
       }
     )
 )

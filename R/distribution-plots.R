@@ -1,7 +1,7 @@
 # Distribution calculations and finite plotting windows share one implementation.
-.saraDistribution <- function(o, discrete=FALSE) {
+.saraDistribution <- function(o, discrete=FALSE, translate=identity) {
   if(discrete) {
-    .saraDiscreteUpper(o) # validate parameters independently of GUI restrictions
+    .saraDiscreteUpper(o,translate=translate) # validate parameters independently of GUI restrictions
     spec <- switch(o$distros,
       binom=list("binom",list(size=o$binomn,prob=o$binomp),"Binomial",c(0,o$binomn)),
       poiss=list("pois",list(lambda=o$lambda),"Poisson",c(0,Inf)),
@@ -16,19 +16,19 @@
       fdist=list("f",list(df1=o$f1nu,df2=o$f2nu),"F",c(0,Inf)),
       exp=list("exp",list(rate=o$rate),"Exponential",c(0,Inf)),
       unif=list("unif",list(min=o$unifmin,max=o$unifmax),"Uniform",c(o$unifmin,o$unifmax)))
-    if(is.null(spec)) jmvcore::reject("Unknown continuous distribution",code="invalid_distribution_parameters")
+    if(is.null(spec)) jmvcore::reject(translate("Unknown continuous distribution"),code="invalid_distribution_parameters")
     positive <- setdiff(names(spec[[2]]),c("mean","min","max"))
     valid <- all(vapply(spec[[2]],function(x) length(x)==1L && is.finite(x),logical(1)))
     if(!valid || any(unlist(spec[[2]][positive])<=0) ||
        (o$cdistros=="unif" && o$unifmin>=o$unifmax))
-      jmvcore::reject("Distribution parameters must be finite, scales and degrees of freedom positive, and minimum smaller than maximum",code="invalid_distribution_parameters")
+      jmvcore::reject(translate("Distribution parameters must be finite, scales and degrees of freedom positive, and minimum smaller than maximum"),code="invalid_distribution_parameters")
   }
   evaluate <- function(prefix,x,...) do.call(get(paste0(prefix,spec[[1]]),envir=asNamespace("stats")),c(list(x),spec[[2]],list(...)))
   list(d=function(x) evaluate("d",x),p=function(x,...) evaluate("p",x,...),
        q=function(x,...) evaluate("q",x,...),label=spec[[3]],support=spec[[4]])
 }
-.saraContinuousRange <- function(o, points=numeric()) {
-  d <- .saraDistribution(o)
+.saraContinuousRange <- function(o, points=numeric(), translate=identity) {
+  d <- .saraDistribution(o,translate=translate)
   bounds <- switch(o$cdistros,
     norm=d$q(c(.0001,.9999)),tdist=d$q(c(.001,.999)),
     chisqdist=c(0,d$q(.999)),fdist=c(0,d$q(.99)),
@@ -36,14 +36,14 @@
   bounds <- range(c(bounds,points[is.finite(points)]))
   bounds <- c(max(bounds[1],d$support[1]),min(bounds[2],d$support[2]))
   if(any(!is.finite(bounds)) || diff(bounds)<=0)
-    jmvcore::reject("These parameters do not give a usable finite plotting window",code="invalid_distribution_parameters")
+    jmvcore::reject(translate("These parameters do not give a usable finite plotting window"),code="invalid_distribution_parameters")
   bounds
 }
 # Limit exceptionally long default tails, while retaining requested finite values.
-.saraContinuousDisplayRange <- function(o, points=numeric()) {
-  bounds <- .saraContinuousRange(o, points)
+.saraContinuousDisplayRange <- function(o, points=numeric(), translate=identity) {
+  bounds <- .saraContinuousRange(o, points, translate=translate)
   if (o$cdistros %in% c("tdist", "fdist")) {
-    d <- .saraDistribution(o)
+    d <- .saraDistribution(o,translate=translate)
     quartiles <- d$q(c(.25,.75))
     spread <- diff(quartiles)
     core <- c(max(d$support[1], quartiles[1]-3*spread),
@@ -59,9 +59,8 @@
 .saraWindowCaption <- function(d, bounds, discrete, translate=identity) {
   omitted <- if (discrete) d$p(bounds[1]-1) + d$p(bounds[2],lower.tail=FALSE) else
     d$p(bounds[1]) + d$p(bounds[2],lower.tail=FALSE)
-  paste0(translate("The graph shows a finite window; probability outside the displayed range"),
-         " = ", format(signif(100*omitted,3),trim=TRUE), "%. ",
-         translate("Calculations use the full distribution."))
+  jmvcore::format(translate("The graph shows a finite window; probability outside the displayed range = {}%. Calculations use the full distribution."),
+    format(signif(100*omitted,3),trim=TRUE))
 }
 .saraPlotNumber <- function(x) format(signif(x,3),trim=TRUE)
 .saraDiscreteBreaks <- function(x) {
@@ -73,7 +72,7 @@
   breaks[breaks >= lower & breaks <= upper]
 }
 .saraDistributionPlot <- function(o,kind,discrete,ggtheme,theme,translate=identity) {
-  d <- .saraDistribution(o,discrete)
+  d <- .saraDistribution(o,discrete,translate=translate)
   palette <- if (is.null(theme$palette)) "jmv" else theme$palette
   fills <- jmvcore::colorPalette(2, palette, "fill")
   prefix <- if(discrete) "" else "cont"
@@ -108,7 +107,7 @@
   if(kind=="quantile" && any(!is.finite(cuts)))
     caption <- translate("Infinite quantiles are reported exactly; the graph shows a finite portion of the distribution.")
   if(discrete) {
-    upper <- max(.saraDiscreteUpper(o),c(a,b,cuts)[is.finite(c(a,b,cuts))])
+    upper <- max(.saraDiscreteUpper(o,translate=translate),c(a,b,cuts)[is.finite(c(a,b,cuts))])
     upper <- min(upper,d$support[2])
     lower <- d$support[1]
     if (upper-lower>100) {
@@ -153,8 +152,8 @@
           fill=fills[2],alpha=.5) +
         ggplot2::geom_path(color=theme$color[1],linewidth=.8)
     } else {
-      bounds <- .saraContinuousDisplayRange(o,c(a,b,cuts))
-      original <- .saraContinuousRange(o,c(a,b,cuts))
+      bounds <- .saraContinuousDisplayRange(o,c(a,b,cuts),translate=translate)
+      original <- .saraContinuousRange(o,c(a,b,cuts),translate=translate)
       if (!isTRUE(all.equal(bounds,original)))
         caption <- paste(c(caption,.saraWindowCaption(d,bounds,FALSE,translate)),collapse="\n")
       x <- sort(unique(c(seq(bounds[1],bounds[2],length.out=1001),c(a,b,cuts)[is.finite(c(a,b,cuts))])))

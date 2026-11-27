@@ -6,7 +6,7 @@ refs: [DescTools]
 
 items:
 - name: wilcoxttest
-  title: Wilcoxon T Test and effect sizes
+  title: Wilcoxon T test and effect sizes
   description: a table containing the Wilcoxon T test results
   type: Table
   rows: (pairs)
@@ -65,7 +65,7 @@ items:
     content: .
     visible: (rankCorrps)
 - name: cisMedps
-  title: Variables Median confidence intervals
+  title: Median confidence intervals
   type: Table
   description: a table containing confidence interval estimates for the medians
   visible: (ciMediansps)
@@ -105,7 +105,7 @@ items:
     title: Upper bound
     type: number
 - name: cisHLps
-  title: Hodges-Lehmann Estimator CIs
+  title: Hodges-Lehmann confidence intervals
   type: Table
   description: a table containing confidence interval estimates for HL estimator
   visible: (ciHLps)

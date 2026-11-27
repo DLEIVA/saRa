@@ -19,110 +19,93 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     
     .run=function() {
       private$.setTableVisibility()
-      
       rowVarName <- self$options$rows
       colVarName <- self$options$cols
-      
-      if (is.null(rowVarName) || is.null(colVarName))
-        return()
-      
+      if (is.null(rowVarName) || is.null(colVarName)) return()
       data <- self$data
-      
-      if (!any(complete.cases(data[c(rowVarName, colVarName)])))
-        jmvcore::reject("No complete observations are available for the selected variables", code="no_complete_observations")
+      if (!any(complete.cases(data[c(rowVarName,colVarName)])))
+        jmvcore::reject(.("No complete observations are available for the selected variables"),
+          code="no_complete_observations")
+      tabla <- table(data[[rowVarName]],data[[colVarName]])
+      private$.populateFrequencyRows(tabla)
+      observed <- private$.populateAssociationIndices(tabla)
+      private$.addYuleNotes(observed)
+      private$.populatePredictionIndices(observed)
+      private$.setTableVisibility()
+    },
 
-      freqs <- self$results$freqs
-      
-      freqRowNo <- 1
-      
-      mats <- list(table(data[[rowVarName]],data[[colVarName]]))
-      
-      nRows  <- base::nlevels(data[[rowVarName]])
-      nCols  <- base::nlevels(data[[colVarName]])
-      nCells <- nRows * nCols
-      
-      for (mat in mats) {
-        total <- sum(mat)
-        colTotals <- apply(mat, 2, sum)
-        rowTotals <- apply(mat, 1, sum)
-        exp <- matrix(kronecker(rowTotals,colTotals),
-                      length(rowTotals),length(colTotals),
-                      byrow = TRUE)/total
-        
-        
-        for (rowNo in seq_len(nRows)) {
-          
-          values <- mat[rowNo,]
-          rowTotal <- rowTotals[rowNo]
-          colTotal <- colTotals[rowNo]          
-          pcRow <- values / rowTotal
-          
-          values <- as.list(values)
-          names(values) <- paste0(1:nCols, '[count]')
-          values[['.total[count]']] <- rowTotal
-          
-          expValues <- exp[rowNo,]
-          expValues <- as.list(expValues)
-          names(expValues) <- paste0(1:nCols, '[expected]')
-          expValues[['.total[exp]']] <- sum(exp[rowNo,])
-          
-          pcRow <- as.list(pcRow)
-          names(pcRow) <- paste0(1:nCols, '[pcRow]')
-          pcRow[['.total[pcRow]']] <- 1
-          
-          pcCol <- as.list(mat[rowNo,] / colTotals)
-          names(pcCol) <- paste0(1:nCols, '[pcCol]')
-          pcCol[['.total[pcCol]']] <- unname(rowTotals[rowNo] / total)
-          
-          pcTot <- as.list(mat[rowNo,] / total)
-          names(pcTot) <- paste0(1:nCols, '[pcTot]')
-          pcTot[['.total[pcTot]']] <- sum(mat[rowNo,] / total)
-          
-          values <- c(values, expValues, pcRow, pcCol, pcTot)
-          
-          freqs$setRow(rowNo=freqRowNo, values=values)
-          freqRowNo <- freqRowNo + 1
-        }
-        
-        values <- apply(mat, 2, sum)
-        rowTotal <- sum(values)
-        values <- as.list(values)
-        names(values) <- paste0(1:nCols, '[count]')
-        values[['.total[count]']] <- rowTotal
-        # 
-        expValues <- apply(exp, 2, sum)
-        expValues <- as.list(expValues)
-        names(expValues) <- paste0(1:nCols, '[expected]')
-        # 
-        pcRow <- apply(mat, 2, sum) / rowTotal
-        pcRow <- as.list(pcRow)
-        names(pcRow) <- paste0(1:nCols, '[pcRow]')
-        # 
-        pcCol <- rep(1, nCols)
-        pcCol <- as.list(pcCol)
-        names(pcCol) <- paste0(1:nCols, '[pcCol]')
-        # 
-        pcTot <- apply(mat, 2, sum) / total
-        pcTot <- as.list(pcTot)
-        names(pcTot) <- paste0(1:nCols, '[pcTot]')
-        # 
-        expValues[['.total[exp]']] <- total
-        pcRow[['.total[pcRow]']] <- 1
-        pcCol[['.total[pcCol]']] <- 1
-        pcTot[['.total[pcTot]']] <- 1
-        # 
-        values <- c(values, expValues, pcRow, pcCol, pcTot) #expValues,
-        # 
-        freqs$setRow(rowNo=freqRowNo, values=values)
-        freqRowNo <- freqRowNo + 1
-      }
-      
+    .populateFrequencyRows=function(mat) {
+      total <- sum(mat)
+      colTotals <- apply(mat,2,sum)
+      rowTotals <- apply(mat,1,sum)
+      exp <- matrix(kronecker(rowTotals,colTotals),length(rowTotals),
+        length(colTotals),byrow=TRUE)/total
+      for (rowNo in seq_len(nrow(mat)))
+        self$results$freqs$setRow(rowNo=rowNo,
+          values=private$.frequencyRow(mat,exp,rowNo,rowTotals,colTotals,total))
+      self$results$freqs$setRow(rowNo=nrow(mat)+1L,
+        values=private$.frequencyTotal(mat,exp,total))
+    },
+
+    .frequencyRow=function(mat,exp,rowNo,rowTotals,colTotals,total) {
+      nCols <- ncol(mat)
+      values <- mat[rowNo,]
+      rowTotal <- rowTotals[rowNo]
+      pcRow <- values / rowTotal
+
+      values <- as.list(values)
+      names(values) <- paste0(1:nCols, '[count]')
+      values[['.total[count]']] <- rowTotal
+
+      expValues <- exp[rowNo,]
+      expValues <- as.list(expValues)
+      names(expValues) <- paste0(1:nCols, '[expected]')
+      expValues[['.total[exp]']] <- sum(exp[rowNo,])
+
+      pcRow <- as.list(pcRow)
+      names(pcRow) <- paste0(1:nCols, '[pcRow]')
+      pcRow[['.total[pcRow]']] <- 1
+
+      pcCol <- as.list(mat[rowNo,] / colTotals)
+      names(pcCol) <- paste0(1:nCols, '[pcCol]')
+      pcCol[['.total[pcCol]']] <- unname(rowTotals[rowNo] / total)
+
+      pcTot <- as.list(mat[rowNo,] / total)
+      names(pcTot) <- paste0(1:nCols, '[pcTot]')
+      pcTot[['.total[pcTot]']] <- sum(mat[rowNo,] / total)
+
+      c(values, expValues, pcRow, pcCol, pcTot)
+    },
+
+    .frequencyTotal=function(mat,exp,total) {
+      nCols <- ncol(mat)
+      values <- apply(mat, 2, sum)
+      rowTotal <- sum(values)
+      values <- as.list(values)
+      names(values) <- paste0(1:nCols, '[count]')
+      values[['.total[count]']] <- rowTotal
+      expValues <- apply(exp, 2, sum)
+      expValues <- as.list(expValues)
+      names(expValues) <- paste0(1:nCols, '[expected]')
+      pcRow <- apply(mat, 2, sum) / rowTotal
+      pcRow <- as.list(pcRow)
+      names(pcRow) <- paste0(1:nCols, '[pcRow]')
+      pcCol <- rep(1, nCols)
+      pcCol <- as.list(pcCol)
+      names(pcCol) <- paste0(1:nCols, '[pcCol]')
+      pcTot <- apply(mat, 2, sum) / total
+      pcTot <- as.list(pcTot)
+      names(pcTot) <- paste0(1:nCols, '[pcTot]')
+      expValues[['.total[exp]']] <- total
+      pcRow[['.total[pcRow]']] <- 1
+      pcCol[['.total[pcCol]']] <- 1
+      pcTot[['.total[pcTot]']] <- 1
+      c(values, expValues, pcRow, pcCol, pcTot)
+    },
+
+    .populateAssociationIndices=function(tabla) {
       asocind <- self$results$asocind
       errorind <- self$results$errorind
-      
-      othRowNo <- 1
-      
-      tabla <- table(data[[rowVarName]],data[[colVarName]])
       emptyLevels <- any(rowSums(tabla)==0) || any(colSums(tabla)==0)
       emptyNote <- if(emptyLevels) .("Empty defined categories are retained in frequencies and excluded from association calculations.") else NULL
       asocind$setNote("empty_levels",emptyNote)
@@ -150,30 +133,26 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         `v[Yyule]` = yule$Y,
         `v[Vyule]` = yule$V
         )
-      asocind$setRow(rowNo=othRowNo, values=values)
-      
-      if ( self$options$Qyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
-        asocind$addFootnote(rowNo=1,'v[Qyule]',
-                            "Indices can only be computed for 2x2 tables.")
+      asocind$setRow(rowNo=1, values=values)
+      tabla
+    },
+
+    .addYuleNotes=function(tabla) {
+      if (nrow(tabla)>2L || ncol(tabla)>2L) {
+        for (option in c("Qyule", "Yyule", "Vyule"))
+          if (isTRUE(self$options[[option]]))
+            self$results$asocind$addFootnote(rowNo=1, paste0("v[",option,"]"),
+              .("Indices can only be computed for 2x2 tables."))
       }
-      
-      if ( self$options$Yyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
-        asocind$addFootnote(rowNo=1,'v[Yyule]',
-                            "Indices can only be computed for 2x2 tables.")
-      }
-      
-      if ( self$options$Vyule & (dim(tabla)[1]>2 | dim(tabla)[2]>2) ){
-        asocind$addFootnote(rowNo=1,'v[Vyule]',
-                            "Indices can only be computed for 2x2 tables.")
-      }
-      
+    },
+
+    .populatePredictionIndices=function(tabla) {
+      errorind <- self$results$errorind
       prediction <- .saraNominalPrediction(tabla)
       values <- setNames(prediction,paste0("v[",names(prediction),"]"))
-      errorind$setRow(rowNo=othRowNo, values=values)      
-      private$.setTableVisibility()
-      
+      errorind$setRow(rowNo=1, values=values)
     },
-    
+
     #### Init tables ----
     .FREQSTable = function(){
       rowVarName <- self$options$rows
@@ -184,7 +163,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data <- self$data
       
       subNames  <- c('[count]', '[expected]', '[pcRow]', '[pcCol]', '[pcTot]')
-      subTitles <- c(('Observed'), ('Expected'), ('% within row'), ('% within column'), ('% of total'))
+      subTitles <- c(.('Observed'), .('Expected'), .('% within row'), .('% within column'), .('% of total'))
       visible   <- c('(obs)', '(exp)', '(pcRow)', '(pcCol)', '(pcTot)')
       types     <- c('integer', 'number', 'number', 'number', 'number')
       formats   <- c('', '', 'pc', 'pc', 'pc')      
@@ -302,20 +281,20 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$obs ){
         freqs$addColumn(
           name='.total[count]',
-          title=('Total'),
+          title=.('Total'),
           type='integer')}
       
       if (self$options$exp) {
         freqs$addColumn(
           name='.total[exp]',
-          title=('Total'),
+          title=.('Total'),
           type='number')
       }
       
       if (self$options$pcRow) {
         freqs$addColumn(
           name='.total[pcRow]',
-          title=('Total'),
+          title=.('Total'),
           type='number',
           format='pc')
       }
@@ -323,7 +302,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$pcCol) {
         freqs$addColumn(
           name='.total[pcCol]',
-          title=('Total'),
+          title=.('Total'),
           type='number',
           format='pc')
       }
@@ -331,7 +310,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$pcTot) {
         freqs$addColumn(
           name='.total[pcTot]',
-          title=('Total'),
+          title=.('Total'),
           type='number',
           format='pc')
       }
@@ -351,7 +330,7 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         for (name in colnames(rows)) {
           value <- as.character(rows[i, name])
           if (value == '.total')
-            value <- ('Total')
+            value <- .('Total')
           values[[name]] <- value
         }
         
@@ -465,12 +444,13 @@ bivcatClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     size = 4)}
       
         if (self$options$yaxisPc == "total_pc") {
-          p <- p + ggplot2::labs(y = "Percentages of total")
+          p <- p + ggplot2::labs(y = .("Percentages of total"))
         } else {
-          p <- p + ggplot2::labs(y = paste0("Percentages within ", pctVarName))
+          p <- p + ggplot2::labs(y = jmvcore::format(.("Percentages within {}"), pctVarName))
         }
       }
       
+      if (self$options$yaxis == "ycounts") p <- p + ggplot2::labs(y=.("Counts"))
       p <- p + ggtheme
       
       return(p)

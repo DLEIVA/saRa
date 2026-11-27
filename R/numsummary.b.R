@@ -17,16 +17,16 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           "h1","h3","beta2","gamma2","k2","k3"
         ),
         title = c(
-          "N", "Missing", "Mean", "Median", "Mode", "Geometric mean", "Trimean",
-          "Midhinge", "Mid-range", 
-          paste0(self$options$Trim,'% trimmed mean'),
-          paste0(self$options$Win,'% winsorized mean'),
-          "Variance","Standard deviation", "Geometric standard deviation",
-          "Mean deviation","CV", "Gini", "Normalized Gini", "Range", "IQR", "QD", "MAD",
-          "Quartile coefficient of dispersion", paste0(self$options$NPerc,'% inner range'),
-          "Min", "Max", "Q1", "Q2", "Q3", "Pearson's \u03B2\u2081",
-          "Fisher's \u03B3\u2081","SP50","SP80","Pearson's \u03B2\u2082",
-          "Fisher's \u03B3\u2082","K2","K3"
+          .("N"), .("Missing"), .("Mean"), .("Median"), .("Mode"), .("Geometric mean"), .("Trimean"),
+          .("Midhinge"), .("Mid-range"), 
+          jmvcore::format(.("{}% trimmed mean"), self$options$Trim),
+          jmvcore::format(.("{}% winsorized mean"), self$options$Win),
+          .("Variance"),.("Standard deviation"), .("Geometric standard deviation"),
+          .("Mean deviation"),.("CV"), .("Gini"), .("Normalized Gini"), .("Range"), .("IQR"), .("QD"), .("MAD"),
+          .("Quartile coefficient of dispersion"), jmvcore::format(.("{}% inner range"), self$options$NPerc),
+          .("Min"), .("Max"), .("Q1"), .("Q2"), .("Q3"), .("Pearson's \u03B2\u2081"),
+          .("Fisher's \u03B3\u2081"),.("SP50"),.("SP80"),.("Pearson's \u03B2\u2082"),
+          .("Fisher's \u03B3\u2082"),.("K2"),.("K3")
         ),
         superTitle = rep("",37),
         type = c("integer","integer",rep("number",35)),
@@ -41,7 +41,8 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       )
       if (self$options$freq)
         .saraInitFrequencyTables(self$results$frequencies, self$data,
-                                self$options$vars, cumulative=TRUE, numericValues=TRUE)
+                                self$options$vars, cumulative=TRUE, numericValues=TRUE,
+          translate=function(message) .saraMessage(message,self))
       private$.addQuantiles()
       private$.initIndicesTableNum()
       private$.initPlots()
@@ -51,7 +52,8 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         results <- private$.compute()
         if (self$options$freq)
           .saraPopulateFrequencyTables(self$results$frequencies, self$data,
-                                      self$options$vars, cumulative=TRUE, numericValues=TRUE)
+                                      self$options$vars, cumulative=TRUE, numericValues=TRUE,
+          translate=function(message) .saraMessage(message,self))
         private$.populateIndicesTableNum(results)
         private$.preparePlots()
       }
@@ -161,7 +163,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         if (isTRUE(self$options$lorenz)) {
           group$add(jmvcore::Image$new(options=self$options, name="lorenz",
-            title="Lorenz curve", renderFun=".lorenz", requiresData=TRUE,
+            title=.("Lorenz curve"), renderFun=".lorenz", requiresData=TRUE,
             width=550, height=550, clearWith=list("vars", "lorenz")))
         }
         if (self$options$qq) {
@@ -260,7 +262,7 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         binWidth <- if (nUniques > 1) range / (nUniques - 1) else 1
       
       plot <- ggplot2::ggplot(data=data, ggplot2::aes(x=.data[[names$x]])) +
-        ggplot2::labs(x=labels$x, y='density') +
+        ggplot2::labs(x=labels$x, y=.('density')) +
         ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10))
       
       if (self$options$hist)
@@ -399,16 +401,17 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (!is.null(message)) {
         return(ggplot2::ggplot() +
           ggplot2::annotate("text", x=0, y=0, label=message, size=4) +
-          ggplot2::labs(title=paste("Q-Q:", variable)) +
+          ggplot2::labs(title=jmvcore::format(.("Q-Q: {}"), variable)) +
           ggplot2::theme_void())
       }
-      .saraQQPlot(self$data, variable, NULL, ggtheme)
+      .saraQQPlot(self$data, variable, NULL, ggtheme,
+        translate=function(message) .saraMessage(message,self))
     },
     .lorenz = function(image, ggtheme, theme, ...) {
       if (is.null(image$state)) return(FALSE)
       variable <- image$state
       .saraLorenzPlot(self$data[[variable]], variable, ggtheme, theme,
-        translate=function(message) .(message))
+        translate=function(message) .saraMessage(message,self))
     },
     #### Populate tables ----
     .populateIndicesTableNum = function(results) {
@@ -504,7 +507,8 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           colArgs <- private$colArgs
           
           private$colArgs$name <- append(colArgs$name, paste0('perc', 1:npcValues), after = 27)
-          private$colArgs$title <- append(colArgs$title, paste0("Percentile ", round(pcValues * 100, 2)), after = 27)
+          private$colArgs$title <- append(colArgs$title, vapply(round(pcValues * 100, 2), function(value)
+            jmvcore::format(.("Percentile {}"), value), character(1)), after = 27)
           private$colArgs$type <- append(colArgs$type, rep('number', npcValues), after = 27)
           private$colArgs$visible <- append(colArgs$visible, rep("(pc)", npcValues), after = 27)
         }
@@ -520,7 +524,8 @@ numSummaryClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       intervinf <- self$options$innerf
       intervsup <- self$options$outerf
-      .saraValidateFences(intervinf,intervsup)
+      .saraValidateFences(intervinf,intervsup,
+        translate=function(message) .saraMessage(message,self))
       .bxp1 <- grDevices::boxplot.stats(as.numeric(column), coef = intervinf)
       .bxp2 <- grDevices::boxplot.stats(as.numeric(column), coef = intervsup)
       .selec <- .bxp1$out %in% .bxp2$out

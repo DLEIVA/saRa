@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-27",
+  "module": "saRa",
+  "version": "1.0.0",
+  "branch": "fix/audit-submission-followup",
+  "head_before_followup_commit": "a4f850848ccc76cb58f41bd714853f409de80de8",
+  "original_comparison": {
+    "match": 109,
+    "different": 4,
+    "missing": 0,
+    "extra": 0
+  },
+  "accepted_regenerated_headers": [
+    "R/bivmix.h.R",
+    "R/catsummary.h.R",
+    "R/umw.h.R",
+    "R/wilcoxt.h.R"
+  ],
+  "header_review": "Only three roxygen documentation lines and five result table title strings differ; all match source YAML descriptions/titles. No options, computations, conditions or result layout changes.",
+  "reconciled_paths": 113,
+  "comparison_evidence": "Supplied CSV matched the previous reference hashes; the four supplied headers matched their reported local hashes; reference updated to accepted local bytes. Other 109 source contents evidenced by user comparison, not a full independent local-tree download.",
+  "new_artifact": {
+    "filename": "saRa_1.0.0.jmo",
+    "sha256": "20bdc32ce37742b1b2e77e2735573381e5e23bc8819bbe804a5ded09b69fb865",
+    "source": "User sha256sum output",
+    "independently_received_or_hashed": false
+  },
+  "automated_validation": {
+    "pass": 2107,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 22.5,
+    "source": "User testthat output"
+  },
+  "manual_validation": "User screenshots and confirmations of frequency tables, categorical plots, OMV save/reopen and HTML/PDF exports",
+  "followup_commit": null,
+  "ready_for_reviewed_commit": true,
+  "publication_completed": false,
+  "palette_exception": "Fixed jmv fills in pie/doughnut per author request; typography/background follow ggtheme"
+}

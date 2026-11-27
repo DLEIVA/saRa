@@ -59,7 +59,7 @@ options:
             `TRUE` or `FALSE` (default: `TRUE`), perform Mann Whitney's U tests
             
     - name: zstat
-      title: Z statistic
+      title: z statistic
       type: Bool
       default: true
       description:
@@ -180,7 +180,7 @@ options:
             Bootstrap CIs.
 
     - name: desc
-      title: Descriptives Table
+      title: Descriptive statistics
       type: Bool
       default: false
       description:
@@ -190,7 +190,7 @@ options:
             `TRUE` or `FALSE` (default: `FALSE`), provide descriptive statistics
 
     - name: plots
-      title: Descriptives Plots
+      title: Descriptive plots
       type: Bool
       default: false
       description:

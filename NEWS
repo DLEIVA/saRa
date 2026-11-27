@@ -1,6 +1,9 @@
 -------------
 VERSION 1.0.0
 -------------
+* Remove redundant proportion and cumulative proportion columns from all
+  univariate frequency tables: categorical, ordinal and numerical. Retain
+  percentages based on non-missing observations and update explanatory notes.
 * Add empirical and normalized Gini coefficients under one Numerical Data
   option, and an independent Lorenz curve using the jamovi theme and palette.
   Explain unsupported data and undefined normalization for a single value.

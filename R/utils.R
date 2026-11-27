@@ -1,6 +1,6 @@
 # Shared finite plotting bound; keep distribution parameters unchanged for evaluation.
-.saraDiscreteUpper <- function(options) {
-  reject <- function(message) jmvcore::reject(message, code="invalid_distribution_parameters")
+.saraDiscreteUpper <- function(options, translate=identity) {
+  reject <- function(message) jmvcore::reject(translate(message), code="invalid_distribution_parameters")
   integer <- function(x) length(x) == 1L && is.finite(x) && x >= 0 && x == floor(x)
   probability <- function(x, positive=FALSE) length(x) == 1L && is.finite(x) &&
     x <= 1 && (if (positive) x > 0 else x >= 0)
@@ -197,7 +197,7 @@
   do.call(rbind, pieces)
 }
 
-.saraQQPlot <- function(data, variable, groupBy=NULL, ggtheme=NULL) {
+.saraQQPlot <- function(data, variable, groupBy=NULL, ggtheme=NULL, translate=identity) {
   frame <- .saraECDFData(jmvcore::toNumeric(data[[variable]]),
                         if (is.null(groupBy)) NULL else data[[groupBy]])
   if (is.null(frame) || nrow(frame) == 0L) return(FALSE)
@@ -208,7 +208,7 @@
                          fill="grey70", alpha=.5) +
     ggplot2::geom_line(ggplot2::aes(y=.data$fitted), linewidth=.8) +
     ggplot2::geom_point(ggplot2::aes(y=.data$sample)) +
-    ggplot2::xlab("Theoretical quantiles") + ggplot2::ylab("Standardised values") + ggtheme
+    ggplot2::xlab(translate("Theoretical quantiles")) + ggplot2::ylab(translate("Standardized values")) + ggtheme
   if (!is.null(groupBy)) plot <- plot + ggplot2::facet_wrap(~ group)
   plot
 }
@@ -419,7 +419,7 @@
 }
 
 # Shared error-to-cell rendering; return success for test-specific footnotes.
-.saraWriteRankResult <- function(table, rowKey, name, result, withP=FALSE) {
+.saraWriteRankResult <- function(table, rowKey, name, result, withP=FALSE, translate=identity) {
   statistic <- paste0("stat[",name,"]")
   probability <- paste0("p[",name,"]")
   failed <- jmvcore::isError(result)
@@ -427,7 +427,7 @@
   if (withP) values[[probability]] <- if(failed) NaN else result$p.value
   table$setRow(rowKey=rowKey,values)
   if (failed) table$addFootnote(rowKey=rowKey,statistic,
-    .saraRankTestError(jmvcore::extractErrorMessage(result)))
+    translate(.saraRankTestError(jmvcore::extractErrorMessage(result))))
   !failed
 }
 
@@ -513,14 +513,14 @@
   p
 }
 .saraDrawMedianPlot <- function(state,label,xLabel=NULL,yLabel=NULL,
-                                ggtheme=NULL,theme=NULL,legendPosition=NULL) {
+                                ggtheme=NULL,theme=NULL,legendPosition=NULL, translate=identity) {
   tryCatch({
     print(.saraMedianPlot(state,label,xLabel,yLabel,ggtheme,theme,legendPosition))
     TRUE
   },error=function(e) {
     graphics::plot.new()
-    graphics::text(.5,.5,paste(strwrap(paste("Plot could not be drawn:",
-      conditionMessage(e)),width=55),collapse="\n"),cex=.85)
+    graphics::text(.5,.5,paste(strwrap(jmvcore::format(translate("Plot could not be drawn: {}"),
+      translate(conditionMessage(e))),width=55),collapse="\n"),cex=.85)
     TRUE
   })
 }
@@ -550,17 +550,13 @@
   out$theilsym <- .saraDivide(2*information,ha+hb)
   out
 }
-.saraValidateFences <- function(inner,outer) {
+.saraValidateFences <- function(inner,outer,translate=identity) {
   if(length(inner)!=1L || length(outer)!=1L || !is.finite(inner) ||
      !is.finite(outer) || inner<0 || outer<=inner)
-    stop("Fence multipliers must be non-negative, with outer greater than inner")
+    stop(translate("Fence multipliers must be non-negative, with outer greater than inner"))
   invisible(TRUE)
 }
 
-.saraPalette <- function(colors,n) {
-  if(n<=length(colors)) return(colors[seq_len(n)])
-  grDevices::colorRampPalette(colors)(n)
-}
 # The renderer must draw a resource rather than merely return a ggplot object.
 .saraDrawBivariatePlot <- function(build) {
   plot <- build()
@@ -577,4 +573,14 @@
   if (length(levels) == 0L) return(translate("Confidence Interval"))
   sprintf(translate("%s%% Confidence Interval"),
           trimws(formatC(100*levels, format="fg", digits=8, width=0)))
+}
+
+# Resolve data-label typography from the supplied public ggplot theme. The theme
+# may be jamovi's list of theme and scale objects; no global defaults are changed.
+.saraPlotTextStyle <- function(ggtheme) {
+  plot <- ggplot2::ggplot() + ggtheme
+  element <- ggplot2::calc_element("text", ggplot2::theme_get() + plot$theme)
+  list(size=element$size / ggplot2::.pt,
+       family=if (is.null(element$family)) "" else element$family,
+       face=if (is.null(element$face)) "plain" else element$face)
 }

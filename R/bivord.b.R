@@ -28,13 +28,13 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         return() 
       } else{
         if (!is.ordered(data[[rowVarName]]))
-          jmvcore::reject("Select ordinal variables with ordered levels", code="requires_ordinal_variables")
+          jmvcore::reject(.("Select ordinal variables with ordered levels"), code="requires_ordinal_variables")
         if (!is.ordered(data[[colVarName]]))
-          jmvcore::reject("Select ordinal variables with ordered levels", code="requires_ordinal_variables")
+          jmvcore::reject(.("Select ordinal variables with ordered levels"), code="requires_ordinal_variables")
       }
       
       if (!any(complete.cases(data[c(rowVarName, colVarName)])))
-        jmvcore::reject("No complete observations are available for the selected variables", code="no_complete_observations")
+        jmvcore::reject(.("No complete observations are available for the selected variables"), code="no_complete_observations")
 
       freqs <- self$results$freqs
       
@@ -129,8 +129,10 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       E.XY <- (sum(tabla^2)-n)/2
       
       res <- c(C,D,E.X,E.Y,E.XY)
-      resnames <- c('Concordant pairs','Discordant pairs',paste0('Ties in ',rowVarName),
-                         paste0('Ties in ',colVarName),paste0('Ties in ',rowVarName,' and ',colVarName))
+      resnames <- c(.("Concordant pairs"), .("Discordant pairs"),
+        jmvcore::format(.("Ties in {}"), rowVarName),
+        jmvcore::format(.("Ties in {}"), colVarName),
+        jmvcore::format(.("Ties in {} and {}"), rowVarName, colVarName))
       
       for(k in 1:length(res)){
         values <- list('names' = resnames[k], 'values' = res[k])
@@ -179,7 +181,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       data <- self$data
       
       subNames  <- c('[count]', '[pcRow]', '[pcCol]', '[pcTot]')
-      subTitles <- c(('Observed'), ('% within row'), ('% within column'), ('% of total'))
+      subTitles <- c(.('Observed'), .('% within row'), .('% within column'), .('% of total'))
       visible   <- c('(obs)', '(pcRow)', '(pcCol)', '(pcTot)')
       types     <- c('integer', 'number', 'number', 'number')
       formats   <- c('', 'pc', 'pc', 'pc')      
@@ -296,13 +298,13 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$obs ){
         freqs$addColumn(
           name='.total[count]',
-          title=('Total'),
+          title=.('Total'),
           type='integer')}
       
       if (self$options$pcRow) {
         freqs$addColumn(
           name='.total[pcRow]',
-          title=('Total'),
+          title=.('Total'),
           type='number',
           format='pc')
       }
@@ -310,7 +312,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$pcCol) {
         freqs$addColumn(
           name='.total[pcCol]',
-          title=('Total'),
+          title=.('Total'),
           type='number',
           format='pc')
       }
@@ -318,7 +320,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       if (self$options$pcTot) {
         freqs$addColumn(
           name='.total[pcTot]',
-          title=('Total'),
+          title=.('Total'),
           type='number',
           format='pc')
       }
@@ -338,7 +340,7 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         for (name in colnames(rows)) {
           value <- as.character(rows[i, name])
           if (value == '.total')
-            value <- ('Total')
+            value <- .('Total')
           values[[name]] <- value
         }
         
@@ -468,12 +470,13 @@ bivordClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                         size = 4)}
         
         if (self$options$yaxisPc == "total_pc") {
-          p <- p + ggplot2::labs(y = "Percentages of total")
+          p <- p + ggplot2::labs(y = .("Percentages of total"))
         } else {
-          p <- p + ggplot2::labs(y = paste0("Percentages within ", pctVarName))
+          p <- p + ggplot2::labs(y = jmvcore::format(.("Percentages within {}"), pctVarName))
         }
       }
       
+      if (self$options$yaxis == "ycounts") p <- p + ggplot2::labs(y=.("Counts"))
       p <- p + ggtheme
       
       return(p)

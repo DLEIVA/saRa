@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-27",
+  "module": "saRa",
+  "version": "1.0.0",
+  "artifact": {
+    "filename": "saRa_1.0.0.jmo",
+    "sha256": "163731acf8c0cee8f838c565e1da270178c35fdbada5ccd15a96fb5a16906b96",
+    "evidence": "User-supplied sha256sum terminal output; assistant has not received or independently hashed the binary"
+  },
+  "source": {
+    "branch": "fix/audit-review-1.0.0",
+    "base_commit": "2cfe7ee61c580950140c832a4b22163a90bba2f8",
+    "candidate_commit": null,
+    "reconciled_inventory_files": 110,
+    "commit_lookup_after_commit": "git log -1 --format=%H -- audit/FINAL_ACCEPTANCE_2026-11-27.json"
+  },
+  "acceptance": {
+    "testthat_pass": 1878,
+    "testthat_fail": 0,
+    "testthat_warn": 0,
+    "testthat_skip": 0,
+    "final_combined_check": "PASS — user confirms final JMO identified and combined check performed",
+    "combined_scope": "Restart/load module, OMV reopening and HTML/PDF export, as requested in preceding instructions",
+    "evidence_kind": "User confirmation; no independent binary/export inspection"
+  },
+  "git_diff_check": "Only trailing-whitespace diagnostics in the user supplied output; no runtime source edits performed for this closeout",
+  "next_step": "Review staged set and create candidate commit; record returned hash outside the self-referential precommit record",
+  "publication": "No push, merge, tag or publication performed"
+}

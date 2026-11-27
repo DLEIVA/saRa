@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-27",
+  "candidate_version": "1.0.0",
+  "scope": "Static inspection of the source tree containing this script; not R execution",
+  "R_syntax_parser": "tree-sitter-language-pack 0.9.0",
+  "R_files_parsed": 61,
+  "YAML_files_parsed": 38,
+  "testthat_blocks": 127,
+  "issues": [],
+  "runtime_evidence_file": "audit/VALIDATION_STATUS.json",
+  "runtime_evidence_preserved": true,
+  "step": "4 — nominal analysis decomposition",
+  "runtime_status": "PASSED after test-helper correction",
+  "baseline_user_suite": {
+    "pass": 2005,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 21.4,
+    "scope": "Step 3 before this refactor"
+  },
+  "run_lines_before": 156,
+  "method_lines_after": {
+    ".run": 16,
+    ".populateFrequencyRows": 12,
+    ".frequencyRow": 29,
+    ".frequencyTotal": 25,
+    ".populateAssociationIndices": 33,
+    ".addYuleNotes": 8,
+    ".populatePredictionIndices": 6
+  },
+  "new_test_blocks": 4,
+  "public_options_changed": false,
+  "yaml_changed": false,
+  "runtime_R_files_changed": [
+    "R/bivcat.b.R"
+  ],
+  "first_user_runtime": {
+    "pass": 2005,
+    "fail": 4,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 22.3,
+    "nominal_refactor_expectations_passed": 0,
+    "failure_stage": "jmvcore::select during analysis init; .run not reached",
+    "cause": "Symbol capture of rows=rows and cols=cols in the new wrapper; those are not data column names",
+    "correction": "do.call with a list of resolved column-name strings",
+    "runtime_source_changed_for_this_correction": false
+  },
+  "user_runtime": {
+    "pass": 2054,
+    "fail": 0,
+    "warn": 0,
+    "skip": 0,
+    "duration_seconds": 22.6,
+    "nominal_refactor_expectations_passed": 49
+  }
+}

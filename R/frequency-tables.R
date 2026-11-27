@@ -18,41 +18,39 @@
     prop <- if (n > 0L) counts/n else rep(NA_real_, length(counts))
     values <- data.frame(levels=c(labels, "Missing"),
                          counts=c(counts, sum(is.na(codes))),
-                         prop=c(prop, NA_real_), pc=c(prop, NA_real_),
+                         pc=c(prop, NA_real_),
                          stringsAsFactors=FALSE, check.names=FALSE)
     if (cumulative) {
         values$cumcounts <- c(cumsum(counts), NA_real_)
-        values$cumprop <- c(if (n > 0L) cumsum(counts)/n else rep(NA_real_, length(counts)), NA_real_)
-        values$cumpc <- values$cumprop
-        values <- values[c("levels", "counts", "cumcounts", "prop", "cumprop", "pc", "cumpc")]
+        values$cumpc <- c(if (n > 0L) cumsum(counts)/n else rep(NA_real_, length(counts)), NA_real_)
+        values <- values[c("levels", "counts", "cumcounts", "pc", "cumpc")]
     }
     if (odds) values$odds <- c(if (n > 0L) counts/(n-counts) else rep(NA_real_, length(counts)), NA_real_)
     values
 }
 
-.saraInitFrequencyTables <- function(tables, data, vars, cumulative=FALSE, odds=FALSE, numericValues=FALSE) {
+.saraInitFrequencyTables <- function(tables, data, vars, cumulative=FALSE, odds=FALSE, numericValues=FALSE, translate=identity) {
     for (var in vars) {
         table <- tables$get(var)
         # .init may receive only the header. Category rows are added in .run.
         columns <- list(levels=c(if (numericValues) "Values" else "Levels", "text"), counts=c("Counts", "integer"))
         if (cumulative) columns$cumcounts <- c("Cumulative counts", "integer")
-        columns$prop <- c("Proportions", "number")
-        if (cumulative) columns$cumprop <- c("Cumulative proportions", "number")
         columns$pc <- c("% of Total", "number")
         if (cumulative) columns$cumpc <- c("Cumulative %", "number")
         if (odds) columns$odds <- c("Odds", "number")
         for (name in names(columns)) {
             spec <- columns[[name]]
-            table$addColumn(name=name, title=spec[1], type=spec[2],
+            table$addColumn(name=name, title=translate(spec[1]), type=spec[2],
                             format=if (name %in% c("pc", "cumpc")) "pc" else "")
         }
     }
 }
 
-.saraPopulateFrequencyTables <- function(tables, data, vars, cumulative=FALSE, odds=FALSE, numericValues=FALSE) {
+.saraPopulateFrequencyTables <- function(tables, data, vars, cumulative=FALSE, odds=FALSE, numericValues=FALSE, translate=identity) {
     for (var in vars) {
         table <- tables$get(var)
         values <- .saraFrequencyRows(data[[var]], cumulative, odds, numericValues)
+        values$levels[nrow(values)] <- translate("Missing")
         table$deleteRows()
         # Positional keys distinguish a category literally named Missing from missing data.
         for (i in seq_len(nrow(values))) {
@@ -61,10 +59,10 @@
             table$setRow(rowNo=i, values=as.list(values[i,,drop=FALSE]))
         }
         table$setNote("valid", if (numericValues)
-            .("Proportions and percentages use non-missing observations. Cumulative values follow ascending numeric order and exclude missing observations.")
+            translate("Percentages use non-missing observations. Cumulative values follow ascending numeric order and exclude missing observations.")
             else if (cumulative)
-            .("Proportions and percentages use non-missing observations. Cumulative values follow the defined category order and exclude missing observations.")
-            else .("Proportions, percentages and odds use non-missing observations. Odds are infinite when all valid observations belong to one category."))
+            translate("Percentages use non-missing observations. Cumulative values follow the defined category order and exclude missing observations.")
+            else translate("Percentages and odds use non-missing observations. Odds are infinite when all valid observations belong to one category."))
     }
 }
 
